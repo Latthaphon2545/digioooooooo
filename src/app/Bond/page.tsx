@@ -1,6 +1,6 @@
 "use client";
 import ActionButton from "@/components/actionButton";
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/sidebar/sidebar";
 import SubmitButton from "@/components/submitButton";
 import React, { useEffect } from "react";
 
