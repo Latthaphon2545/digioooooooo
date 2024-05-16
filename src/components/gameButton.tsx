@@ -1,5 +1,5 @@
 const GameButton = () => {
-  return <div>Game Kiki</div>;
+  return <div>Game Eieiiiiiiiiiiiiiii</div>;
 };
 
 export default GameButton;
