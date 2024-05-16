@@ -30,7 +30,7 @@ const Sidebar = () => {
           <Profile />
           <ActionButton
             action={() => {}}
-            styles="btn-info text-base-100 text-xl w-fit px-20 mb-5 mx-4"
+            styles="btn-info text-base-100 text-base w-fit px-24 mb-5 mx-4"
           >
             Edit
           </ActionButton>
