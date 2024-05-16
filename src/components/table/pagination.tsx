@@ -14,7 +14,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
   const handleNext = () => {
     if (currentPage < totalPages) {
       onPageChange(currentPage + 1);
-      if (currentPage - pageStart >= 2 && pageEnd < totalPages -1) {
+      if (currentPage - pageStart >= 2 && pageEnd < totalPages - 1) {
         setPageStart(pageStart + 1);
       }
     }
@@ -31,12 +31,13 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
 
   const handleCurrentPage = (page: number) => {
     onPageChange(page);
-    if (page - pageStart >= 2 && pageEnd < totalPages - 1 ) {
+    if (currentPage - pageStart >= 2 && pageEnd < totalPages - 1) {
       setPageStart(page - 2);
-    } else if (page - pageStart <= 1 && pageStart > 1) {
+    } else if (pageStart - currentPage >= -2 && pageStart > 1) {
       setPageStart(page - 2);
     }
   }
+
 
   return (
     <>
