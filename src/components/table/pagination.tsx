@@ -78,7 +78,7 @@ export default function Pagination({
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-5">
+      <div className="flex flex-col justify-center items-center mt-2">
         <div className="join">
           <ActionButton
             children={"<<"}
@@ -93,6 +93,7 @@ export default function Pagination({
             disabled={currentPage === 1}
           />
           {pages.map((page) => (
+            <div key={page}>
             <ActionButton
               children={String(page)}
               action={() => handleCurrentPage(page)}
@@ -102,6 +103,7 @@ export default function Pagination({
                   : "btn-neutral"
               }`}
             />
+            </div>
           ))}
           <ActionButton
             children={">"}
