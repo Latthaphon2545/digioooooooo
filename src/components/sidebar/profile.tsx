@@ -12,8 +12,8 @@ const Profile = () => {
         className="w-20 h-20 rounded-full object-cover"
       />
       <div className="flex flex-col">
-        <p className="text-base-100 text-xl">Twon Sonsai</p>
-        <p className="text-base-300 text-base">Admin</p>
+        <p className="text-neutral-content text-xl">Twon Sonsai</p>
+        <p className="text-gray-500 text-base">Admin</p>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const BondPage = () => {
   return (
     <div className="flex flex-row">
       <Sidebar />
-      <div className="w-full">
+      <div className="w-full p-5">
         <UserInput />
       </div>
     </div>
