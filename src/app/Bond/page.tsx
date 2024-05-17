@@ -1,9 +1,6 @@
-"use client";
-import ActionButton from "@/components/actionButton";
+import InputForm from "@/components/inputForm";
 import Sidebar from "@/components/sidebar/sidebar";
-import SubmitButton from "@/components/submitButton";
-import UserInput from "@/components/userInput";
-import React, { useEffect } from "react";
+import React from "react";
 
 const BondPage = () => {
   function test() {
@@ -15,10 +12,10 @@ const BondPage = () => {
   }
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row min-h-screen">
       <Sidebar />
       <div className="w-full p-5">
-        <UserInput />
+        <InputForm />
       </div>
     </div>
   );
