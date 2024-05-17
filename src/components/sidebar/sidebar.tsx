@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import ActionButton from "../actionButton";
 import Profile from "./profile";
@@ -24,7 +22,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="bg-neutral max-w-64 h-lvh flex flex-col justify-between">
+    <div className="bg-slate-300 max-w-64 h-lvh flex flex-col justify-between">
       <div>
         <div className="flex flex-col items-center">
           <Profile />
