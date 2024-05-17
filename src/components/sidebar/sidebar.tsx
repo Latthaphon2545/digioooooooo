@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import ActionButton from "../actionButton";
 import Profile from "./profile";
 import DropdownRight from "../dropdownRight";
 import { TbUserEdit } from "react-icons/tb";
+import Alert from "../alert";
 
 const MENU = [
   {
@@ -40,12 +42,20 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
-      <ActionButton
+      {/* <ActionButton
         action={() => {}}
         styles="btn-error text-base-100 text-base w-fit px-[5rem] mb-4 mx-auto"
       >
         Logout
-      </ActionButton>
+      </ActionButton> */}
+      <Alert
+        styles="btn-error text-base-100 text-base w-fit px-[5rem] mb-4 mx-5"
+        action={() => {}}
+        alertHeader="You're about to logout"
+        alertDescroption="Are you sure you want to logout?"
+      >
+        Logout
+      </Alert>
     </div>
   );
 };
