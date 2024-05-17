@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 type ActionButtonProps = {
@@ -15,7 +16,7 @@ const ActionButton = ({
 }: ActionButtonProps) => {
   return (
     <button disabled={disabled} onClick={action} className={`btn ${styles}`}>
-      {children} 
+      {children}
     </button>
   );
 };

@@ -21,14 +21,18 @@ const InputHeader = ({
       <div role="tablist" className="tabs tabs-bordered tabs-lg">
         <a
           role="tab"
-          className={`tab ${activeTab === 0 ? "tab-active" : ""}`}
+          className={`tab ${
+            activeTab === 0 ? "tab-active font-semibold" : ""
+          } text-xl`}
           onClick={() => setActiveTab(0)}
         >
           Individual
         </a>
         <a
           role="tab"
-          className={`tab ${activeTab === 1 ? "tab-active" : ""}`}
+          className={`tab ${
+            activeTab === 1 ? "tab-active font-semibold" : ""
+          } text-xl`}
           onClick={() => setActiveTab(1)}
         >
           Group

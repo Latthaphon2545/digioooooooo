@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 type AlertProps = {
@@ -6,6 +7,8 @@ type AlertProps = {
   styles: string;
   alertHeader: string;
   alertDescroption: string;
+  id: string;
+  disabled?: boolean;
 };
 
 const Alert = ({
@@ -14,27 +17,26 @@ const Alert = ({
   styles,
   alertHeader,
   alertDescroption,
+  id,
 }: AlertProps) => {
   return (
     <div>
       <button
         className={`btn ${styles}`}
         onClick={() =>
-          (
-            document.getElementById("my_modal_5") as HTMLDialogElement
-          )?.showModal()
+          (document.getElementById(id) as HTMLDialogElement)?.showModal()
         }
       >
         {children}
       </button>
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+      <dialog id={id} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">{alertHeader}</h3>
           <p className="py-4">{alertDescroption}</p>
           <div className="modal-action">
             <form method="dialog">
               <button className="btn mr-5">Close</button>
-              <button className="btn" onClick={action}>
+              <button type="submit" className="btn" onClick={action}>
                 Submit
               </button>
             </form>

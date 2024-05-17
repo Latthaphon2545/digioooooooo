@@ -29,15 +29,18 @@ const UserInput = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-3 items-center">
+    <div className="flex flex-col space-y-3 items-center min-h-[36rem]">
       {inputList.map((user, index) => {
         return (
-          <div key={index} className="w-full">
+          <div key={index} className="w-full ">
             <div className="divider mb-8 font-semibold text-xl">
               User {user.id}
             </div>
             {user.inputs.map((input, index) => (
-              <label className="flex items-center mb-5 w-full" key={index}>
+              <label
+                className="flex items-center mb-5 mx-auto max-w-[60rem]"
+                key={index}
+              >
                 <InputField placeholder={input.placeholder} />
               </label>
             ))}

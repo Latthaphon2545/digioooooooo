@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Profile = () => {
   return (
-    <div className="px-2 py-8 pb-4 flex flex-row items-center  gap-3">
+    <div className="px-2 py-8 pb-4 flex flex-row items-center gap-3">
       <Image
         src="/image/twon.jpeg"
         alt="twon's image"
@@ -12,8 +12,10 @@ const Profile = () => {
         className="w-20 h-20 rounded-full object-cover"
       />
       <div className="flex flex-col">
-        <p className="text-neutral-content text-xl">Twon Sonsai</p>
-        <p className="text-gray-500 text-base">Admin</p>
+        <p className="text-neutral-content text-xl font-semibold">
+          Twon Sonsai
+        </p>
+        <p className="text-gray-500 text-base font-medium">Admin</p>
       </div>
     </div>
   );
