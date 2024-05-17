@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ActionButton from "../actionButton";
 
 interface PaginationProps {
   currentPage: number;
@@ -7,16 +8,32 @@ interface PaginationProps {
   onPageChange: (pageNumber: number) => void;
 }
 
-export default function Pagination({ currentPage, totalPages, lengthData, onPageChange }: PaginationProps) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  lengthData,
+  onPageChange,
+}: PaginationProps) {
   const [pageStart, setPageStart] = useState(1);
   const pageEnd = Math.min(pageStart + 3, totalPages);
   let manyPage = 0;
+
+  const DISAPLECOLOR_FIRST = `btn btn-sm btn-neutral ${
+    currentPage === 1 ? "disabled" : ""
+  }`;
+  const DISAPLECOLOR_LAST = `btn btn-sm btn-neutral ${
+    currentPage === totalPages ? "disabled" : ""
+  }`;
+
   if (lengthData <= 32) {
     manyPage = 1;
   } else {
-    manyPage = 2
+    manyPage = 2;
   }
-  const pages = Array.from({ length: pageEnd - pageStart + manyPage }, (_, i) => pageStart + i);
+  const pages = Array.from(
+    { length: pageEnd - pageStart + manyPage },
+    (_, i) => pageStart + i
+  );
 
   const handleNext = () => {
     if (currentPage < totalPages) {
@@ -47,34 +64,62 @@ export default function Pagination({ currentPage, totalPages, lengthData, onPage
         setPageStart(page - 2);
       }
     }
-  }
+  };
 
   const handleToFistPage = () => {
     onPageChange(1);
     setPageStart(1);
-  }
+  };
 
   const handleToLastPage = () => {
     onPageChange(totalPages);
     setPageStart(totalPages - 4);
-  }
-
+  };
 
   return (
     <>
       <div className="flex flex-col justify-center items-center mt-5">
         <div className="join">
-          <button className={`join-item btn btn-sm`} onClick={handleToFistPage} disabled={currentPage === 1}>{"<<"}</button>
-          <button className={`join-item btn btn-sm`} onClick={handlePrev} disabled={currentPage === 1}>{"<"}</button>
+          <ActionButton
+            children={"<<"}
+            action={handleToFistPage}
+            styles={"join-item btn btn-sm btn-neutral"}
+            disabled={currentPage === 1}
+          />
+          <ActionButton
+            children={"<"}
+            action={handlePrev}
+            styles={"join-item btn btn-sm btn-neutral"}
+            disabled={currentPage === 1}
+          />
           {pages.map((page) => (
-            <button key={page} className={`join-item btn btn-sm ${currentPage === page ? "btn-secondary text-accent" : ""}`} onClick={() => handleCurrentPage(page)}>{page}</button>
+            <ActionButton
+              children={String(page)}
+              action={() => handleCurrentPage(page)}
+              styles={`join-item btn btn-sm ${
+                currentPage === page
+                  ? "btn-accent text-accent-content"
+                  : "btn-neutral"
+              }`}
+            />
           ))}
-          <button className={`join-item btn btn-sm`} onClick={handleNext} disabled={currentPage === totalPages}>{">"}</button>
-          <button className={`join-item btn btn-sm`} onClick={handleToLastPage} disabled={currentPage === totalPages}>{">>"}</button>
-
+          <ActionButton
+            children={">"}
+            action={handleNext}
+            styles={"join-item btn btn-sm btn-neutral"}
+            disabled={currentPage === totalPages}
+          />
+          <ActionButton
+            children={">>"}
+            action={handleToLastPage}
+            styles={"join-item btn btn-sm btn-neutral"}
+            disabled={currentPage === totalPages}
+          />
         </div>
-        <p className="mt-3">{currentPage} of {totalPages}</p>
+        <p className="mt-3">
+          {currentPage} of {totalPages}
+        </p>
       </div>
     </>
-  )
+  );
 }
