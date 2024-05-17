@@ -19,30 +19,49 @@ const config: Config = {
     themes: [
       {
         mytheme: {
+          primary: "#3b82f6",
 
-          "primary": "#00BBEB",
+          "primary-content": "#f3f4f6",
 
-          "secondary": "#ABD9FF",
+          secondary: "#74b4ea",
 
-          "accent": "#004AF5",
+          "secondary-content": "#f3f4f6",
 
-          "neutral": "#9ca3af",
+          accent: "#1e3a8a",
+
+          "accent-content": "#f3f4f6",
+
+          neutral: "#e5e7eb",
+
+          "neutral-content": "#090a0b",
 
           "base-100": "#f5fffa",
 
-          "info": "#6887F5",
+          "base-200": "#d5ded9",
 
-          "success": "#01A950",
+          "base-300": "#b6beba",
 
-          "warning": "#ffa600",
+          "base-content": "#151615",
 
-          "error": "#ED1A2D",
+          info: "#fde791",
+
+          "info-content": "#040615",
+
+          success: "#10b981",
+
+          "success-content": "#f3f4f6",
+
+          warning: "#f59e0b",
+
+          "warning-content": "#f3f4f6",
+
+          error: "#ef4444",
+
+          "error-content": "#f3f4f6",
         },
       },
     ],
   },
-  plugins: [
-    require('daisyui'),
-  ],
+  plugins: [require("daisyui")],
 };
 export default config;
