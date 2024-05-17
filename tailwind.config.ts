@@ -35,7 +35,7 @@ const config: Config = {
 
           "neutral-content": "#090a0b",
 
-          "base-100": "#f5fffa",
+          "base-100": "#ffffff",
 
           "base-200": "#d5ded9",
 
