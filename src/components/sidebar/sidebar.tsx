@@ -32,7 +32,6 @@ const Sidebar = () => {
             styles="btn-success text-success-content text-base w-fit px-24 mb-5 mx-4"
           >
             <TbUserEdit className="w-8 h-8" />
-            Edit
           </ActionButton>
         </div>
         <div className="flex flex-col space-y-5 text-2xl mt-5">
