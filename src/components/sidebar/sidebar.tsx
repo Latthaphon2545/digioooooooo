@@ -3,24 +3,24 @@ import ActionButton from "../actionButton";
 import Profile from "./profile";
 import DropdownRight from "../dropdownRight";
 
-const Sidebar = () => {
-  const MENU = [
-    {
-      title: "User",
-      links: [
-        { name: "User Management", href: "users/management" },
-        { name: "User List", href: "/users/list" },
-      ],
-    },
-    {
-      title: "Product",
-      links: [
-        { name: "Model", href: "/products/models" },
-        { name: "Product", href: "/products/list" },
-      ],
-    },
-  ];
+const MENU = [
+  {
+    title: "User",
+    links: [
+      { name: "User Management", href: "users/management" },
+      { name: "User List", href: "/users/list" },
+    ],
+  },
+  {
+    title: "Product",
+    links: [
+      { name: "Model", href: "/products/models" },
+      { name: "Product", href: "/products/list" },
+    ],
+  },
+];
 
+const Sidebar = () => {
   return (
     <div className="bg-slate-300 max-w-64 h-lvh flex flex-col justify-between">
       <div>
