@@ -26,7 +26,9 @@ const UserInput = () => {
           placeholder={input.placeholder}
           className="pl-3 placeholder:capitalize flex-grow"
         />
-        <span className="bg-primary p-[0.8rem] rounded-r-lg">@digio.co.th</span>
+        <span className="bg-primary p-[0.8rem] rounded-r-lg text-base-100">
+          @digio.co.th
+        </span>
       </div>
     ) : (
       <input
