@@ -15,7 +15,7 @@ export default function Table({
     <div className="min-h-[70vh]">
       <table className="table">
         <thead>
-          <tr className="bg-base-200 text-center">
+          <tr className="text-center">
             <th className="min-w-[18vw]">Name</th>
             <th>Role</th>
             <th>Status</th>

@@ -4,13 +4,19 @@ type ActionButtonProps = {
   children: React.ReactNode;
   action: () => void;
   styles: string;
+  disabled?: boolean;
 };
 
-const ActionButton = ({ children, action, styles }: ActionButtonProps) => {
+const ActionButton = ({
+  children,
+  action,
+  styles,
+  disabled,
+}: ActionButtonProps) => {
   return (
-    <div onClick={action} className={`btn ${styles}`}>
-      {children}
-    </div>
+    <button disabled={disabled} onClick={action} className={`btn ${styles}`}>
+      {children} 
+    </button>
   );
 };
 
