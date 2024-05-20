@@ -11,15 +11,15 @@ const MENU = [
   {
     title: "User",
     links: [
-      { name: "User Management", href: "/users/management" },
-      { name: "User List", href: "/users/list" },
+      { name: "User Management", href: "/users/management?filter=&search=" },
+      { name: "User List", href: "/users/list?filter=&search=" },
     ],
   },
   {
     title: "Product",
     links: [
-      { name: "Model", href: "/products/models" },
-      { name: "Product", href: "/products/list" },
+      { name: "Model", href: "/products/models?filter=&search=" },
+      { name: "Product", href: "/products/list?filter=&search=" },
     ],
   },
 ];

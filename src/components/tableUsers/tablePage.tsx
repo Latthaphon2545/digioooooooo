@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Pagination from "./pagination";
 import Table from "./table";
 import Header from "./header";
-import { usePathname, useRouter } from "next/navigation";
 
 interface TablePageProps {
   data: {
@@ -14,13 +13,13 @@ interface TablePageProps {
   editor: boolean;
 }
 
+const ITEMPERPAGE = 7;
+
 export default function TablePage({
   data,
   colorStatus,
   editor,
 }: TablePageProps) {
-  const pathname = usePathname();
-  const ITEMPERPAGE = pathname === "/users/management" ? 7 : 8;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / ITEMPERPAGE);
   let dataForCurrentPage = data.slice(

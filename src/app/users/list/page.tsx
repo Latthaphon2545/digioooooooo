@@ -22,7 +22,7 @@ export default function Home() {
             text-3xl
             font-bold
             mt-5
-            mb-1
+            mb-5
           "
             >
               User List
