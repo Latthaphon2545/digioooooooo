@@ -51,7 +51,7 @@ export default function TablePage({ data, colorStatus }: TablePageProps) {
 
   return (
     <>
-      <div className="container mx-auto my-5 px-4 py-4 border-2 border-black">
+      <div className="container mx-auto px-4 py-4">
         <Header />
         <Table
           dataForCurrentPage={dataForCurrentPage}

@@ -1,7 +1,7 @@
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import ActionButton from "../actionButton";
 import { IoFilterSharp } from "react-icons/io5";
+import ActionButton from "../actionButton";
 
 type DropdownBottomProps = {
   item: {
@@ -22,8 +22,8 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const [checkboxValues, setCheckboxValues] = useState<Record<string, boolean>>(
     {}
   );
-
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
+  const searchParams = useSearchParams().get("search") || "";
 
   useEffect(() => {
     const initialCheckboxValues: Record<string, boolean> = {};
@@ -48,7 +48,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
       checkedValues.length ===
       item.list.flatMap((options) => options.names).length;
     const filterValue = allChecked ? "All" : checkedValues.join(",");
-    router.push(`/Game?filter=${filterValue}&search=`);
+    router.push(`/users?filter=${filterValue}&search=${searchParams}`);
   }, [checkedValues]);
 
   const handleClear = () => {
@@ -62,38 +62,36 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   };
 
   return (
-    <>
-      <div key={index} className="dropdown dropdown-hover dropdown-bottom">
-        <button tabIndex={0} className="btn mr-3">
-          <IoFilterSharp size={30} />
-        </button>
-        <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-          {item.list.map((options, optionsIndex) => (
-            <div key={optionsIndex}>
-              <p className="text-xs mb-2 mt-2">{options.title}</p>
-              {options.names.map((option, optionIndex) => (
-                <li key={option.name} className="form-control">
-                  <label className="cursor-pointer">
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-primary mr-3"
-                      name={option.name}
-                      onChange={getCheckBoxValue}
-                      checked={checkedValues.includes(option.name)}
-                    />
-                    <span className="label-text">{option.name}</span>
-                  </label>
-                </li>
-              ))}
-            </div>
-          ))}
-          <ActionButton
-            children="Clear"
-            action={handleClear}
-            styles="btn-error mt-2"
-          />
-        </ul>
-      </div>
-    </>
+    <div key={index} className="dropdown dropdown-hover dropdown-bottom">
+      <button tabIndex={0} className="btn mr-3">
+        <IoFilterSharp size={30} />
+      </button>
+      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        {item.list.map((options, optionsIndex) => (
+          <div key={optionsIndex}>
+            <p className="text-xs mb-2 mt-2">{options.title}</p>
+            {options.names.map((option, optionIndex) => (
+              <li key={option.name} className="form-control">
+                <label className="cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary mr-3"
+                    name={option.name}
+                    onChange={getCheckBoxValue}
+                    checked={checkedValues.includes(option.name)}
+                  />
+                  <span className="label-text">{option.name}</span>
+                </label>
+              </li>
+            ))}
+          </div>
+        ))}
+        <ActionButton
+          children="Clear"
+          action={handleClear}
+          styles="btn-error mt-2"
+        />
+      </ul>
+    </div>
   );
 }

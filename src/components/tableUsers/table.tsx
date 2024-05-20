@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TbUserEdit } from "react-icons/tb";
 import ActionButton from "../actionButton";
-import DropdownRight from "../dropdownRight";
 
 interface TableProps {
   dataForCurrentPage: {
