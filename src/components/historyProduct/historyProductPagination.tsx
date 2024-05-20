@@ -18,13 +18,6 @@ export default function Pagination({
   const pageEnd = Math.min(pageStart + 3, totalPages);
   let manyPage = 0;
 
-  const DISAPLECOLOR_FIRST = `btn btn-sm btn-neutral ${
-    currentPage === 1 ? "disabled" : ""
-  }`;
-  const DISAPLECOLOR_LAST = `btn btn-sm btn-neutral ${
-    currentPage === totalPages ? "disabled" : ""
-  }`;
-
   if (lengthData <= 32) {
     manyPage = 1;
   } else {
@@ -78,7 +71,7 @@ export default function Pagination({
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-2">
+      <div className="flex flex-col justify-center items-center">
         <div className="join">
           <ActionButton
             children={"<<"}
@@ -94,15 +87,15 @@ export default function Pagination({
           />
           {pages.map((page) => (
             <div key={page}>
-            <ActionButton
-              children={String(page)}
-              action={() => handleCurrentPage(page)}
-              styles={`join-item btn btn-sm ${
-                currentPage === page
-                  ? "btn-accent text-accent-content"
-                  : "btn-neutral"
-              }`}
-            />
+              <ActionButton
+                children={String(page)}
+                action={() => handleCurrentPage(page)}
+                styles={`join-item btn btn-sm ${
+                  currentPage === page
+                    ? "btn-accent text-accent-content"
+                    : "btn-neutral"
+                }`}
+              />
             </div>
           ))}
           <ActionButton

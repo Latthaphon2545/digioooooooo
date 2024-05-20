@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TbUserEdit } from "react-icons/tb";
 import ActionButton from "../actionButton";
+import { usePathname } from "next/navigation";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -21,6 +22,7 @@ export default function Table({
   const [bool, setBool] = useState(false);
   const [boolEdit, setBoolEdit] = useState(editor);
   const [editingItem, setEditingItem] = useState(null);
+  const pathname = usePathname();
 
   const handleEditData = (data: any) => {
     setBoolEdit(!boolEdit);
@@ -28,6 +30,8 @@ export default function Table({
     setEditingItem(data);
     console.log(data);
   };
+
+  const widthTable = pathname === "/users/management" ? 6 : 5;
 
   return (
     <div className="min-h-[70vh] mt-3">
@@ -47,7 +51,7 @@ export default function Table({
             return (
               <tr key={item.name}>
                 {/* Name */}
-                <td className="content-start w-2/6">
+                <td className={`content-start w-2/${widthTable}`}>
                   <span>
                     {bool && isEditing ? (
                       inputField((item as { name: string }).name)
@@ -59,14 +63,14 @@ export default function Table({
                 </td>
 
                 {/* Role */}
-                <td className="text-center w-1/6">
+                <td className={`text-center w-1/${widthTable}`}>
                   {bool && isEditing
                     ? dropdown(USERROLE, (item as { role: string }).role)
                     : item.role}
                 </td>
 
                 {/* Status */}
-                <td className="text-center w-1/6">
+                <td className={`text-center w-1/${widthTable}`}>
                   <span>
                     {bool && isEditing ? (
                       dropdown(USERSTATUS, (item as { status: string }).status)
@@ -83,14 +87,18 @@ export default function Table({
                 </td>
 
                 {/* Contact */}
-                <td className="text-center w-1/6">
+                <td className={`text-center w-1/${widthTable}`}>
                   {bool && isEditing
                     ? inputField((item as { Contact: string }).Contact)
                     : item.Contact}
                 </td>
 
                 {/* Action To Eidtor */}
-                <td className={`text-center h-20 ${boolEdit ? "w-1/6" : ""}`}>
+                <td
+                  className={`text-center h-20 ${
+                    boolEdit ? `w-1/${widthTable}` : ""
+                  }`}
+                >
                   {boolEdit && (
                     <ActionButton
                       children={

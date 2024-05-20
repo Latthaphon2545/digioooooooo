@@ -1,7 +1,6 @@
-import { useRouter, useSearchParams } from "next/navigation";
-import SearchBar from "./search";
-import DropdownBottom from "./dropdownFillter";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import SearchBar from "./productSearch";
+import DropdownBottom from "./productFillter";
 
 const CATEGORIES = [
   {
@@ -10,19 +9,16 @@ const CATEGORIES = [
       {
         title: "Status",
         names: [
-          { name: "Active", action: () => {} },
-          { name: "Inactive", action: () => {} },
-          { name: "Restricted", action: () => {} },
-          { name: "Pending", action: () => {} },
+          { name: "Installed", action: () => {} },
+          { name: "In Stock", action: () => {} },
+          { name: "Damaged", action: () => {} },
+          { name: "Repairing", action: () => {} },
+          { name: "Waiting for Repair", action: () => {} },
         ],
       },
       {
-        title: "Role",
-        names: [
-          { name: "Admin", action: () => {} },
-          { name: "Operator", action: () => {} },
-          { name: "Call Center", action: () => {} },
-        ],
+        title: "Models",
+        names: [{ name: "xxxx", action: () => {} }],
       },
     ],
   },
@@ -30,6 +26,7 @@ const CATEGORIES = [
 
 export default function Header({}) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const filterParams = useSearchParams().get("filter");
   const filterParamsArray = filterParams ? filterParams.split(",") : [];
@@ -43,7 +40,7 @@ export default function Header({}) {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     router.push(
-      `/users/management?filter=${filterParamsArray.join(",")}&search=${
+      `${pathname}?filter=${filterParamsArray.join(",")}&search=${
         e.target.value
       }`
     );

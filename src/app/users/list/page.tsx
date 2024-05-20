@@ -1,5 +1,5 @@
 import Sidebar from "@/components/sidebar/sidebar";
-import Table from "@/components/tableUsers/tablePage";
+import Table from "@/components/usersTable/usersTablePage";
 import { randomInt } from "crypto";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
@@ -15,7 +15,6 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-row min-h-screen">
-        <Sidebar />
         <div className="flex flex-col w-full relative">
           <div className="flex justify-between items-center mx-5 ">
             <h1
@@ -23,17 +22,11 @@ export default function Home() {
             text-3xl
             font-bold
             mt-5
-            mb-1
+            mb-5
           "
             >
-              User Management
+              User List
             </h1>
-          </div>
-          <div className="flex justify-end mx-5">
-            <button className="btn btn-primary my-2 w-40 text-lg">
-              <AiOutlineUserAdd size={20} />
-              Add users
-            </button>
           </div>
           <Table data={data} colorStatus="user" editor={false} />
         </div>
