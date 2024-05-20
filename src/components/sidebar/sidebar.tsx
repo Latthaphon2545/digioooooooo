@@ -40,7 +40,7 @@ const Sidebar = () => {
             </div>
           </ActionButton>
         </div>
-        <div className="flex flex-col space-y-5 text-2xl mt-5 w-full">
+        <div className="flex flex-col text-2xl mt-5 w-full">
           {MENU.map((item, index) => (
             <DropdownRight key={index} item={item} index={index} />
           ))}
