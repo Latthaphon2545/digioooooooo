@@ -18,8 +18,12 @@ const MENU = [
   {
     title: "Product",
     links: [
-      { name: "Model", href: "/products/models?filter=&search=" },
-      { name: "Product", href: "/products/list?filter=&search=" },
+      { name: "Model", href: "/products/models" },
+      {
+        name: "Product Management",
+        href: "/products/management?filter=&search=",
+      },
+      { name: "Product List", href: "/products/list?filter=&search=" },
     ],
   },
 ];

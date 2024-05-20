@@ -1,8 +1,9 @@
 import TablePageProduct from "@/components/productTable/productTablePage";
 import { randomInt } from "crypto";
 import React from "react";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
-export default function prodictList() {
+export default function productmanagement() {
   const data = Array.from({ length: 33 }, (_, i) => ({
     model: `Model ${i + 1}`,
     serialNumber: randomInt(1000000000, 9999999999),
@@ -28,13 +29,18 @@ export default function prodictList() {
             text-3xl
             font-bold
             mt-5
-            mb-5
+            mb-1
           "
             >
-              Product List
+              Product Menagement
             </h1>
           </div>
-          <TablePageProduct data={data} colorStatus="product" editor={false} />
+          <div className="flex justify-end mx-5">
+            <button className="btn btn-primary my-2 w-40 text-lg">
+              Add Product
+            </button>
+          </div>
+          <TablePageProduct data={data} colorStatus="product" editor={true} />
         </div>
       </div>
     </>

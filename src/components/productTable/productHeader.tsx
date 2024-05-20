@@ -1,7 +1,6 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import SearchBar from "./search";
-import DropdownBottom from "./dropdownFillter";
-import { useState } from "react";
+import SearchBar from "./productSearch";
+import DropdownBottom from "./productFillter";
 
 const CATEGORIES = [
   {
@@ -10,19 +9,16 @@ const CATEGORIES = [
       {
         title: "Status",
         names: [
-          { name: "Active", action: () => {} },
-          { name: "Inactive", action: () => {} },
-          { name: "Restricted", action: () => {} },
-          { name: "Pending", action: () => {} },
+          { name: "Installed", action: () => {} },
+          { name: "In Stock", action: () => {} },
+          { name: "Damaged", action: () => {} },
+          { name: "Repairing", action: () => {} },
+          { name: "Waiting for Repair", action: () => {} },
         ],
       },
       {
-        title: "Role",
-        names: [
-          { name: "Admin", action: () => {} },
-          { name: "Operator", action: () => {} },
-          { name: "Call Center", action: () => {} },
-        ],
+        title: "Models",
+        names: [{ name: "xxxx", action: () => {} }],
       },
     ],
   },
