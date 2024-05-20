@@ -47,7 +47,7 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="flex flex-col items-center">
-        <div className="mx-auto">
+        <div className="mx-2">
           <Profile />
         </div>
         <Alert
