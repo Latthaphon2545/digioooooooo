@@ -2,6 +2,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import ActionButton from "../actionButton";
+import { Router } from "next/router";
 
 type DropdownBottomProps = {
   item: {
@@ -19,6 +20,7 @@ type DropdownBottomProps = {
 
 export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const router = useRouter();
+  // get path name from url
   const [checkboxValues, setCheckboxValues] = useState<Record<string, boolean>>(
     {}
   );
@@ -48,7 +50,9 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
       checkedValues.length ===
       item.list.flatMap((options) => options.names).length;
     const filterValue = allChecked ? "All" : checkedValues.join(",");
-    router.push(`/users?filter=${filterValue}&search=${searchParams}`);
+    router.push(
+      `/users/management?filter=${filterValue}&search=${searchParams}`
+    );
   }, [checkedValues]);
 
   const handleClear = () => {
@@ -62,9 +66,12 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   };
 
   return (
-    <div key={index} className="dropdown dropdown-hover dropdown-bottom">
-      <button tabIndex={0} className="btn mr-3">
-        <IoFilterSharp size={30} />
+    <div
+      key={index}
+      className="dropdown dropdown-hover dropdown-bottom"
+    >
+      <button tabIndex={0} className="btn btn-sm mr-3">
+        <IoFilterSharp size={20} />
       </button>
       <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
         {item.list.map((options, optionsIndex) => (

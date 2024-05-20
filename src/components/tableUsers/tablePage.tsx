@@ -5,19 +5,22 @@ import Pagination from "./pagination";
 import Table from "./table";
 import Header from "./header";
 import { useRouter } from "next/navigation";
-import { SearchContext } from "./searchContext";
-
 
 interface TablePageProps {
   data: {
     [key: string]: any;
   }[];
   colorStatus: string;
+  editor: boolean;
 }
 
-const ITEMPERPAGE = 8;
+const ITEMPERPAGE = 7;
 
-export default function TablePage({ data, colorStatus }: TablePageProps) {
+export default function TablePage({
+  data,
+  colorStatus,
+  editor,
+}: TablePageProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / ITEMPERPAGE);
@@ -47,16 +50,14 @@ export default function TablePage({ data, colorStatus }: TablePageProps) {
     setCurrentPage(pageNumber);
   };
 
-  // router.push(`/Game?filter=&search=`);
-
   return (
     <>
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4">
         <Header />
         <Table
           dataForCurrentPage={dataForCurrentPage}
           colorUserStatus={colorUserStatus}
-          editor={true}
+          editor={editor}
         />
         <Pagination
           currentPage={currentPage}

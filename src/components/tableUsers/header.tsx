@@ -43,7 +43,9 @@ export default function Header({}) {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     router.push(
-      `/users?filter=${filterParamsArray.join(",")}&search=${e.target.value}`
+      `/users/management?filter=${filterParamsArray.join(",")}&search=${
+        e.target.value
+      }`
     );
   };
 
