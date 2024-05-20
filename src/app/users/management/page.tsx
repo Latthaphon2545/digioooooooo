@@ -15,7 +15,6 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-row min-h-screen">
-        <Sidebar />
         <div className="flex flex-col w-full relative">
           <div className="flex justify-between items-center mx-5 ">
             <h1
