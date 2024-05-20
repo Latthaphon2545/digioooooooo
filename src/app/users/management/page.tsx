@@ -1,4 +1,3 @@
-import Sidebar from "@/components/sidebar/sidebar";
 import Table from "@/components/tableUsers/tablePage";
 import { randomInt } from "crypto";
 import { AiOutlineUserAdd } from "react-icons/ai";

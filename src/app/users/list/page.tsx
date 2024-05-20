@@ -15,7 +15,6 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-row min-h-screen">
-        <Sidebar />
         <div className="flex flex-col w-full relative">
           <div className="flex justify-between items-center mx-5 ">
             <h1
@@ -28,12 +27,6 @@ export default function Home() {
             >
               User List
             </h1>
-          </div>
-          <div className="flex justify-end mx-5">
-            <button className="btn btn-primary my-2 w-40 text-lg">
-              <AiOutlineUserAdd size={20} />
-              Add users
-            </button>
           </div>
           <Table data={data} colorStatus="user" editor={false} />
         </div>
