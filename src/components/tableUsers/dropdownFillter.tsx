@@ -2,6 +2,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import ActionButton from "../actionButton";
+import { Router } from "next/router";
 
 type DropdownBottomProps = {
   item: {
@@ -19,6 +20,7 @@ type DropdownBottomProps = {
 
 export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const router = useRouter();
+  // get path name from url
   const [checkboxValues, setCheckboxValues] = useState<Record<string, boolean>>(
     {}
   );

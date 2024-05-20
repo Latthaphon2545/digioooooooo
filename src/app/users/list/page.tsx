@@ -35,7 +35,7 @@ export default function Home() {
               Add users
             </button>
           </div>
-          <Table data={data} colorStatus="user" editor={true} />
+          <Table data={data} colorStatus="user" editor={false} />
         </div>
       </div>
     </>

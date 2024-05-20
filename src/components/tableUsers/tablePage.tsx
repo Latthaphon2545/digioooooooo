@@ -6,17 +6,21 @@ import Table from "./table";
 import Header from "./header";
 import { useRouter } from "next/navigation";
 
-
 interface TablePageProps {
   data: {
     [key: string]: any;
   }[];
   colorStatus: string;
+  editor: boolean;
 }
 
 const ITEMPERPAGE = 7;
 
-export default function TablePage({ data, colorStatus }: TablePageProps) {
+export default function TablePage({
+  data,
+  colorStatus,
+  editor,
+}: TablePageProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / ITEMPERPAGE);
@@ -53,7 +57,7 @@ export default function TablePage({ data, colorStatus }: TablePageProps) {
         <Table
           dataForCurrentPage={dataForCurrentPage}
           colorUserStatus={colorUserStatus}
-          editor={true}
+          editor={editor}
         />
         <Pagination
           currentPage={currentPage}

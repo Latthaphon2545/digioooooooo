@@ -13,7 +13,6 @@ const BondPage = () => {
 
   return (
     <div className="flex flex-row min-h-screen">
-      <Sidebar />
       <div className="w-full p-5">
         <InputForm />
       </div>
