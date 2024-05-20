@@ -1,5 +1,6 @@
-import { SearchContext } from "@/components/table/searchContext";
-import Table from "@/components/table/tablePage";
+import Sidebar from "@/components/sidebar/sidebar";
+import { SearchContext } from "@/components/tableUsers/searchContext";
+import Table from "@/components/tableUsers/tablePage";
 import { randomInt } from "crypto";
 
 export default function Home() {
@@ -13,7 +14,12 @@ export default function Home() {
 
   return (
     <>
-      <Table data={data} colorStatus="user" />
+      <div className="flex flex-row min-h-screen">
+        <Sidebar />
+        <div className="flex flex-col w-full">
+          <Table data={data} colorStatus="user" />
+        </div>
+      </div>
     </>
   );
 }
