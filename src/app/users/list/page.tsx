@@ -26,7 +26,7 @@ export default function Home() {
             mb-1
           "
             >
-              User Management
+              User List
             </h1>
           </div>
           <div className="flex justify-end mx-5">
