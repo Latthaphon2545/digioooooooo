@@ -5,7 +5,6 @@ import Pagination from "./pagination";
 import Table from "./table";
 import Header from "./header";
 import { useRouter } from "next/navigation";
-import { SearchContext } from "./searchContext";
 
 
 interface TablePageProps {
@@ -15,7 +14,7 @@ interface TablePageProps {
   colorStatus: string;
 }
 
-const ITEMPERPAGE = 8;
+const ITEMPERPAGE = 7;
 
 export default function TablePage({ data, colorStatus }: TablePageProps) {
   const router = useRouter();
@@ -47,11 +46,9 @@ export default function TablePage({ data, colorStatus }: TablePageProps) {
     setCurrentPage(pageNumber);
   };
 
-  // router.push(`/Game?filter=&search=`);
-
   return (
     <>
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4">
         <Header />
         <Table
           dataForCurrentPage={dataForCurrentPage}

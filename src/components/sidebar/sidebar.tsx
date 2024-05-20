@@ -1,17 +1,16 @@
 "use client";
 import React from "react";
-import ActionButton from "../actionButton";
 import Profile from "./profile";
 import DropdownRight from "../dropdownRight";
-import { TbUserEdit } from "react-icons/tb";
 import Alert from "../alert";
 import { BiLogOut } from "react-icons/bi";
+import Image from "next/image";
 
 const MENU = [
   {
     title: "User",
     links: [
-      { name: "User Management", href: "users/management" },
+      { name: "User Management", href: "/users/management" },
       { name: "User List", href: "/users/list" },
     ],
   },
@@ -29,16 +28,14 @@ const Sidebar = () => {
     <div className="bg-neutral md:min-w-72 h-auto flex flex-col justify-between items-center">
       <div className="w-full">
         <div className="flex flex-col items-center">
-          <Profile />
-          <ActionButton
-            action={() => {}}
-            styles="btn-success text-success-content text-base w-fit px-24 mb-5 mx-4"
-          >
-            <div className="flex flex-row justify-center items-center gap-3">
-              <TbUserEdit className="w-8 h-8" />
-              Edit
-            </div>
-          </ActionButton>
+          {/* <Profile /> */}
+          <Image
+            className="text-4xl font-bold mt-5 mb-1"
+            src="/image/digio_logo.png"
+            alt={"Digiooo"}
+            width={174}
+            height={106}
+          ></Image>
         </div>
         <div className="flex flex-col text-2xl mt-5 w-full">
           {MENU.map((item, index) => (
@@ -46,24 +43,21 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
-      {/* <ActionButton
-        action={() => {}}
-        styles="btn-error text-base-100 text-base w-fit px-[5rem] mb-4 mx-auto"
-      >
-        Logout
-      </ActionButton> */}
-      <Alert
-        styles="btn-error text-base-100 text-base w-fit px-20 mb-4 mx-4 flex flex-col justify-center items-center"
-        action={() => {}}
-        alertHeader="You're about to logout"
-        alertDescroption="Are you sure you want to logout?"
-        id="logout"
-      >
-        <div className="flex flex-row justify-center items-center gap-3">
-          <BiLogOut className="w-8 h-8" />
-          Logout
-        </div>
-      </Alert>
+      <div className="flex flex-col items-center">
+        <Profile />
+        <Alert
+          styles="btn-error btn-sm text-base-100 text-sm w-fit px-20 mb-4 flex flex-col justify-center items-center"
+          action={() => {}}
+          alertHeader="You're about to logout"
+          alertDescroption="Are you sure you want to logout?"
+          id="logout"
+        >
+          <div className="flex flex-row justify-center items-center gap-3">
+            <BiLogOut className="w-5 h-5" />
+            Logout
+          </div>
+        </Alert>
+      </div>
     </div>
   );
 };

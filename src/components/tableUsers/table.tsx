@@ -30,7 +30,7 @@ export default function Table({
   };
 
   return (
-    <div className="min-h-[80vh] mt-3">
+    <div className="min-h-[70vh] mt-3">
       <table className="table">
         <thead className="text-center">
           <tr>
@@ -116,7 +116,7 @@ export default function Table({
                             setBool(!bool);
                           }
                         }}
-                        styles="btn-error mr-2"
+                        styles="btn-error mr-2 btn-sm"
                       />
                       <ActionButton
                         children="Save"
@@ -127,7 +127,7 @@ export default function Table({
                             setBool(!bool);
                           }
                         }}
-                        styles="btn-success"
+                        styles="btn-success btn-sm"
                       />
                     </>
                   )}

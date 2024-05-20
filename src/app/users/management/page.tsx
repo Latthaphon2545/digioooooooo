@@ -1,7 +1,7 @@
 import Sidebar from "@/components/sidebar/sidebar";
-import { SearchContext } from "@/components/tableUsers/searchContext";
 import Table from "@/components/tableUsers/tablePage";
 import { randomInt } from "crypto";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
 export default function Home() {
   const data = Array.from({ length: 33 }, (_, i) => ({
@@ -16,7 +16,25 @@ export default function Home() {
     <>
       <div className="flex flex-row min-h-screen">
         <Sidebar />
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full relative">
+          <div className="flex justify-between items-center mx-5 ">
+            <h1
+              className="
+            text-3xl
+            font-bold
+            mt-5
+            mb-1
+          "
+            >
+              User Management
+            </h1>
+          </div>
+          <div className="flex justify-end mx-5">
+            <button className="btn btn-primary my-2 w-40 text-lg">
+              <AiOutlineUserAdd size={20} />
+              Add users
+            </button>
+          </div>
           <Table data={data} colorStatus="user" />
         </div>
       </div>
