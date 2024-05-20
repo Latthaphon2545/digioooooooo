@@ -1,13 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { TbUserEdit } from "react-icons/tb";
+import twon from "/public/image/twon.png";
 
 const Profile = () => {
   return (
     <div className="pb-4 flex flex-row items-center gap-3">
       <div className="avatar">
         <div className="w-20 rounded-full">
-          <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          <Image src={twon} alt="" />
         </div>
       </div>
       <div className="flex flex-col w-auto">

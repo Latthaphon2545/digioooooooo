@@ -18,10 +18,12 @@ const Alert = ({
   alertHeader,
   alertDescroption,
   id,
+  disabled,
 }: AlertProps) => {
   return (
     <div>
       <button
+        disabled={disabled}
         className={`btn ${styles}`}
         onClick={() =>
           (document.getElementById(id) as HTMLDialogElement)?.showModal()

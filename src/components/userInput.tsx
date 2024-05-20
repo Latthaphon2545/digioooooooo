@@ -29,7 +29,7 @@ const UserInput = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-3 items-center min-h-[36rem]">
+    <div className="flex flex-col space-y-3 items-center min-h-[36rem] max-h-[36rem] overflow-scroll">
       {inputList.map((user, index) => {
         return (
           <div key={index} className="w-full ">

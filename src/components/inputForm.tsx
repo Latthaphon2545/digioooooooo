@@ -8,6 +8,7 @@ import GroupUpload from "./groupUpload";
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [hasError, setHasError] = useState(false);
 
   return (
     <div>
@@ -19,7 +20,7 @@ const InputForm = () => {
       />
       <div className="min-h-[36rem]">
         {activeTab === 0 && <UserInput />}
-        {activeTab === 1 && <GroupUpload />}
+        {activeTab === 1 && <GroupUpload setHasError={setHasError} />}
       </div>
       <div className="flex justify-end mr-10">
         <Alert
@@ -27,6 +28,7 @@ const InputForm = () => {
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add this user?"
           id="add_user"
+          disabled={hasError}
         >
           Add
         </Alert>
