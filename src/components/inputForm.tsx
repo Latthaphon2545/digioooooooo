@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { IoPersonAddSharp } from "react-icons/io5";
-import UserInput from "./userInput";
 import InputHeader from "./inputHeader";
 import Alert from "./alert";
 import GroupUpload from "./groupUpload";
+import UserInput from "./userInput";
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);

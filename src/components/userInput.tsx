@@ -1,58 +1,53 @@
-import React, { useState } from "react";
-import { IoPersonAddSharp } from "react-icons/io5";
-import InputField from "./inputField";
+const INPUT = new Array(10).fill(0);
 
 const UserInput = () => {
-  const [inputList, setInputList] = useState([
-    {
-      id: 1,
-      inputs: [
-        { placeholder: "email" },
-        { placeholder: "name" },
-        { placeholder: "contact" },
-      ],
-    },
-  ]);
-
-  const handleAddClick = () => {
-    setInputList([
-      ...inputList,
-      {
-        id: inputList.length + 1,
-        inputs: [
-          { placeholder: "email" },
-          { placeholder: "name" },
-          { placeholder: "contact" },
-        ],
-      },
-    ]);
-  };
-
   return (
-    <div className="flex flex-col space-y-3 items-center min-h-[36rem] max-h-[36rem] overflow-scroll">
-      {inputList.map((user, index) => {
-        return (
-          <div key={index} className="w-full ">
-            <div className="divider mb-8 font-semibold text-xl">
-              User {user.id}
-            </div>
-            {user.inputs.map((input, index) => (
-              <label
-                className="flex items-center mb-5 mx-auto max-w-[60rem]"
-                key={index}
-              >
-                <InputField placeholder={input.placeholder} />
-              </label>
-            ))}
-          </div>
-        );
-      })}
-      <button
-        className="btn btn-circle justify-center"
-        onClick={handleAddClick}
-      >
-        <IoPersonAddSharp className="w-6 h-6" />
-      </button>
+    <div>
+      <table className="table-auto w-full">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody className="p-2 ml-2 ">
+          {INPUT.map((_, index) => {
+            return (
+              <tr key={index}>
+                <td>
+                  <p className="text-center text-xl font-semibold">
+                    {index + 1}
+                  </p>
+                </td>
+                <td>
+                  <label className="input input-sm input-bordered flex items-center gap-2 m-2 relative">
+                    <input type="text" className="grow" placeholder="Email" />
+                    <span className="absolute top-[-1] right-0 bg-primary rounded-r-lg text-white px-5">
+                      @digio.co.th
+                    </span>
+                  </label>
+                </td>
+                <td>
+                  <label className="input input-sm input-bordered flex items-center gap-2 m-1">
+                    <input
+                      type="text"
+                      className="grow"
+                      placeholder="Username"
+                    />
+                  </label>
+                </td>
+                <td>
+                  <label className="input input-sm input-bordered flex items-center gap-2 m-1">
+                    <input type="text" className="grow" placeholder="contact" />
+                  </label>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };
