@@ -38,7 +38,7 @@ export default function TablePage({
       } else if (status === "restricted") {
         color = "error";
       } else if (status === "pending") {
-        color = "neutral";
+        color = "secondary";
       }
     }
     return color;
