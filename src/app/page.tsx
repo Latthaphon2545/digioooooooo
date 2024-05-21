@@ -1,9 +1,14 @@
-import Image from "next/image";
+import axios from "axios";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <p className="text-5xl font-bold">Digioooooo</p>
-    </main>
-  );
+export default async function Home() {
+  try {
+    const getdata = await axios.get("http://localhost:3000/api");
+    console.log(getdata.data);
+  } catch (err) {
+    console.log(err);
+  }
+
+  return <>
+  
+  </>;
 }
