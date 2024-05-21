@@ -4,6 +4,7 @@ import ActionButton from "../actionButton";
 import { usePathname } from "next/navigation";
 import { FaHistory } from "react-icons/fa";
 import Link from "next/link";
+import { randomBytes } from "crypto";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -36,12 +37,10 @@ export default function Table({
     setBoolEdit(!boolEdit);
     setBool(!bool);
     setEditingItem(data);
-    console.log(data);
   };
 
   const widthTable = 6;
   const heightTable = pathname === "/products/list" ? 75 : 72;
-  console.log(heightTable);
   return (
     <div className={`min-h-[${heightTable}vh] mt-3`}>
       <table className="table">
@@ -56,11 +55,11 @@ export default function Table({
             {editor && <th>Action</th>}
           </tr>
         </thead>
-        <tbody>
-          {dataForCurrentPage.map((item) => {
-            const isEditing = editingItem === item;
-            return (
-              <tr key={item.name}>
+        {dataForCurrentPage.map((item) => {
+          const isEditing = editingItem === item;
+          return (
+            <tbody key={item.serialNumber}>
+              <tr key={item.serialNumber}>
                 {/* Model */}
                 <td className={`text-center w-1/${widthTable}`}>
                   <p>{item.model}</p>
@@ -169,9 +168,9 @@ export default function Table({
                   </td>
                 )}
               </tr>
-            );
-          })}
-        </tbody>
+            </tbody>
+          );
+        })}
       </table>
     </div>
   );

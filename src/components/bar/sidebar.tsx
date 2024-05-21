@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaDatabase } from "react-icons/fa";
 
 const MENU = [
   {
@@ -34,7 +35,7 @@ const MENU = [
 const Sidebar = () => {
   const pathName = usePathname();
   return (
-    <div className="md:min-w-48 h-screen flex flex-col justify-between max-h-screen items-center shadow-xl">
+    <div className="md:min-w-48 h-screen flex flex-col justify-between max-h-screen items-center">
       <div className="w-full">
         {/* Menu */}
         <div className="flex flex-col text-2xl w-full px-3">
@@ -62,6 +63,8 @@ const Sidebar = () => {
             </React.Fragment>
           ))}
         </div>
+
+        {/* Profile */}
       </div>
     </div>
   );

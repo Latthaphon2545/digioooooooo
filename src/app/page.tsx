@@ -8,5 +8,9 @@ export default async function Home() {
   //   console.log(err);
   // }
 
-  return <></>;
+  return (
+    <>
+      <h1 className="text-[200px] font-bold mt-5 mb-1 text-center">Digioooooo</h1>
+    </>
+  );
 }

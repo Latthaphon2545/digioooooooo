@@ -22,7 +22,7 @@ export default function RootLayout({
         <Topbar />
         <div className="flex flex-grow">
           <Sidebar />
-          <main className={`w-full`}>{children}</main>
+          <main className={`w-full boxshadow`}>{children}</main>
         </div>
       </body>
     </html>
