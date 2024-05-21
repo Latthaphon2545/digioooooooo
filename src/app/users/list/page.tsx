@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar/sidebar";
+import Sidebar from "@/components/bar/sidebar";
 import Table from "@/components/usersTable/usersTablePage";
 import { randomInt } from "crypto";
 import { AiOutlineUserAdd } from "react-icons/ai";
