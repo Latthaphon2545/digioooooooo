@@ -81,7 +81,6 @@ model History {
   userId       String   @db.ObjectId
   imageProve   String[]
   createdAt    DateTime @default(now())
-  serialNumber String
   category     Category
 }
 

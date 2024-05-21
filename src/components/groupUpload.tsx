@@ -67,7 +67,7 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
       />
       <div className="flex flex-col items-center justify-center space-y-4">
         <div
-          className="border-dotted border-2 text-lg text-center min-w-72 min-h-52 flex items-center justify-center"
+          className="border-dotted border-2 text-lg text-center min-w-72 min-h-52 flex items-center justify-center hover:cursor-pointer"
           onClick={handleDivClick}
         >
           <div>
