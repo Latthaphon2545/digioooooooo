@@ -31,7 +31,6 @@ const stat = () => {
   return (
     <div className="stats stats-vertical lg:stats-horizontal shadow w-full">
       {status.map((stat, index) => {
-        console.log(stat);
         return (
           <div key={index} className="stat">
             <div className={`stat-title text-sm`}>{stat.status}</div>

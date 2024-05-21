@@ -29,7 +29,6 @@ export default function TablePageProduct({
   );
 
   const pathname = usePathname();
-  console.log(pathname);
   ITEMPERPAGE = pathname === "/products/list" ? 8 : ITEMPERPAGE;
 
   const colorUserStatus = (status: string) => {
