@@ -23,6 +23,7 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
   >([]);
   const [fileName, setFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [errorCount, setErrorCount] = useState(0);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -48,6 +49,12 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
       const hasError = filteredData.some(
         (row) => !row.email?.endsWith("@digio.co.th")
       );
+      setHasError(hasError);
+
+      const errorCount = filteredData.filter(
+        (row) => !row.email?.endsWith("@digio.co.th")
+      ).length;
+      setErrorCount(errorCount);
       setHasError(hasError);
     };
     reader.readAsArrayBuffer(file);
@@ -87,8 +94,24 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
           <p>Download Template</p>
         </a>
       </div>
-      <div className="border-2 min-w-[40rem] min-h-[30rem] max-h-[35rem] overflow-scroll">
-        <InputPreview data={data} />
+      <div className="relative">
+        <div className="border-2 min-w-[40rem] min-h-[30rem] max-h-[35rem] overflow-scroll relative">
+          <InputPreview data={data} />
+        </div>
+        {data.length > 0 && (
+          <>
+            <span className="badge badge-primary badge-lg py-4 px-3 absolute -bottom-10 left-2">
+              Total {data.length}
+            </span>
+            <span
+              className={`badge ${
+                errorCount > 0 ? "badge-error" : "badge-success"
+              } badge-lg py-4 px-3 absolute -bottom-10 left-[6.2rem]`}
+            >
+              {errorCount > 0 ? `Error ${errorCount}` : "Success"}
+            </span>
+          </>
+        )}
       </div>
     </div>
   );
