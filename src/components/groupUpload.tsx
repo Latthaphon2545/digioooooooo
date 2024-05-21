@@ -6,9 +6,18 @@ import { InputPreview } from "./inputPreview";
 
 type GroupUploadProps = {
   setHasError: (hasError: boolean) => void;
+  headers: string[];
 };
 
-const GroupUpload = ({ setHasError }: GroupUploadProps) => {
+type DataItem = {
+  email?: string;
+  name?: string;
+  contact?: string;
+  sn?: string;
+  model?: string;
+};
+
+const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
   const [data, setData] = useState<
     Array<{ email: string; name: string; contact: string }>
   >([]);
@@ -25,11 +34,20 @@ const GroupUpload = ({ setHasError }: GroupUploadProps) => {
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       const data = utilsXlsx.sheet_to_json(ws, {
-        header: ["email", "name", "contact"],
-      }) as Array<{ email: string; name: string; contact: string }>;
-      data.shift();
-      setData(data);
-      const hasError = data.some((row) => !row.email.endsWith("@digio.co.th"));
+        header: headers,
+      }) as Array<DataItem>;
+      const filteredData = data
+        .filter((item) => item.email && item.name && item.contact)
+        .map((item) => ({
+          email: item.email || "",
+          name: item.name || "",
+          contact: item.contact || "",
+        }));
+      filteredData.shift();
+      setData(filteredData);
+      const hasError = filteredData.some(
+        (row) => !row.email?.endsWith("@digio.co.th")
+      );
       setHasError(hasError);
     };
     reader.readAsArrayBuffer(file);

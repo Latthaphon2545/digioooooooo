@@ -20,7 +20,12 @@ const InputForm = () => {
       />
       <div className="min-h-[36rem]">
         {activeTab === 0 && <UserInput />}
-        {activeTab === 1 && <GroupUpload setHasError={setHasError} />}
+        {activeTab === 1 && (
+          <GroupUpload
+            setHasError={setHasError}
+            headers={["email", "name", "contact"]}
+          />
+        )}
       </div>
       <div className="flex justify-end mr-10">
         <Alert
