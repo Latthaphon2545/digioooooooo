@@ -50,8 +50,10 @@ export default function TablePage({
 
   return (
     <>
-      <div className="container mx-auto px-4">
+      <div className="ml-[3vw]">
         <Header />
+      </div>
+      <div className="flex flex-col w-full justify-center items-center">
         <Table
           dataForCurrentPage={dataForCurrentPage}
           colorUserStatus={colorUserStatus}

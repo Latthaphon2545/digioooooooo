@@ -40,9 +40,8 @@ export default function Table({
   };
 
   const widthTable = 6;
-  const heightTable = pathname === "/products/list" ? 75 : 72;
   return (
-    <div className={`min-h-[${heightTable}vh] mt-3`}>
+    <div className={`min-h-[75vh] mt-3`}>
       <table className="table">
         <thead className="text-center">
           <tr>

@@ -50,7 +50,13 @@ export default function Header({}) {
   };
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex items-center gap-3">
+      <div className="flex items-center">
+        <SearchBar handleSearch={handleSearch} />
+        {CATEGORIES.map((item, index) => (
+          <DropdownBottom key={index} item={item} index={index} />
+        ))}
+      </div>
       <div>
         {filterParamsObjects.map((param) => (
           <div
@@ -60,12 +66,6 @@ export default function Header({}) {
             {param.value}
           </div>
         ))}
-      </div>
-      <div className="flex items-center">
-        {CATEGORIES.map((item, index) => (
-          <DropdownBottom key={index} item={item} index={index} />
-        ))}
-        <SearchBar handleSearch={handleSearch} />
       </div>
     </div>
   );

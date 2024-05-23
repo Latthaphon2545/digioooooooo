@@ -11,16 +11,10 @@ export default function Topbar() {
   const splitPath = pathName.split("/");
   return (
     <div className="w-full">
-      <div className="navbar text-center h-2">
+      <div className="navbar text-center">
         {/* Logo */}
         <div className="flex-1">
-          <Link href="/">
-            <div className="flex flex-row items-center">
-              <FaDatabase className="text-3xl" />
-              <h1 className="text-3xl font-bold">DIGIOOO</h1>
-            </div>
-          </Link>
-          <div className="text-ms breadcrumbs ml-6">
+          <div className="text-ms breadcrumbs">
             <ul>
               {splitPath.map((item, index) => {
                 if (index === 0) {
