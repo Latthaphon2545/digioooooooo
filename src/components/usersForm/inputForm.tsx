@@ -18,7 +18,7 @@ const InputForm = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[75vh]">
+      <div className="min-h-[65vh]">
         {activeTab === 0 && <UserInput />}
         {activeTab === 1 && (
           <GroupUpload
