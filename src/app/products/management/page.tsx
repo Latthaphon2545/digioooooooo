@@ -1,5 +1,6 @@
 import TablePageProduct from "@/components/productTable/productTablePage";
 import { randomInt } from "crypto";
+import Link from "next/link";
 import React from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
@@ -36,9 +37,12 @@ export default function productmanagement() {
             </h1>
           </div>
           <div className="flex justify-end mx-5">
-            <button className="btn btn-primary my-2 w-40 text-lg">
+            <Link
+              href={"/products/add"}
+              className="btn btn-primary my-2 w-40 text-lg"
+            >
               Add Product
-            </button>
+            </Link>
           </div>
           <TablePageProduct data={data} colorStatus="product" editor={true} />
         </div>

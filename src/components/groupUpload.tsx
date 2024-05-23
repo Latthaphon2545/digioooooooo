@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Dispatch } from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { read as readXlsx, utils as utilsXlsx } from "xlsx";
 import { GrDocumentUpload } from "react-icons/gr";
@@ -65,7 +65,7 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
   };
 
   return (
-    <div className="flex flex-row justify-center flex-grow space-x-8">
+    <div className="flex flex-col sm:flex-row justify-center flex-grow space-x-8">
       <input
         type="file"
         ref={fileInputRef}
@@ -95,7 +95,7 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
         </a>
       </div>
       <div className="relative">
-        <div className="border-2 min-w-[40rem] min-h-[30rem] max-h-[35rem] overflow-scroll relative">
+        <div className="border-2 min-w-[40rem] min-h-[30rem] max-h-[30rem] overflow-scroll relative">
           <InputPreview data={data} />
         </div>
         {data.length > 0 && (
