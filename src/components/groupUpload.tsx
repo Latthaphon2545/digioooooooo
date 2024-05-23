@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { read as readXlsx, utils as utilsXlsx } from "xlsx";
 import { GrDocumentUpload } from "react-icons/gr";
-import { InputPreview } from "./inputPreview";
+import { InputPreview } from "./usersForm/inputPreview";
 
 type GroupUploadProps = {
   setHasError: (hasError: boolean) => void;

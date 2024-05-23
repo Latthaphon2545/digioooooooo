@@ -1,10 +1,8 @@
-"use client";
 import React, { useState } from "react";
-import { IoPersonAddSharp } from "react-icons/io5";
-import InputHeader from "./inputHeader";
-import Alert from "./alert";
-import GroupUpload from "./groupUpload";
-import UserInput from "./userInput";
+import InputHeader from "../usersForm/inputHeader";
+import { IoMdAddCircle } from "react-icons/io";
+import GroupUpload from "../groupUpload";
+import Alert from "../alert";
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -13,13 +11,13 @@ const InputForm = () => {
   return (
     <div>
       <InputHeader
-        icon={<IoPersonAddSharp />}
-        title="Add User"
+        icon={<IoMdAddCircle />}
+        title="Add Producr"
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[36rem]">
-        {activeTab === 0 && <UserInput />}
+      <div className="min-h-[75vh]">
+        {activeTab === 0 && <p></p>}
         {activeTab === 1 && (
           <GroupUpload
             setHasError={setHasError}
@@ -32,7 +30,7 @@ const InputForm = () => {
           styles="btn-primary px-10"
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add this user?"
-          id="add_user"
+          id="add_product"
           disabled={hasError}
         >
           Add

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoPersonAddSharp } from "react-icons/io5";
-import InputField from "./inputField";
+import InputField from "./usersForm/inputField";
 
 const UserInput = () => {
   const [inputList, setInputList] = useState([
