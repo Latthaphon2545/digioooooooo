@@ -1,5 +1,11 @@
+import InputForm from "@/components/productsForm/inputForm";
+
 const AddProductPage = () => {
-  return <div>AddProductPage</div>;
+  return (
+    <div>
+      <InputForm />
+    </div>
+  );
 };
 
 export default AddProductPage;

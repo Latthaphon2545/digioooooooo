@@ -13,7 +13,7 @@ export function InputPreview({ data }: InputPreviewProps) {
   if (data.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
-        <p className="text-xl font-medium text-center">Preview List</p>
+        <p className="text-xl font-semibold text-center">Preview List</p>
       </div>
     );
   }

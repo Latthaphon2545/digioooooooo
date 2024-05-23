@@ -47,12 +47,6 @@ const UserInput = () => {
           </div>
         );
       })}
-      <button
-        className="btn btn-circle justify-center"
-        onClick={handleAddClick}
-      >
-        <IoPersonAddSharp className="w-6 h-6" />
-      </button>
     </div>
   );
 };

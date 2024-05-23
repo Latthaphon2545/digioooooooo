@@ -3,12 +3,24 @@ import React, { useState } from "react";
 import { IoPersonAddSharp } from "react-icons/io5";
 import Alert from "../alert";
 import InputHeader from "./inputHeader";
-import UserInput from "../userInput";
+import UserInput from "./userInput";
 import GroupUpload from "../groupUpload";
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [hasError, setHasError] = useState(false);
+  const [formValues, setFormValues] = useState([
+    { email: "", username: "", contact: "" },
+    { email: "", username: "", contact: "" },
+    { email: "", username: "", contact: "" },
+  ]);
+
+  const handleSubmit = () => {
+    const filledOutInputs = formValues.filter(
+      ({ email, username, contact }) => email || username || contact
+    );
+    console.log(filledOutInputs);
+  };
 
   return (
     <div>
@@ -18,8 +30,10 @@ const InputForm = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[65vh]">
-        {activeTab === 0 && <UserInput />}
+      <div className="min-h-[68vh]">
+        {activeTab === 0 && (
+          <UserInput formValues={formValues} setFormValues={setFormValues} />
+        )}
         {activeTab === 1 && (
           <GroupUpload
             setHasError={setHasError}
@@ -31,9 +45,10 @@ const InputForm = () => {
         <Alert
           styles="btn-primary px-10"
           alertHeader="Add User"
-          alertDescroption="Are you sure you want to add this user?"
+          alertDescroption="Are you sure you want to add these user?"
           id="add_user"
           disabled={hasError}
+          action={handleSubmit}
         >
           Add
         </Alert>
