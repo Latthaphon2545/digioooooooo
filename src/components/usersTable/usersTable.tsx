@@ -34,7 +34,7 @@ export default function Table({
   const widthTable = pathname === "/users/management" ? 6 : 5;
 
   return (
-    <div className="min-h-[70vh] mt-3">
+    <div className="min-h-[72vh] mt-3 w-[80vw]">
       <table className="table">
         <thead className="text-center">
           <tr>
@@ -94,12 +94,12 @@ export default function Table({
                 </td>
 
                 {/* Action To Eidtor */}
-                <td
-                  className={`text-center h-20 ${
-                    boolEdit ? `w-1/${widthTable}` : ""
-                  }`}
-                >
-                  {boolEdit && (
+                {boolEdit && (
+                  <td
+                    className={`text-center h-20 ${
+                      boolEdit ? `w-1/${widthTable}` : ""
+                    }`}
+                  >
                     <ActionButton
                       children={
                         <>
@@ -111,35 +111,35 @@ export default function Table({
                       }}
                       styles="btn-info"
                     />
-                  )}
 
-                  {bool && isEditing && (
-                    <>
-                      <ActionButton
-                        children="Cancel"
-                        action={() => {
-                          const confirmCancel = true;
-                          if (confirmCancel) {
-                            setBoolEdit(!boolEdit);
-                            setBool(!bool);
-                          }
-                        }}
-                        styles="btn-error mr-2 btn-sm"
-                      />
-                      <ActionButton
-                        children="Save"
-                        action={() => {
-                          const confirmSave = true;
-                          if (confirmSave) {
-                            setBoolEdit(!boolEdit);
-                            setBool(!bool);
-                          }
-                        }}
-                        styles="btn-success btn-sm"
-                      />
-                    </>
-                  )}
-                </td>
+                    {bool && isEditing && (
+                      <>
+                        <ActionButton
+                          children="Cancel"
+                          action={() => {
+                            const confirmCancel = true;
+                            if (confirmCancel) {
+                              setBoolEdit(!boolEdit);
+                              setBool(!bool);
+                            }
+                          }}
+                          styles="btn-error mr-2 btn-sm"
+                        />
+                        <ActionButton
+                          children="Save"
+                          action={() => {
+                            const confirmSave = true;
+                            if (confirmSave) {
+                              setBoolEdit(!boolEdit);
+                              setBool(!bool);
+                            }
+                          }}
+                          styles="btn-success btn-sm"
+                        />
+                      </>
+                    )}
+                  </td>
+                )}
               </tr>
             );
           })}

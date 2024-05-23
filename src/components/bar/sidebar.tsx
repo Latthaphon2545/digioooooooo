@@ -3,6 +3,8 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaDatabase } from "react-icons/fa";
+import Image from "next/image";
+import logo from "../../../public/image/digio_logo.png";
 
 const MENU = [
   {
@@ -35,8 +37,18 @@ const MENU = [
 const Sidebar = () => {
   const pathName = usePathname();
   return (
-    <div className="md:min-w-48 h-screen flex flex-col justify-between max-h-screen items-center">
+    <div className="md:min-w-[14vw] h-screen flex flex-col justify-between max-h-screen items-center">
       <div className="w-full">
+        <div className="flex flex-row items-center justify-center my-7">
+          <Link href="/">
+            {/* <div className="flex flex-row items-center">
+              <FaDatabase className="text-4xl" />
+              <h1 className="text-4xl font-bold">DIGIOOO</h1>
+            </div> */}
+            <Image src={logo} alt="Digio" width={150} />
+          </Link>
+        </div>
+
         {/* Menu */}
         <div className="flex flex-col text-2xl w-full px-3">
           {MENU.map((item, index) => (

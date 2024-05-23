@@ -65,7 +65,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
 
   return (
     <div key={index} className="dropdown dropdown-hover dropdown-bottom">
-      <button tabIndex={0} className="btn btn-sm mr-3">
+      <button tabIndex={0} className="btn btn-sm ml-3">
         <IoFilterSharp size={20} />
       </button>
       <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">

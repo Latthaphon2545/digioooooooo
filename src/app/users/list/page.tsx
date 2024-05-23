@@ -1,6 +1,7 @@
 import Sidebar from "@/components/bar/sidebar";
 import Table from "@/components/usersTable/usersTablePage";
 import { randomInt } from "crypto";
+import Link from "next/link";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
 export default function Home() {
@@ -16,17 +17,9 @@ export default function Home() {
     <>
       <div className="flex flex-row min-h-screen">
         <div className="flex flex-col w-full relative">
-          <div className="flex justify-between items-center mx-5 ">
-            <h1
-              className="
-            text-3xl
-            font-bold
-            mt-5
-            mb-5
-          "
-            >
-              User List
-            </h1>
+          <div className="flex justify-between items-center mx-5 mt-5 mb-1">
+            <h1 className="text-3xl font-bold">User List</h1>
+            <span className="h-[3rem]"></span>
           </div>
           <Table data={data} colorStatus="user" editor={false} />
         </div>
