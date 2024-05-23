@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { IoPersonAddSharp } from "react-icons/io5";
+import Alert from "../alert";
 import InputHeader from "./inputHeader";
-import Alert from "./alert";
-import GroupUpload from "./groupUpload";
-import UserInput from "./userInput";
+import UserInput from "../userInput";
+import GroupUpload from "../groupUpload";
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -18,7 +18,7 @@ const InputForm = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[36rem]">
+      <div className="min-h-[75vh]">
         {activeTab === 0 && <UserInput />}
         {activeTab === 1 && (
           <GroupUpload

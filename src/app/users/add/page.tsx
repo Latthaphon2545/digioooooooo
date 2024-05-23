@@ -1,4 +1,4 @@
-import InputForm from "@/components/inputForm";
+import InputForm from "@/components/usersForm/inputForm";
 
 const AddPage = () => {
   return (
