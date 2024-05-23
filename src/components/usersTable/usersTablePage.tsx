@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "./usersPagination";
 import Table from "./usersTable";
 import Header from "./usersHeader";
@@ -13,7 +13,10 @@ interface TablePageProps {
   editor: boolean;
 }
 
-const ITEMPERPAGE = 7;
+const getItemPerPage = (height: number) => {
+  // if (height > 1000) return 10;
+  return 8;
+};
 
 export default function TablePage({
   data,
@@ -21,10 +24,12 @@ export default function TablePage({
   editor,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / ITEMPERPAGE);
+  const [itemPerPage, setItemPerPage] = useState(getItemPerPage(1));
+
+  const totalPages = Math.ceil(data.length / itemPerPage);
   let dataForCurrentPage = data.slice(
-    (currentPage - 1) * ITEMPERPAGE,
-    currentPage * ITEMPERPAGE
+    (currentPage - 1) * itemPerPage,
+    currentPage * itemPerPage
   );
 
   const colorUserStatus = (status: string) => {

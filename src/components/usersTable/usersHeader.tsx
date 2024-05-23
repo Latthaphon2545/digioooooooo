@@ -1,6 +1,9 @@
+"use client";
+
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SearchBar from "./usersSearch";
 import DropdownBottom from "./usersFillter";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const CATEGORIES = [
   {
@@ -37,6 +40,8 @@ export default function Header({}) {
     value: param,
   }));
 
+  const searchParams = useSearchParams().get("search");
+
   if (filterParamsObjects.length === 0) {
     filterParamsObjects.push({ value: "All" });
   }
@@ -46,6 +51,17 @@ export default function Header({}) {
       `${pathname}?filter=${filterParamsArray.join(",")}&search=${
         e.target.value
       }`
+    );
+  };
+
+  const handleDeleteFilter = (index: number) => {
+    const newFilterParamsArray = filterParamsArray.filter(
+      (_, i) => i !== index
+    );
+    router.push(
+      `${pathname}?filter=${newFilterParamsArray.join(
+        ","
+      )}&search=${searchParams}`
     );
   };
 
@@ -61,9 +77,17 @@ export default function Header({}) {
         {filterParamsObjects.map((param) => (
           <div
             key={param.value}
-            className="badge badge-outline badge-lg mr-3 px-4 py-3 text-sm font-bold"
+            className="badge badge-outline badge-lg mr-3 px-4 py-3 text-sm font-bold gap-2"
           >
-            {param.value}
+            <p>{param.value}</p>
+            {!filterParamsObjects.some((param) => param.value === "All") && (
+              <p
+                className="cursor-pointer"
+                onClick={() => handleDeleteFilter(0)}
+              >
+                <FaRegTrashAlt color="red" />
+              </p>
+            )}
           </div>
         ))}
       </div>

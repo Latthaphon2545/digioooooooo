@@ -2,7 +2,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import ActionButton from "../actionButton";
-import { Router } from "next/router";
 
 type DropdownBottomProps = {
   item: {
@@ -49,7 +48,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
     const allChecked =
       checkedValues.length ===
       item.list.flatMap((options) => options.names).length;
-    const filterValue = allChecked ? "All" : checkedValues.join(",");
+    const filterValue = allChecked ? "" : checkedValues.join(",");
     router.push(`${pathname}?filter=${filterValue}&search=${searchParams}`);
   }, [checkedValues]);
 
