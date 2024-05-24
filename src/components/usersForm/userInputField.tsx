@@ -1,22 +1,26 @@
+import { Role } from "@/lib/types";
 import React from "react";
 
 type InputFieldProps = {
   index: number;
   formValues: {
     email: string;
-    username: string;
+    name: string;
     contact: string;
+    role: Role | null;
   }[];
   handleInputChange: (
     index: number,
-    field: "email" | "contact" | "username"
+    field: "email" | "contact" | "name"
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRoleChange: (index: number, newRole: Role) => void;
 };
 
 const UserInputField = ({
   index,
   formValues,
   handleInputChange,
+  handleRoleChange,
 }: InputFieldProps) => (
   <tr key={index}>
     <td>
@@ -41,9 +45,9 @@ const UserInputField = ({
         <input
           type="text"
           className="grow"
-          placeholder="Username"
-          value={formValues[index].username}
-          onChange={handleInputChange(index, "username")}
+          placeholder="Name"
+          value={formValues[index].name}
+          onChange={handleInputChange(index, "name")}
         />
       </label>
     </td>
@@ -56,6 +60,23 @@ const UserInputField = ({
           value={formValues[index].contact}
           onChange={handleInputChange(index, "contact")}
         />
+      </label>
+    </td>
+    <td>
+      <label className="input input-sm input-bordered flex items-center gap-2 m-1">
+        <select
+          value={formValues[index].role ?? ""}
+          onChange={(e) => handleRoleChange(index, e.target.value as Role)}
+        >
+          <option value="" disabled={true}>
+            Select a role
+          </option>
+          {Object.values(Role).map((role) => (
+            <option key={role} value={role}>
+              {role}
+            </option>
+          ))}
+        </select>
       </label>
     </td>
   </tr>

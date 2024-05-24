@@ -5,10 +5,13 @@ import { IoMdAddCircle } from "react-icons/io";
 import GroupUpload from "../groupUpload";
 import Alert from "../alert";
 import ProductInput from "./productInput";
+import { DataItem } from "@/lib/types";
+import axios from "axios";
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [hasError, setHasError] = useState(false);
+  const [groupData, setGroupData] = useState<Array<DataItem>>([]);
   const [formValues, setFormValues] = useState([
     { model: "", sn: "" },
     { model: "", sn: "" },
@@ -17,7 +20,12 @@ const InputForm = () => {
   const model = ["A920", "A920 Pro", "A930", "A930 Pro"];
 
   const handleSubmit = () => {
-    const filledOutInputs = formValues.filter(({ model, sn }) => sn || model);
+    const filledOutInputs =
+      activeTab === 0
+        ? formValues.filter(({ model, sn }) => sn || model)
+        : groupData;
+    const res = axios.post("/api/users/createUsers", filledOutInputs);
+    console.log(res);
     console.log(filledOutInputs);
   };
 
@@ -38,7 +46,13 @@ const InputForm = () => {
           />
         )}
         {activeTab === 1 && (
-          <GroupUpload setHasError={setHasError} headers={["sn", "model"]} />
+          <GroupUpload
+            setHasError={setHasError}
+            headers={["model", "sn"]}
+            model={model}
+            setGroupData={setGroupData}
+            page="product"
+          />
         )}
       </div>
       <div className="flex justify-end mr-10">

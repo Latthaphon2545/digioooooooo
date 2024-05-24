@@ -5,21 +5,52 @@ import Alert from "../alert";
 import InputHeader from "./inputHeader";
 import UserInput from "./userInput";
 import GroupUpload from "../groupUpload";
+import { DataItem, Role } from "@/lib/types";
+import axios from "axios";
+
+type FormValues = {
+  email: string;
+  name: string;
+  contact: string;
+  role: Role | null;
+}[];
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [hasError, setHasError] = useState(false);
-  const [formValues, setFormValues] = useState([
-    { email: "", username: "", contact: "" },
-    { email: "", username: "", contact: "" },
-    { email: "", username: "", contact: "" },
+  const [groupData, setGroupData] = useState<Array<DataItem>>([]);
+  const [formValues, setFormValues] = useState<FormValues>([
+    { email: "", name: "", contact: "", role: null },
+    { email: "", name: "", contact: "", role: null },
+    { email: "", name: "", contact: "", role: null },
   ]);
 
-  const handleSubmit = () => {
-    const filledOutInputs = formValues.filter(
-      ({ email, username, contact }) => email || username || contact
-    );
-    console.log(filledOutInputs);
+  const handleSubmit = async () => {
+    console.log("Creating user....");
+    const filledOutInputs =
+      activeTab === 0
+        ? formValues
+            .filter(
+              ({ email, name, contact, role }) =>
+                email || name || contact || role
+            )
+            .map((value) => ({
+              ...value,
+              email: value.email + "@digio.co.th",
+            }))
+        : groupData;
+    const res = await axios.post("/api/users/createUsers", filledOutInputs);
+    console.log("res", res.data);
+    clearForm();
+  };
+
+  const clearForm = () => {
+    setFormValues([
+      { email: "", name: "", contact: "", role: null },
+      { email: "", name: "", contact: "", role: null },
+      { email: "", name: "", contact: "", role: null },
+    ]);
+    setGroupData([]);
   };
 
   return (
@@ -38,6 +69,8 @@ const InputForm = () => {
           <GroupUpload
             setHasError={setHasError}
             headers={["email", "name", "contact"]}
+            setGroupData={setGroupData}
+            page="user"
           />
         )}
       </div>

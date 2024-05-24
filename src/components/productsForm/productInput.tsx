@@ -7,13 +7,17 @@ type FormValues = {
   model: string;
 }[];
 
-type UserInputProps = {
+type ProductInputProps = {
   formValues: FormValues;
   setFormValues: Dispatch<SetStateAction<FormValues>>;
   model: string[];
 };
 
-const ProductInput = ({ formValues, setFormValues, model }: UserInputProps) => {
+const ProductInput = ({
+  formValues,
+  setFormValues,
+  model,
+}: ProductInputProps) => {
   const handleInputChange =
     (index: number, field: keyof (typeof formValues)[0]) =>
     (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

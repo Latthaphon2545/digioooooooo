@@ -19,7 +19,7 @@ model User {
   email          String     @unique
   hashedPassword String
   role           Role
-  status         StatusUser
+  status         StatusUser @default(PENDING)
   contact        String
   token          Json?
   history        History[]
@@ -45,7 +45,7 @@ model Product {
   history      History[]
   historyId    String[]
   merchant     Merchant?
-  status       StatusProduct
+  status       StatusProduct @default(INSTOCK)
   bank         Bank?
 }
 
@@ -73,15 +73,15 @@ model Model {
 }
 
 model History {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  product      Product  @relation(fields: [productId], references: [serialNumber])
-  productId    String
-  description  String
-  user         User     @relation(fields: [userId], references: [id])
-  userId       String   @db.ObjectId
-  imageProve   String[]
-  createdAt    DateTime @default(now())
-  category     Category
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  product     Product  @relation(fields: [productId], references: [serialNumber])
+  productId   String
+  description String
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.ObjectId
+  imageProve  String[]
+  createdAt   DateTime @default(now())
+  category    Category
 }
 
 enum Category {

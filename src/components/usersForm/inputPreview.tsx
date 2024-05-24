@@ -1,18 +1,22 @@
+import ProductPreview from "../productsForm/productPreview";
+import UserInputPreview from "./userInputPreview";
+
 type InputPreviewProps = {
-  data: {
-    email: string;
-    name: string;
-    contact: string;
-  }[];
-};
-const checkEmail = (email: string) => {
-  return email.endsWith("@digio.co.th");
+  data: Array<{
+    email?: string;
+    name?: string;
+    contact?: string;
+    sn?: string;
+    model?: string;
+  }>;
+  headers: string[];
+  model?: string[];
 };
 
-export function InputPreview({ data }: InputPreviewProps) {
+export function InputPreview({ data, headers, model }: InputPreviewProps) {
   if (data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center min-h-[30rem] max-h-[30rem]">
         <p className="text-xl font-semibold text-center">Preview List</p>
       </div>
     );
@@ -24,28 +28,11 @@ export function InputPreview({ data }: InputPreviewProps) {
         {data.length}
       </div>
       <div className="">
-        <table className="table">
-          <thead className="text-xl">
-            <tr>
-              <th>No.</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
-                <td className="text-xl font-medium">{index + 1}.</td>
-                <td
-                  className={`overflow-scroll p-2  flex flex-row space-x-4 text-lg ${
-                    checkEmail(row.email) ? "text-success" : "text-error"
-                  }`}
-                >
-                  {row.email}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {headers[0] === "email" ? (
+          <UserInputPreview data={data} />
+        ) : (
+          <ProductPreview data={data} model={model!} />
+        )}
       </div>
     </div>
   );
