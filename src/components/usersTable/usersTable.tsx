@@ -13,8 +13,10 @@ interface TableProps {
   loading?: boolean;
 }
 
-const USERROLE = ["Admin", "Operator", "Call Center"];
-const USERSTATUS = ["Pending", "Active", "Restricted", "Inactive"];
+let USERROLE = ["Admin", "Operator", "CallCenter"];
+USERROLE = USERROLE.map((role) => role.toUpperCase());
+let USERSTATUS = ["Pending", "Active", "Restricted", "Inactive"];
+USERSTATUS = USERSTATUS.map((status) => status.toUpperCase());
 
 export default function Table({
   dataForCurrentPage,
@@ -27,13 +29,6 @@ export default function Table({
     key: string;
     direction: string;
   } | null>(null);
-  const pathname = usePathname();
-  const [widthTable, setWidthTable] = useState(5);
-
-  useEffect(() => {
-    const widthTable = pathname === "/users/management" ? 6 : 5;
-    setWidthTable(widthTable);
-  }, []);
 
   const handleEditToggle = (key: string) => {
     setIsEditing((prev) => ({
@@ -69,7 +64,7 @@ export default function Table({
     return (
       <tr key={item.name}>
         {/* Name */}
-        <td className={`w-2/${widthTable} py-2 px-4 h-[8vh]`}>
+        <td className={` py-2 px-4 h-[8vh]`}>
           {isEditing[item.name] ? (
             <EditableField defaultValue={name} onChange={setName} />
           ) : (
@@ -79,21 +74,27 @@ export default function Table({
         </td>
 
         {/* Role */}
-        <td className={`w-1/${widthTable} py-2 px-4`}>
+        <td className={` py-2 px-4`}>
           {isEditing[item.name] ? (
-            <Dropdown options={USERROLE} selected={role} onChange={setRole} />
+            <Dropdown
+              options={USERROLE}
+              selected={role}
+              onChange={setRole}
+              isRole={true}
+            />
           ) : (
-            <p>{item.role}</p>
+            <p>{handleRoleChange(item.role)}</p>
           )}
         </td>
 
         {/* Status */}
-        <td className={`w-1/${widthTable} py-2 px-4`}>
+        <td className={` py-2 px-4`}>
           {isEditing[item.name] ? (
             <Dropdown
               options={USERSTATUS}
               selected={status}
               onChange={setStatus}
+              isStatus={true}
             />
           ) : (
             <div
@@ -101,13 +102,13 @@ export default function Table({
                 item.status
               )} badge-outline badge-md`}
             >
-              <p>{item.status}</p>
+              <p>{handleStatusChange(item.status)}</p>
             </div>
           )}
         </td>
 
         {/* Contact */}
-        <td className={`w-1/${widthTable} py-2 px-4`}>
+        <td className={` py-2 px-4`}>
           {isEditing[item.name] ? (
             <EditableField defaultValue={item.contact} onChange={setContact} />
           ) : (
@@ -117,7 +118,7 @@ export default function Table({
 
         {/* Action */}
         {editor && (
-          <td className={`w-1/${widthTable} py-2 px-4`}>
+          <td className={` py-2 px-4`}>
             {isEditing[item.name] ? (
               <div className="flex gap-1 justify-start">
                 <ActionButton
@@ -189,23 +190,19 @@ export default function Table({
       <table className="table table-fixed w-full">
         <thead>
           <tr>
-            <th className={`text-start w-2/${widthTable} py-2 px-4`}>
+            <th className={`text-start py-2 px-4`}>
               <p>Name</p>
             </th>
-            <th className={`text-start w-1/${widthTable} py-2 px-4`}>
+            <th className={`text-start  py-2 px-4`}>
               <p>Role</p>
             </th>
-            <th className={`text-start w-1/${widthTable} py-2 px-4`}>
+            <th className={`text-start  py-2 px-4`}>
               <p>Status</p>
             </th>
-            <th className={`text-start w-1/${widthTable} py-2 px-4`}>
+            <th className={`text-start  py-2 px-4`}>
               <p>Contact</p>
             </th>
-            {editor && (
-              <th className={`text-start w-1/${widthTable} py-2 px-4`}>
-                Action
-              </th>
-            )}
+            {editor && <th className={`text-start  py-2 px-4`}>Action</th>}
           </tr>
         </thead>
         <tbody>
@@ -236,23 +233,71 @@ const Dropdown = ({
   options,
   selected,
   onChange,
+  isRole,
+  isStatus,
 }: {
   options: string[];
   selected: string;
   onChange: (value: string) => void;
-}) => (
-  <select
-    className="border-2 border-base-content rounded-md p-1 w-full"
-    value={selected}
-    onChange={(e) => onChange(e.target.value)}
-  >
-    {options.map((option) => (
-      <option key={option} value={option}>
-        {option}
-      </option>
-    ))}
-  </select>
-);
+  isRole?: boolean;
+  isStatus?: boolean;
+}) => {
+  if (isRole) {
+    return (
+      <select
+        className="border-2 border-base-content rounded-md p-1 w-full"
+        value={selected}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {handleRoleChange(option)}
+          </option>
+        ))}
+      </select>
+    );
+  } else if (isStatus) {
+    return (
+      <select
+        className="border-2 border-base-content rounded-md p-1 w-full"
+        value={selected}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {handleStatusChange(option)}
+          </option>
+        ))}
+      </select>
+    );
+  }
+};
+
+const handleRoleChange = (e: string) => {
+  let showRole = "";
+  if (e === "ADMIN") {
+    showRole = "Admin";
+  } else if (e === "OPERATOR") {
+    showRole = "Operator";
+  } else if (e === "CALLCENTER") {
+    showRole = "Call Center";
+  }
+  return showRole;
+};
+
+const handleStatusChange = (e: string) => {
+  let showStatus = "";
+  if (e === "ACTIVE") {
+    showStatus = "Active";
+  } else if (e === "INACTIVE") {
+    showStatus = "Inactive";
+  } else if (e === "RESTRICTED") {
+    showStatus = "Restricted";
+  } else if (e === "PENDING") {
+    showStatus = "Pending";
+  }
+  return showStatus;
+};
 
 const EditableField = ({
   defaultValue,

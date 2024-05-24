@@ -1,5 +1,3 @@
-// app/api/todo/route.ts
-
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,25 +13,25 @@ export async function GET(request: NextRequest) {
 
     const filters = searchFilter
       .split(",")
-      .map((f) => f.trim())
+      .map((f) => f.trim().toLocaleUpperCase())
       .filter(Boolean);
 
-    const statusFilters = ["Active", "Inactive", "Restricted", "Pending"];
-    const roleFilters = ["Admin", "Operator", "Call Center"];
+    const statusFilters = ["ACTIVE", "INACTIVE", "RESTRICTED", "PENDING"];
+    const roleFilters = ["ADMIN", "OPERATOR", "CALLCENTER"];
 
     const statusFilterArray = filters.filter((filter) =>
-      statusFilters.includes(filter)
+      statusFilters.includes(filter.toUpperCase())
     );
     const roleFilterArray = filters.filter((filter) =>
-      roleFilters.includes(filter)
+      roleFilters.includes(filter.toUpperCase())
     );
 
     if (statusFilterArray.length === 0) {
-      statusFilterArray.push("Active", "Inactive", "Restricted", "Pending");
+      statusFilterArray.push("ACTIVE", "INACTIVE", "RESTRICTED", "PENDING");
     }
 
     if (roleFilterArray.length === 0) {
-      roleFilterArray.push("Admin", "Operator", "Call Center");
+      roleFilterArray.push("ADMIN", "OPERATOR", "CALLCENTER");
     }
 
     let whereClause: any = {
@@ -85,6 +83,6 @@ export async function GET(request: NextRequest) {
     );
   } catch (error) {
     console.log("[GET TODO]", error);
-    return NextResponse.json(error, { status: 500 });
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 }

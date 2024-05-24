@@ -28,12 +28,7 @@ export default function Table({
   colorProductStatus,
   editor,
 }: TableProps) {
-  const [bool, setBool] = useState(false);
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
-  const [editingItem, setEditingItem] = useState(null);
-  const pathname = usePathname();
-
-  const widthTable = 6;
 
   const handleEditToggle = (key: string) => {
     setIsEditing((prev) => ({
@@ -52,17 +47,17 @@ export default function Table({
     return (
       <tr key={item.serialNumber}>
         {/* Model */}
-        <td className={`w-2/${widthTable} py-2 px-4 h-[8vh]`}>
-          <p className="text-base w-full">{item.model}</p>
+        <td className={` py-2 px-4 h-[8vh]`}>
+          <p className=" w-full">{item.model}</p>
         </td>
 
         {/* Serial Number */}
-        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
-          <p className="text-base w-full">{item.serialNumber}</p>
+        <td className={`py-2 px-4 h-[8vh]`}>
+          <p className=" w-full">{item.serialNumber}</p>
         </td>
 
         {/* Status */}
-        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
+        <td className={` py-2 px-4 h-[8vh]`}>
           <div
             className={`badge badge-${colorProductStatus(
               item.status
@@ -73,17 +68,17 @@ export default function Table({
         </td>
 
         {/* Merchant */}
-        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
-          <p className="text-base w-full">{item.merchant}</p>
+        <td className={`py-2 px-4 h-[8vh]`}>
+          <p className=" w-full">{item.merchant}</p>
         </td>
 
         {/* Bank */}
-        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
-          <p className="text-base w-full">{item.bank}</p>
+        <td className={` py-2 px-4 h-[8vh]`}>
+          <p className=" w-full">{item.bank}</p>
         </td>
 
         {/* History */}
-        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
+        <td className={` py-2 px-4 h-[8vh]`}>
           <Link href={`/products/history/${item.serialNumber}`}>
             <FaHistory size={15} />
           </Link>
@@ -91,7 +86,7 @@ export default function Table({
 
         {/* Action */}
         {editor && (
-          <td className={`w-1/${widthTable} py-2 px-4`}>
+          <td className={`py-2 px-4`}>
             {isEditing[item.name] ? (
               <div className="flex gap-1 justify-start">
                 <ActionButton
@@ -133,13 +128,13 @@ export default function Table({
       <table className="table table-fixed w-full">
         <thead>
           <tr>
-            <th>Model</th>
-            <th>Serial Number</th>
-            <th>Status</th>
-            <th>Merchant</th>
-            <th>Bank</th>
-            <th>History</th>
-            {editor && <th>Action</th>}
+            <th className={`text-start  py-2 px-4`}>Model</th>
+            <th className={`text-start  py-2 px-4`}>Serial Number</th>
+            <th className={`text-start  py-2 px-4`}>Status</th>
+            <th className={`text-start  py-2 px-4`}>Merchant</th>
+            <th className={`text-start  py-2 px-4`}>Bank</th>
+            <th className={`text-start  py-2 px-4`}>History</th>
+            {editor && <th className={`text-start  py-2 px-4`}>Action</th>}
           </tr>
         </thead>
         <tbody>
