@@ -1,11 +1,13 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import UserInputField from "./userInputField";
 import { IoAddCircleOutline } from "react-icons/io5";
+import { Role } from "@/lib/types";
 
 type FormValues = {
   email: string;
-  username: string;
+  name: string;
   contact: string;
+  role: Role | null;
 }[];
 
 type UserInputProps = {
@@ -18,12 +20,27 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
     (index: number, field: keyof (typeof formValues)[0]) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newFormValues = [...formValues];
-      newFormValues[index][field] = event.target.value;
+      if (field === "role") {
+        newFormValues[index][field] = event.target.value as Role;
+      } else if (field === "name") {
+        newFormValues[index][field] = event.target.value;
+      } else {
+        newFormValues[index][field] = event.target.value.trim();
+      }
       setFormValues(newFormValues);
     };
 
+  const handleRoleChange = (index: number, newRole: Role) => {
+    const newFormValues = [...formValues];
+    newFormValues[index].role = newRole;
+    setFormValues(newFormValues);
+  };
+
   const addRow = () => {
-    setFormValues([...formValues, { email: "", username: "", contact: "" }]);
+    setFormValues([
+      ...formValues,
+      { email: "", name: "", contact: "", role: null },
+    ]);
   };
 
   return (
@@ -36,6 +53,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
               <th>Email</th>
               <th>Name</th>
               <th>Contact</th>
+              <th>Role</th>
             </tr>
           </thead>
           <tbody className="p-2 ml-2 ">
@@ -46,6 +64,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
                   index={index}
                   formValues={formValues}
                   handleInputChange={handleInputChange}
+                  handleRoleChange={handleRoleChange}
                 />
               );
             })}

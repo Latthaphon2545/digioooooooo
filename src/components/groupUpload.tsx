@@ -3,23 +3,31 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { read as readXlsx, utils as utilsXlsx } from "xlsx";
 import { GrDocumentUpload } from "react-icons/gr";
 import { InputPreview } from "./usersForm/inputPreview";
+import { DataItem } from "@/lib/types";
 
 type GroupUploadProps = {
   setHasError: (hasError: boolean) => void;
   headers: string[];
+  model?: string[];
+  setGroupData: (data: Array<DataItem>) => void;
+  page: "user" | "product";
 };
 
-type DataItem = {
-  email?: string;
-  name?: string;
-  contact?: string;
-  sn?: string;
-  model?: string;
-};
-
-const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
+const GroupUpload = ({
+  setHasError,
+  headers,
+  model,
+  setGroupData,
+  page,
+}: GroupUploadProps) => {
   const [data, setData] = useState<
-    Array<{ email: string; name: string; contact: string }>
+    Array<{
+      email?: string;
+      name?: string;
+      contact?: string;
+      sn?: string;
+      model?: string;
+    }>
   >([]);
   const [fileName, setFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -38,24 +46,41 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
         header: headers,
       }) as Array<DataItem>;
       const filteredData = data
-        .filter((item) => item.email && item.name && item.contact)
-        .map((item) => ({
-          email: item.email || "",
-          name: item.name || "",
-          contact: item.contact || "",
-        }));
+        .filter(
+          (item) =>
+            (page === "user" && item.email && item.name && item.contact) ||
+            (page === "product" && item.sn && item.model)
+        )
+        .map((item) => {
+          if (page === "product") {
+            return {
+              sn: item.sn,
+              model: item.model,
+            };
+          } else {
+            return {
+              email: item.email || "",
+              name: item.name || "",
+              contact: item.contact || "",
+            };
+          }
+        });
       filteredData.shift();
       setData(filteredData);
-      const hasError = filteredData.some(
-        (row) => !row.email?.endsWith("@digio.co.th")
+      setGroupData(filteredData);
+      const hasError = filteredData.some((row) =>
+        headers[0] === "email"
+          ? !row.email?.endsWith("@digio.co.th")
+          : !model?.includes(row.model || "")
       );
       setHasError(hasError);
 
-      const errorCount = filteredData.filter(
-        (row) => !row.email?.endsWith("@digio.co.th")
+      const errorCount = filteredData.filter((row) =>
+        headers[0] === "email"
+          ? !row.email?.endsWith("@digio.co.th")
+          : !model?.includes(row.model || "")
       ).length;
       setErrorCount(errorCount);
-      setHasError(hasError);
     };
     reader.readAsArrayBuffer(file);
   };
@@ -96,7 +121,7 @@ const GroupUpload = ({ setHasError, headers }: GroupUploadProps) => {
       </div>
       <div className="relative">
         <div className="border-2 min-w-[40rem] min-h-[30rem] max-h-[30rem] overflow-scroll relative">
-          <InputPreview data={data} />
+          <InputPreview data={data} headers={headers} model={model} />
         </div>
         {data.length > 0 && (
           <>
