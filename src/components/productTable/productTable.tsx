@@ -10,7 +10,7 @@ interface TableProps {
   dataForCurrentPage: {
     [key: string]: any;
   }[];
-  colorUserStatus: (status: string) => string;
+  colorProductStatus: (status: string) => string;
   editor?: boolean;
 }
 
@@ -25,25 +25,113 @@ const USERSTATUS = [
 
 export default function Table({
   dataForCurrentPage,
-  colorUserStatus,
+  colorProductStatus,
   editor,
 }: TableProps) {
   const [bool, setBool] = useState(false);
-  const [boolEdit, setBoolEdit] = useState(editor);
+  const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
   const [editingItem, setEditingItem] = useState(null);
   const pathname = usePathname();
 
-  const handleEditData = (data: any) => {
-    setBoolEdit(!boolEdit);
-    setBool(!bool);
-    setEditingItem(data);
+  const widthTable = 6;
+
+  const handleEditToggle = (key: string) => {
+    setIsEditing((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
   };
 
-  const widthTable = 6;
+  const TableRow = ({ item }: { item: any }) => {
+    const [status, setStatus] = useState(item.status);
+    const [merchant, setMerchant] = useState(item.merchant);
+    const [bank, setBank] = useState(item.bank);
+
+    const [isUpdate, setIsUpdate] = useState(false);
+
+    return (
+      <tr key={item.serialNumber}>
+        {/* Model */}
+        <td className={`w-2/${widthTable} py-2 px-4 h-[8vh]`}>
+          <p className="text-base w-full">{item.model}</p>
+        </td>
+
+        {/* Serial Number */}
+        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
+          <p className="text-base w-full">{item.serialNumber}</p>
+        </td>
+
+        {/* Status */}
+        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
+          <div
+            className={`badge badge-${colorProductStatus(
+              item.status
+            )} badge-outline badge-md`}
+          >
+            <p>{item.status}</p>
+          </div>
+        </td>
+
+        {/* Merchant */}
+        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
+          <p className="text-base w-full">{item.merchant}</p>
+        </td>
+
+        {/* Bank */}
+        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
+          <p className="text-base w-full">{item.bank}</p>
+        </td>
+
+        {/* History */}
+        <td className={`w-1/${widthTable} py-2 px-4 h-[8vh]`}>
+          <Link href={`/products/history/${item.serialNumber}`}>
+            <FaHistory size={15} />
+          </Link>
+        </td>
+
+        {/* Action */}
+        {editor && (
+          <td className={`w-1/${widthTable} py-2 px-4`}>
+            {isEditing[item.name] ? (
+              <div className="flex gap-1 justify-start">
+                <ActionButton
+                  children="Cancel"
+                  action={() => handleEditToggle(item.name)}
+                  styles="btn-error"
+                />
+                <ActionButton
+                  children={
+                    isUpdate ? (
+                      <span className="loading loading-dots loading-xs"></span>
+                    ) : (
+                      "Update"
+                    )
+                  }
+                  action={async () => {}}
+                  styles="btn-success"
+                />
+              </div>
+            ) : (
+              <ActionButton
+                children={
+                  <>
+                    <TbUserEdit size={20} /> Edit
+                  </>
+                }
+                action={() => handleEditToggle(item.name)}
+                styles="btn-info"
+              />
+            )}
+          </td>
+        )}
+      </tr>
+    );
+  };
+
   return (
-    <div className={`min-h-[75vh] mt-3`}>
-      <table className="table">
-        <thead className="text-center">
+    <div className="min-h-[70vh] mt-3 w-[80vw]">
+      <table className="table table-fixed w-full">
+        <thead>
           <tr>
             <th>Model</th>
             <th>Serial Number</th>
@@ -54,155 +142,49 @@ export default function Table({
             {editor && <th>Action</th>}
           </tr>
         </thead>
-        {dataForCurrentPage.map((item) => {
-          const isEditing = editingItem === item;
-          return (
-            <tbody key={item.serialNumber}>
-              <tr key={item.serialNumber}>
-                {/* Model */}
-                <td className={`text-center w-1/${widthTable}`}>
-                  <p>{item.model}</p>
-                </td>
-
-                {/* Serial Number */}
-                <td className={`text-center w-1/${widthTable}`}>
-                  {item.serialNumber}
-                </td>
-
-                {/* Status */}
-                <td className={`text-center w-1/${widthTable}`}>
-                  <span>
-                    {bool && isEditing ? (
-                      dropdown(USERSTATUS, (item as { status: string }).status)
-                    ) : (
-                      <div
-                        className={`badge badge-${colorUserStatus(
-                          item.status
-                        )} badge-outline`}
-                      >
-                        {item.status}
-                      </div>
-                    )}
-                  </span>
-                </td>
-
-                {/* Merchant */}
-                <td className={`text-center w-1/${widthTable}`}>
-                  {bool && isEditing
-                    ? inputField((item as { merchant: string }).merchant)
-                    : item.merchant}
-                </td>
-
-                {/* Bank */}
-                <td className={`text-center w-1/${widthTable}`}>
-                  {bool && isEditing
-                    ? inputField((item as { bank: string }).bank)
-                    : item.bank}
-                </td>
-
-                {/* History */}
-                <td className={`text-center w-1/${widthTable}`}>
-                  <ActionButton
-                    children={
-                      <>
-                        <Link href={`/products/history/${item.serialNumber}`}>
-                          <FaHistory size={15} />
-                        </Link>
-                      </>
-                    }
-                    action={() => {
-                      console.log("View History");
-                    }}
-                    styles="glass"
-                  />
-                </td>
-
-                {/* Action To Eidtor */}
-                {editor && (
-                  <td
-                    className={`text-center h-24 ${
-                      boolEdit ? `w-1/${widthTable}` : ""
-                    }`}
-                  >
-                    {boolEdit && (
-                      <ActionButton
-                        children={
-                          <>
-                            <TbUserEdit size={20} /> Edit
-                          </>
-                        }
-                        action={() => {
-                          handleEditData(item);
-                        }}
-                        styles="btn-info"
-                      />
-                    )}
-
-                    {bool && isEditing && (
-                      <div className="flex flex-col justify-center gap-1">
-                        <ActionButton
-                          children="Save"
-                          action={() => {
-                            const confirmSave = true;
-                            if (confirmSave) {
-                              setBoolEdit(!boolEdit);
-                              setBool(!bool);
-                            }
-                          }}
-                          styles="btn-success btn-sm"
-                        />
-                        <ActionButton
-                          children="Cancel"
-                          action={() => {
-                            const confirmCancel = true;
-                            if (confirmCancel) {
-                              setBoolEdit(!boolEdit);
-                              setBool(!bool);
-                            }
-                          }}
-                          styles="btn-error btn-sm"
-                        />
-                      </div>
-                    )}
-                  </td>
-                )}
-              </tr>
-            </tbody>
-          );
-        })}
+        <tbody>
+          {dataForCurrentPage.map((item) => (
+            <TableRow key={item.serialNumber} item={item} />
+          ))}
+        </tbody>
       </table>
     </div>
   );
 }
 
-const dropdown = (data: string[], currentData: string) => {
-  return (
-    <div className="dropdown dropdown-hover w-full">
-      <div tabIndex={0} role="button" className="btn w-full">
-        {currentData}
-      </div>
-      <ul
-        tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        {data.map((item, index) => (
-          <li key={index} className="form-control">
-            <label className="cursor-pointer">
-              <span className="label-text">{item}</span>
-            </label>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+const Dropdown = ({
+  options,
+  selected,
+  onChange,
+}: {
+  options: string[];
+  selected: string;
+  onChange: (value: string) => void;
+}) => (
+  <select
+    className="border-2 border-base-content rounded-md p-1 w-full"
+    value={selected}
+    onChange={(e) => onChange(e.target.value)}
+  >
+    {options.map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))}
+  </select>
+);
 
-const inputField = (text: string) => {
-  return (
-    <input
-      type="text"
-      placeholder={text}
-      className="border-2 border-base-content rounded-md p-1 w-full"
-    />
-  );
-};
+const EditableField = ({
+  defaultValue,
+  onChange,
+}: {
+  defaultValue: string;
+  onChange: (value: string) => void;
+}) => (
+  <input
+    type="text"
+    defaultValue={defaultValue}
+    className="border-2 border-base-content rounded-md p-1 w-fit"
+    onChange={(e) => onChange(e.target.value)}
+  />
+);

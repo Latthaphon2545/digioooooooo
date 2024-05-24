@@ -2,7 +2,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import ActionButton from "../actionButton";
-import { Router } from "next/router";
 
 type DropdownBottomProps = {
   item: {
@@ -21,11 +20,11 @@ type DropdownBottomProps = {
 export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [checkboxValues, setCheckboxValues] = useState<Record<string, boolean>>(
-    {}
-  );
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
-  const searchParams = useSearchParams().get("search") || "";
+  const params = useSearchParams();
+  const searchParams = params.get("search") || "";
+  const skipParams = params.get("skip") || "";
+  const takeParams = params.get("take") || "";
 
   useEffect(() => {
     const initialCheckboxValues: Record<string, boolean> = {};
@@ -34,7 +33,6 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
         initialCheckboxValues[option.name] = false;
       });
     });
-    setCheckboxValues(initialCheckboxValues);
   }, [item]);
 
   const getCheckBoxValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,26 +47,22 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
     const allChecked =
       checkedValues.length ===
       item.list.flatMap((options) => options.names).length;
-    const filterValue = allChecked ? "All" : checkedValues.join(",");
-    router.push(`${pathname}?filter=${filterValue}&search=${searchParams}`);
+    const filterValue = allChecked ? "" : checkedValues.join(",");
+    router.push(
+      `${pathname}?filter=${filterValue}&search=${searchParams}&skip=${skipParams}&take=${takeParams}`
+    );
   }, [checkedValues]);
 
   const handleClear = () => {
     setCheckedValues([]);
-    setCheckboxValues((prev) =>
-      Object.keys(prev).reduce((acc, key) => {
-        acc[key] = false;
-        return acc;
-      }, {} as Record<string, boolean>)
-    );
   };
 
   return (
     <div key={index} className="dropdown dropdown-hover dropdown-bottom">
-      <button tabIndex={0} className="btn btn-sm mr-3">
+      <button tabIndex={0} className="btn btn-sm ml-3">
         <IoFilterSharp size={20} />
       </button>
-      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-60">
+      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
         {item.list.map((options, optionsIndex) => (
           <div key={optionsIndex}>
             <p className="text-xs mb-2 mt-2">{options.title}</p>

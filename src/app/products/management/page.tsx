@@ -22,28 +22,17 @@ export default function productmanagement() {
 
   return (
     <>
-      <div className="flex flex-row min-h-screen">
+      <div className="flex flex-row">
         <div className="flex flex-col w-full relative">
-          <div className="flex justify-between items-center mx-5 ">
-            <h1
-              className="
-            text-3xl
-            font-bold
-            mt-5
-            mb-1
-          "
-            >
-              Product Menagement
-            </h1>
-          </div>
-          <div className="flex justify-end mx-5">
-            <Link
-              href={"/products/add"}
-              className="btn btn-primary my-2 w-40 text-lg"
-            >
-              Add Product
+          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
+            <h1 className="text-3xl font-bold">User Management</h1>
+            <Link href={"/users/add"}>
+              <button className="btn btn-primary w-40 text-lg">
+                Add Product
+              </button>
             </Link>
           </div>
+          <div className="flex justify-end mx-5"></div>
           <TablePageProduct data={data} colorStatus="product" editor={true} />
         </div>
       </div>

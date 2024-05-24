@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ActionButton from "../actionButton";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationProps {
   currentPage: number;
@@ -18,11 +19,19 @@ export default function Pagination({
   const pageEnd = Math.min(pageStart + 3, totalPages);
   let manyPage = 0;
 
-  if (lengthData <= 32) {
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams().get("search") || "";
+  const filterParams = useSearchParams().get("filter") || "";
+
+  if (lengthData === 0) {
+    manyPage = 0;
+  } else if (lengthData <= 32) {
     manyPage = 1;
   } else {
     manyPage = 2;
   }
+
   const pages = Array.from(
     { length: pageEnd - pageStart + manyPage },
     (_, i) => pageStart + i
@@ -69,9 +78,17 @@ export default function Pagination({
     setPageStart(totalPages - 4);
   };
 
+  useEffect(() => {
+    router.push(
+      `${pathName}?filter=${filterParams}&search=${searchParams}&skip=${
+        (currentPage - 1) * 8
+      }&take=8`
+    );
+  }, [currentPage]);
+
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center mt-2">
         <div className="join">
           <ActionButton
             children={"<<"}

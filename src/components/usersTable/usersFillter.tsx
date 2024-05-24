@@ -20,11 +20,11 @@ type DropdownBottomProps = {
 export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [checkboxValues, setCheckboxValues] = useState<Record<string, boolean>>(
-    {}
-  );
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
-  const searchParams = useSearchParams().get("search") || "";
+  const params = useSearchParams();
+  const searchParams = params.get("search") || "";
+  const skipParams = params.get("skip") || "";
+  const takeParams = params.get("take") || "";
 
   useEffect(() => {
     const initialCheckboxValues: Record<string, boolean> = {};
@@ -33,7 +33,6 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
         initialCheckboxValues[option.name] = false;
       });
     });
-    setCheckboxValues(initialCheckboxValues);
   }, [item]);
 
   const getCheckBoxValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,17 +48,13 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
       checkedValues.length ===
       item.list.flatMap((options) => options.names).length;
     const filterValue = allChecked ? "" : checkedValues.join(",");
-    router.push(`${pathname}?filter=${filterValue}&search=${searchParams}`);
+    router.push(
+      `${pathname}?filter=${filterValue}&search=${searchParams}&skip=${skipParams}&take=${takeParams}`
+    );
   }, [checkedValues]);
 
   const handleClear = () => {
     setCheckedValues([]);
-    setCheckboxValues((prev) =>
-      Object.keys(prev).reduce((acc, key) => {
-        acc[key] = false;
-        return acc;
-      }, {} as Record<string, boolean>)
-    );
   };
 
   return (

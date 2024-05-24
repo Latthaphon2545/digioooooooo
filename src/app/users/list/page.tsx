@@ -9,51 +9,49 @@ import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [data, setData] = useState([]);
+  const [dataLength, setDataLength] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
   const path = useSearchParams();
   const filter = path.get("filter") || "";
   const search = path.get("search") || "";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`/api/users/getAllUsers`);
-        setData(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, []);
+  const skip = path.get("skip") || "";
+  const take = path.get("take") || "";
 
   useEffect(() => {
     const updateData = async () => {
       try {
         const res = await axios.get(
-          `/api/users/filterAndSearchUser?filter=${filter}&search=${search}`
+          `/api/users/getUsers?filter=${filter}&search=${search}&skip=${skip}&take=${take}`
         );
-        setData(res.data);
+        const data = res.data.users;
+        const dataLength = res.data.length;
+        setData(data);
+        setDataLength(dataLength);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     updateData();
-  }, [filter, search]);
+  }, [filter, search, skip, take]);
 
   return (
     <>
       <div className="flex flex-row">
         <div className="flex flex-col w-full relative">
-          <div className="flex justify-between items-center mx-5 mt-5 mb-1 ">
-            <h1 className="text-3xl font-bold">User Management</h1>
-            <Link href={"/users/add"}>
-              <button className="btn btn-primary w-40 text-lg">
-                <AiOutlineUserAdd size={20} />
-                Add users
-              </button>
-            </Link>
+          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
+            <h1 className="text-3xl font-bold">User List</h1>
           </div>
           <div className="flex justify-end mx-5"></div>
-          <Table data={data} colorStatus="user" editor={false} />
+          <Table
+            data={data}
+            colorStatus="user"
+            editor={false}
+            loading={isLoading}
+            totalLength={dataLength}
+          />
         </div>
       </div>
     </>

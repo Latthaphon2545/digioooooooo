@@ -22,7 +22,7 @@ export default function SearchBar({
         <input
           type="text"
           className="grow"
-          placeholder="Search"
+          placeholder="Name or Email"
           onChange={(e) => {
             handleSearch(e);
             setSearch(e.target.value);

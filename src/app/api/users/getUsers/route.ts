@@ -1,19 +1,22 @@
 // app/api/todo/route.ts
 
-import { PrismaClient } from "@prisma/client";
+import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const searchFilter = searchParams.get("filter") || "";
     const searchSearch = searchParams.get("search") || "";
+    const skip = searchParams.get("skip") || "";
+    const take = searchParams.get("take") || "";
+    const skipInt = skip ? parseInt(skip) : undefined;
+    const takeInt = take ? parseInt(take) : undefined;
+
     const filters = searchFilter
       .split(",")
       .map((f) => f.trim())
-      .filter(Boolean); // Remove empty strings
+      .filter(Boolean);
 
     const statusFilters = ["Active", "Inactive", "Restricted", "Pending"];
     const roleFilters = ["Admin", "Operator", "Call Center"];
@@ -25,7 +28,6 @@ export async function GET(request: NextRequest) {
       roleFilters.includes(filter)
     );
 
-    // Default to all statuses if no specific status filter is provided
     if (statusFilterArray.length === 0) {
       statusFilterArray.push("Active", "Inactive", "Restricted", "Pending");
     }
@@ -34,7 +36,6 @@ export async function GET(request: NextRequest) {
       roleFilterArray.push("Admin", "Operator", "Call Center");
     }
 
-    // Construct the `where` clause
     let whereClause: any = {
       status: {
         in: statusFilterArray,
@@ -65,13 +66,25 @@ export async function GET(request: NextRequest) {
       ];
     }
 
-    const users = await prisma.user.findMany({
+    const users = await db.user.findMany({
+      skip: skipInt,
+      take: takeInt,
       where: whereClause,
     });
 
-    return NextResponse.json(users, { status: 200 });
+    const totalUsers = await db.user.count({
+      where: whereClause,
+    });
+
+    return NextResponse.json(
+      {
+        users: users,
+        length: totalUsers,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("[GET TODO]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return NextResponse.json(error, { status: 500 });
   }
 }

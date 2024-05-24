@@ -14,7 +14,7 @@ interface TablePageProps {
   editor: boolean;
 }
 
-let ITEMPERPAGE = 6;
+let ITEMPERPAGE = 8;
 
 export default function TablePageProduct({
   data,
@@ -31,7 +31,7 @@ export default function TablePageProduct({
   const pathname = usePathname();
   ITEMPERPAGE = pathname === "/products/list" ? 8 : ITEMPERPAGE;
 
-  const colorUserStatus = (status: string) => {
+  const colorProductStatus = (status: string) => {
     status = status.toLocaleLowerCase();
     let color = "";
     if (colorStatus === "product") {
@@ -46,7 +46,7 @@ export default function TablePageProduct({
       } else if (status === "repairing") {
         color = "warning";
       } else if (status === "waiting for repair") {
-        color = "neutral";
+        color = "secondary";
       }
     }
     return color;
@@ -62,7 +62,7 @@ export default function TablePageProduct({
         <Header />
         <Table
           dataForCurrentPage={dataForCurrentPage}
-          colorUserStatus={colorUserStatus}
+          colorProductStatus={colorProductStatus}
           editor={editor}
         />
         <Pagination
