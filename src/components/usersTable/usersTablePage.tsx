@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "./usersPagination";
 import Table from "./usersTable";
 import Header from "./usersHeader";
@@ -11,21 +11,33 @@ interface TablePageProps {
   }[];
   colorStatus: string;
   editor: boolean;
+  loading?: boolean;
+  totalLength: number;
 }
 
-const ITEMPERPAGE = 7;
+const getItemPerPage = (height: number) => {
+  return 8;
+};
 
 export default function TablePage({
   data,
   colorStatus,
   editor,
+  loading,
+  totalLength,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / ITEMPERPAGE);
-  let dataForCurrentPage = data.slice(
-    (currentPage - 1) * ITEMPERPAGE,
-    currentPage * ITEMPERPAGE
-  );
+  const [itemPerPage, setItemPerPage] = useState(getItemPerPage(1));
+  const [totalPages, setTotalPages] = useState(0);
+
+  useEffect(() => {
+    const getLengthUsers = async () => {
+      if (totalLength === 0) return;
+      const totalPages = Math.ceil(totalLength / itemPerPage);
+      setTotalPages(totalPages);
+    };
+    getLengthUsers();
+  }, [totalLength, itemPerPage]);
 
   const colorUserStatus = (status: string) => {
     status = status.toLocaleLowerCase();
@@ -55,14 +67,15 @@ export default function TablePage({
       </div>
       <div className="flex flex-col w-full justify-center items-center">
         <Table
-          dataForCurrentPage={dataForCurrentPage}
+          dataForCurrentPage={data}
           colorUserStatus={colorUserStatus}
           editor={editor}
+          loading={loading}
         />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          lengthData={data.length}
+          lengthData={totalLength}
           onPageChange={onPageChange}
         />
       </div>

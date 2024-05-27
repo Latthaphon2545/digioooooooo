@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "./productPagination";
 import Table from "./productTable";
 import Header from "./productHeader";
@@ -10,44 +10,51 @@ interface TablePageProps {
   data: {
     [key: string]: any;
   }[];
-  colorStatus: string;
   editor: boolean;
+  loading?: boolean;
+  totalLength: number;
 }
 
-let ITEMPERPAGE = 6;
+const getItemPerPage = (height: number) => {
+  return 8;
+};
 
 export default function TablePageProduct({
   data,
-  colorStatus,
   editor,
+  loading,
+  totalLength,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / ITEMPERPAGE);
-  let dataForCurrentPage = data.slice(
-    (currentPage - 1) * ITEMPERPAGE,
-    currentPage * ITEMPERPAGE
-  );
+  const [itemPerPage, setItemPerPage] = useState(getItemPerPage(1));
+  const [totalPages, setTotalPages] = useState(0);
 
-  const pathname = usePathname();
-  ITEMPERPAGE = pathname === "/products/list" ? 8 : ITEMPERPAGE;
+  useEffect(() => {
+    const getLengthUsers = async () => {
+      if (totalLength === 0) return;
+      const totalPages = Math.ceil(totalLength / itemPerPage);
+      setTotalPages(totalPages);
+    };
+    getLengthUsers();
+  }, [totalLength, itemPerPage]);
 
-  const colorUserStatus = (status: string) => {
+  const colorProductStatus = (status: string) => {
     status = status.toLocaleLowerCase();
     let color = "";
-    if (colorStatus === "product") {
-      if (status === "installed") {
-        color = "primary";
-      } else if (status === "in stock") {
-        color = "success";
-      } else if (status === "Lost") {
-        color = "";
-      } else if (status === "damaged") {
-        color = "error";
-      } else if (status === "repairing") {
-        color = "warning";
-      } else if (status === "waiting for repair") {
-        color = "neutral";
-      }
+    if (status === "installed") {
+      color = "primary";
+    } else if (status === "in stock") {
+      color = "success";
+    } else if (status === "Lost") {
+      color = "";
+    } else if (status === "damaged") {
+      color = "error";
+    } else if (status === "reparing") {
+      color = "warning";
+    } else if (status === "waiting for repair") {
+      color = "secondary";
+    } else if (status === "installing") {
+      color = "accent";
     }
     return color;
   };
@@ -58,17 +65,19 @@ export default function TablePageProduct({
 
   return (
     <>
-      <div className="container mx-auto px-4">
+      <div className="ml-[3vw]">
         <Header />
+      </div>
+      <div className="flex flex-col w-full justify-center items-center">
         <Table
-          dataForCurrentPage={dataForCurrentPage}
-          colorUserStatus={colorUserStatus}
+          dataForCurrentPage={data}
+          colorProductStatus={colorProductStatus}
           editor={editor}
         />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          lengthData={data.length}
+          lengthData={totalLength}
           onPageChange={onPageChange}
         />
       </div>

@@ -5,13 +5,17 @@ import { usePathname } from "next/navigation";
 import { FaDatabase } from "react-icons/fa";
 import Image from "next/image";
 import logo from "../../../public/image/digio_logo.png";
+import { title } from "process";
 
 const MENU = [
   {
     title: "User",
     links: [
-      { name: "User Management", href: "/users/management" },
-      { name: "User List", href: "/users/list" },
+      {
+        name: "User Management",
+        href: "/users/management?filter=&search=&skip=0&take=8",
+      },
+      { name: "User List", href: "/users/list?filter=&search=&skip=0&take=8" },
     ],
   },
   {
@@ -20,9 +24,19 @@ const MENU = [
       { name: "Model", href: "/products/models" },
       {
         name: "Product Management",
-        href: "/products/management",
+        href: "/products/management?filter=&search=&skip=0&take=8",
       },
-      { name: "Product List", href: "/products/list" },
+      {
+        name: "Product List",
+        href: "/products/list?filter=&search=&skip=0&take=8",
+      },
+    ],
+  },
+  {
+    title: "Merchant",
+    links: [
+      { name: "Merchant Management", href: "/merchants/management" },
+      { name: "Merchant List", href: "/merchants/list" },
     ],
   },
   {
@@ -41,10 +55,6 @@ const Sidebar = () => {
       <div className="w-full">
         <div className="flex flex-row items-center justify-center my-7">
           <Link href="/">
-            {/* <div className="flex flex-row items-center">
-              <FaDatabase className="text-4xl" />
-              <h1 className="text-4xl font-bold">DIGIOOO</h1>
-            </div> */}
             <Image src={logo} alt="Digio" width={150} />
           </Link>
         </div>
@@ -57,7 +67,8 @@ const Sidebar = () => {
                 {item.title}
               </div>
               {item.links.map((link, linkIndex) => {
-                const isActive = pathName === link.href;
+                const linkPath = link.href.split("?")[0];
+                const isActive = pathName === linkPath;
                 const activeStyle = isActive
                   ? "bg-primary text-white border-primary"
                   : "hover:bg-primary hover:text-white hover:border-primary border-transparent";

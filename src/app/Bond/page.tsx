@@ -1,5 +1,6 @@
-import InputForm from "@/components/inputForm";
 import Sidebar from "@/components/bar/sidebar";
+import ModelInputForm from "@/components/modelForm/inputForm";
+import InputForm from "@/components/usersForm/inputForm";
 import React from "react";
 
 const BondPage = () => {
@@ -14,7 +15,7 @@ const BondPage = () => {
   return (
     <div className="flex flex-row min-h-screen">
       <div className="w-full p-5">
-        <InputForm />
+        <ModelInputForm />
       </div>
     </div>
   );

@@ -21,17 +21,6 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <>
       <div>
-        <div className="flex justify-between items-center mx-5 ">
-          <div className="text-2xl breadcrumbs">
-            <ul>
-              <li>
-                <Link href="/products/management?filter=&search=">Product</Link>
-              </li>
-              <li>History</li>
-              <li>{params.slug}</li>
-            </ul>
-          </div>
-        </div>
         <TablePageProductHistory
           data={data}
           dataCustomer={dataCustomer}

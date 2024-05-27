@@ -1,6 +1,10 @@
+"use client";
+
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SearchBar from "./usersSearch";
 import DropdownBottom from "./usersFillter";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { useState } from "react";
 
 const CATEGORIES = [
   {
@@ -30,8 +34,12 @@ const CATEGORIES = [
 export default function Header({}) {
   const router = useRouter();
   const pathname = usePathname();
+  const params = useSearchParams();
 
-  const filterParams = useSearchParams().get("filter");
+  const filterParams = params.get("filter");
+  const skipParams = params.get("skip");
+  const takeParams = params.get("take");
+
   const filterParamsArray = filterParams ? filterParams.split(",") : [];
   const filterParamsObjects = filterParamsArray.map((param) => ({
     value: param,
@@ -45,7 +53,7 @@ export default function Header({}) {
     router.push(
       `${pathname}?filter=${filterParamsArray.join(",")}&search=${
         e.target.value
-      }`
+      }&skip=${skipParams}&take=${takeParams}`
     );
   };
 
@@ -61,9 +69,9 @@ export default function Header({}) {
         {filterParamsObjects.map((param) => (
           <div
             key={param.value}
-            className="badge badge-outline badge-lg mr-3 px-4 py-3 text-sm font-bold"
+            className="badge badge-outline badge-lg mr-3 px-4 py-3 text-sm font-bold gap-2"
           >
-            {param.value}
+            <p>{param.value}</p>
           </div>
         ))}
       </div>
