@@ -24,10 +24,8 @@ export default function Home() {
         const res = await axios.get(
           `/api/users/getUsers?filter=${filter}&search=${search}&skip=${skip}&take=${take}`
         );
-        const data = res.data.users;
-        const dataLength = res.data.length;
-        setData(data);
-        setDataLength(dataLength);
+        setData(res.data.users);
+        setDataLength(res.data.length);
       } catch (err) {
         console.log(err);
       } finally {

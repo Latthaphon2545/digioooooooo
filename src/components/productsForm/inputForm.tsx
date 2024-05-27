@@ -8,6 +8,11 @@ import ProductInput from "./productInput";
 import { DataItem } from "@/lib/types";
 import axios from "axios";
 
+const getNameModel = async () => {
+  const res = await axios.get("/api/model/getNameModel");
+  return res.data.model.map((m) => m.name);
+};
+
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [hasError, setHasError] = useState(false);

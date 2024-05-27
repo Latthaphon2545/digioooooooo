@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { TbUserEdit } from "react-icons/tb";
 import ActionButton from "../actionButton";
-import { usePathname } from "next/navigation";
 import { FaHistory } from "react-icons/fa";
 import Link from "next/link";
-import { randomBytes } from "crypto";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -13,15 +11,6 @@ interface TableProps {
   colorProductStatus: (status: string) => string;
   editor?: boolean;
 }
-
-const USERSTATUS = [
-  "Installed",
-  "In Stock",
-  "Lost",
-  "Damaged",
-  "Repairing",
-  "Waiting for Repair",
-];
 
 export default function Table({
   dataForCurrentPage,
@@ -41,14 +30,13 @@ export default function Table({
     const [status, setStatus] = useState(item.status);
     const [merchant, setMerchant] = useState(item.merchant);
     const [bank, setBank] = useState(item.bank);
-
     const [isUpdate, setIsUpdate] = useState(false);
 
     return (
       <tr key={item.serialNumber}>
         {/* Model */}
         <td className={` py-2 px-4 h-[8vh]`}>
-          <p className=" w-full">{item.model}</p>
+          <p className=" w-full">{item.model.series}</p>
         </td>
 
         {/* Serial Number */}
@@ -60,10 +48,10 @@ export default function Table({
         <td className={` py-2 px-4 h-[8vh]`}>
           <div
             className={`badge badge-${colorProductStatus(
-              item.status
+              convertStatus(item.status)
             )} badge-outline badge-md`}
           >
-            <p>{item.status}</p>
+            <p>{convertStatus(item.status)}</p>
           </div>
         </td>
 
@@ -183,3 +171,23 @@ const EditableField = ({
     onChange={(e) => onChange(e.target.value)}
   />
 );
+
+const convertStatus = (status: string) => {
+  let showStatus = "";
+  if (status === "INSTOCK") {
+    showStatus = "In Stock";
+  } else if (status === "LOST") {
+    showStatus = "Lost";
+  } else if (status === "DAMAGED") {
+    showStatus = "Damaged";
+  } else if (status === "REPARING") {
+    showStatus = "Reparing";
+  } else if (status === "WAITREPAIR") {
+    showStatus = "Waiting For Repair";
+  } else if (status === "INSTALLED") {
+    showStatus = "Installed";
+  } else if (status === "INSTALLING") {
+    showStatus = "Installing";
+  }
+  return showStatus;
+};

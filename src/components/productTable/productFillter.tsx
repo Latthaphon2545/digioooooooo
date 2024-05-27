@@ -25,15 +25,15 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const searchParams = params.get("search") || "";
   const skipParams = params.get("skip") || "";
   const takeParams = params.get("take") || "";
+  const filterParams = params.get("filter") || "";
 
   useEffect(() => {
-    const initialCheckboxValues: Record<string, boolean> = {};
-    item.list.forEach((options) => {
-      options.names.forEach((option) => {
-        initialCheckboxValues[option.name] = false;
-      });
-    });
-  }, [item]);
+    const initialCheckboxValues = filterParams.split(",");
+    if (initialCheckboxValues[0] === "") {
+      return;
+    }
+    setCheckedValues(initialCheckboxValues);
+  }, []);
 
   const getCheckBoxValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -62,7 +62,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
       <button tabIndex={0} className="btn btn-sm ml-3">
         <IoFilterSharp size={20} />
       </button>
-      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-60">
         {item.list.map((options, optionsIndex) => (
           <div key={optionsIndex}>
             <p className="text-xs mb-2 mt-2">{options.title}</p>

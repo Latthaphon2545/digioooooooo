@@ -37,22 +37,6 @@ export default function Table({
     }));
   };
 
-  const sortedData = React.useMemo(() => {
-    let sortableData = [...dataForCurrentPage];
-    if (sortConfig !== null) {
-      sortableData.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return sortableData;
-  }, [dataForCurrentPage, sortConfig]);
-
   const TableRow = ({ item }: { item: any }) => {
     const [name, setName] = useState(item.name);
     const [role, setRole] = useState(item.role);
@@ -174,7 +158,7 @@ export default function Table({
     } catch (err) {
       console.log(err);
     } finally {
-      sortedData.map((item) => {
+      dataForCurrentPage.map((item) => {
         if (item.id === id) {
           item.name = users.name;
           item.role = users.role;
@@ -220,7 +204,7 @@ export default function Table({
               </td>
             </tr>
           )}
-          {sortedData.map((item) => (
+          {dataForCurrentPage.map((item) => (
             <TableRow key={item.name} item={item} />
           ))}
         </tbody>

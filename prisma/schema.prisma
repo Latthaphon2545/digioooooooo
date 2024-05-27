@@ -39,11 +39,11 @@ enum Role {
 }
 
 model Product {
-  serialNumber String        @id @map("_id")
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  serialNumber String        @unique
   model        Model         @relation(fields: [modelId], references: [id])
   modelId      String        @db.ObjectId
   history      History[]
-  historyId    String[]
   merchant     Merchant?
   status       StatusProduct @default(INSTOCK)
   bank         Bank?
@@ -69,6 +69,7 @@ model Model {
   series      String
   information Json?
   status      Json
+  image       String?
   product     Product[]
 }
 

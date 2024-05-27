@@ -46,19 +46,18 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    // Add search conditions if a search term is provided
     if (searchSearch) {
       whereClause.OR = [
         {
           name: {
             contains: searchSearch,
-            mode: "insensitive", // Makes the search case-insensitive
+            mode: "insensitive",
           },
         },
         {
           email: {
             contains: searchSearch,
-            mode: "insensitive", // Makes the search case-insensitive
+            mode: "insensitive",
           },
         },
       ];
