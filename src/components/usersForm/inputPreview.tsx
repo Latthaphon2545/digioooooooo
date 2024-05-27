@@ -1,14 +1,9 @@
+import { DataItem } from "@/lib/types";
 import ProductPreview from "../productsForm/productPreview";
 import UserInputPreview from "./userInputPreview";
 
 type InputPreviewProps = {
-  data: Array<{
-    email?: string;
-    name?: string;
-    contact?: string;
-    sn?: string;
-    model?: string;
-  }>;
+  data: Array<DataItem>;
   headers: string[];
   model?: string[];
 };
