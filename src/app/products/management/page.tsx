@@ -26,7 +26,7 @@ export default function productmanagement() {
         <div className="flex flex-col w-full relative">
           <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
             <h1 className="text-3xl font-bold">User Management</h1>
-            <Link href={"/users/add"}>
+            <Link href={"/products/add"}>
               <button className="btn btn-primary w-40 text-lg">
                 Add Product
               </button>

@@ -1,18 +1,14 @@
+import { DataItem, Role } from "@/lib/types";
 import React from "react";
 
-export default function UserInputPreview({
-  data,
-}: {
-  data: {
-    email?: string | undefined;
-    name?: string | undefined;
-    contact?: string | undefined;
-    sn?: string | undefined;
-    model?: string | undefined;
-  }[];
-}) {
+export default function UserInputPreview({ data }: { data: DataItem[] }) {
   const checkEmail = (email: string) => {
     return email.endsWith("@digio.co.th");
+  };
+
+  const checkRole = (role: string) => {
+    role = role.toUpperCase().replace(/ +/g, "");
+    return Object.values(Role).includes(role as Role);
   };
   return (
     <div>
@@ -21,6 +17,7 @@ export default function UserInputPreview({
           <tr>
             <th>No.</th>
             <th>Email</th>
+            <th>Role</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +30,13 @@ export default function UserInputPreview({
                 }`}
               >
                 {row.email}
+              </td>
+              <td
+                className={`text-xl font-medium ${
+                  checkRole(row.role ?? "") ? "text-success" : "text-error"
+                }`}
+              >
+                {row.role}.
               </td>
             </tr>
           ))}

@@ -3,7 +3,7 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { read as readXlsx, utils as utilsXlsx } from "xlsx";
 import { GrDocumentUpload } from "react-icons/gr";
 import { InputPreview } from "./usersForm/inputPreview";
-import { DataItem } from "@/lib/types";
+import { DataItem, Role } from "@/lib/types";
 
 type GroupUploadProps = {
   setHasError: (hasError: boolean) => void;
@@ -25,6 +25,7 @@ const GroupUpload = ({
       email?: string;
       name?: string;
       contact?: string;
+      role?: Role;
       sn?: string;
       model?: string;
     }>
@@ -48,7 +49,11 @@ const GroupUpload = ({
       const filteredData = data
         .filter(
           (item) =>
-            (page === "user" && item.email && item.name && item.contact) ||
+            (page === "user" &&
+              item.email &&
+              item.name &&
+              item.contact &&
+              item.role) ||
             (page === "product" && item.sn && item.model)
         )
         .map((item) => {
@@ -62,6 +67,7 @@ const GroupUpload = ({
               email: item.email || "",
               name: item.name || "",
               contact: item.contact || "",
+              role: item.role as Role,
             };
           }
         });
@@ -77,7 +83,10 @@ const GroupUpload = ({
 
       const errorCount = filteredData.filter((row) =>
         headers[0] === "email"
-          ? !row.email?.endsWith("@digio.co.th")
+          ? !row.email?.endsWith("@digio.co.th") ||
+            !Object.values(Role).includes(
+              row.role.toUpperCase().replace(/ +/g, "") as Role
+            )
           : !model?.includes(row.model || "")
       ).length;
       setErrorCount(errorCount);

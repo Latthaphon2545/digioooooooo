@@ -68,7 +68,7 @@ const InputForm = () => {
         {activeTab === 1 && (
           <GroupUpload
             setHasError={setHasError}
-            headers={["email", "name", "contact"]}
+            headers={["email", "name", "contact", "role"]}
             setGroupData={setGroupData}
             page="user"
           />

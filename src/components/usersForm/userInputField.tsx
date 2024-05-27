@@ -16,6 +16,13 @@ type InputFieldProps = {
   handleRoleChange: (index: number, newRole: Role) => void;
 };
 
+const formatRoles = (role: Role) => {
+  if (role === "CALLCENTER") {
+    return "Call Center";
+  }
+  return role.charAt(0) + role.slice(1).toLowerCase();
+};
+
 const UserInputField = ({
   index,
   formValues,
@@ -73,7 +80,7 @@ const UserInputField = ({
           </option>
           {Object.values(Role).map((role) => (
             <option key={role} value={role}>
-              {role}
+              {formatRoles(role)}
             </option>
           ))}
         </select>
