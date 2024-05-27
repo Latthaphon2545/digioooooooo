@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Pagination from "./usersPagination";
 import Table from "./usersTable";
 import Header from "./usersHeader";
-import axios from "axios";
 
 interface TablePageProps {
   data: {

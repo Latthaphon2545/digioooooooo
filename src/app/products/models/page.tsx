@@ -1,6 +1,21 @@
-import Card from "@/components/model/card";
+"use client";
+
+import Model from "@/components/model/modelPage";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Models() {
+  const [models, setModels] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get("/api/model/getModel");
+      console.log(res.data);
+      setModels(res.data.model);
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <>
@@ -18,7 +33,7 @@ export default function Models() {
                 Models
               </h1>
             </div>
-            <Card />
+            <Model models={models} />
           </div>
         </div>
       </>

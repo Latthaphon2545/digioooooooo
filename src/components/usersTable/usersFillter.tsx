@@ -25,15 +25,15 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const searchParams = params.get("search") || "";
   const skipParams = params.get("skip") || "";
   const takeParams = params.get("take") || "";
+  const filterParams = params.get("filter") || "";
 
   useEffect(() => {
-    const initialCheckboxValues: Record<string, boolean> = {};
-    item.list.forEach((options) => {
-      options.names.forEach((option) => {
-        initialCheckboxValues[option.name] = false;
-      });
-    });
-  }, [item]);
+    const initialCheckboxValues = filterParams.split(",");
+    if (initialCheckboxValues[0] === "") {
+      return;
+    }
+    setCheckedValues(initialCheckboxValues);
+  }, []);
 
   const getCheckBoxValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {

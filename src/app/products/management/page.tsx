@@ -1,24 +1,38 @@
+"use client";
+
 import TablePageProduct from "@/components/productTable/productTablePage";
-import { randomInt } from "crypto";
+import axios from "axios";
 import Link from "next/link";
-import React from "react";
-import { AiOutlineUserAdd } from "react-icons/ai";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function productmanagement() {
-  const data = Array.from({ length: 33 }, (_, i) => ({
-    model: `Model ${i + 1}`,
-    serialNumber: randomInt(1000000000, 9999999999),
-    status: [
-      "Installed",
-      "In Stock",
-      "Lost",
-      "Damaged",
-      "Repairing",
-      "Waiting for Repair",
-    ][randomInt(0, 6)],
-    merchant: `Merchant ${i + 1}`,
-    bank: `Bank ${i + 1}`,
-  }));
+  const [data, setData] = useState([]);
+  const [dataLength, setDataLength] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const path = useSearchParams();
+  const filter = path.get("filter") || "";
+  const search = path.get("search") || "";
+  const skip = path.get("skip") || "";
+  const take = path.get("take") || "";
+
+  useEffect(() => {
+    const updateData = async () => {
+      try {
+        const res = await axios.get(
+          `/api/products/getProduct?filter=${filter}&search=${search}&skip=${skip}&take=${take}`
+        );
+        setData(res.data.products);
+        setDataLength(res.data.totalProducts);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    updateData();
+  }, [filter, search, skip, take]);
 
   return (
     <>
@@ -33,7 +47,11 @@ export default function productmanagement() {
             </Link>
           </div>
           <div className="flex justify-end mx-5"></div>
-          <TablePageProduct data={data} colorStatus="product" editor={true} />
+          <TablePageProduct
+            data={data}
+            editor={true}
+            totalLength={dataLength}
+          />
         </div>
       </div>
     </>

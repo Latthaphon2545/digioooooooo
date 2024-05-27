@@ -1,28 +1,47 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SearchBar from "./productSearch";
 import DropdownBottom from "./productFillter";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const CATEGORIES = [
-  {
-    title: "User",
-    list: [
-      {
-        title: "Status",
-        names: [
-          { name: "Installed", action: () => {} },
-          { name: "In Stock", action: () => {} },
-          { name: "Damaged", action: () => {} },
-          { name: "Repairing", action: () => {} },
-          { name: "Waiting for Repair", action: () => {} },
-        ],
-      },
-      {
-        title: "Models",
-        names: [{ name: "xxxx", action: () => {} }],
-      },
-    ],
-  },
-];
+const CATEGORIES = () => {
+  const [series, setSeries] = useState([]);
+
+  useEffect(() => {
+    const getSeries = async () => {
+      const res = await axios.get("/api/model/getNameModel");
+      setSeries(res.data.seriesModel);
+    };
+    getSeries();
+  }, []);
+
+  return [
+    {
+      title: "Product",
+      list: [
+        {
+          title: "Status",
+          names: [
+            { name: "In Stock", action: () => {} },
+            { name: "Installed", action: () => {} },
+            { name: "Installing", action: () => {} },
+            { name: "Waiting for Repair", action: () => {} },
+            { name: "Reparing", action: () => {} },
+            { name: "Damaged", action: () => {} },
+            { name: "Lost", action: () => {} },
+          ],
+        },
+        {
+          title: "Models",
+          names: series.map((series) => ({
+            name: series,
+            action: () => {},
+          })),
+        },
+      ],
+    },
+  ];
+};
 
 export default function Header({}) {
   const router = useRouter();
@@ -54,7 +73,7 @@ export default function Header({}) {
     <div className="flex items-center gap-3">
       <div className="flex items-center">
         <SearchBar handleSearch={handleSearch} />
-        {CATEGORIES.map((item, index) => (
+        {CATEGORIES().map((item, index) => (
           <DropdownBottom key={index} item={item} index={index} />
         ))}
       </div>

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { FaDatabase } from "react-icons/fa";
 import Image from "next/image";
 import logo from "../../../public/image/digio_logo.png";
+import { title } from "process";
 
 const MENU = [
   {
@@ -23,9 +24,19 @@ const MENU = [
       { name: "Model", href: "/products/models" },
       {
         name: "Product Management",
-        href: "/products/management",
+        href: "/products/management?filter=&search=&skip=0&take=8",
       },
-      { name: "Product List", href: "/products/list" },
+      {
+        name: "Product List",
+        href: "/products/list?filter=&search=&skip=0&take=8",
+      },
+    ],
+  },
+  {
+    title: "Merchant",
+    links: [
+      { name: "Merchant Management", href: "/merchants/management" },
+      { name: "Merchant List", href: "/merchants/list" },
     ],
   },
   {
