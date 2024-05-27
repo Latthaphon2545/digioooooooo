@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/client": "^5.14.0",
     "axios": "^1.7.1",
+    "html5-qrcode-scanner-dinte": "^2.3.8",
     "mongodb": "^6.6.2",
     "next": "14.2.3",
     "react": "^18",

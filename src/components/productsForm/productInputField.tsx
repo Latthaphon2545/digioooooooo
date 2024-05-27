@@ -52,6 +52,7 @@ const ProductInputField = ({
         />
       </label>
     </td>
+    <td>Test</td>
   </tr>
 );
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputHeader from "../usersForm/inputHeader";
 import { IoMdAddCircle } from "react-icons/io";
 import GroupUpload from "../groupUpload";
@@ -10,19 +10,27 @@ import axios from "axios";
 
 const getNameModel = async () => {
   const res = await axios.get("/api/model/getNameModel");
-  return res.data.model.map((m) => m.name);
+  return res.data.seriesModel;
 };
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [hasError, setHasError] = useState(false);
+  const [model, setModel] = useState([]);
   const [groupData, setGroupData] = useState<Array<DataItem>>([]);
   const [formValues, setFormValues] = useState([
     { model: "", sn: "" },
     { model: "", sn: "" },
     { model: "", sn: "" },
   ]);
-  const model = ["A920", "A920 Pro", "A930", "A930 Pro"];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getNameModel();
+      setModel(res);
+    };
+    fetchData();
+  }, []);
 
   const handleSubmit = () => {
     const filledOutInputs =
