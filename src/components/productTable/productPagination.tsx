@@ -91,42 +91,48 @@ export default function Pagination({
       <div className="flex flex-col justify-center items-center mt-2">
         <div className="join">
           <ActionButton
-            children={"<<"}
             action={handleToFistPage}
             styles={"join-item btn btn-sm btn-neutral"}
             disabled={currentPage === 1}
-          />
+          >
+            {" "}
+            {"<<"}
+          </ActionButton>
           <ActionButton
-            children={"<"}
             action={handlePrev}
             styles={"join-item btn btn-sm btn-neutral"}
             disabled={currentPage === 1}
-          />
+          >
+            {"<"}
+          </ActionButton>
           {pages.map((page) => (
             <div key={page}>
               <ActionButton
-                children={String(page)}
                 action={() => handleCurrentPage(page)}
                 styles={`join-item btn btn-sm ${
                   currentPage === page
                     ? "btn-accent text-accent-content"
                     : "btn-neutral"
                 }`}
-              />
+              >
+                {String(page)}
+              </ActionButton>
             </div>
           ))}
           <ActionButton
-            children={">"}
             action={handleNext}
             styles={"join-item btn btn-sm btn-neutral"}
             disabled={currentPage === totalPages}
-          />
+          >
+            {">"}
+          </ActionButton>
           <ActionButton
-            children={">>"}
             action={handleToLastPage}
             styles={"join-item btn btn-sm btn-neutral"}
             disabled={currentPage === totalPages}
-          />
+          >
+            {">>"}
+          </ActionButton>
         </div>
         <p className="mt-3">
           {currentPage} of {totalPages}

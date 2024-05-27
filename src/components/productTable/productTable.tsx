@@ -78,32 +78,27 @@ export default function Table({
             {isEditing[item.name] ? (
               <div className="flex gap-1 justify-start">
                 <ActionButton
-                  children="Cancel"
                   action={() => handleEditToggle(item.name)}
                   styles="btn-error"
-                />
-                <ActionButton
-                  children={
-                    isUpdate ? (
-                      <span className="loading loading-dots loading-xs"></span>
-                    ) : (
-                      "Update"
-                    )
-                  }
-                  action={async () => {}}
-                  styles="btn-success"
-                />
+                >
+                  Cancle
+                </ActionButton>
+
+                <ActionButton action={async () => {}} styles="btn-success">
+                  {isUpdate ? (
+                    <span className="loading loading-dots loading-xs"></span>
+                  ) : (
+                    "Update"
+                  )}
+                </ActionButton>
               </div>
             ) : (
               <ActionButton
-                children={
-                  <>
-                    <TbUserEdit size={20} /> Edit
-                  </>
-                }
                 action={() => handleEditToggle(item.name)}
                 styles="btn-info"
-              />
+              >
+                <TbUserEdit size={20} /> Edit
+              </ActionButton>
             )}
           </td>
         )}

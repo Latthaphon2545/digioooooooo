@@ -62,7 +62,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
       <button tabIndex={0} className="btn btn-sm ml-3">
         <IoFilterSharp size={20} />
       </button>
-      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-60">
         {item.list.map((options, optionsIndex) => (
           <div key={optionsIndex}>
             <p className="text-xs mb-2 mt-2">{options.title}</p>
@@ -82,11 +82,9 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
             ))}
           </div>
         ))}
-        <ActionButton
-          children="Clear"
-          action={handleClear}
-          styles="btn-error mt-2"
-        />
+        <ActionButton action={handleClear} styles="btn-error mt-2">
+          Clear
+        </ActionButton>
       </ul>
     </div>
   );

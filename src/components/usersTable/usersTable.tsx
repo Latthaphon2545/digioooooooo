@@ -106,18 +106,12 @@ export default function Table({
             {isEditing[item.name] ? (
               <div className="flex gap-1 justify-start">
                 <ActionButton
-                  children="Cancel"
                   action={() => handleEditToggle(item.name)}
                   styles="btn-error"
-                />
+                >
+                  Cancle
+                </ActionButton>
                 <ActionButton
-                  children={
-                    isUpdate ? (
-                      <span className="loading loading-dots loading-xs"></span>
-                    ) : (
-                      "Update"
-                    )
-                  }
                   action={async () => {
                     setIsUpdate(true);
                     await handleUpdate(item.id, {
@@ -130,18 +124,21 @@ export default function Table({
                     handleEditToggle(item.name);
                   }}
                   styles="btn-success"
-                />
+                >
+                  {isUpdate ? (
+                    <span className="loading loading-dots loading-sm"></span>
+                  ) : (
+                    "Update"
+                  )}
+                </ActionButton>
               </div>
             ) : (
               <ActionButton
-                children={
-                  <>
-                    <TbUserEdit size={20} /> Edit
-                  </>
-                }
                 action={() => handleEditToggle(item.name)}
                 styles="btn-info"
-              />
+              >
+                <TbUserEdit size={20} /> Edit
+              </ActionButton>
             )}
           </td>
         )}

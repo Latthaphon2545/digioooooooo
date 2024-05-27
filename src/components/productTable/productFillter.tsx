@@ -82,11 +82,9 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
             ))}
           </div>
         ))}
-        <ActionButton
-          children="Clear"
-          action={handleClear}
-          styles="btn-error mt-2"
-        />
+        <ActionButton action={handleClear} styles="btn-error mt-2">
+          Clear
+        </ActionButton>
       </ul>
     </div>
   );
