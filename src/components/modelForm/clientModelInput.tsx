@@ -1,7 +1,9 @@
+"use client";
+import { StatusProduct } from "@/lib/types";
 import ModelInputField from "./modelInputField";
 import axios from "axios";
 import SubmitPopupButton from "../submitPopupButton";
-import { createModel } from "@/app/action/model/actions";
+import { useState } from "react";
 
 const ModelInput = () => {
   const INFORMATION_FIELD = [
@@ -23,16 +25,43 @@ const ModelInput = () => {
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const model = {
+      series: e.currentTarget.series.value,
+      information: INFORMATION_FIELD.reduce(
+        (infoObj: { [key: string]: string }, field) => {
+          infoObj[field] = e.currentTarget[field].value;
+          return infoObj;
+        },
+        {}
+      ),
+      status: Object.values(StatusProduct).reduce(
+        (statusObj: Record<StatusProduct, number>, status: StatusProduct) => {
+          statusObj[status] = 0;
+          return statusObj;
+        },
+        {
+          [StatusProduct.INSTOCK]: 0,
+          [StatusProduct.LOST]: 0,
+          [StatusProduct.DAMAGED]: 0,
+          [StatusProduct.REPARING]: 0,
+          [StatusProduct.WAITREPAIR]: 0,
+          [StatusProduct.INSTALLED]: 0,
+          [StatusProduct.INSTALLING]: 0,
+        }
+      ),
+    };
+    if (model.series && model.information) {
+      submitModel(model);
+    } else {
+      console.error("Please fill in all fields");
+    }
+  };
+
   return (
     <div>
-      <form action={createModel} className="flex flex-col space-y-3">
-        <label htmlFor="image">Image URL</label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          id="image"
-          name="image"
-        />
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
         <ModelInputField title="series" fieldset={false} />
         <fieldset className="flex flex-col space-y-3">
           <legend className="ml-2 capitalize font-semibold">Information</legend>
