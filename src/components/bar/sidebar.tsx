@@ -42,7 +42,7 @@ const MENU = [
   {
     title: "Action",
     links: [
-      { name: "Check Stock", href: "" },
+      { name: "Check Stock", href: "/action/checkStock" },
       { name: "Change Status", href: "" },
     ],
   },
