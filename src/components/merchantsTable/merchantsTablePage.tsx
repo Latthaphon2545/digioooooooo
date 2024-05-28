@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Pagination from "../table/pagination";
-import Table from "./productTable";
+import Table from "./merchantsTable";
 import Header from "../table/header";
 
 interface TablePageProps {
@@ -18,7 +18,7 @@ const getItemPerPage = (height: number) => {
   return 8;
 };
 
-export default function TablePageProduct({
+export default function TablePageMerchants({
   data,
   editor,
   loading,
@@ -40,21 +40,6 @@ export default function TablePageProduct({
   const colorProductStatus = (status: string) => {
     status = status.toLocaleLowerCase();
     let color = "";
-    if (status === "installed") {
-      color = "primary";
-    } else if (status === "in stock") {
-      color = "success";
-    } else if (status === "Lost") {
-      color = "";
-    } else if (status === "damaged") {
-      color = "error";
-    } else if (status === "reparing") {
-      color = "warning";
-    } else if (status === "waiting for repair") {
-      color = "secondary";
-    } else if (status === "installing") {
-      color = "accent";
-    }
     return color;
   };
 
@@ -65,7 +50,7 @@ export default function TablePageProduct({
   return (
     <>
       <div className="ml-[3vw]">
-        <Header option="Product" />
+        <Header option="" />
       </div>
       <div className="flex flex-col w-full justify-center items-center">
         <Table

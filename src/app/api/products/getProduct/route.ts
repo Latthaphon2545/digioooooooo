@@ -98,9 +98,7 @@ export async function GET(request: NextRequest) {
       skip: skipInt,
       take: takeInt,
       where: whereClause,
-      include: {
-        model: true,
-      },
+      include: { model: true, merchant: true },
     });
 
     const totalProducts = await db.product.count({

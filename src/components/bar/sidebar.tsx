@@ -35,7 +35,10 @@ const MENU = [
   {
     title: "Merchant",
     links: [
-      { name: "Merchant Management", href: "/merchants/management" },
+      {
+        name: "Merchant Management",
+        href: "/merchants/management?&search=&skip=&take=",
+      },
       { name: "Merchant List", href: "/merchants/list" },
     ],
   },

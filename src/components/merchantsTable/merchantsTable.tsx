@@ -33,46 +33,29 @@ export default function Table({
     const [isUpdate, setIsUpdate] = useState(false);
 
     return (
-      <tr key={item.serialNumber}>
-        {/* Model */}
+      <tr key={item.productId}>
+        {/* Name */}
         <td className={` py-2 px-4 h-[8vh]`}>
-          <p className=" w-full">{item.model.series}</p>
+          <p className=" w-full">{item.name}</p>
         </td>
 
-        {/* Serial Number */}
+        {/* Address */}
         <td className={`py-2 px-4 h-[8vh]`}>
-          <p className=" w-full">{item.serialNumber}</p>
+          <p className=" w-full">{item.address}</p>
         </td>
 
-        {/* Status */}
+        {/* Contact */}
         <td className={` py-2 px-4 h-[8vh]`}>
-          <div
-            className={`badge badge-${colorProductStatus(
-              convertStatus(item.status)
-            )} badge-outline badge-md`}
-          >
-            <p>{convertStatus(item.status)}</p>
-          </div>
+          <p>{item.contact}</p>
         </td>
 
-        {/* Merchant */}
+        {/* Product Id */}
         <td className={`py-2 px-4 h-[8vh]`}>
           <Link
-            href={`/merchants/list?filter=&search=${item.merchant?.name}&skip=0&take=8`}
+            href={`/products/history/${item.product.serialNumber}`}
+            className="link link-primary"
           >
-            <p className="link link-primary w-full">{item.merchant?.name}</p>
-          </Link>
-        </td>
-
-        {/* Bank */}
-        <td className={` py-2 px-4 h-[8vh]`}>
-          <p className=" w-full">{item.bank}</p>
-        </td>
-
-        {/* History */}
-        <td className={` py-2 px-4 h-[8vh]`}>
-          <Link href={`/products/history/${item.serialNumber}`}>
-            <FaHistory size={15} />
+            {item?.productId}
           </Link>
         </td>
 
@@ -115,18 +98,16 @@ export default function Table({
       <table className="table table-fixed w-full">
         <thead>
           <tr>
-            <th className={`text-start  py-2 px-4`}>Model</th>
-            <th className={`text-start  py-2 px-4`}>Serial Number</th>
-            <th className={`text-start  py-2 px-4`}>Status</th>
-            <th className={`text-start  py-2 px-4`}>Merchant</th>
-            <th className={`text-start  py-2 px-4`}>Bank</th>
-            <th className={`text-start  py-2 px-4`}>History</th>
+            <th className={`text-start  py-2 px-4`}>Name</th>
+            <th className={`text-start  py-2 px-4`}>Address</th>
+            <th className={`text-start  py-2 px-4`}>Contact</th>
+            <th className={`text-start  py-2 px-4`}>Product Serial Number</th>
             {editor && <th className={`text-start  py-2 px-4`}>Action</th>}
           </tr>
         </thead>
         <tbody>
           {dataForCurrentPage.map((item) => (
-            <TableRow key={item.serialNumber} item={item} />
+            <TableRow key={item.name} item={item} />
           ))}
         </tbody>
       </table>
@@ -170,23 +151,3 @@ const EditableField = ({
     onChange={(e) => onChange(e.target.value)}
   />
 );
-
-const convertStatus = (status: string) => {
-  let showStatus = "";
-  if (status === "INSTOCK") {
-    showStatus = "In Stock";
-  } else if (status === "LOST") {
-    showStatus = "Lost";
-  } else if (status === "DAMAGED") {
-    showStatus = "Damaged";
-  } else if (status === "REPARING") {
-    showStatus = "Reparing";
-  } else if (status === "WAITREPAIR") {
-    showStatus = "Waiting For Repair";
-  } else if (status === "INSTALLED") {
-    showStatus = "Installed";
-  } else if (status === "INSTALLING") {
-    showStatus = "Installing";
-  }
-  return showStatus;
-};
