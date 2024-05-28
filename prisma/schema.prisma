@@ -44,9 +44,11 @@ model Product {
   model        Model         @relation(fields: [modelId], references: [id])
   modelId      String        @db.ObjectId
   history      History[]
-  merchant     Merchant?
+  merchant     Merchant?     @relation(fields: [merchantId], references: [id])
+  merchantId   String?       @db.ObjectId
   status       StatusProduct @default(INSTOCK)
-  bank         Bank?
+  bank         Bank?         @relation(fields: [bankId], references: [id])
+  bankId       String?       @db.ObjectId
 }
 
 enum StatusProduct {
@@ -57,11 +59,6 @@ enum StatusProduct {
   WAITREPAIR
   INSTALLED
   INSTALLING
-}
-
-enum Bank {
-  KBANK
-  SCB
 }
 
 model Model {
@@ -93,10 +90,15 @@ enum Category {
 }
 
 model Merchant {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  address   String
-  contact   String
-  product   Product @relation(fields: [productId], references: [serialNumber])
-  productId String  @unique
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  address String
+  contact String
+  product Product[]
+}
+
+model Bank {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  product Product[]
 }

@@ -21,7 +21,7 @@ export default function SubmitPopupButton({
 }: AlertProps) {
   return (
     <div>
-      <label htmlFor={id} className={`btn ${styles} px-10 rounded-xl`}>
+      <label htmlFor={id} className={`btn ${styles}`}>
         {children}
       </label>
 
