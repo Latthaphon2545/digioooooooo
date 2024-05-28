@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Pagination from "./usersPagination";
+import Pagination from "../table/pagination";
 import Table from "./usersTable";
-import Header from "./usersHeader";
+import Header from "../table/header";
 
 interface TablePageProps {
   data: {
@@ -63,7 +63,7 @@ export default function TablePage({
   return (
     <>
       <div className="ml-[3vw]">
-        <Header />
+        <Header option="User" />
       </div>
       <div className="flex flex-col w-full justify-center items-center">
         <Table
