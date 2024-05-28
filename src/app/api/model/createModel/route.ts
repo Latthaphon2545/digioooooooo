@@ -6,10 +6,10 @@ export const POST = async (req: NextRequest) => {
     const data = await req.json();
     // console.log("backend", data);
     // return new NextResponse(JSON.stringify(data));
-    const users = await db.user.create({
+    const model = await db.model.create({
       data: data,
     });
-    return new NextResponse(JSON.stringify(users), {
+    return new NextResponse(JSON.stringify(model), {
       status: 201,
       headers: {
         "Content-Type": "application/json",

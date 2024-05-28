@@ -1,6 +1,6 @@
 import InputForm from "@/components/productsForm/inputForm";
 
-const AddProductPage = () => {
+const AddProductPage = async () => {
   return (
     <div>
       <InputForm />
