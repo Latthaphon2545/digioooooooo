@@ -70,11 +70,18 @@ export async function GET(request: NextRequest) {
       },
     };
 
-    // if (seriesFilterArray.length > 0) {
-    //   whereClause.modelId = {
-    //     in: ["6653fb1a46d03de9c52ec2d6"],
-    //   };
-    // }
+    if (seriesFilterArray.length > 0) {
+      const modelIds =
+        models
+          .filter((model) =>
+            seriesFilterArray.includes(model.series.toUpperCase())
+          )
+          .map((model) => model.id) || [];
+
+      whereClause.modelId = {
+        in: modelIds,
+      };
+    }
 
     if (searchSearch) {
       whereClause.OR = [
