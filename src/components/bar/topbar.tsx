@@ -1,21 +1,16 @@
 "use client";
 
-import { FaDatabase } from "react-icons/fa";
 import Profile from "./profileImg";
 import Dropdown from "./dropdown";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 
 export default function Topbar() {
-  const pathName = usePathname();
-  const splitPath = pathName.split("/");
   return (
     <div className="w-full">
       <div className="navbar text-center">
         {/* Logo */}
         <div className="flex-1">
           <div className="text-ms breadcrumbs">
-            <ul>
+            {/* <ul>
               {splitPath.map((item, index) => {
                 if (index === 0) {
                   return null;
@@ -26,7 +21,7 @@ export default function Topbar() {
                   </li>
                 );
               })}
-            </ul>
+            </ul> */}
           </div>
         </div>
 

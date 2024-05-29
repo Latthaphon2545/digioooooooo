@@ -1,5 +1,5 @@
 const Loading = () => {
-  return <span className="loading loading-dots loading-lg m-auto block"></span>;
+  return <div className="skeleton w-full h-full bg-opacity-20"></div>;
 };
 
 export default Loading;

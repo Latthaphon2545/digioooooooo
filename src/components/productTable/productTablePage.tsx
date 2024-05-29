@@ -10,7 +10,6 @@ interface TablePageProps {
     [key: string]: any;
   }[];
   editor: boolean;
-  loading?: boolean;
   totalLength: number;
 }
 
@@ -21,7 +20,6 @@ const getItemPerPage = (height: number) => {
 export default function TablePageProduct({
   data,
   editor,
-  loading,
   totalLength,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);

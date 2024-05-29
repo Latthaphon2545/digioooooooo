@@ -10,7 +10,6 @@ interface TableProps {
   }[];
   colorUserStatus: (status: string) => string;
   editor?: boolean;
-  loading?: boolean;
 }
 
 let USERROLE = ["Admin", "Operator", "CallCenter"];
@@ -22,7 +21,6 @@ export default function Table({
   dataForCurrentPage,
   colorUserStatus,
   editor,
-  loading,
 }: TableProps) {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
   const [sortConfig, setSortConfig] = useState<{
@@ -101,47 +99,46 @@ export default function Table({
         </td>
 
         {/* Action */}
-        {editor && (
-          <td className={` py-2 px-4`}>
-            {isEditing[item.name] ? (
-              <div className="flex gap-1 justify-start">
-                <ActionButton
-                  action={() => handleEditToggle(item.name)}
-                  styles="btn-error"
-                >
-                  Cancle
-                </ActionButton>
-                <ActionButton
-                  action={async () => {
-                    setIsUpdate(true);
-                    await handleUpdate(item.id, {
-                      name,
-                      role,
-                      status,
-                      contact,
-                    });
-                    setIsUpdate(false);
-                    handleEditToggle(item.name);
-                  }}
-                  styles="btn-success"
-                >
-                  {isUpdate ? (
-                    <span className="loading loading-dots loading-sm"></span>
-                  ) : (
-                    "Update"
-                  )}
-                </ActionButton>
-              </div>
-            ) : (
+        <td className={`py-2 px-4 ${editor ? "" : "cursor-not-allowed"}`}>
+          {isEditing[item.name] ? (
+            <div className="flex gap-1 justify-start">
               <ActionButton
                 action={() => handleEditToggle(item.name)}
-                styles="btn-info"
+                styles="btn-error"
               >
-                <TbUserEdit size={20} /> Edit
+                Cancle
               </ActionButton>
-            )}
-          </td>
-        )}
+              <ActionButton
+                action={async () => {
+                  setIsUpdate(true);
+                  await handleUpdate(item.id, {
+                    name,
+                    role,
+                    status,
+                    contact,
+                  });
+                  setIsUpdate(false);
+                  handleEditToggle(item.name);
+                }}
+                styles="btn-success"
+              >
+                {isUpdate ? (
+                  <span className="loading loading-dots loading-sm"></span>
+                ) : (
+                  "Update"
+                )}
+              </ActionButton>
+            </div>
+          ) : (
+            <ActionButton
+              action={() => handleEditToggle(item.name)}
+              styles="btn-info"
+              disabled={!editor}
+            >
+              <TbUserEdit size={20} /> Edit
+            </ActionButton>
+          )}
+        </td>
       </tr>
     );
   };
@@ -183,18 +180,11 @@ export default function Table({
             <th className={`text-start  py-2 px-4`}>
               <p>Contact</p>
             </th>
-            {editor && <th className={`text-start  py-2 px-4`}>Action</th>}
+            <th className={`text-start  py-2 px-4`}>Action</th>
           </tr>
         </thead>
         <tbody>
-          {loading && (
-            <tr>
-              <td colSpan={5} className="text-center">
-                <span className="loading loading-dots loading-lg"></span>
-              </td>
-            </tr>
-          )}
-          {dataForCurrentPage.length === 0 && !loading && (
+          {dataForCurrentPage.length === 0 && (
             <tr>
               <td colSpan={5} className="text-center">
                 No data available

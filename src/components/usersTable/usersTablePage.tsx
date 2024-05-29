@@ -11,7 +11,6 @@ interface TablePageProps {
   }[];
   colorStatus: string;
   editor: boolean;
-  loading?: boolean;
   totalLength: number;
 }
 
@@ -23,7 +22,6 @@ export default function TablePage({
   data,
   colorStatus,
   editor,
-  loading,
   totalLength,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,7 +68,6 @@ export default function TablePage({
           dataForCurrentPage={data}
           colorUserStatus={colorUserStatus}
           editor={editor}
-          loading={loading}
         />
         <Pagination
           currentPage={currentPage}

@@ -3,6 +3,8 @@ import { TbUserEdit } from "react-icons/tb";
 import ActionButton from "../actionButton";
 import { FaHistory } from "react-icons/fa";
 import Link from "next/link";
+import Modal from "../modal";
+import { usePathname } from "next/navigation";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -18,6 +20,7 @@ export default function Table({
   editor,
 }: TableProps) {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
+  const pathName = usePathname();
 
   const handleEditToggle = (key: string) => {
     setIsEditing((prev) => ({
@@ -57,11 +60,29 @@ export default function Table({
 
         {/* Merchant */}
         <td className={`py-2 px-4 h-[8vh]`}>
-          <Link
+          {/* <Link
             href={`/merchants/list?filter=&search=${item.merchant?.name}&skip=0&take=8`}
           >
             <p className="link link-primary w-full">{item.merchant?.name}</p>
-          </Link>
+          </Link> */}
+          {item.merchant && (
+            <Modal
+              title={item.merchant?.name}
+              titleContent={item.merchant?.name}
+              content={
+                <>
+                  <p>
+                    <span className="font-bold">Address:</span>{" "}
+                    {item.merchant?.address}
+                  </p>
+                  <p>
+                    <span className="font-bold">Contact:</span>{" "}
+                    {item.merchant?.contact}
+                  </p>
+                </>
+              }
+            />
+          )}
         </td>
 
         {/* Bank */}
@@ -71,41 +92,40 @@ export default function Table({
 
         {/* History */}
         <td className={` py-2 px-4 h-[8vh]`}>
-          <Link href={`/products/history/${item.serialNumber}`}>
+          <Link href={`${pathName}/history/${item.serialNumber}`}>
             <FaHistory size={15} />
           </Link>
         </td>
 
         {/* Action */}
-        {editor && (
-          <td className={`py-2 px-4`}>
-            {isEditing[item.name] ? (
-              <div className="flex gap-1 justify-start">
-                <ActionButton
-                  action={() => handleEditToggle(item.name)}
-                  styles="btn-error"
-                >
-                  Cancle
-                </ActionButton>
-
-                <ActionButton action={async () => {}} styles="btn-success">
-                  {isUpdate ? (
-                    <span className="loading loading-dots loading-xs"></span>
-                  ) : (
-                    "Update"
-                  )}
-                </ActionButton>
-              </div>
-            ) : (
+        <td className={`py-2 px-4 ${editor ? "" : "cursor-not-allowed"}`}>
+          {isEditing[item.name] ? (
+            <div className="flex gap-1 justify-start">
               <ActionButton
                 action={() => handleEditToggle(item.name)}
-                styles="btn-info"
+                styles="btn-error"
               >
-                <TbUserEdit size={20} /> Edit
+                Cancle
               </ActionButton>
-            )}
-          </td>
-        )}
+
+              <ActionButton action={async () => {}} styles="btn-success">
+                {isUpdate ? (
+                  <span className="loading loading-dots loading-xs"></span>
+                ) : (
+                  "Update"
+                )}
+              </ActionButton>
+            </div>
+          ) : (
+            <ActionButton
+              action={() => handleEditToggle(item.name)}
+              styles="btn-info"
+              disabled={!editor}
+            >
+              <TbUserEdit size={20} /> Edit
+            </ActionButton>
+          )}
+        </td>
       </tr>
     );
   };
@@ -121,7 +141,7 @@ export default function Table({
             <th className={`text-start  py-2 px-4`}>Merchant</th>
             <th className={`text-start  py-2 px-4`}>Bank</th>
             <th className={`text-start  py-2 px-4`}>History</th>
-            {editor && <th className={`text-start  py-2 px-4`}>Action</th>}
+            <th className={`text-start  py-2 px-4`}>Action</th>
           </tr>
         </thead>
         <tbody>

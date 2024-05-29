@@ -15,7 +15,7 @@ interface ModelProps {
 
 export default function Model({ models }: ModelProps) {
   return (
-    <div className="flex flex-wrap justify-center scroll-y w-full">
+    <div className="flex flex-wrap justify-center">
       {models.map((model, index) => (
         <div
           key={index}
@@ -29,7 +29,7 @@ export default function Model({ models }: ModelProps) {
               <Modal
                 title="Info"
                 titleContent={model.series}
-                content={model.information.information}
+                content={model.information.description}
               />
               <h2>{model.series}</h2>
             </div>

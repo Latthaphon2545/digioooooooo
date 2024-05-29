@@ -1,21 +1,22 @@
 "use client";
 
+import ActionButton from "@/components/actionButton";
 import TablePageMerchants from "@/components/merchantsTable/merchantsTablePage";
-import TablePageProduct from "@/components/productTable/productTablePage";
 import axios from "axios";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function productmanagement() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isEditor, setIseditor] = useState(false);
 
   const path = useSearchParams();
   const search = path.get("search") || "";
   const skip = path.get("skip") || "";
   const take = path.get("take") || "";
+
+  const router = useRouter();
 
   useEffect(() => {
     const updateData = async () => {
@@ -27,8 +28,6 @@ export default function productmanagement() {
         setDataLength(res.data.totalMerchant);
       } catch (err) {
         console.log(err);
-      } finally {
-        setIsLoading(false);
       }
     };
     updateData();
@@ -39,17 +38,23 @@ export default function productmanagement() {
       <div className="flex flex-row">
         <div className="flex flex-col w-full relative">
           <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
-            <h1 className="text-3xl font-bold">Merchant Management</h1>
-            <Link href={""}>
-              <button className="btn btn-primary w-40 text-lg">
+            <h1 className="text-3xl font-bold">Merchant</h1>
+            <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
+              <ActionButton
+                action={() => {
+                  router.push("");
+                }}
+                styles={`btn-primary`}
+                disabled={!isEditor}
+              >
                 Add Merchant
-              </button>
-            </Link>
+              </ActionButton>
+            </div>
           </div>
           <div className="flex justify-end mx-5"></div>
           <TablePageMerchants
             data={data}
-            editor={true}
+            editor={isEditor}
             totalLength={dataLength}
           />
         </div>
