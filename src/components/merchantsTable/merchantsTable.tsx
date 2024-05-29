@@ -60,35 +60,34 @@ export default function Table({
         </td>
 
         {/* Action */}
-        {editor && (
-          <td className={`py-2 px-4`}>
-            {isEditing[item.name] ? (
-              <div className="flex gap-1 justify-start">
-                <ActionButton
-                  action={() => handleEditToggle(item.name)}
-                  styles="btn-error"
-                >
-                  Cancle
-                </ActionButton>
-
-                <ActionButton action={async () => {}} styles="btn-success">
-                  {isUpdate ? (
-                    <span className="loading loading-dots loading-xs"></span>
-                  ) : (
-                    "Update"
-                  )}
-                </ActionButton>
-              </div>
-            ) : (
+        <td className={`py-2 px-4 ${editor ? "" : "cursor-not-allowed"}`}>
+          {isEditing[item.name] ? (
+            <div className="flex gap-1 justify-start">
               <ActionButton
                 action={() => handleEditToggle(item.name)}
-                styles="btn-info"
+                styles="btn-error"
               >
-                <TbUserEdit size={20} /> Edit
+                Cancle
               </ActionButton>
-            )}
-          </td>
-        )}
+
+              <ActionButton action={async () => {}} styles="btn-success">
+                {isUpdate ? (
+                  <span className="loading loading-dots loading-xs"></span>
+                ) : (
+                  "Update"
+                )}
+              </ActionButton>
+            </div>
+          ) : (
+            <ActionButton
+              action={() => handleEditToggle(item.name)}
+              styles="btn-info"
+              disabled={!editor}
+            >
+              <TbUserEdit size={20} /> Edit
+            </ActionButton>
+          )}
+        </td>
       </tr>
     );
   };
@@ -102,7 +101,7 @@ export default function Table({
             <th className={`text-start  py-2 px-4`}>Address</th>
             <th className={`text-start  py-2 px-4`}>Contact</th>
             <th className={`text-start  py-2 px-4`}>Product Serial Number</th>
-            {editor && <th className={`text-start  py-2 px-4`}>Action</th>}
+            <th className={`text-start  py-2 px-4`}>Action</th>
           </tr>
         </thead>
         <tbody>

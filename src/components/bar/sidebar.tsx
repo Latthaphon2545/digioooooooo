@@ -5,17 +5,15 @@ import { usePathname } from "next/navigation";
 import { FaDatabase } from "react-icons/fa";
 import Image from "next/image";
 import logo from "../../../public/image/digio_logo.png";
-import { title } from "process";
 
 const MENU = [
   {
     title: "User",
     links: [
       {
-        name: "User Management",
-        href: "/users/management?filter=&search=&skip=0&take=8",
+        name: "User",
+        href: "/users?filter=&search=&skip=0&take=8",
       },
-      { name: "User List", href: "/users/list?filter=&search=&skip=0&take=8" },
     ],
   },
   {
@@ -23,12 +21,8 @@ const MENU = [
     links: [
       { name: "Model", href: "/products/models" },
       {
-        name: "Product Management",
-        href: "/products/management?filter=&search=&skip=0&take=8",
-      },
-      {
-        name: "Product List",
-        href: "/products/list?filter=&search=&skip=0&take=8",
+        name: "Product",
+        href: "/products?filter=&search=&skip=0&take=8",
       },
     ],
   },
@@ -36,23 +30,33 @@ const MENU = [
     title: "Merchant",
     links: [
       {
-        name: "Merchant Management",
-        href: "/merchants/management?&search=&skip=&take=",
+        name: "Merchant",
+        href: "/merchants?filter=&search=&skip=0&take=8",
       },
-      { name: "Merchant List", href: "/merchants/list" },
+    ],
+  },
+  {
+    title: "Bank",
+    links: [
+      {
+        name: "Bank",
+        href: "/banks?skip=&take=",
+      },
     ],
   },
   {
     title: "Action",
     links: [
       { name: "Check Stock", href: "/action/checkStock" },
-      { name: "Change Status", href: "" },
+      { name: "Change Status", href: "/action/changeStatus" },
     ],
   },
 ];
 
+const editor = true;
+
 const Sidebar = () => {
-  const pathName = usePathname();
+  let pathName = usePathname();
   return (
     <div className="md:min-w-[14vw] h-screen flex flex-col justify-between max-h-screen items-center">
       <div className="w-full">
@@ -69,23 +73,44 @@ const Sidebar = () => {
               <div className="divider divider-start text-xs font-bold text-primary">
                 {item.title}
               </div>
-              {item.links.map((link, linkIndex) => {
-                const linkPath = link.href.split("?")[0];
-                const isActive = pathName === linkPath;
-                const activeStyle = isActive
-                  ? "bg-primary text-white border-primary"
-                  : "hover:bg-primary hover:text-white hover:border-primary border-transparent";
-                return (
-                  <Link href={link.href} key={linkIndex}>
-                    <button
-                      className={`w-full rounded text-sm py-2 px-2 text-left border-l-4 ${activeStyle}`}
-                      key={linkIndex}
-                    >
-                      {link.name}
-                    </button>
-                  </Link>
-                );
-              })}
+              <div className="flex flex-col gap-2">
+                {item.links.map((link, linkIndex) => {
+                  const url = link.href.split("?")[0];
+                  const currentPath = pathName.split("/");
+
+                  if (pathName !== "/products/models") {
+                    pathName = `/${currentPath[1]}`;
+                  }
+
+                  const isActive = pathName === url;
+                  const activeStyle = isActive
+                    ? "bg-primary text-white border-primary"
+                    : "hover:bg-primary hover:text-white hover:border-primary border-transparent";
+
+                  if (editor || !link.href.startsWith("/action")) {
+                    return (
+                      <Link href={link.href} key={linkIndex}>
+                        <button
+                          className={`w-full rounded text-sm py-2 px-2 text-left border-l-4 ${activeStyle}`}
+                          key={linkIndex}
+                        >
+                          {link.name}
+                        </button>
+                      </Link>
+                    );
+                  } else {
+                    return (
+                      <button
+                        className={`w-full rounded text-sm py-2 px-2 text-left border-l-4 bg-gray-200 text-gray-400 cursor-not-allowed`}
+                        key={linkIndex}
+                        disabled={true}
+                      >
+                        {link.name}
+                      </button>
+                    );
+                  }
+                })}
+              </div>
             </React.Fragment>
           ))}
         </div>

@@ -20,7 +20,7 @@ export default function RootLayout({
         <Sidebar />
         <div className="flex flex-col flex-grow">
           <Topbar />
-          <main className="flex-grow boxshadow">{children}</main>
+          <main className="flex-grow boxshadow rounded-[1rem]">{children}</main>
         </div>
       </body>
     </html>

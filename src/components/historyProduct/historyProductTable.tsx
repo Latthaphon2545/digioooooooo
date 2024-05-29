@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { randomBytes } from "crypto";
 import ViewImg from "./historyProductViewImg";
 import HistoryProductEdit from "./historyProductEdit";
+import Modal from "../modal";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -10,23 +11,10 @@ interface TableProps {
   editor?: boolean;
 }
 
-const USERSTATUS = [
-  "Installed",
-  "In Stock",
-  "Lost",
-  "Damaged",
-  "Repairing",
-  "Waiting for Repair",
-];
-
 export default function Table({ dataForCurrentPage, editor }: TableProps) {
   const [bool, setBool] = useState(false);
   const [boolEdit, setBoolEdit] = useState(editor);
   const [editingItem, setEditingItem] = useState(null);
-  const [openedTooltip, setOpenedTooltip] = useState<{
-    [key: string]: any;
-  } | null>(null);
-  const [openImg, setOpenImg] = useState<{ [key: string]: any } | null>(null);
 
   const handleEditData = (data: any) => {
     setBoolEdit(!boolEdit);
@@ -35,18 +23,10 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
     console.log(data);
   };
 
-  const image = [
-    "https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg",
-    "https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.jpg",
-    "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.jpg",
-    "https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.jpg",
-  ];
-
-  const widthTable = 12;
   return (
-    <div className={`min-h-[63vh] mt-3`}>
-      <table className="table">
-        <thead className="text-center">
+    <div className={`min-h-[50vh] mt-3`}>
+      <table className="table table-fixed w-full">
+        <thead>
           <tr>
             <th>time</th>
             <th>description</th>
@@ -58,17 +38,17 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         </thead>
         <tbody>
           {dataForCurrentPage.map((item) => {
-            const isEditing = editingItem === item;
+            // const isEditing = editingItem === item;
             return (
-              <tr key={randomBytes(5).toString("hex")}>
+              <tr key={item.time}>
                 {/* Time */}
-                <td className={`text-center w-1/${widthTable}`}>
+                <td>
                   <p>{item.time}</p>
                 </td>
 
                 {/* Description */}
-                <td className={`text-center w-6/${widthTable}`}>
-                  <div
+                <td>
+                  {/* <div
                     className={`tooltip ${
                       openedTooltip === item ? "tooltip-open" : ""
                     } tooltip-right`}
@@ -85,29 +65,28 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                       Open Description
                     </button>
                     <p className="text-xs">hover or click</p>
-                  </div>
+                  </div> */}
+                  <Modal
+                    title={<p>Description</p>}
+                    titleContent={"Description"}
+                    content={<p>{item.description}</p>}
+                  />
                 </td>
 
                 {/* User */}
-                <td className={`text-center w-1/${widthTable}`}>{item.user}</td>
+                <td>{item.user}</td>
 
                 {/* Category */}
-                <td className={`text-center w-1/${widthTable}`}>
-                  {item.category}
-                </td>
+                <td>{item.category}</td>
 
                 {/* Image */}
-                <td className={`w-1/${widthTable} text-center`}>
+                <td>
                   <ViewImg />
                 </td>
 
                 {/* Action To Eidtor */}
                 {editor && (
-                  <td
-                    className={`text-center h-24 ${
-                      boolEdit ? `w-1/${widthTable}` : ""
-                    }`}
-                  >
+                  <td className={`text-center h-24`}>
                     {boolEdit && <HistoryProductEdit data={[item]} />}
                   </td>
                 )}

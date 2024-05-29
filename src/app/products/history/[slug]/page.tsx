@@ -11,22 +11,32 @@ export default function Page({ params }: { params: { slug: string } }) {
   }));
 
   const data = Array.from({ length: 8 }, (_, i) => ({
-    time: "12:00 - 12/12/2021",
+    time: `${i + 1}:00 - 12/12/2021`,
     description:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form",
     user: "User",
-    category: "Check Stock",
+    category: ["Check Stock"],
   }));
 
   return (
     <>
-      <div>
-        <TablePageProductHistory
-          data={data}
-          dataCustomer={dataCustomer}
-          colorStatus="product"
-          editor={true}
-        />
+      <div className="flex flex-row">
+        <div className="flex flex-col w-full relative">
+          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
+            <h1 className="text-3xl font-bold">
+              <Link href="/products" className="curser-pointer">
+                Product
+              </Link>
+              <span className="font-normal">{` > ${params.slug}`}</span>
+            </h1>
+          </div>
+          <div className="flex justify-end mx-5"></div>
+          <TablePageProductHistory
+            data={data}
+            dataCustomer={dataCustomer}
+            editor={false}
+          />
+        </div>
       </div>
     </>
   );

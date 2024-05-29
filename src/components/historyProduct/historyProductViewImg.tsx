@@ -1,5 +1,6 @@
 import React from "react";
 import { MdImageSearch } from "react-icons/md";
+import Modal from "../modal";
 
 const ViewImg = () => {
   const image = [
@@ -40,31 +41,13 @@ const ViewImg = () => {
     );
   };
 
-  const openModal = () => {
-    const modal = document.getElementById("my_modal_5") as HTMLDialogElement;
-    if (modal) {
-      modal.showModal();
-    }
-  };
-
   return (
     <>
-      <button className="btn" onClick={openModal}>
-        <MdImageSearch size={20} />
-      </button>
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Images</h3>
-          <div className="modal-action">
-            <form method="dialog">
-              {imageShow(image)}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
-              </button>
-            </form>
-          </div>
-        </div>
-      </dialog>
+      <Modal
+        title={<MdImageSearch size={20} />}
+        titleContent="Image"
+        content={imageShow(image)}
+      />
     </>
   );
 };

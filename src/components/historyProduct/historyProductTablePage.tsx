@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Table from "./historyProductTable";
 import { usePathname } from "next/navigation";
 import Header from "./historyProductHeader";
-import Pagination from "./historyProductPagination";
+import Pagination from "../table/pagination";
 
 interface TablePageProps {
   data: {
@@ -13,27 +13,18 @@ interface TablePageProps {
   dataCustomer: {
     [key: string]: any;
   }[];
-  colorStatus: string;
-editor?: boolean;
+  editor?: boolean;
 }
 
-let ITEMPERPAGE = 5;
+let ITEMPERPAGE = 8;
 
 export default function TablePageProductHistory({
   data,
-  colorStatus,
   dataCustomer,
   editor,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / ITEMPERPAGE);
-  let dataForCurrentPage = data.slice(
-    (currentPage - 1) * ITEMPERPAGE,
-    currentPage * ITEMPERPAGE
-  );
-
-  const pathname = usePathname();
-  ITEMPERPAGE = pathname === "/products/list" ? 8 : ITEMPERPAGE;
 
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -41,12 +32,9 @@ export default function TablePageProductHistory({
 
   return (
     <>
-      <div className="container mx-auto px-4">
+      <div className="container px-4 mx-5">
         <Header data={dataCustomer} />
-        <Table
-          dataForCurrentPage={dataForCurrentPage}
-          editor={editor}
-        />
+        <Table dataForCurrentPage={data} editor={editor} />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
