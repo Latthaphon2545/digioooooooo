@@ -24,24 +24,44 @@ const InputForm = () => {
     { email: "", name: "", contact: "", role: null },
     { email: "", name: "", contact: "", role: null },
   ]);
+  const [uploading, setUploading] = useState(false);
 
   const handleSubmit = async () => {
-    console.log("Creating user....");
-    const filledOutInputs =
-      activeTab === 0
-        ? formValues
-            .filter(
-              ({ email, name, contact, role }) =>
-                email || name || contact || role
-            )
-            .map((value) => ({
-              ...value,
-              email: value.email + "@digio.co.th",
-            }))
-        : groupData;
-    const res = await axios.post("/api/users/createUsers", filledOutInputs);
-    console.log("res", res.data);
-    clearForm();
+    try {
+      const filledOutInputs =
+        activeTab === 0
+          ? formValues
+              .filter(
+                ({ email, name, contact, role }) =>
+                  email || name || contact || role
+              )
+              .map((value) => ({
+                ...value,
+                email: value.email + "@digio.co.th",
+              }))
+          : groupData;
+
+      console.log("Sending data:", filledOutInputs);
+
+      const res = await axios.post("/api/users/createUsers", filledOutInputs, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Response status:", res.status);
+      console.log("Response data:", res.data);
+
+      if (res.status === 201) {
+        console.log("Users created successfully:", res.data);
+      } else {
+        console.error("Failed to create users:", res.data);
+      }
+    } catch (error) {
+      console.error("Error creating users:", error);
+    } finally {
+      clearForm();
+    }
   };
 
   const clearForm = () => {
@@ -71,6 +91,8 @@ const InputForm = () => {
             headers={["email", "name", "contact", "role"]}
             setGroupData={setGroupData}
             page="user"
+            uploading={uploading}
+            setUploading={setUploading}
           />
         )}
       </div>
@@ -80,7 +102,7 @@ const InputForm = () => {
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
           id="add_user"
-          disabled={hasError}
+          disabled={hasError || uploading}
           action={handleSubmit}
         >
           Add

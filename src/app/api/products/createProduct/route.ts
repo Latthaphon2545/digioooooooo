@@ -14,6 +14,11 @@ export const POST = async (req: NextRequest) => {
             id: data.modelId,
           },
         },
+        merchant: {
+          connect: {
+            id: data.merchantId,
+          },
+        },
         history: {
           create: {
             user: {

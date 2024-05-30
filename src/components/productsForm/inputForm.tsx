@@ -18,6 +18,7 @@ const InputForm = () => {
   const [hasError, setHasError] = useState(false);
   const [model, setModel] = useState([]);
   const [groupData, setGroupData] = useState<Array<DataItem>>([]);
+  const [uploading, setUploading] = useState(false);
   const [formValues, setFormValues] = useState([
     { model: "", sn: "" },
     { model: "", sn: "" },
@@ -65,6 +66,8 @@ const InputForm = () => {
             model={model}
             setGroupData={setGroupData}
             page="product"
+            uploading={uploading}
+            setUploading={setUploading}
           />
         )}
       </div>
@@ -74,7 +77,7 @@ const InputForm = () => {
           alertHeader="Add Product"
           alertDescroption="Are you sure you want to add these products?"
           id="add_product"
-          disabled={hasError}
+          disabled={hasError || uploading}
           action={handleSubmit}
         >
           Add

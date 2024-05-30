@@ -4,6 +4,7 @@ import { read as readXlsx, utils as utilsXlsx } from "xlsx";
 import { GrDocumentUpload } from "react-icons/gr";
 import { InputPreview } from "./usersForm/inputPreview";
 import { DataItem, Role } from "@/lib/types";
+import ProgressIndicator from "./progressIndicator";
 
 type GroupUploadProps = {
   setHasError: (hasError: boolean) => void;
@@ -11,7 +12,13 @@ type GroupUploadProps = {
   model?: string[];
   setGroupData: (data: Array<DataItem>) => void;
   page: "user" | "product";
+  uploading: boolean;
+  setUploading: Dispatch<boolean>;
 };
+
+interface CustomCSSProperties extends React.CSSProperties {
+  "--value"?: number;
+}
 
 const GroupUpload = ({
   setHasError,
@@ -19,6 +26,8 @@ const GroupUpload = ({
   model,
   setGroupData,
   page,
+  uploading,
+  setUploading,
 }: GroupUploadProps) => {
   const [data, setData] = useState<
     Array<{
@@ -33,63 +42,80 @@ const GroupUpload = ({
   const [fileName, setFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [errorCount, setErrorCount] = useState(0);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
     setFileName(file.name);
     const reader = new FileReader();
-    reader.onload = (e) => {
-      const bufferArray = e.target!.result;
-      const wb = readXlsx(bufferArray, { type: "buffer" });
-      const wsname = wb.SheetNames[0];
-      const ws = wb.Sheets[wsname];
-      const data = utilsXlsx.sheet_to_json(ws, {
-        header: headers,
-      }) as Array<DataItem>;
-      const filteredData = data
-        .filter(
-          (item) =>
-            (page === "user" &&
-              item.email &&
-              item.name &&
-              item.contact &&
-              item.role) ||
-            (page === "product" && item.sn && item.model)
-        )
-        .map((item) => {
-          if (page === "product") {
-            return {
-              sn: item.sn,
-              model: item.model,
-            };
-          } else {
-            return {
-              email: item.email || "",
-              name: item.name || "",
-              contact: item.contact || "",
-              role: item.role as Role,
-            };
-          }
-        });
-      filteredData.shift();
-      setData(filteredData);
-      setGroupData(filteredData);
-      const hasError = filteredData.some((row) =>
-        headers[0] === "email"
-          ? !row.email?.endsWith("@digio.co.th")
-          : !model?.includes(row.model || "")
-      );
-      setHasError(hasError);
 
-      const errorCount = filteredData.filter((row) =>
-        headers[0] === "email"
-          ? !row.email?.endsWith("@digio.co.th") ||
-            !Object.values(Role).includes(
-              row.role.toUpperCase().replace(/ +/g, "") as Role
-            )
-          : !model?.includes(row.model || "")
-      ).length;
-      setErrorCount(errorCount);
+    reader.onloadstart = () => {
+      setUploading(true);
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        setUploadProgress(progress);
+        if (progress >= 100) {
+          clearInterval(interval);
+        }
+      }, 200);
+    };
+
+    reader.onload = (e) => {
+      setTimeout(() => {
+        const bufferArray = e.target!.result;
+        const wb = readXlsx(bufferArray, { type: "buffer" });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = utilsXlsx.sheet_to_json(ws, {
+          header: headers,
+        }) as Array<DataItem>;
+        const filteredData = data
+          .filter(
+            (item) =>
+              (page === "user" &&
+                item.email &&
+                item.name &&
+                item.contact &&
+                item.role) ||
+              (page === "product" && item.sn && item.model)
+          )
+          .map((item) => {
+            if (page === "product") {
+              return {
+                sn: item.sn,
+                model: item.model,
+              };
+            } else {
+              return {
+                email: item.email || "",
+                name: item.name || "",
+                contact: item.contact || "",
+                role: item.role as Role,
+              };
+            }
+          });
+        filteredData.shift();
+        setData(filteredData);
+        setGroupData(filteredData);
+        const hasError = filteredData.some((row) =>
+          headers[0] === "email"
+            ? !row.email?.endsWith("@digio.co.th")
+            : !model?.includes(row.model || "")
+        );
+        setHasError(hasError);
+
+        const errorCount = filteredData.filter((row) =>
+          headers[0] === "email"
+            ? !row.email?.endsWith("@digio.co.th") ||
+              !Object.values(Role).includes(
+                row.role.toUpperCase().replace(/ +/g, "") as Role
+              )
+            : !model?.includes(row.model || "")
+        ).length;
+        setErrorCount(errorCount);
+        setUploading(false);
+      }, 2000);
     };
     reader.readAsArrayBuffer(file);
   };
@@ -130,22 +156,39 @@ const GroupUpload = ({
       </div>
       <div className="relative">
         <div className="border-2 min-w-[40rem] min-h-[30rem] max-h-[30rem] overflow-scroll relative">
-          <InputPreview data={data} headers={headers} model={model} />
+          {uploading && <ProgressIndicator uploadProgress={uploadProgress} />}
+          <InputPreview
+            data={data}
+            headers={headers}
+            model={model}
+            uploading={uploading}
+          />
         </div>
         {data.length > 0 && (
-          <>
-            <span className="badge badge-primary badge-lg py-4 px-3 absolute -bottom-10 left-2">
+          <div className="absolute -bottom-10 left-2 flex flex-wrap space-x-2">
+            <span className="badge badge-primary badge-lg py-4 px-3">
               Total {data.length}
             </span>
             <span
               className={`badge ${
                 errorCount > 0 ? "badge-error" : "badge-success"
-              } badge-lg py-4 px-3 absolute -bottom-10 left-[6.2rem]`}
+              } badge-lg py-4 px-3`}
             >
               {errorCount > 0 ? `Error ${errorCount}` : "Success"}
             </span>
-          </>
+          </div>
         )}
+        {/* <div className="relative">
+          {uploading && (
+            <div
+              className={`radial-progress text-primary absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+              style={{ "--value": uploadProgress } as CustomCSSProperties}
+              role="progressbar"
+            >
+              {uploadProgress}%
+            </div>
+          )}
+        </div> */}
       </div>
     </div>
   );

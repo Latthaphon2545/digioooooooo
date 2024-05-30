@@ -11,7 +11,6 @@ export default function ProductPreview({
   }[];
   model: string[];
 }) {
-  console.log(data[0].model, data[0].sn);
   return (
     <div>
       <table className="table ">

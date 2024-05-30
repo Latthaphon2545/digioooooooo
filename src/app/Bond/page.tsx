@@ -1,6 +1,4 @@
-import Sidebar from "@/components/bar/sidebar";
 import ModelInputForm from "@/components/modelForm/inputForm";
-import InputForm from "@/components/usersForm/inputForm";
 import React from "react";
 
 const BondPage = () => {

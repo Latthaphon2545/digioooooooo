@@ -5,6 +5,7 @@ export default function ModelInputForm() {
   return (
     <div className="">
       <ModelInputHeader />
+
       <ModelInput />
     </div>
   );
