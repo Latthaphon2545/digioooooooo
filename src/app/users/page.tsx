@@ -12,7 +12,7 @@ import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 export default function Home() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(false);
+  const [isEditor, setIseditor] = useState(true);
 
   const [loading, setLoading] = useState(true);
 

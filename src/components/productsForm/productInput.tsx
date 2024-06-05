@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import ProductInputField from "./productInputField";
 import axios from "axios";
+import { Model } from "@/lib/types";
 
 type FormValues = {
   sn: string;
@@ -11,13 +12,13 @@ type FormValues = {
 type ProductInputProps = {
   formValues: FormValues;
   setFormValues: Dispatch<SetStateAction<FormValues>>;
-  model: string[];
+  models: Model[];
 };
 
 const ProductInput = ({
   formValues,
   setFormValues,
-  model,
+  models,
 }: ProductInputProps) => {
   const handleInputChange =
     (index: number, field: keyof (typeof formValues)[0]) =>
@@ -50,7 +51,7 @@ const ProductInput = ({
                   index={index}
                   formValues={formValues}
                   handleInputChange={handleInputChange}
-                  model={model}
+                  model={models}
                 />
               );
             })}

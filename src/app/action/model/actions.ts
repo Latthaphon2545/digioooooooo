@@ -3,10 +3,12 @@
 import { uploadImage } from "@/lib/cloudinary";
 import { db } from "@/lib/db";
 import { StatusProduct } from "@/lib/types";
-import axios from "axios";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createModel(formData: FormData) {
   const INFORMATION_FIELD = [
+    "description",
     "operating_system",
     "processor",
     "display",
@@ -31,6 +33,7 @@ export async function createModel(formData: FormData) {
       },
       {}
     ),
+    image: image,
     status: Object.values(StatusProduct).reduce(
       (statusObj: Record<StatusProduct, number>, status: StatusProduct) => {
         statusObj[status] = 0;
@@ -47,11 +50,10 @@ export async function createModel(formData: FormData) {
       }
     ),
   };
-  console.log("model", model);
-  console.log("image", image);
 
-  //   const res = await db.model.create({
-  //     data: model,
-  //   });
-  //   return res;
+  const res = await db.model.create({
+    data: model,
+  });
+  revalidatePath("/products/models");
+  redirect("/products/models");
 }

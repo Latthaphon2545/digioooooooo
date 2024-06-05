@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import { useFormStatus } from "react-dom";
 
 type AlertProps = {
   children: React.ReactNode;
@@ -19,6 +21,7 @@ export default function SubmitPopupButton({
   id,
   disabled,
 }: AlertProps) {
+  const { pending } = useFormStatus();
   return (
     <div>
       <label htmlFor={id} className={`btn ${styles}`}>
@@ -34,9 +37,19 @@ export default function SubmitPopupButton({
             <label htmlFor={id} className="btn">
               Close
             </label>
-            <button className="btn" type="submit" disabled={disabled}>
-              Submit
-            </button>
+            <label htmlFor={id}>
+              <button
+                className="btn"
+                type="submit"
+                disabled={disabled || pending}
+              >
+                {pending ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  <p>{children}</p>
+                )}
+              </button>
+            </label>
           </div>
         </div>
       </div>

@@ -29,6 +29,24 @@ export type Model = {
   status: StatusProduct;
 };
 
+export type User = {
+  id: string;
+  email: string;
+  name: string;
+  hashedPassword: string;
+  contact: string;
+  role: Role;
+  status: StatusUser;
+  token?: JSON;
+};
+
+export enum StatusUser {
+  INACTIVE = "INACTIVE",
+  ACTIVE = "ACTIVE",
+  RESTRICTED = "RESTRICTED",
+  PENDING = "PENDING",
+}
+
 export enum StatusProduct {
   INSTOCK = "INSTOCK",
   LOST = "LOST",
