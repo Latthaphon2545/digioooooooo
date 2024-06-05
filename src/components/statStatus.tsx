@@ -1,4 +1,4 @@
-const stat = (status: Record<string, string>) => {
+const StatStatus = (status: Record<string, string>) => {
   return (
     <div className="stats stats-vertical lg:stats-horizontal shadow w-full">
       {Object.entries(status).map(([key, value], index) => (
@@ -11,4 +11,4 @@ const stat = (status: Record<string, string>) => {
   );
 };
 
-export default stat;
+export default StatStatus;

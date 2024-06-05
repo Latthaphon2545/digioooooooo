@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Modal from "../modal";
-import stat from "./statModel";
+import StatStatus from "../statStatus";
+
+import { FaEdit } from "react-icons/fa";
 
 interface Model {
   series: string;
@@ -11,9 +13,10 @@ interface Model {
 
 interface ModelProps {
   models: Model[];
+  edit: boolean;
 }
 
-export default function Model({ models }: ModelProps) {
+export default function Model({ models, edit }: ModelProps) {
   return (
     <div className="flex flex-wrap justify-center">
       {models.map((model, index) => (
@@ -32,11 +35,17 @@ export default function Model({ models }: ModelProps) {
                 content={model.information.description}
               />
               <h2>{model.series}</h2>
+              <button
+                disabled={!edit}
+                className={`${edit ? "" : "cursor-not-allowed"}`}
+              >
+                <FaEdit color={`${edit ? "black" : "gray"}`} />
+              </button>
             </div>
-            {stat(model.status)}
+            {StatStatus(model.status)}
             <div className="card-actions justify-end mt-3">
               <Link
-                href={`/products/list?filter=${model.series}&search=&skip=0&take=8`}
+                href={`/products?filter=${model.series}&search=&skip=0&take=8`}
               >
                 <button className="btn btn-primary">Watch</button>
               </Link>

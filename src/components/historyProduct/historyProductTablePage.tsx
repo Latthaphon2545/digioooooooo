@@ -14,6 +14,7 @@ interface TablePageProps {
     [key: string]: any;
   }[];
   editor?: boolean;
+  lengthHistory: number;
 }
 
 let ITEMPERPAGE = 8;
@@ -22,10 +23,9 @@ export default function TablePageProductHistory({
   data,
   dataCustomer,
   editor,
+  lengthHistory,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / ITEMPERPAGE);
-
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -37,7 +37,7 @@ export default function TablePageProductHistory({
         <Table dataForCurrentPage={data} editor={editor} />
         <Pagination
           currentPage={currentPage}
-          totalPages={totalPages}
+          totalPages={lengthHistory}
           lengthData={data.length}
           onPageChange={onPageChange}
         />

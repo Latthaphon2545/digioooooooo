@@ -1,22 +1,42 @@
+"use client";
+
 import TablePageProductHistory from "@/components/historyProduct/historyProductTablePage";
+import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+// /api/products/getHistory?sn=test4&skip=0&take=8
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const dataCustomer = Array.from({ length: 1 }, (_, i) => ({
-    model: `Model 1`,
-    serialNumber: params.slug,
-    status: "Installed",
-    merchant: `Merchant 1`,
-    bank: `Bank 1`,
-  }));
+  const [dataHistory, setDataHistory] = useState([]);
+  const [dataProduct, setDataProduct] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
 
-  const data = Array.from({ length: 8 }, (_, i) => ({
-    time: `${i + 1}:00 - 12/12/2021`,
-    description:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form",
-    user: "User",
-    category: ["Check Stock"],
-  }));
+  useEffect(() => {
+    const getHistory = async () => {
+      const res = await axios.get(
+        `/api/products/getHistory?sn=${params.slug}&skip=0&take=8`
+      );
+      const data = res.data;
+      const dataCustomer = data.productsHistory;
+      const lengthHistory = data.lengthHistory;
+
+      const transformedHistory = dataCustomer.map((item: any) => ({
+        time: new Date(item.createdAt).toLocaleString(),
+        description: item.description,
+        user: item.user.name,
+        category: [item.category],
+      }));
+
+      const productDetails = dataCustomer[0]?.product;
+
+      setDataHistory(transformedHistory);
+      setDataProduct(productDetails);
+      setTotalPages(lengthHistory);
+    };
+
+    getHistory();
+  }, []);
 
   return (
     <>
@@ -32,9 +52,10 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
           <div className="flex justify-end mx-5"></div>
           <TablePageProductHistory
-            data={data}
-            dataCustomer={dataCustomer}
+            data={dataHistory}
+            dataCustomer={dataProduct}
             editor={false}
+            lengthHistory={totalPages}
           />
         </div>
       </div>

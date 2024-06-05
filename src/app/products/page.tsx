@@ -1,6 +1,7 @@
 "use client";
 
 import ActionButton from "@/components/actionButton";
+import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageProduct from "@/components/productTable/productTablePage";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -9,7 +10,9 @@ import { useEffect, useState } from "react";
 export default function productmanagement() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(true);
+  const [isEditor, setIseditor] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   const path = useSearchParams();
   const filter = path.get("filter") || "";
@@ -29,6 +32,8 @@ export default function productmanagement() {
         setDataLength(res.data.totalProducts);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     updateData();
@@ -53,11 +58,15 @@ export default function productmanagement() {
             </div>
           </div>
           <div className="flex justify-end mx-5"></div>
-          <TablePageProduct
-            data={data}
-            editor={isEditor}
-            totalLength={dataLength}
-          />
+          {loading ? (
+            <TablePageLoading Type="Product" />
+          ) : (
+            <TablePageProduct
+              data={data}
+              editor={isEditor}
+              totalLength={dataLength}
+            />
+          )}
         </div>
       </div>
     </>

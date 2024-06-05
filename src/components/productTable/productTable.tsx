@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { TbUserEdit } from "react-icons/tb";
+import { CiLock } from "react-icons/ci";
 import ActionButton from "../actionButton";
 import { FaHistory } from "react-icons/fa";
 import Link from "next/link";
 import Modal from "../modal";
-import { usePathname } from "next/navigation";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -20,7 +20,6 @@ export default function Table({
   editor,
 }: TableProps) {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
-  const pathName = usePathname();
 
   const handleEditToggle = (key: string) => {
     setIsEditing((prev) => ({
@@ -92,7 +91,7 @@ export default function Table({
 
         {/* History */}
         <td className={` py-2 px-4 h-[8vh]`}>
-          <Link href={`${pathName}/history/${item.serialNumber}`}>
+          <Link href={`products/history/${item.serialNumber}`}>
             <FaHistory size={15} />
           </Link>
         </td>
@@ -122,7 +121,7 @@ export default function Table({
               styles="btn-info"
               disabled={!editor}
             >
-              <TbUserEdit size={20} /> Edit
+              <TbUserEdit size={20} /> Edit{" "}
             </ActionButton>
           )}
         </td>
@@ -191,7 +190,7 @@ const EditableField = ({
   />
 );
 
-const convertStatus = (status: string) => {
+export const convertStatus = (status: string) => {
   let showStatus = "";
   if (status === "INSTOCK") {
     showStatus = "In Stock";

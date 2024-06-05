@@ -7,11 +7,14 @@ import Table from "@/components/usersTable/usersTablePage";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ActionButton from "@/components/actionButton";
+import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 
 export default function Home() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
   const [isEditor, setIseditor] = useState(true);
+
+  const [loading, setLoading] = useState(true);
 
   const path = useSearchParams();
   const filter = path.get("filter") || "";
@@ -31,6 +34,8 @@ export default function Home() {
         setDataLength(res.data.length);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     updateData();
@@ -55,12 +60,16 @@ export default function Home() {
             </div>
           </div>
           <div className="flex justify-end mx-5"></div>
-          <Table
-            data={data}
-            colorStatus="user"
-            editor={isEditor}
-            totalLength={dataLength}
-          />
+          {loading ? (
+            <TablePageLoading Type="User" />
+          ) : (
+            <Table
+              data={data}
+              colorStatus="user"
+              editor={isEditor}
+              totalLength={dataLength}
+            />
+          )}
         </div>
       </div>
     </>
