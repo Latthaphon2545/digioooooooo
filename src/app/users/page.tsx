@@ -22,19 +22,19 @@ export default function Home() {
   const search = path.get("search") || "";
   const skip = path.get("skip") || "";
   const take = path.get("take") || "";
-  const [showAlert, setShowAlert] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
 
   const router = useRouter();
   const alertMessage = useSearchParams().get("alert") || "";
 
-  // useEffect(() => {
-  //   if (alertMessage) {
-  //     setShowAlert(true);
-  //     setTimeout(() => {
-  //       setShowAlert(false);
-  //     }, 3000);
-  //   }
-  // }, [alertMessage]);
+  useEffect(() => {
+    if (alertMessage) {
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+    }
+  }, [alertMessage]);
 
   useEffect(() => {
     const updateData = async () => {
