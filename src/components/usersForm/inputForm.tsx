@@ -1,14 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoPersonAddSharp } from "react-icons/io5";
 import Alert from "../alert";
 import InputHeader from "./inputHeader";
 import UserInput from "./userInput";
 import GroupUpload from "../groupUpload";
 import { DataItem, Role } from "@/lib/types";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { redirect, useRouter } from "next/navigation";
 import AlertDialog from "../alertDialog";
+import { BiError } from "react-icons/bi";
 
 type FormValues = {
   email: string;
@@ -16,13 +17,6 @@ type FormValues = {
   contact: string;
   role: Role | null;
 }[];
-
-type PrismaErrorProps = {
-  code: string;
-  meta: {
-    target: string[];
-  };
-};
 
 const InputForm = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -38,9 +32,29 @@ const InputForm = () => {
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    if (errorOnSubmit) {
+      const timer = setTimeout(() => {
+        setErrorOnSubmit("");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorOnSubmit]);
+
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
+      if (
+        activeTab === 0 &&
+        formValues.every(
+          ({ email, name, contact, role }) =>
+            !email && !name && !contact && !role
+        )
+      ) {
+        setErrorOnSubmit("Please fill out the form");
+        return;
+      }
+
       groupData.forEach((value) => {
         value.role = value.role?.toUpperCase().replace(/ +/g, "") as Role;
       });
@@ -57,6 +71,13 @@ const InputForm = () => {
               }))
           : groupData;
 
+      for (let input of filledOutInputs) {
+        if (!input.email || !input.name || !input.contact || !input.role) {
+          setErrorOnSubmit("Please fill out all fields");
+          return;
+        }
+      }
+
       console.log("Sending data:", filledOutInputs);
 
       const res = await axios.post("/api/users/createUsers", filledOutInputs, {
@@ -67,29 +88,21 @@ const InputForm = () => {
 
       console.log("Response status:", res.status);
       if (res.data.code === "P2002") {
-        setErrorOnSubmit("Duplicate email found");
+        setErrorOnSubmit(
+          "Duplicate email found, please check your data again!"
+        );
+        return;
+      }
+      if (res.status === 201) {
+        router.push(
+          "/users?filter=&search=&skip=0&take=8&alert=Users added successfully"
+        );
       }
     } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data) {
-        const prismaError = axiosError.response.data as PrismaErrorProps;
-        if (prismaError.code === "P2002") {
-          setErrorOnSubmit("Duplicate email found");
-          console.error("A user with this email already exists");
-        } else {
-          setErrorOnSubmit("Error creating users");
-          console.error("Error creating users:", axiosError);
-        }
-      }
+      console.log("Error:", error);
     } finally {
       setSubmitting(false);
       clearForm();
-      if (errorOnSubmit) {
-        setTimeout(() => {
-          setErrorOnSubmit("");
-          router.refresh();
-        }, 2000);
-      }
     }
   };
 
@@ -133,7 +146,8 @@ const InputForm = () => {
       {errorOnSubmit && (
         <AlertDialog
           title={errorOnSubmit}
-          styles="alert-error absolute w-[50vh] mx-10"
+          styles="alert-error absolute w-fit mx-10 py-3 bottom-3"
+          icon={<BiError size={20} />}
         />
       )}
       <div className="flex justify-end mr-10">
