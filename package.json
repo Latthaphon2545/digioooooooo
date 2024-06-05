@@ -9,15 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ericblade/quagga2": "^1.8.4",
     "@prisma/client": "^5.14.0",
+    "@zxing/browser": "^0.1.5",
+    "@zxing/library": "^0.21.0",
     "axios": "^1.7.1",
     "cloudinary": "^2.2.0",
+    "fs": "^0.0.1-security",
+    "javascript-barcode-reader": "^0.6.9",
+    "jsqr": "^1.4.0",
     "mongodb": "^6.6.2",
     "next": "14.2.3",
     "react": "^18",
+    "react-barcode-scanner": "^2.0.2",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
-    "use-barcode-detection": "^1.0.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

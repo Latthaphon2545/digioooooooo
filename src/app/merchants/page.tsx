@@ -1,6 +1,7 @@
 "use client";
 
 import ActionButton from "@/components/actionButton";
+import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageMerchants from "@/components/merchantsTable/merchantsTablePage";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -10,6 +11,8 @@ export default function productmanagement() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
   const [isEditor, setIseditor] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   const path = useSearchParams();
   const search = path.get("search") || "";
@@ -28,8 +31,11 @@ export default function productmanagement() {
         setDataLength(res.data.totalMerchant);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
+
     updateData();
   }, [search, skip, take]);
 
@@ -52,11 +58,15 @@ export default function productmanagement() {
             </div>
           </div>
           <div className="flex justify-end mx-5"></div>
-          <TablePageMerchants
-            data={data}
-            editor={isEditor}
-            totalLength={dataLength}
-          />
+          {loading ? (
+            <TablePageLoading Type="Merchant" />
+          ) : (
+            <TablePageMerchants
+              data={data}
+              editor={isEditor}
+              totalLength={dataLength}
+            />
+          )}
         </div>
       </div>
     </>

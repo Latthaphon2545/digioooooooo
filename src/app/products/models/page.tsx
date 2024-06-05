@@ -1,16 +1,25 @@
 "use client";
 
+import ModelLoading from "@/components/loading/loadingModel/modelPage";
 import Model from "@/components/model/modelPage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Models() {
   const [models, setModels] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("/api/model/getModel");
-      setModels(res.data.model);
+      try {
+        setLoading(true);
+        const res = await axios.get("/api/model/getModel");
+        setModels(res.data.model);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -23,7 +32,11 @@ export default function Models() {
             <h1 className="text-3xl font-bold mt-5 mb-1">Models</h1>
           </div>
           <div className="flex flex-wrap justify-center overflow-y-auto w-full h-full">
-            <Model models={models} />
+            {loading ? (
+              <ModelLoading length={4} />
+            ) : (
+              <Model models={models} edit={false} />
+            )}
           </div>
         </div>
       </div>

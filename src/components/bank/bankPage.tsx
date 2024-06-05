@@ -40,6 +40,7 @@ export default function BankPage({ banks, products }: BankPageProps) {
           </figure>
         </div>
       ))}
+      <div className="skeleton w-96 opacity-15 h-[81vh]"></div>
     </div>
   );
 }

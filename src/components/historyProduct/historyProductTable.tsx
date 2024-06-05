@@ -16,6 +16,8 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
   const [boolEdit, setBoolEdit] = useState(editor);
   const [editingItem, setEditingItem] = useState(null);
 
+  console.log(dataForCurrentPage);
+
   const handleEditData = (data: any) => {
     setBoolEdit(!boolEdit);
     setBool(!bool);
@@ -28,10 +30,10 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
       <table className="table table-fixed w-full">
         <thead>
           <tr>
-            <th>time</th>
-            <th>description</th>
-            <th>user</th>
-            <th>category</th>
+            <th>Time</th>
+            <th>Description</th>
+            <th>User</th>
+            <th>Category</th>
             <th>Image</th>
             {editor && <th>Action</th>}
           </tr>

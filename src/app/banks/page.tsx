@@ -1,4 +1,5 @@
 import BankPage from "@/components/bank/bankPage";
+import LoadingBankPage from "@/components/loading/loadingBank/BankPage";
 
 export default function Page() {
   const data = [
@@ -48,6 +49,7 @@ export default function Page() {
   return (
     <div>
       <BankPage banks={data} products={products} />
+      {/* <LoadingBankPage /> */}
     </div>
   );
 }

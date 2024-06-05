@@ -35,27 +35,6 @@ export default function TablePageProduct({
     getLengthUsers();
   }, [totalLength, itemPerPage]);
 
-  const colorProductStatus = (status: string) => {
-    status = status.toLocaleLowerCase();
-    let color = "";
-    if (status === "installed") {
-      color = "primary";
-    } else if (status === "in stock") {
-      color = "success";
-    } else if (status === "Lost") {
-      color = "";
-    } else if (status === "damaged") {
-      color = "error";
-    } else if (status === "reparing") {
-      color = "warning";
-    } else if (status === "waiting for repair") {
-      color = "secondary";
-    } else if (status === "installing") {
-      color = "accent";
-    }
-    return color;
-  };
-
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -81,3 +60,24 @@ export default function TablePageProduct({
     </>
   );
 }
+
+export const colorProductStatus = (status: string) => {
+  status = status.toLocaleLowerCase();
+  let color = "";
+  if (status === "installed") {
+    color = "primary";
+  } else if (status === "in stock") {
+    color = "success";
+  } else if (status === "lost") {
+    color = "";
+  } else if (status === "damaged") {
+    color = "error";
+  } else if (status === "reparing") {
+    color = "warning";
+  } else if (status === "waiting for repair") {
+    color = "secondary";
+  } else if (status === "installing") {
+    color = "accent";
+  }
+  return color;
+};

@@ -1,26 +1,19 @@
-"use client";
-
-import { useState } from "react";
+import Image from "next/image";
 import InputCheckStock from "./inputCheckStock";
-import Scanner from "./scaner";
+
+import BG from "/public/image/checkStockBG.jpg";
 
 export default function CheckStockPage() {
-  const [openScanner, setOpenScanner] = useState(false);
   return (
-    <div className="flex flex-col gap-4 mx-5">
-      <div>
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            setOpenScanner(!openScanner);
-          }}
-        >
-          {openScanner ? "Input Serial Number" : "Scan Serial Number"}
-        </button>
-      </div>
-      <div>
-        {!openScanner && <InputCheckStock />}
-        {openScanner && <Scanner />}
+    <div className="gap-4 mx-5 my-3 ">
+      <div className="flex flex-col gap-4">
+        <p>Please type the barcode or scan the barcode to check the stock.</p>
+        <div className="flex gap-4 justify-around">
+          <div className="w-2/6">
+            <InputCheckStock />
+          </div>
+          <Image src={BG} className="w-3/6" alt="check stock" />
+        </div>
       </div>
     </div>
   );
