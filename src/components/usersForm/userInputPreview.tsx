@@ -2,14 +2,18 @@ import { DataItem, Role } from "@/lib/types";
 import React from "react";
 
 export default function UserInputPreview({ data }: { data: DataItem[] }) {
-  const checkEmail = (email: string) => {
-    return email.endsWith("@digio.co.th");
+  const checkEmail = (email: string, index: number) => {
+    const isDuplicate = data
+      .slice(0, index)
+      .some((item) => item.email === email);
+    return email.endsWith("@digio.co.th") && !isDuplicate;
   };
 
   const checkRole = (role: string) => {
     role = role.toUpperCase().replace(/ +/g, "");
     return Object.values(Role).includes(role as Role);
   };
+
   return (
     <div>
       <table className="table">
@@ -26,7 +30,9 @@ export default function UserInputPreview({ data }: { data: DataItem[] }) {
               <td className="text-xl font-medium">{index + 1}.</td>
               <td
                 className={`overflow-scroll p-2  flex flex-row space-x-4 text-lg ${
-                  checkEmail(row.email ?? "") ? "text-success" : "text-error"
+                  checkEmail(row.email ?? "", index)
+                    ? "text-success"
+                    : "text-error"
                 }`}
               >
                 {row.email}

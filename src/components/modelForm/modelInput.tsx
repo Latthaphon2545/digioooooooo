@@ -37,7 +37,7 @@ const ModelInput = () => {
               className={`ml-7 mt-3 font-normal block p-2.5 min-w-[70vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  w-full  `}
             ></textarea>
           </label>
-          <fieldset className="flex flex-col space-y-3">
+          <fieldset className="flex flex-col space-y-1">
             <legend className="ml-2 capitalize font-semibold">
               Specification:
             </legend>

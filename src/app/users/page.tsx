@@ -11,7 +11,7 @@ import ActionButton from "@/components/actionButton";
 export default function Home() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(false);
+  const [isEditor, setIseditor] = useState(true);
 
   const path = useSearchParams();
   const filter = path.get("filter") || "";

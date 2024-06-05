@@ -1,3 +1,4 @@
+import { Model } from "@/lib/types";
 import React from "react";
 
 type InputFieldProps = {
@@ -6,7 +7,7 @@ type InputFieldProps = {
     model: string;
     sn: string;
   }[];
-  model: string[];
+  model: Model[];
   handleInputChange: (
     index: number,
     field: "model" | "sn"
@@ -34,8 +35,8 @@ const ProductInputField = ({
             Select Model
           </option>
           {model.map((model, index) => (
-            <option key={index} value={model}>
-              {model}
+            <option key={index} value={model.id}>
+              {model.series}
             </option>
           ))}
         </select>

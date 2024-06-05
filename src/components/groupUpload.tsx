@@ -3,27 +3,23 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { read as readXlsx, utils as utilsXlsx } from "xlsx";
 import { GrDocumentUpload } from "react-icons/gr";
 import { InputPreview } from "./usersForm/inputPreview";
-import { DataItem, Role } from "@/lib/types";
+import { DataItem, Model, Role } from "@/lib/types";
 import ProgressIndicator from "./progressIndicator";
 
 type GroupUploadProps = {
   setHasError: (hasError: boolean) => void;
   headers: string[];
-  model?: string[];
+  models?: Model[];
   setGroupData: (data: Array<DataItem>) => void;
   page: "user" | "product";
   uploading: boolean;
   setUploading: Dispatch<boolean>;
 };
 
-interface CustomCSSProperties extends React.CSSProperties {
-  "--value"?: number;
-}
-
 const GroupUpload = ({
   setHasError,
   headers,
-  model,
+  models,
   setGroupData,
   page,
   uploading,
@@ -43,6 +39,36 @@ const GroupUpload = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [errorCount, setErrorCount] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const modelNames = models?.map((item) => item.series);
+
+  const validateEmailAndRole = (
+    email: string,
+    role: Role,
+    data: Array<DataItem>,
+    index: number
+  ) => {
+    const isDuplicate = data
+      .slice(0, index)
+      .some((item) => item.email === email);
+    return (
+      isDuplicate ||
+      !email.endsWith("@digio.co.th") ||
+      !Object.values(Role).includes(
+        role.toUpperCase().replace(/ +/g, "") as Role
+      )
+    );
+  };
+
+  const validateSn = (sn: string, data: Array<DataItem>, index: number) => {
+    const isDuplicate = data.slice(0, index).some((item) => item.sn === sn);
+    return isDuplicate;
+  };
+
+  const validateModel = (inputModel: string) => {
+    return !models
+      ?.map((item) => item.series.toLowerCase())
+      .includes(inputModel!.toLowerCase().trim().replace(/ +/g, "") || "");
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -83,7 +109,7 @@ const GroupUpload = ({
           .map((item) => {
             if (page === "product") {
               return {
-                sn: item.sn,
+                sn: item.sn?.toString() || "",
                 model: item.model,
               };
             } else {
@@ -96,23 +122,37 @@ const GroupUpload = ({
             }
           });
         filteredData.shift();
+        filteredData.forEach((item) => {
+          console.log(typeof item.sn as string);
+        });
         setData(filteredData);
         setGroupData(filteredData);
-        const hasError = filteredData.some((row) =>
-          headers[0] === "email"
-            ? !row.email?.endsWith("@digio.co.th")
-            : !model?.includes(row.model || "")
-        );
-        setHasError(hasError);
+
+        // const hasError = filteredData.some((row) =>
+        //   headers[0] === "email"
+        //     ? !row.email?.endsWith("@digio.co.th")
+        //     : !modelNames?.includes(row.model || "")
+        // );
+        // setHasError(hasError);
 
         const errorCount = filteredData.filter((row) =>
           headers[0] === "email"
-            ? !row.email?.endsWith("@digio.co.th") ||
-              !Object.values(Role).includes(
-                row.role.toUpperCase().replace(/ +/g, "") as Role
+            ? // ? !row.email?.endsWith("@digio.co.th") ||
+              //   !Object.values(Role).includes(
+              //     row.role.toUpperCase().replace(/ +/g, "") as Role
+              //   )
+              // : !model?.includes(row.model!.trim().replace(/ +/g, "") || "")
+              validateEmailAndRole(
+                row.email!,
+                row.role!,
+                filteredData,
+                filteredData.indexOf(row)
               )
-            : !model?.includes(row.model || "")
+            : validateModel(row.model!) ||
+              validateSn(row.sn!, filteredData, filteredData.indexOf(row))
         ).length;
+        const hasError = errorCount > 0;
+        setHasError(hasError);
         setErrorCount(errorCount);
         setUploading(false);
       }, 2000);
@@ -148,7 +188,10 @@ const GroupUpload = ({
         </div>
         <a
           className="flex flex-row items-center text-lg cursor-pointer"
-          download={""}
+          href={`/uploadTemplate/${
+            page === "product" ? "ProductTemplate" : "UserTemplate"
+          }.xlsx`}
+          download
         >
           <MdOutlineFileDownload className="w-10 h-10" />
           <p>Download Template</p>
@@ -157,12 +200,14 @@ const GroupUpload = ({
       <div className="relative">
         <div className="border-2 min-w-[40rem] min-h-[30rem] max-h-[30rem] overflow-scroll relative">
           {uploading && <ProgressIndicator uploadProgress={uploadProgress} />}
-          <InputPreview
-            data={data}
-            headers={headers}
-            model={model}
-            uploading={uploading}
-          />
+          {!uploading && (
+            <InputPreview
+              data={data}
+              headers={headers}
+              modelNames={modelNames}
+              uploading={uploading}
+            />
+          )}
         </div>
         {data.length > 0 && (
           <div className="absolute -bottom-10 left-2 flex flex-wrap space-x-2">

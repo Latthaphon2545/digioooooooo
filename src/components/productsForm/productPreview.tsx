@@ -1,6 +1,6 @@
 export default function ProductPreview({
   data,
-  model,
+  modelNames,
 }: {
   data: {
     email?: string | undefined;
@@ -9,8 +9,19 @@ export default function ProductPreview({
     sn?: string | undefined;
     model?: string | undefined;
   }[];
-  model: string[];
+  modelNames: string[];
 }) {
+  const checkSN = (sn: string, index: number) => {
+    const isDuplicate = data.slice(0, index).some((item) => item.sn === sn);
+    return !isDuplicate;
+  };
+
+  const validateModel = (inputModel: string) => {
+    return modelNames
+      ?.map((item) => item.toLowerCase())
+      .includes(inputModel!.toLowerCase().trim().replace(/ +/g, "") || "");
+  };
+
   return (
     <div>
       <table className="table ">
@@ -25,12 +36,16 @@ export default function ProductPreview({
           {data.map((row, index) => (
             <tr key={index}>
               <td className="text-xl font-medium">{index + 1}.</td>
-              <td className="p-2 text-lg">{row.sn}</td>
+              <td
+                className={`p-2 text-lg ${
+                  checkSN(row.sn ?? "", index) ? "text-success" : "text-error"
+                }`}
+              >
+                {row.sn}
+              </td>
               <td
                 className={`overflow-scroll p-2  flex flex-row space-x-4 text-lg ${
-                  model.includes(row.model ?? "")
-                    ? "text-success"
-                    : "text-error"
+                  validateModel(row.model ?? "") ? "text-success" : "text-error"
                 }`}
               >
                 {row.model}

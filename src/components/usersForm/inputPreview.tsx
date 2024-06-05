@@ -1,18 +1,18 @@
-import { DataItem } from "@/lib/types";
+import { DataItem, Model } from "@/lib/types";
 import ProductPreview from "../productsForm/productPreview";
 import UserInputPreview from "./userInputPreview";
 
 type InputPreviewProps = {
   data: Array<DataItem>;
   headers: string[];
-  model?: string[];
+  modelNames?: string[];
   uploading?: boolean;
 };
 
 export function InputPreview({
   data,
   headers,
-  model,
+  modelNames,
   uploading,
 }: InputPreviewProps) {
   if (data.length === 0 && !uploading) {
@@ -25,14 +25,11 @@ export function InputPreview({
 
   return (
     <div className="relative ">
-      <div className="badge badge-primary badge-lg py-4 px-2 absolute top-2 right-2">
-        {data.length}
-      </div>
       <div className="">
         {headers[0] === "email" ? (
           <UserInputPreview data={data} />
         ) : (
-          <ProductPreview data={data} model={model!} />
+          <ProductPreview data={data} modelNames={modelNames!} />
         )}
       </div>
     </div>

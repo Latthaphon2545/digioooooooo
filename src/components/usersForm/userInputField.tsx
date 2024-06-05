@@ -74,12 +74,13 @@ const UserInputField = ({
         <select
           value={formValues[index].role ?? ""}
           onChange={(e) => handleRoleChange(index, e.target.value as Role)}
+          className="grow"
         >
           <option value="" disabled={true}>
             Select a role
           </option>
           {Object.values(Role).map((role) => (
-            <option key={role} value={role}>
+            <option key={role} value={role} className="p-3">
               {formatRoles(role)}
             </option>
           ))}
