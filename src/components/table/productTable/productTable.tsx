@@ -128,11 +128,11 @@ export default function Table({
 
         {/* History */}
         <td className={`py-2 px-4 h-[8vh]`}>
-          <button className="btn text-xl btn-ghost">
-            <Link href={`products/history/${item.serialNumber}`}>
+          <Link href={`products/history/${item.serialNumber}`}>
+            <button className="btn text-xl btn-ghost">
               <FaHistory />
-            </Link>
-          </button>
+            </button>
+          </Link>
         </td>
       </tr>
     );

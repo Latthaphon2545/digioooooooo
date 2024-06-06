@@ -4,6 +4,7 @@ import ActionButton from "@/components/actionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageMerchants from "@/components/table/merchantsTable/merchantsTablePage";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -46,15 +47,15 @@ export default function productmanagement() {
           <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
             <h1 className="text-3xl font-bold">Merchant</h1>
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
-              <ActionButton
-                action={() => {
-                  router.push("/merchants/add");
-                }}
-                styles={`btn-primary`}
-                disabled={!isEditor}
-              >
-                Add Merchant
-              </ActionButton>
+              <Link href="/merchants/add">
+                <ActionButton
+                  action={() => {}}
+                  styles={`btn-primary`}
+                  disabled={!isEditor}
+                >
+                  Add Merchant
+                </ActionButton>
+              </Link>
             </div>
           </div>
           <div className="flex justify-end mx-5"></div>

@@ -8,10 +8,12 @@ export async function GET(request: NextRequest) {
     const model = await db.model.findMany({});
 
     const seriesModel = model.map((model) => model.series);
+    const idModel = model.map((model) => model.id);
 
     return NextResponse.json(
       {
         seriesModel,
+        idModel,
       },
       { status: 200 }
     );

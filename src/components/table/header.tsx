@@ -83,7 +83,7 @@ export default function Header({ option }: { option: string }) {
     const getCategories = async () => {
       let updatedSeries = [];
       if (option === "Product") {
-        const res = await axios.get("/api/model/getNameModel");
+        const res = await axios.get("/api/model/getNameAndIdModel");
         updatedSeries = res.data.seriesModel;
         setSeries(updatedSeries);
       }
