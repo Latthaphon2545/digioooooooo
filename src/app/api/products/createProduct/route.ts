@@ -56,7 +56,7 @@ export const POST = async (req: NextRequest) => {
                 },
               },
               description: "Product added",
-              category: "CHECKSTOCK",
+              category: "INSTOCK",
             },
           },
         },
