@@ -22,8 +22,6 @@ export default function Table({
   colorProductStatus,
   editor,
 }: TableProps) {
-  const [data, setData] = useState(dataForCurrentPage);
-
   const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
@@ -44,12 +42,11 @@ export default function Table({
   ) => {
     if (!productId || !merchant)
       return showAlert("Failed to add merchant", "alert-error", Error);
-
-    setData((prevData) =>
-      prevData.map((item) =>
-        item.id === productId ? { ...item, merchant } : item
-      )
-    );
+    dataForCurrentPage.map((item) => {
+      if (item.id === productId) {
+        item.merchant = merchant;
+      }
+    });
     showAlert("Merchant added successfully", "alert-success", Success);
   };
 
@@ -59,15 +56,16 @@ export default function Table({
       const response = await axios.delete(`/api/products/deleteMerchant`, {
         data: { productId },
       });
-      setData((prevData) =>
-        prevData.map((item) =>
-          item.id === productId ? { ...item, merchant: null } : item
-        )
-      );
       showAlert("Merchant deleted successfully", "alert-success", Success);
     } catch (err) {
       console.log(err);
       showAlert("Failed to delete merchant", "alert-error", Error);
+    } finally {
+      dataForCurrentPage.map((item) => {
+        if (item.id === productId) {
+          item.merchant = null;
+        }
+      });
     }
   };
 
@@ -153,7 +151,14 @@ export default function Table({
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {dataForCurrentPage.length === 0 && (
+              <tr>
+                <td colSpan={6} className="text-center py-2 px-4 h-[8vh]">
+                  No data available
+                </td>
+              </tr>
+            )}
+            {dataForCurrentPage.map((item) => (
               <TableRow key={item.serialNumber} item={item} />
             ))}
           </tbody>

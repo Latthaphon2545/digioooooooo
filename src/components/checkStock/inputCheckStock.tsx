@@ -57,7 +57,7 @@ export default function InputCheckStock() {
                 value={barcode}
                 onChange={(e) => handleInputChange(e, index)}
               />
-              <div className="tooltip" data-tip="Scan Barcode">
+              {/* <div className="tooltip" data-tip="Scan Barcode">
                 <label
                   htmlFor={`scanner-modal-${index}`}
                   className="cursor-pointer text-xl"
@@ -65,13 +65,13 @@ export default function InputCheckStock() {
                 >
                   <RiQrScan2Line />
                 </label>
-              </div>
+              </div> */}
             </label>
           </li>
         ))}
       </div>
 
-      {currentIndex !== null && (
+      {/* {currentIndex !== null && (
         <input
           type="checkbox"
           id={`scanner-modal-${currentIndex}`}
@@ -108,9 +108,9 @@ export default function InputCheckStock() {
             Close
           </label>
         </div>
-      )}
+      )} */}
 
-      <button className="btn btn-success" onClick={submit}>
+      <button className="btn btn-primary" onClick={submit}>
         Submit
       </button>
     </div>

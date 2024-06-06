@@ -135,7 +135,13 @@ export default function Pagination({
           </ActionButton>
         </div>
         <p className="mt-3">
-          {currentPage} of {totalPages}
+          {lengthData === 0 ? (
+            <span>Not found data</span>
+          ) : (
+            <span>
+              {currentPage} of {totalPages}
+            </span>
+          )}
         </p>
       </div>
     </>
