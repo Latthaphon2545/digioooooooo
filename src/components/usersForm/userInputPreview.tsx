@@ -42,7 +42,7 @@ export default function UserInputPreview({ data }: { data: DataItem[] }) {
                   checkRole(row.role ?? "") ? "text-success" : "text-error"
                 }`}
               >
-                {row.role}.
+                {row.role}
               </td>
             </tr>
           ))}

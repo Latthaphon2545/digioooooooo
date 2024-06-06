@@ -1,17 +1,18 @@
 import { DataItem, Model } from "@/lib/types";
 import ProductPreview from "../productsForm/productPreview";
 import UserInputPreview from "./userInputPreview";
+import MerchantInputPreview from "../merchantForm/merchantInputPreview";
 
 type InputPreviewProps = {
   data: Array<DataItem>;
-  headers: string[];
+  page: string;
   modelNames?: string[];
   uploading?: boolean;
 };
 
 export function InputPreview({
   data,
-  headers,
+  page,
   modelNames,
   uploading,
 }: InputPreviewProps) {
@@ -26,10 +27,12 @@ export function InputPreview({
   return (
     <div className="relative ">
       <div className="">
-        {headers[0] === "email" ? (
+        {page === "user" ? (
           <UserInputPreview data={data} />
-        ) : (
+        ) : page === "product" ? (
           <ProductPreview data={data} modelNames={modelNames!} />
+        ) : (
+          <MerchantInputPreview data={data} />
         )}
       </div>
     </div>

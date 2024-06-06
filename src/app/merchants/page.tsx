@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 export default function productmanagement() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(false);
+  const [isEditor, setIseditor] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +48,7 @@ export default function productmanagement() {
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
               <ActionButton
                 action={() => {
-                  router.push("");
+                  router.push("/merchants/add");
                 }}
                 styles={`btn-primary`}
                 disabled={!isEditor}

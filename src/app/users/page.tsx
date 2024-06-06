@@ -61,6 +61,7 @@ export default function Home() {
             <AlertDialog
               title="Users added successfully"
               styles="alert-success absolute bottom-8 left-8 w-fit"
+              icon={<AiOutlineUserAdd size={20} />}
             />
           )}
           <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">

@@ -1,45 +1,33 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { IoPersonAddSharp } from "react-icons/io5";
-import Alert from "../alert";
-import InputHeader from "./inputHeader";
-import UserInput from "./userInput";
+import React, { useState } from "react";
+import InputHeader from "../usersForm/inputHeader";
+import { MdAddShoppingCart } from "react-icons/md";
+import { DataItem } from "@/lib/types";
+import MerchantInput from "./merchantInput";
 import GroupUpload from "../groupUpload";
-import { DataItem, Role } from "@/lib/types";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
+import Alert from "../alert";
+import axios from "axios";
 
 type FormValues = {
-  email: string;
   name: string;
+  address: string;
   contact: string;
-  role: Role | null;
 }[];
 
-const InputForm = () => {
+export default function MerchantInputForm() {
   const [activeTab, setActiveTab] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [groupData, setGroupData] = useState<Array<DataItem>>([]);
   const [formValues, setFormValues] = useState<FormValues>([
-    { email: "", name: "", contact: "", role: null },
-    { email: "", name: "", contact: "", role: null },
-    { email: "", name: "", contact: "", role: null },
+    { name: "", contact: "", address: "" },
+    { name: "", contact: "", address: "" },
+    { name: "", contact: "", address: "" },
   ]);
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
-  const router = useRouter();
-
-  useEffect(() => {
-    if (errorOnSubmit) {
-      const timer = setTimeout(() => {
-        setErrorOnSubmit("");
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [errorOnSubmit]);
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -47,32 +35,22 @@ const InputForm = () => {
       if (
         activeTab === 0 &&
         formValues.every(
-          ({ email, name, contact, role }) =>
-            !email && !name && !contact && !role
+          ({ name, contact, address }) => !name && !contact && !address
         )
       ) {
         setErrorOnSubmit("Please fill out the form");
         return;
       }
 
-      groupData.forEach((value) => {
-        value.role = value.role?.toUpperCase().replace(/ +/g, "") as Role;
-      });
       const filledOutInputs =
         activeTab === 0
-          ? formValues
-              .filter(
-                ({ email, name, contact, role }) =>
-                  email || name || contact || role
-              )
-              .map((value) => ({
-                ...value,
-                email: value.email + "@digio.co.th",
-              }))
+          ? formValues.filter(
+              ({ name, contact, address }) => name || contact || address
+            )
           : groupData;
 
       for (let input of filledOutInputs) {
-        if (!input.email || !input.name || !input.contact || !input.role) {
+        if (!input.name || !input.contact || !input.address) {
           setErrorOnSubmit("Please fill out all fields");
           return;
         }
@@ -80,23 +58,16 @@ const InputForm = () => {
 
       console.log("Sending data:", filledOutInputs);
 
-      const res = await axios.post("/api/users/createUsers", filledOutInputs, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (res.data.code === "P2002") {
-        setErrorOnSubmit(
-          "Duplicate email found, please check your data again!"
-        );
-        return;
-      }
-      if (res.status === 201) {
-        router.push(
-          "/users?filter=&search=&skip=0&take=8&alert=Users added successfully"
-        );
-      }
+      const res = await axios.post(
+        "/api/merchants/createMerchants",
+        filledOutInputs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(res.data);
     } catch (error) {
       console.log("Error:", error);
     } finally {
@@ -107,9 +78,9 @@ const InputForm = () => {
 
   const clearForm = () => {
     setFormValues([
-      { email: "", name: "", contact: "", role: null },
-      { email: "", name: "", contact: "", role: null },
-      { email: "", name: "", contact: "", role: null },
+      { name: "", contact: "", address: "" },
+      { name: "", contact: "", address: "" },
+      { name: "", contact: "", address: "" },
     ]);
     setGroupData([]);
   };
@@ -117,21 +88,24 @@ const InputForm = () => {
   return (
     <div className="relative">
       <InputHeader
-        icon={<IoPersonAddSharp />}
-        title="Add User"
+        icon={<MdAddShoppingCart />}
+        title="Add Merchant"
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
       <div className="min-h-[68vh]">
         {activeTab === 0 && (
-          <UserInput formValues={formValues} setFormValues={setFormValues} />
+          <MerchantInput
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />
         )}
         {activeTab === 1 && (
           <GroupUpload
             setHasError={setHasError}
-            headers={["email", "name", "contact", "role"]}
+            headers={["name", "address", "contact"]}
             setGroupData={setGroupData}
-            page="user"
+            page="merchant"
             uploading={uploading}
             setUploading={setUploading}
           />
@@ -145,7 +119,7 @@ const InputForm = () => {
       {errorOnSubmit && (
         <AlertDialog
           title={errorOnSubmit}
-          styles="alert-error absolute w-fit mx-10 py-3 bottom-0"
+          styles="alert-error absolute w-fit mx-10 py-3 bottom-3"
           icon={<BiError size={20} />}
         />
       )}
@@ -155,7 +129,7 @@ const InputForm = () => {
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
           id="add_user"
-          disabled={hasError || uploading}
+          disabled={uploading}
           action={handleSubmit}
         >
           Add
@@ -163,6 +137,4 @@ const InputForm = () => {
       </div>
     </div>
   );
-};
-
-export default InputForm;
+}

@@ -6,17 +6,8 @@ export const POST = async (req: NextRequest) => {
     const data = await req.json();
     // console.log("backend", data);
     // return new NextResponse(JSON.stringify(data));
-    const merchant = await db.merchant.create({
-      data: {
-        name: data.name,
-        address: data.address,
-        contact: data.contact,
-        product: {
-          connect: {
-            id: data.productId,
-          },
-        },
-      },
+    const merchant = await db.merchant.createMany({
+      data: data,
     });
     return new NextResponse(JSON.stringify(merchant), {
       status: 201,

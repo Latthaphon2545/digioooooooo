@@ -5,6 +5,7 @@ export type DataItem = {
   role?: Role | null | undefined;
   sn?: string | undefined;
   model?: string | undefined;
+  address?: string | undefined;
 };
 
 export enum Role {
