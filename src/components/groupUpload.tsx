@@ -11,7 +11,7 @@ type GroupUploadProps = {
   headers: string[];
   models?: Model[];
   setGroupData: (data: Array<DataItem>) => void;
-  page: "user" | "product";
+  page: "user" | "product" | "merchant";
   uploading: boolean;
   setUploading: Dispatch<boolean>;
 };
@@ -95,6 +95,7 @@ const GroupUpload = ({
         const ws = wb.Sheets[wsname];
         const data = utilsXlsx.sheet_to_json(ws, {
           header: headers,
+          raw: false,
         }) as Array<DataItem>;
         const filteredData = data
           .filter(
@@ -104,7 +105,8 @@ const GroupUpload = ({
                 item.name &&
                 item.contact &&
                 item.role) ||
-              (page === "product" && item.sn && item.model)
+              (page === "product" && item.sn && item.model) ||
+              (page === "merchant" && item.name && item.address && item.contact)
           )
           .map((item) => {
             if (page === "product") {
@@ -112,18 +114,24 @@ const GroupUpload = ({
                 sn: item.sn?.toString() || "",
                 model: item.model,
               };
-            } else {
+            } else if (page === "user") {
               return {
                 email: item.email || "",
                 name: item.name || "",
                 contact: item.contact || "",
                 role: item.role as Role,
               };
+            } else {
+              return {
+                name: item.name || "",
+                address: item.address || "",
+                contact: item.contact || "",
+              };
             }
           });
         filteredData.shift();
         filteredData.forEach((item) => {
-          console.log(typeof item.sn as string);
+          console.log(typeof item.contact as string);
         });
         setData(filteredData);
         setGroupData(filteredData);
@@ -136,7 +144,7 @@ const GroupUpload = ({
         // setHasError(hasError);
 
         const errorCount = filteredData.filter((row) =>
-          headers[0] === "email"
+          page === "user"
             ? // ? !row.email?.endsWith("@digio.co.th") ||
               //   !Object.values(Role).includes(
               //     row.role.toUpperCase().replace(/ +/g, "") as Role
@@ -148,8 +156,10 @@ const GroupUpload = ({
                 filteredData,
                 filteredData.indexOf(row)
               )
-            : validateModel(row.model!) ||
+            : page === "product"
+            ? validateModel(row.model!) ||
               validateSn(row.sn!, filteredData, filteredData.indexOf(row))
+            : null
         ).length;
         const hasError = errorCount > 0;
         setHasError(hasError);
@@ -189,7 +199,11 @@ const GroupUpload = ({
         <a
           className="flex flex-row items-center text-lg cursor-pointer"
           href={`/uploadTemplate/${
-            page === "product" ? "ProductTemplate" : "UserTemplate"
+            page === "product"
+              ? "ProductTemplate"
+              : page === "user"
+              ? "UserTemplate"
+              : "MerchantTemplate"
           }.xlsx`}
           download
         >
@@ -203,7 +217,7 @@ const GroupUpload = ({
           {!uploading && (
             <InputPreview
               data={data}
-              headers={headers}
+              page={page}
               modelNames={modelNames}
               uploading={uploading}
             />

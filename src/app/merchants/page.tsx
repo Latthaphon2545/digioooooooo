@@ -48,7 +48,7 @@ export default function productmanagement() {
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
               <ActionButton
                 action={() => {
-                  router.push("");
+                  router.push("/merchants/add");
                 }}
                 styles={`btn-primary`}
                 disabled={!isEditor}
