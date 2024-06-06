@@ -1,8 +1,6 @@
 import React from "react";
 
-const TableLoading = ({ Type }: { Type: string }) => {
-  const length = 8;
-
+const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
   const columns: { [key: string]: string[] } = {
     User: ["Name", "Role", "Status", "Contact", "Action"],
     Product: [
@@ -12,9 +10,9 @@ const TableLoading = ({ Type }: { Type: string }) => {
       "Merchant",
       "Bank",
       "History",
-      "Action",
     ],
-    Merchant: ["Name", "Address", "Contact", "Product Serial Number", "Action"],
+    Merchant: ["Name", "Address", "Contact", "Action"],
+    History: ["Time", "Description", "User", "Category", "Image"],
   };
 
   const columnHeaders = columns[Type] || [];
@@ -32,14 +30,16 @@ const TableLoading = ({ Type }: { Type: string }) => {
   };
 
   return (
-    <div className="min-h-[70vh] mt-3 w-[80vw]">
-      <table className="table table-fixed w-full">
+    <div
+      className={`${
+        Type === "History" ? "min-h-[50vh]" : "min-h-[70vh]"
+      } mt-3 w-[80vw]`}
+    >
+      <table className="table table-fixed w-full text-center">
         <thead>
           <tr>
             {columnHeaders.map((header, index) => (
-              <th key={index} className={`text-start py-2 px-4`}>
-                <p>{header}</p>
-              </th>
+              <th key={index}>{header}</th>
             ))}
           </tr>
         </thead>

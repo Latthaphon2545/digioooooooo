@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Table from "./historyProductTable";
-import { usePathname } from "next/navigation";
 import Header from "./historyProductHeader";
 import Pagination from "../table/pagination";
 
@@ -12,12 +11,10 @@ interface TablePageProps {
   }[];
   dataCustomer: {
     [key: string]: any;
-  }[];
+  };
   editor?: boolean;
   lengthHistory: number;
 }
-
-let ITEMPERPAGE = 8;
 
 export default function TablePageProductHistory({
   data,

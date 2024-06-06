@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Pagination from "../table/pagination";
-import Table from "./merchantsTable";
-import Header from "../table/header";
+import React, { useState, useEffect } from "react";
+import Pagination from "../pagination";
+import Table from "./usersTable";
+import Header from "../header";
 
 interface TablePageProps {
   data: {
     [key: string]: any;
   }[];
+  colorStatus: string;
   editor: boolean;
   totalLength: number;
 }
@@ -17,8 +18,9 @@ const getItemPerPage = (height: number) => {
   return 8;
 };
 
-export default function TablePageMerchants({
+export default function TablePage({
   data,
+  colorStatus,
   editor,
   totalLength,
 }: TablePageProps) {
@@ -35,9 +37,20 @@ export default function TablePageMerchants({
     getLengthUsers();
   }, [totalLength, itemPerPage]);
 
-  const colorProductStatus = (status: string) => {
+  const colorUserStatus = (status: string) => {
     status = status.toLocaleLowerCase();
     let color = "";
+    if (colorStatus === "user") {
+      if (status === "active") {
+        color = "success";
+      } else if (status === "inactive") {
+        color = "";
+      } else if (status === "restricted") {
+        color = "error";
+      } else if (status === "pending") {
+        color = "secondary";
+      }
+    }
     return color;
   };
 
@@ -48,12 +61,12 @@ export default function TablePageMerchants({
   return (
     <>
       <div className="ml-[3vw]">
-        <Header option="" />
+        <Header option="User" />
       </div>
       <div className="flex flex-col w-full justify-center items-center">
         <Table
           dataForCurrentPage={data}
-          colorProductStatus={colorProductStatus}
+          colorUserStatus={colorUserStatus}
           editor={editor}
         />
         <Pagination

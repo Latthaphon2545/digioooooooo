@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { TbUserEdit } from "react-icons/tb";
-import ActionButton from "../actionButton";
-import { usePathname } from "next/navigation";
+import ActionButton from "../../actionButton";
 import axios from "axios";
+import AlertDialog, { Error, Success } from "../../alertDialog";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -28,11 +28,25 @@ export default function Table({
     direction: string;
   } | null>(null);
 
+  const [updateAlert, setUpdateAlert] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertStyles, setAlertStyles] = useState("");
+  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
+
   const handleEditToggle = (key: string) => {
+    console.log(key);
     setIsEditing((prev) => ({
       ...prev,
       [key]: !prev[key],
     }));
+  };
+
+  const showAlert = (title: string, styles: string, icon?: React.ReactNode) => {
+    setAlertTitle(title);
+    setAlertStyles(styles);
+    setAlertIcon(icon);
+    setUpdateAlert(true);
+    setTimeout(() => setUpdateAlert(false), 3000);
   };
 
   const TableRow = ({ item }: { item: any }) => {
@@ -47,7 +61,7 @@ export default function Table({
       <tr key={item.name}>
         {/* Name */}
         <td className={` py-2 px-4 h-[8vh]`}>
-          {isEditing[item.name] ? (
+          {isEditing[item.id] ? (
             <EditableField defaultValue={name} onChange={setName} />
           ) : (
             <p className="text-base w-full">{name}</p>
@@ -57,7 +71,7 @@ export default function Table({
 
         {/* Role */}
         <td className={` py-2 px-4`}>
-          {isEditing[item.name] ? (
+          {isEditing[item.id] ? (
             <Dropdown
               options={USERROLE}
               selected={role}
@@ -71,7 +85,7 @@ export default function Table({
 
         {/* Status */}
         <td className={` py-2 px-4`}>
-          {isEditing[item.name] ? (
+          {isEditing[item.id] ? (
             <Dropdown
               options={USERSTATUS}
               selected={status}
@@ -91,7 +105,7 @@ export default function Table({
 
         {/* Contact */}
         <td className={` py-2 px-4`}>
-          {isEditing[item.name] ? (
+          {isEditing[item.id] ? (
             <EditableField defaultValue={item.contact} onChange={setContact} />
           ) : (
             <p>{item.contact}</p>
@@ -100,10 +114,10 @@ export default function Table({
 
         {/* Action */}
         <td className={`py-2 px-4 ${editor ? "" : "cursor-not-allowed"}`}>
-          {isEditing[item.name] ? (
-            <div className="flex gap-1 justify-start">
+          {isEditing[item.id] ? (
+            <div className="flex gap-1 justify-center">
               <ActionButton
-                action={() => handleEditToggle(item.name)}
+                action={() => handleEditToggle(item.id)}
                 styles="btn-error"
               >
                 Cancle
@@ -118,7 +132,6 @@ export default function Table({
                     contact,
                   });
                   setIsUpdate(false);
-                  handleEditToggle(item.name);
                 }}
                 styles="btn-success"
               >
@@ -131,7 +144,7 @@ export default function Table({
             </div>
           ) : (
             <ActionButton
-              action={() => handleEditToggle(item.name)}
+              action={() => handleEditToggle(item.id)}
               styles="btn-info"
               disabled={!editor}
             >
@@ -148,9 +161,12 @@ export default function Table({
     users: { name: string; role: string; status: string; contact: string }
   ) => {
     try {
+      if (!confirm("Are you sure you want to update this user?")) return;
       const response = await axios.patch(`/api/users/updateUsers/${id}`, users);
     } catch (err) {
       console.log(err);
+      setUpdateAlert(true);
+      showAlert("Failed to update user", "alert-error", Error);
     } finally {
       dataForCurrentPage.map((item) => {
         if (item.id === id) {
@@ -160,43 +176,49 @@ export default function Table({
           item.contact = users.contact;
         }
       });
+      handleEditToggle(id);
+      setUpdateAlert(true);
+      showAlert("User updated successfully", "alert-success", Success);
     }
   };
 
   return (
-    <div className="min-h-[70vh] mt-3 w-[80vw]">
-      <table className="table table-fixed w-full">
-        <thead>
-          <tr>
-            <th className={`text-start py-2 px-4`}>
-              <p>Name</p>
-            </th>
-            <th className={`text-start  py-2 px-4`}>
-              <p>Role</p>
-            </th>
-            <th className={`text-start  py-2 px-4`}>
-              <p>Status</p>
-            </th>
-            <th className={`text-start  py-2 px-4`}>
-              <p>Contact</p>
-            </th>
-            <th className={`text-start  py-2 px-4`}>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dataForCurrentPage.length === 0 && (
+    <>
+      <div className="min-h-[70vh] mt-3 w-[80vw]">
+        <table className="table table-fixed w-full text-center">
+          <thead>
             <tr>
-              <td colSpan={5} className="text-center">
-                No data available
-              </td>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Contact</th>
+              <th>Action</th>
             </tr>
-          )}
-          {dataForCurrentPage.map((item) => (
-            <TableRow key={item.name} item={item} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {dataForCurrentPage.length === 0 && (
+              <tr>
+                <td colSpan={5} className="text-center">
+                  No data available
+                </td>
+              </tr>
+            )}
+            {dataForCurrentPage.map((item) => (
+              <TableRow key={item.name} item={item} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="fixed bottom-4 left-[15%] w-[20%]">
+        {updateAlert && (
+          <AlertDialog
+            title={alertTitle}
+            styles={alertStyles}
+            icon={alertIcon}
+          />
+        )}
+      </div>
+    </>
   );
 }
 
@@ -216,7 +238,7 @@ const Dropdown = ({
   if (isRole) {
     return (
       <select
-        className="border-2 border-base-content rounded-md p-1 w-full"
+        className="border-2 border-base-content rounded-md p-1 w-full text-center"
         value={selected}
         onChange={(e) => onChange(e.target.value)}
       >
@@ -230,7 +252,7 @@ const Dropdown = ({
   } else if (isStatus) {
     return (
       <select
-        className="border-2 border-base-content rounded-md p-1 w-full"
+        className="border-2 border-base-content rounded-md p-1 w-full text-center"
         value={selected}
         onChange={(e) => onChange(e.target.value)}
       >
@@ -280,7 +302,7 @@ const EditableField = ({
   <input
     type="text"
     defaultValue={defaultValue}
-    className="border-2 border-base-content rounded-md p-1 w-fit"
+    className="border-2 border-base-content rounded-md p-1 w-fit text-center"
     onChange={(e) => onChange(e.target.value)}
   />
 );

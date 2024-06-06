@@ -1,6 +1,7 @@
 "use client";
 
 import TablePageProductHistory from "@/components/historyProduct/historyProductTablePage";
+import LoadingHistory from "@/components/loading/loadingHistory/loadingHistory";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -12,27 +13,36 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [dataProduct, setDataProduct] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getHistory = async () => {
-      const res = await axios.get(
-        `/api/products/getHistory?sn=${params.slug}&skip=0&take=8`
-      );
-      const data = res.data;
-      const dataCustomer = data.productsHistory;
-      const lengthHistory = data.lengthHistory;
+      try {
+        const res = await axios.get(
+          `/api/products/getHistory?sn=${params.slug}&skip=0&take=5`
+        );
+        const data = res.data;
+        const dataCustomer = data.productsHistory;
+        const lengthHistory = data.lengthHistory;
 
-      const transformedHistory = dataCustomer.map((item: any) => ({
-        time: new Date(item.createdAt).toLocaleString(),
-        description: item.description,
-        user: item.user.name,
-        category: [item.category],
-      }));
+        const transformedHistory = dataCustomer.map((item: any) => ({
+          time: new Date(item.createdAt).toLocaleString(),
+          description: item.description,
+          user: item.user.name,
+          category: [item.category],
+        }));
 
-      const productDetails = dataCustomer[0]?.product;
+        const productDetails = dataCustomer[0]?.product;
 
-      setDataHistory(transformedHistory);
-      setDataProduct(productDetails);
-      setTotalPages(lengthHistory);
+        setDataHistory(transformedHistory);
+        setDataProduct(productDetails);
+        setTotalPages(lengthHistory);
+      } catch (error) {
+        console.log("[GET TODO]", error);
+      } finally {
+        setLoading(false);
+        console.log("GET TODO");
+      }
     };
 
     getHistory();
@@ -51,12 +61,16 @@ export default function Page({ params }: { params: { slug: string } }) {
             </h1>
           </div>
           <div className="flex justify-end mx-5"></div>
-          <TablePageProductHistory
-            data={dataHistory}
-            dataCustomer={dataProduct}
-            editor={false}
-            lengthHistory={totalPages}
-          />
+          {loading ? (
+            <LoadingHistory />
+          ) : (
+            <TablePageProductHistory
+              data={dataHistory}
+              dataCustomer={dataProduct}
+              editor={false}
+              lengthHistory={totalPages}
+            />
+          )}
         </div>
       </div>
     </>

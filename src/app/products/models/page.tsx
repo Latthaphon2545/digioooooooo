@@ -14,7 +14,7 @@ export default function Models() {
       try {
         setLoading(true);
         const res = await axios.get("/api/model/getModel");
-        setModels(res.data.model);
+        setModels(res.data.models);
       } catch (e) {
         console.log(e);
       } finally {

@@ -3,13 +3,14 @@ import React from "react";
 interface ModalProps {
   title: React.ReactNode;
   titleContent: string;
-  content: React.ReactNode;
+  content?: React.ReactNode;
+  style?: string;
 }
 
-const Modal = ({ title, titleContent, content }: ModalProps) => {
+const Modal = ({ title, titleContent, content, style }: ModalProps) => {
   return (
     <React.Fragment>
-      <label htmlFor="my_modal_7" className="btn btn-xs">
+      <label htmlFor="my_modal_7" className={`btn btn-xs ${style}`}>
         {title}
       </label>
 

@@ -1,5 +1,6 @@
 import { TbBuildingWarehouse } from "react-icons/tb";
 import { RiUninstallLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 interface StatProps {
   series: string;
@@ -9,6 +10,7 @@ interface StatProps {
 }
 
 const StatHome = ({ series, instock, installing, image }: StatProps) => {
+  const router = useRouter();
   return (
     <div className="stats shadow-xl ">
       <div className="stat">
@@ -36,7 +38,14 @@ const StatHome = ({ series, instock, installing, image }: StatProps) => {
           </div>
         </div>
         <div className="stat-value text-xl">{series}</div>
-        <div className="stat-title btn btn-xs">View Model</div>
+        <button
+          className="stat-title btn btn-xs"
+          onClick={() => {
+            router.push(`/products/models`);
+          }}
+        >
+          View Model
+        </button>
       </div>
     </div>
   );

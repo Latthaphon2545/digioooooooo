@@ -26,7 +26,11 @@ export async function GET(request: NextRequest) {
         },
         product: {
           include: {
-            model: true,
+            model: {
+              select: {
+                series: true,
+              },
+            },
             merchant: true,
           },
         },

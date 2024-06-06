@@ -47,7 +47,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/model/getModel");
-        setModels(res.data.model);
+        setModels(res.data.models);
       } catch (e) {
         console.log(e);
       } finally {

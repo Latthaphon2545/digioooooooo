@@ -2,7 +2,7 @@
 
 import ActionButton from "@/components/actionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
-import TablePageProduct from "@/components/productTable/productTablePage";
+import TablePageProduct from "@/components/table/productTable/productTablePage";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 export default function productmanagement() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(false);
+  const [isEditor, setIseditor] = useState(true);
 
   const [loading, setLoading] = useState(true);
 

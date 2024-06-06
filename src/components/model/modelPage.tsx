@@ -9,6 +9,7 @@ interface Model {
   information: Record<string, string>;
   status: Record<string, string>;
   image: string;
+  product?: Record<string, string>[];
 }
 
 interface ModelProps {
@@ -23,6 +24,7 @@ export default function Model({ models, edit }: ModelProps) {
         <div
           key={index}
           className="card card-side bg-base-100 shadow-xl mx-20 mt-5"
+          id={model.series}
         >
           <figure>
             <img src={model.image} alt="Model" className="h-[25vh] w-[20vw]" />

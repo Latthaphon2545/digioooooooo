@@ -16,8 +16,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
   const [boolEdit, setBoolEdit] = useState(editor);
   const [editingItem, setEditingItem] = useState(null);
 
-  console.log(dataForCurrentPage);
-
   const handleEditData = (data: any) => {
     setBoolEdit(!boolEdit);
     setBool(!bool);
@@ -25,9 +23,29 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
     console.log(data);
   };
 
+  const TableRow = ({ item }: { item: any }) => {
+    return (
+      <tr key={item.id}>
+        <td className={`py-2 px-4 h-[8vh]`}>{item.time}</td>
+        <td className={`py-2 px-4 h-[8vh]`}>
+          <Modal
+            title={<p>Description</p>}
+            titleContent={"Description"}
+            content={<p>{item.description}</p>}
+          />
+        </td>
+        <td className={`py-2 px-4 h-[8vh]`}>{item.user}</td>
+        <td className={`py-2 px-4 h-[8vh]`}>{item.category}</td>
+        <td className={`py-2 px-4 h-[8vh]`}>
+          <ViewImg />
+        </td>
+      </tr>
+    );
+  };
+
   return (
     <div className={`min-h-[50vh] mt-3`}>
-      <table className="table table-fixed w-full">
+      <table className="table table-fixed w-full text-center">
         <thead>
           <tr>
             <th>Time</th>
@@ -40,60 +58,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         </thead>
         <tbody>
           {dataForCurrentPage.map((item) => {
-            // const isEditing = editingItem === item;
-            return (
-              <tr key={item.time}>
-                {/* Time */}
-                <td>
-                  <p>{item.time}</p>
-                </td>
-
-                {/* Description */}
-                <td>
-                  {/* <div
-                    className={`tooltip ${
-                      openedTooltip === item ? "tooltip-open" : ""
-                    } tooltip-right`}
-                    data-tip={item.description}
-                  >
-                    <button
-                      className={`btn ${
-                        openedTooltip === item ? "btn-success" : ""
-                      } hover:btn-success`}
-                      onClick={() =>
-                        setOpenedTooltip(openedTooltip === item ? null : item)
-                      }
-                    >
-                      Open Description
-                    </button>
-                    <p className="text-xs">hover or click</p>
-                  </div> */}
-                  <Modal
-                    title={<p>Description</p>}
-                    titleContent={"Description"}
-                    content={<p>{item.description}</p>}
-                  />
-                </td>
-
-                {/* User */}
-                <td>{item.user}</td>
-
-                {/* Category */}
-                <td>{item.category}</td>
-
-                {/* Image */}
-                <td>
-                  <ViewImg />
-                </td>
-
-                {/* Action To Eidtor */}
-                {editor && (
-                  <td className={`text-center h-24`}>
-                    {boolEdit && <HistoryProductEdit data={[item]} />}
-                  </td>
-                )}
-              </tr>
-            );
+            return <TableRow key={item.id} item={item} />;
           })}
         </tbody>
       </table>

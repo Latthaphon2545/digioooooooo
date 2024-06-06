@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Pagination from "../table/pagination";
+import Header from "../header";
 import Table from "./productTable";
-import Header from "../table/header";
+import Pagination from "../pagination";
 
 interface TablePageProps {
   data: {

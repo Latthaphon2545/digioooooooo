@@ -11,7 +11,7 @@ const MENU = [
     title: "User",
     links: [
       {
-        name: "User",
+        name: "Users",
         href: "/users?filter=&search=&skip=0&take=8",
       },
     ],
@@ -19,9 +19,9 @@ const MENU = [
   {
     title: "Product",
     links: [
-      { name: "Model", href: "/products/models" },
+      { name: "Models", href: "/products/models" },
       {
-        name: "Product",
+        name: "Products",
         href: "/products?filter=&search=&skip=0&take=8",
       },
     ],
@@ -30,7 +30,7 @@ const MENU = [
     title: "Merchant",
     links: [
       {
-        name: "Merchant",
+        name: "Merchants",
         href: "/merchants?filter=&search=&skip=0&take=8",
       },
     ],
@@ -39,7 +39,7 @@ const MENU = [
     title: "Bank",
     links: [
       {
-        name: "Bank",
+        name: "Banks",
         href: "/banks?skip=&take=",
       },
     ],
