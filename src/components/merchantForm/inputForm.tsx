@@ -108,6 +108,7 @@ export default function MerchantInputForm() {
             page="merchant"
             uploading={uploading}
             setUploading={setUploading}
+            setErrorOnSubmit={setErrorOnSubmit}
           />
         )}
       </div>

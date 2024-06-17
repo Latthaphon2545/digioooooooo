@@ -134,6 +134,7 @@ const InputForm = () => {
             page="user"
             uploading={uploading}
             setUploading={setUploading}
+            setErrorOnSubmit={setErrorOnSubmit}
           />
         )}
       </div>

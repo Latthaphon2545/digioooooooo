@@ -124,6 +124,7 @@ const InputForm = ({ models }: { models: Model[] }) => {
             page="product"
             uploading={uploading}
             setUploading={setUploading}
+            setErrorOnSubmit={setErrorOnSubmit}
           />
         )}
       </div>

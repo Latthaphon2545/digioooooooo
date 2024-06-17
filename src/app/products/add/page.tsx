@@ -15,7 +15,6 @@ const AddProductPage = async () => {
     id: data.idModel[index],
     series,
   }));
-  console.log(models);
 
   return (
     <div>
