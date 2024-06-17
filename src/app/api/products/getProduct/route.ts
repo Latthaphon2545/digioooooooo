@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(
       {
-        products,
+        products: products,
         totalProducts: totalProducts,
       },
       { status: 200 }

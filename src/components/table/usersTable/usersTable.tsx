@@ -198,7 +198,7 @@ export default function Table({
           <tbody>
             {dataForCurrentPage.length === 0 && (
               <tr>
-                <td colSpan={5} className="text-center">
+                <td colSpan={5} className="text-center py-2 px-4 h-[8vh]">
                   No data available
                 </td>
               </tr>

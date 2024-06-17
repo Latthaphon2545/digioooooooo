@@ -207,6 +207,13 @@ export default function Table({
             </tr>
           </thead>
           <tbody>
+            {dataForCurrentPage.length === 0 && (
+              <tr>
+                <td colSpan={5} className="text-center py-2 px-4 h-[8vh]">
+                  No data available
+                </td>
+              </tr>
+            )}
             {dataForCurrentPage.map((item) => (
               <TableRow key={item.name} item={item} />
             ))}

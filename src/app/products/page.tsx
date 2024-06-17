@@ -21,19 +21,7 @@ export default function productmanagement() {
   const search = path.get("search") || "";
   const skip = path.get("skip") || "";
   const take = path.get("take") || "";
-  const [showAlert, setShowAlert] = useState(false);
-
   const router = useRouter();
-  const alertMessage = useSearchParams().get("alert") || "";
-
-  useEffect(() => {
-    if (alertMessage) {
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 3000);
-    }
-  }, [alertMessage]);
 
   useEffect(() => {
     const updateData = async () => {
@@ -41,8 +29,8 @@ export default function productmanagement() {
         const res = await axios.get(
           `/api/products/getProduct?filter=${filter}&search=${search}&skip=${skip}&take=${take}`
         );
-        setData(res.data.products);
-        setDataLength(res.data.totalProducts);
+        setData(res.data.products || []);
+        setDataLength(res.data.totalProducts || 0);
       } catch (err) {
         console.log(err);
       } finally {
@@ -56,13 +44,6 @@ export default function productmanagement() {
     <>
       <div className="flex flex-row">
         <div className="flex flex-col w-full relative">
-          {showAlert && (
-            <AlertDialog
-              title="Products added successfully"
-              styles="alert-success absolute bottom-8 left-8 w-fit"
-              icon={<IoMdAddCircle size={20} />}
-            />
-          )}
           <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
             <h1 className="text-3xl font-bold">Product</h1>
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
