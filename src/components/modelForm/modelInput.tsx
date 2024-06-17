@@ -1,7 +1,7 @@
 import ModelInputField from "./modelInputField";
 import SubmitPopupButton from "../submitPopupButton";
-import { createModel } from "@/app/action/model/actions";
 import ImageRenderer from "../imageRenderer";
+import { createModel } from "@/lib/actions/model/action";
 
 const ModelInput = () => {
   const INFORMATION_FIELD = [

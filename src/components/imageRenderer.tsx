@@ -46,13 +46,12 @@ export default function ImageRenderer() {
     // </div>
 
     <div className="flex flex-col items-center space-y-8 h-full">
-      <div className="w-[40vh] h-[40vh] border-4 ">
+      <div className="w-[40vh] h-[40vh] border-4 relative">
         {selectedImage ? (
           <Image
             src={selectedImage}
             alt={`${selectedImage}'s photo`}
-            width={100}
-            height={100}
+            fill
             className="w-full h-full"
           />
         ) : (

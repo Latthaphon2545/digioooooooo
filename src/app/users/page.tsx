@@ -59,7 +59,7 @@ export default function Home() {
         <div className="flex flex-col w-full relative">
           {showAlert && (
             <AlertDialog
-              title="Users added successfully"
+              title="User added successfully"
               styles="alert-success absolute bottom-8 left-8 w-fit"
               icon={<AiOutlineUserAdd size={20} />}
             />
