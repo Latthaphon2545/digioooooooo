@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { BarcodeScanner } from "react-barcode-scanner";
 import "react-barcode-scanner/polyfill";
-import AlertDialog, { Error, Success } from "../alertDialog";
+import AlertDialog, { Error, Success, Warning } from "../../alertDialog";
+import axios from "axios";
 
 export default function Scanner() {
   const [code, setCode] = useState("");
@@ -18,28 +19,36 @@ export default function Scanner() {
     setAlertStyles(styles);
     setAlertIcon(icon);
     setAlert(true);
-    setTimeout(() => setAlert(false), 3000);
+    setTimeout(() => {
+      setAlert(false);
+    }, 3000);
   };
 
   const checkStock = async (code: string) => {
     try {
-      // if (!confirm("Are you sure you want to check the stock?")) return;
       setProcess(true);
       setCode(code);
-    } catch (error) {
+      const res = await axios.post("/api/products/checkStock", {
+        sn: code,
+        user: "6650666b7e05719e52aabef7",
+      });
+
+      const data = await res.data;
+      if (res.status === 200) {
+        showAlert(data.message, "bg-success", Success);
+      }
+    } catch (error: any) {
       console.log(error);
-      showAlert("Error", "bg-red-500", Error);
+      if (error.response.status === 404) {
+        showAlert(error.response.data.message, "bg-error", Error);
+      } else if (error.response.status === 400) {
+        showAlert(error.response.data.message, "bg-warning", Warning);
+      }
     } finally {
       setTimeout(() => {
-        setCode("");
         setProcess(false);
-        showAlert(
-          `Stock checked for ${code}
-        `,
-          "bg-green-500",
-          Success
-        );
-      }, 2000);
+        setCode("");
+      }, 500);
     }
   };
 

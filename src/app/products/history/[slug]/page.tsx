@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           time: new Date(item.createdAt).toLocaleString(),
           description: item.description,
           user: item.user.name,
-          category: [item.category],
+          category: item.category,
         }));
 
         const productDetails = dataCustomer[0]?.product;
@@ -41,7 +41,6 @@ export default function Page({ params }: { params: { slug: string } }) {
         console.log("[GET TODO]", error);
       } finally {
         setLoading(false);
-        console.log("GET TODO");
       }
     };
 

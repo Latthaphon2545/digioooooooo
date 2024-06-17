@@ -179,6 +179,10 @@ export default function Table({
 
 export const convertStatus = (status: string) => {
   let showStatus = "";
+  if (typeof status !== "string") {
+    return showStatus;
+  }
+  status = status.toUpperCase().trim();
   if (status === "INSTOCK") {
     showStatus = "In Stock";
   } else if (status === "LOST") {

@@ -13,7 +13,7 @@ import AlertDialog from "@/components/alertDialog";
 export default function Home() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(true);
+  const [isEditor, setIseditor] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
