@@ -5,18 +5,8 @@ export const POST = async (req: NextRequest) => {
   try {
     const data = await req.json();
 
-    // console.log(data);
-    // data.forEach((element: { sn: string; model: string }) =>
-    //   console.log(typeof element.sn)
-    // );
-    // return new NextResponse(JSON.stringify(data), {
-    //   status: 201,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-
     const products = [];
+    const errors = [];
 
     for (const item of data) {
       const existingProduct = await db.product.findUnique({
@@ -26,18 +16,11 @@ export const POST = async (req: NextRequest) => {
       });
 
       if (existingProduct) {
-        return new NextResponse(
-          JSON.stringify({
-            message: "Product with these serial numbers already exists",
-            code: "P2002",
-          }),
-          {
-            status: 409,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        errors.push({
+          sn: item.sn,
+          message: "Product with these serial numbers already exists",
+        });
+        continue;
       }
 
       const product = await db.product.create({
@@ -65,7 +48,16 @@ export const POST = async (req: NextRequest) => {
       products.push(product);
     }
 
-    return new NextResponse(JSON.stringify(products), {
+    if (errors.length > 0) {
+      return new NextResponse(JSON.stringify({ products, errors }), {
+        status: 409,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
+    return new NextResponse(JSON.stringify({ products }), {
       status: 201,
       headers: {
         "Content-Type": "application/json",

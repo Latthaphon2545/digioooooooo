@@ -14,6 +14,7 @@ type GroupUploadProps = {
   page: "user" | "product" | "merchant";
   uploading: boolean;
   setUploading: Dispatch<boolean>;
+  setErrorOnSubmit: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const GroupUpload = ({
@@ -24,6 +25,7 @@ const GroupUpload = ({
   page,
   uploading,
   setUploading,
+  setErrorOnSubmit,
 }: GroupUploadProps) => {
   const [data, setData] = useState<
     Array<{
@@ -40,6 +42,11 @@ const GroupUpload = ({
   const [errorCount, setErrorCount] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
   const modelNames = models?.map((item) => item.series);
+  const expectedHeaders = {
+    user: ["email", "name", "contact", "role"],
+    product: ["model", "sn"],
+    merchant: ["name", "address", "contact"],
+  };
 
   const validateEmailAndRole = (
     email: string,
@@ -93,6 +100,33 @@ const GroupUpload = ({
         const wb = readXlsx(bufferArray, { type: "buffer" });
         const wsname = wb.SheetNames[0];
         const ws = wb.Sheets[wsname];
+        const fileExtension = file.name.split(".").pop();
+        if (fileExtension !== "xlsx" && fileExtension !== "csv") {
+          setErrorOnSubmit(
+            "Invalid file format. Please upload an xlsx or csv file."
+          );
+          setUploading(false);
+          return;
+        }
+
+        const fileHeaders = utilsXlsx.sheet_to_json(ws, {
+          header: 1,
+        })[0] as string[];
+        const expectedHeaderList = expectedHeaders[page];
+
+        const headersMatch = fileHeaders.every(
+          (header, index) => header === expectedHeaderList[index]
+        );
+
+        if (!headersMatch) {
+          setErrorOnSubmit(
+            "The headers of the uploaded file do not match the expected headers. It should be " +
+              expectedHeaderList.join(", ")
+          );
+          setUploading(false);
+          return;
+        }
+
         const data = utilsXlsx.sheet_to_json(ws, {
           header: headers,
           raw: false,
@@ -129,19 +163,13 @@ const GroupUpload = ({
               };
             }
           });
+
         filteredData.shift();
         filteredData.forEach((item) => {
           console.log(typeof item.contact as string);
         });
         setData(filteredData);
         setGroupData(filteredData);
-
-        // const hasError = filteredData.some((row) =>
-        //   headers[0] === "email"
-        //     ? !row.email?.endsWith("@digio.co.th")
-        //     : !modelNames?.includes(row.model || "")
-        // );
-        // setHasError(hasError);
 
         const errorCount = filteredData.filter((row) =>
           page === "user"
@@ -237,17 +265,6 @@ const GroupUpload = ({
             </span>
           </div>
         )}
-        {/* <div className="relative">
-          {uploading && (
-            <div
-              className={`radial-progress text-primary absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
-              style={{ "--value": uploadProgress } as CustomCSSProperties}
-              role="progressbar"
-            >
-              {uploadProgress}%
-            </div>
-          )}
-        </div> */}
       </div>
     </div>
   );

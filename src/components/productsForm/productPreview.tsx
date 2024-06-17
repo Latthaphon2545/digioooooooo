@@ -28,8 +28,8 @@ export default function ProductPreview({
         <thead className="text-xl">
           <tr>
             <th>No.</th>
-            <th>S/N</th>
-            <th>Model</th>
+            <th className="">S/N</th>
+            <th className="">Model</th>
           </tr>
         </thead>
         <tbody>
@@ -37,14 +37,14 @@ export default function ProductPreview({
             <tr key={index}>
               <td className="text-xl font-medium">{index + 1}.</td>
               <td
-                className={`p-2 text-lg ${
+                className={`p-2 text-lg  ${
                   checkSN(row.sn ?? "", index) ? "text-success" : "text-error"
                 }`}
               >
                 {row.sn}
               </td>
               <td
-                className={`overflow-scroll p-2  flex flex-row space-x-4 text-lg ${
+                className={`overflow-scroll p-2   text-lg ${
                   validateModel(row.model ?? "") ? "text-success" : "text-error"
                 }`}
               >
