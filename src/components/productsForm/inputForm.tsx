@@ -70,13 +70,16 @@ const InputForm = ({ models }: { models: Model[] }) => {
         }
       );
 
+      if (res.data.errors) {
+        setErrorOnSubmit(res.data.errors[0].message);
+        return;
+      }
       if (res.data) {
         router.push(
           "/products?filter=&search=&skip=0&take=8&alert=Products added successfully"
         );
       }
       clearForm();
-      console.log("response:", res.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.data) {

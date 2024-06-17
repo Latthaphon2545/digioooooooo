@@ -18,7 +18,7 @@ const InputHeader = ({
         <div className="text-5xl">{icon}</div>
         <h1 className="text-3xl font-bold text-center">{title}</h1>
       </div>
-      <div role="tablist" className="tabs tabs-bordered tabs-lg">
+      <div role="tablist" className="tabs tabs-bordered tabs-lg mr-3">
         <a
           role="tab"
           className={`tab ${

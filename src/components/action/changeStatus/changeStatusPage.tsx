@@ -86,7 +86,7 @@ export default function ChangeStatusPage() {
 
         {nextStep && (
           <>
-            <FormChangeStatus />
+            <FormChangeStatus sn={code} />
             <div className="link text-center w-3/6" onClick={handleBack}>
               Back
             </div>

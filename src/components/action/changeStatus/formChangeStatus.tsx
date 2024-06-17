@@ -1,3 +1,7 @@
+import ViewImg from "@/components/historyProduct/historyProductViewImg";
+import SubmitPopupButton from "@/components/submitPopupButton";
+import { changeStatus } from "@/lib/actions/changeStatus/action";
+import Image from "next/image";
 import React, { useState } from "react";
 
 const statuses = [
@@ -10,10 +14,12 @@ const statuses = [
   "Installing",
 ];
 
-export default function FormChangeStatus() {
+export default function FormChangeStatus({ sn }: { sn: string }) {
   const [description, setDescription] = useState("");
-  const [file, setFile] = useState<File | null>(null); // Changed to store a single File instead of FileList
+  const [files, setFiles] = useState<File[]>([]);
   const [activeStatus, setActiveStatus] = useState("In Stock");
+
+  const changeProductStatus = changeStatus.bind(null, sn);
 
   const tapStatus = (status: string) => (
     <a
@@ -23,44 +29,61 @@ export default function FormChangeStatus() {
       onClick={() => setActiveStatus(status)}
     >
       {status}
+      <input type="text" hidden value={activeStatus} name="status" />
     </a>
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]); // Store the first selected file
+      setFiles(Array.from(e.target.files));
     }
   };
 
   const submit = () => {
-    console.log(description, file, activeStatus);
+    console.log(description, files, activeStatus);
   };
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center gap-5 h-[25vw] w-[40vw]">
-        {/* Description */}
-        <textarea
-          className="textarea textarea-bordered h-[60%] w-full"
-          placeholder="Description..."
-          onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
+      <form action={changeProductStatus}>
+        <div className="flex flex-col justify-center items-center gap-5 h-[25vw] w-[40vw]">
+          {/* Description */}
+          <textarea
+            className="textarea textarea-bordered h-[60%] w-full"
+            placeholder="Description..."
+            //onChange={(e) => setDescription(e.target.value)}
+            name="description"
+          ></textarea>
 
-        {/* Status */}
-        <div role="tablist" className="tabs tabs-boxed w-full  bg-info">
-          {statuses.map(tapStatus)}
+          {/* Status */}
+          <div role="tablist" className="tabs tabs-boxed w-full  bg-info">
+            {statuses.map(tapStatus)}
+          </div>
+
+          {/* File */}
+          <input
+            type="file"
+            accept="image/*"
+            className="file-input file-input-bordered w-full file-input-info"
+            onChange={handleFileChange}
+            multiple
+            name="images"
+          />
+
+          {/* <ViewImg images={files.map((file, index) => URL.createObjectURL(file))} /> */}
         </div>
-
-        {/* File */}
-        <input
-          type="file"
-          className="file-input file-input-bordered w-full file-input-info"
-          onChange={handleFileChange}
-        />
-      </div>
-      <button className="btn w-3/6 btn-primary btn-lg" onClick={submit}>
-        Submit
-      </button>
+        {/* <button className="btn w-full btn-primary btn-lg" type="submit">
+          Submit
+        </button> */}
+        <SubmitPopupButton
+          header="Change Status"
+          description="Are you sure you want to change the status of this product?"
+          id="change_status"
+          styles="btn w-full btn-primary btn-lg"
+        >
+          Submit
+        </SubmitPopupButton>
+      </form>
     </>
   );
 }
