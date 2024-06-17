@@ -29,7 +29,4 @@ export default function Dropdown() {
       </li>
     </ul>
   );
-};
-
-
- 
+}

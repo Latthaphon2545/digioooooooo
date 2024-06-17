@@ -12,7 +12,7 @@ interface StatProps {
 const StatHome = ({ series, instock, installing, image }: StatProps) => {
   const router = useRouter();
   return (
-    <div className="stats shadow-xl ">
+    <div className="stats stats-vertical laptop:stats-horizontal shadow-xl">
       <div className="stat">
         <div className="stat-figure text-green-500">
           <TbBuildingWarehouse size={40} />

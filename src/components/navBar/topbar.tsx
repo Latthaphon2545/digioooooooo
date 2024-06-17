@@ -3,26 +3,18 @@
 import Profile from "./profileImg";
 import Dropdown from "./dropdown";
 
+import { GiHamburgerMenu } from "react-icons/gi";
+import logo from "/public/image/digio_logo.png";
+import { useState } from "react";
+import { HamburgerBar } from "./sidebar";
+
 export default function Topbar() {
+  const [openHamburger, setOpenHamburger] = useState(false);
   return (
     <div className="w-full">
-      <div className="navbar text-center">
-        {/* Logo */}
+      <div className="navbar text-center mobile:hidden tablet:hidden desktop:flex laptop:flex">
         <div className="flex-1">
-          <div className="text-ms breadcrumbs">
-            {/* <ul>
-              {splitPath.map((item, index) => {
-                if (index === 0) {
-                  return null;
-                }
-                return (
-                  <li key={index}>
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </li>
-                );
-              })}
-            </ul> */}
-          </div>
+          <div className="text-ms breadcrumbs"></div>
         </div>
 
         {/* Profile */}
@@ -44,6 +36,32 @@ export default function Topbar() {
             <Dropdown />
           </div>
         </div>
+      </div>
+
+      <div className="navbar flex justify-between mobile:flex tablet:flex desktop:hidden laptop:hidden relative">
+        <GiHamburgerMenu
+          className="text-[4vh]"
+          onClick={() => {
+            setOpenHamburger(!openHamburger);
+          }}
+        />
+        <img src={logo.src} alt="Digio" className="h-10" />
+        <div className="dropdown dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <Profile />
+          </div>
+          <Dropdown />
+        </div>
+        {openHamburger && (
+          <HamburgerBar
+            setOpenHamburger={setOpenHamburger}
+            openHamburger={openHamburger}
+          />
+        )}
       </div>
     </div>
   );

@@ -14,45 +14,46 @@ interface BankProps {
 export default function BankPage({ banks }: BankProps) {
   const [currentBank, setCurrentBank] = useState(0);
 
-  useEffect(() => {
-    const autoMove = setInterval(() => {
-      setCurrentBank((prev) => (prev + 1) % banks.length);
-      // move to next bank use id
-      const nextBankId = `bank${((currentBank + 1) % banks.length) + 1}`;
-      const nextBankElement = document.getElementById(nextBankId);
-      if (nextBankElement) {
-        nextBankElement.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-    }, 5000);
-    return () => clearInterval(autoMove);
-  }, [banks.length, currentBank]);
+  // useEffect(() => {
+  //   const autoMove = setInterval(() => {
+  //     setCurrentBank((prev) => (prev + 1) % banks.length);
+  //   }, 5000);
+
+  //   return () => clearInterval(autoMove);
+  // }, [banks.length]);
+
+  // useEffect(() => {
+  //   const nextBankId = `bank${currentBank + 1}`;
+  //   const nextBankElement = document.getElementById(nextBankId);
+  //   if (nextBankElement) {
+  //     nextBankElement.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "center",
+  //     });
+  //   }
+  // }, [currentBank]);
 
   return (
-    <div>
+    <div className="bg-gray-200 py-5 flex flex-col justify-center laptop:rounded-tl-[1rem] laptop:min-w-full mobile:max-w-sm tablet:max-w-xl">
       <div className="carousel rounded-box">
-        {banks.map((bank, index) => {
-          return (
-            <React.Fragment key={bank.name}>
-              <div
-                id={`bank${index + 1}`}
-                className={`carousel-item relative w-full justify-center items-center`}
-                onMouseOver={() => setCurrentBank(index)}
-              >
-                <img
-                  src={bank.image}
-                  alt={bank.name}
-                  className="w-[17vw] h-[30vh] mx-10 "
-                />
-                <div className="flex flex-col items-center justify-center gap-5 ">
-                  {StatStatus(bank.status)}
-                </div>
+        {banks.map((bank, index) => (
+          <React.Fragment key={bank.name}>
+            <div
+              id={`bank${index + 1}`}
+              className={`carousel-item relative w-full flex justify-center items-center gap-5 flex-row`}
+              onMouseOver={() => setCurrentBank(index)}
+            >
+              <img
+                src={bank.image}
+                alt={bank.name}
+                className="rounded-lg laptop:w-52 laptop:h-52 hidden md:block"
+              />
+              <div className="mb-5">
+                {StatStatus({ status: bank.status, image: bank.image })}
               </div>
-            </React.Fragment>
-          );
-        })}
+            </div>
+          </React.Fragment>
+        ))}
       </div>
       <SlidePagination
         totalBank={banks.length}
@@ -63,16 +64,32 @@ export default function BankPage({ banks }: BankProps) {
   );
 }
 
-const StatStatus = (status: Record<string, number>) => {
+const StatStatus = ({
+  status,
+  image,
+}: {
+  status: Record<string, number>;
+  image: string;
+}) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-5">
-      <div className="stats stats-horizontal grid grid-rows-2 gap-4 shadow-xl">
+    <div className="flex flex-col items-center justify-center">
+      <div className="stats stats-horizontal grid gap-3 shadow-lg mobile:grid-rows-4 laptop:grid-rows-2">
         {Object.entries(status).map(([status, value], index) => (
           <div key={index} className="stat">
-            <div className="stat-title text-sm">{status}</div>
-            <div className={`stat-value text-2xl`}>{value}</div>
+            <div className="stat-title laptop:text-sm mobile:text-xs">
+              {status}
+            </div>
+            <div className={`stat-value laptop:text-2xl mobile:text-base`}>
+              {value}
+            </div>
           </div>
         ))}
+        <img
+          src={image}
+          className="w-16 h-16 rounded-full absolute bottom-8 right-20 laptop:hidden 
+        "
+          alt={image}
+        />
       </div>
     </div>
   );
@@ -91,7 +108,7 @@ const SlidePagination = ({
 }: SlidePaginationProps) => {
   const router = useRouter();
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex justify-center items-center gap-4 mt-4">
       {Array.from({ length: totalBank }).map((_, index) => {
         const isActive = currentBank === index;
         return (

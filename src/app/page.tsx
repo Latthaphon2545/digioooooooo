@@ -59,13 +59,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center h-full   m-auto">
-      <div className="bg-gray-200 py-5 rounded-tl-[1rem] w-full flex justify-center">
-        {loadingBank ? <BankHomeLoading /> : <BankPage banks={bank} />}
-      </div>
-      <div>
-        {loadingModel ? <ModelHomeLoading /> : <ModelPage models={models} />}
-      </div>
+    <div className="w-full flex flex-col items-center h-full m-auto">
+      {loadingBank ? <BankHomeLoading /> : <BankPage banks={bank} />}
+      {loadingModel ? <ModelHomeLoading /> : <ModelPage models={models} />}
       <h1 className="text-2xl font-bold">Welcome to Digio Stock Inventory</h1>
     </div>
   );
