@@ -81,8 +81,8 @@ export default function Pagination({
   useEffect(() => {
     router.push(
       `${pathName}?filter=${filterParams}&search=${searchParams}&skip=${
-        (currentPage - 1) * 8
-      }&take=8`
+        (currentPage - 1) * 7
+      }&take=7`
     );
   }, [currentPage]);
 

@@ -12,7 +12,6 @@ export default function InputCheckStock() {
   useEffect(() => {
     const setSN = async () => {
       const sizeWindow = await window.innerHeight;
-      console.log(sizeWindow);
       let size = 0;
       if (sizeWindow > 1100) {
         size = 11;

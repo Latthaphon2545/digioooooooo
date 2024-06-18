@@ -114,7 +114,7 @@ export default function Header({ option }: { option: string }) {
   };
 
   return (
-    <div className="flex items-center gap-3 mobile:mt-3 mobile:justify-center laptop:justify-normal">
+    <div className="flex items-center gap-3 mobile:my-5 mobile:justify-center laptop:mt-0 laptop:justify-normal">
       <div className="flex items-center">
         <SearchBar handleSearch={handleSearch} />
         {category.map((item, index) => (

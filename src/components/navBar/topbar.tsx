@@ -12,7 +12,6 @@ import { usePathname } from "next/navigation";
 export default function Topbar() {
   const [openHamburger, setOpenHamburger] = useState(false);
   const pathName = usePathname();
-  console.log(pathName);
   return (
     <div className="w-full shadow-lg">
       <div className="navbar text-center mobile:hidden tablet:hidden desktop:flex laptop:flex">
@@ -41,7 +40,7 @@ export default function Topbar() {
         </div>
       </div>
 
-      <div className="navbar flex justify-between mobile:flex tablet:flex desktop:hidden laptop:hidden relative">
+      <div className="navbar flex justify-between mobile:flex tablet:flex desktop:hidden laptop:hidden fixed top-0 left-0 right-0 bg-white z-50 shadow-lg">
         <GiHamburgerMenu
           className="text-[4vh]"
           onClick={() => {

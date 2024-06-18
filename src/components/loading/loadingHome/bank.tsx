@@ -12,20 +12,26 @@ const status = [
 
 export default function BankHomeLoading() {
   return (
-    <div>
+    <div className="py-5 flex flex-col justify-center laptop:rounded-tl-[1rem] laptop:min-w-full mobile:max-w-sm tablet:min-w-full">
       <div className="carousel rounded-box">
         <div
           className={`carousel-item relative w-full justify-center items-center`}
         >
-          <div className="mx-10 skeleton opacity-25 w-[17vw] h-[30vh] rounded-full "></div>
-          <div className="flex flex-col items-center justify-center gap-5">
-            <div className="stats stats-horizontal grid grid-rows-2 gap-4 shadow-xl">
-              {status.map((status, index) => (
-                <div key={index} className="stat">
-                  <div className="stat-title text-sm">{status}</div>
-                  <div className={`stat-value skeleton opacity-25  h-8`}></div>
-                </div>
-              ))}
+          <div className="mx-10 skeleton opacity-25 w-[17vw] h-[30vh] rounded-full laptop:w-52 laptop:h-52 mobile:hidden tablet:block tablet:w-48 tablet:h-48 laptop:block "></div>
+          <div className="mb-5">
+            <div className="flex justify-center items-center">
+              <div className="stats stats-horizontal grid gap-3 shadow-lg mobile:grid-rows-4 tablet:grid-rows-2 laptop:grid-rows-2">
+                {status.map((status, index) => (
+                  <div key={index} className="stat">
+                    <div className="stat-title laptop:text-sm mobile:text-xs">
+                      {status}
+                    </div>
+                    <div
+                      className={`stat-value skeleton opacity-25  h-6 w-10`}
+                    ></div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -37,8 +43,8 @@ export default function BankHomeLoading() {
 
 const SlidePaginationSkeleton = () => {
   return (
-    <div className="flex justify-center items-center gap-4">
-      <div className="skeleton opacity-0 w-3 h-3 cursor-pointer rounded-full"></div>
+    <div className="flex justify-center items-center gap-4 mt-4">
+      <div className={`h-3 rounded-full cursor-pointer bg-primary w-7`}></div>
     </div>
   );
 };

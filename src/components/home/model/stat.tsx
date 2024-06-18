@@ -12,11 +12,11 @@ interface StatProps {
 const StatHome = ({ series, instock, installing, image }: StatProps) => {
   const router = useRouter();
   return (
-    <div className="stats stats-horizontal shadow-xl ">
+    <div className="stats stats-horizontal shadow-xl overflow-hidden">
       <div className="stat laptop:w-52 mobile:w-28 tablet:w-52">
         <div className="stat-figure text-secondary mobile:hidden laptop:block tablet:block">
           <div className="avatar">
-            <div className="w-16 rounded-full">
+            <div className="w-16 h-16 rounded-full">
               <img src={image} alt={series} />
             </div>
           </div>

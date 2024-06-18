@@ -26,7 +26,7 @@ export default function RootLayout({
         </div>
         <div className="flex flex-col flex-grow ">
           <Topbar />
-          <main className="flex-grow boxshadow laptop:rounded-tl-[1rem]">
+          <main className="flex-grow boxshadow mobile:mt-16 laptop:mt-0">
             {children}
           </main>
         </div>

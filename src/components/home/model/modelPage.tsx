@@ -15,9 +15,7 @@ interface ModelProps {
 export default function ModelPage({ models }: ModelProps) {
   return (
     <>
-      <div
-        className={`grid gap-5 rounded-lg overflow-x-auto p-10 laptop:grid-cols-2`}
-      >
+      <div className={`grid gap-5 rounded-lg py-10 laptop:grid-cols-2`}>
         {models.map((model, index) => (
           <React.Fragment key={index}>
             <StatHome

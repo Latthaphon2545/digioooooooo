@@ -14,10 +14,6 @@ interface TablePageProps {
   totalLength: number;
 }
 
-const getItemPerPage = (height: number) => {
-  return 8;
-};
-
 export default function TablePage({
   data,
   colorStatus,
@@ -25,7 +21,7 @@ export default function TablePage({
   totalLength,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemPerPage, setItemPerPage] = useState(getItemPerPage(1));
+  const [itemPerPage, setItemPerPage] = useState(7);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {

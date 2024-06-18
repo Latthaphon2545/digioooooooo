@@ -11,7 +11,7 @@ export const MENU = [
     links: [
       {
         name: "Users",
-        href: "/users?filter=&search=&skip=0&take=8",
+        href: "/users?filter=&search=&skip=0&take=7",
       },
     ],
   },
@@ -21,7 +21,7 @@ export const MENU = [
       { name: "Models", href: "/products/models" },
       {
         name: "Products",
-        href: "/products?filter=&search=&skip=0&take=8",
+        href: "/products?filter=&search=&skip=0&take=7",
       },
     ],
   },
@@ -30,7 +30,7 @@ export const MENU = [
     links: [
       {
         name: "Merchants",
-        href: "/merchants?filter=&search=&skip=0&take=8",
+        href: "/merchants?filter=&search=&skip=0&take=7",
       },
     ],
   },
@@ -138,7 +138,7 @@ export const HamburgerBar = ({
   }, [openHamburger]);
 
   return (
-    <div className="fixed top-0 left-0 h-full w-full z-50">
+    <div className="fixed top-0 left-0 h-full w-full z-50 ">
       {/* Background overlay */}
       <div
         className={`absolute top-0 left-0 w-full h-full bg-black opacity-50 ${
