@@ -9,11 +9,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ActionButton from "@/components/actionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import AlertDialog from "@/components/alertDialog";
+import FloatingActionButton from "@/components/floatingActionButton";
 
 export default function Home() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(false);
+  const [isEditor, setIseditor] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
@@ -67,15 +68,18 @@ export default function Home() {
           <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
             <h1 className="text-3xl font-bold">User</h1>
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
-              <ActionButton
-                action={() => {
-                  router.push("/users/add");
-                }}
-                styles={`btn-primary`}
-                disabled={!isEditor}
-              >
-                <AiOutlineUserAdd size={20} /> Add users
-              </ActionButton>
+              <div className="mobile:hidden laptop:block">
+                <ActionButton
+                  action={() => {
+                    router.push("/users/add");
+                  }}
+                  styles={`btn-primary`}
+                  disabled={!isEditor}
+                >
+                  <AiOutlineUserAdd size={20} /> Add users
+                </ActionButton>
+              </div>
+              <FloatingActionButton />
             </div>
           </div>
           <div className="flex justify-end mx-5"></div>

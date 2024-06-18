@@ -104,12 +104,14 @@ const InputForm = ({ models }: { models: Model[] }) => {
 
   return (
     <div className="relative">
-      <InputHeader
-        icon={<IoMdAddCircle />}
-        title="Add Product"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+      <div className="mobile:hidden tablet:block">
+        <InputHeader
+          icon={<IoMdAddCircle />}
+          title="Add Product"
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      </div>
       <div className="min-h-[68vh]">
         {activeTab === 0 && (
           <ProductInput
