@@ -240,7 +240,7 @@ const GroupUpload = ({
         </a>
       </div>
       <div className="relative">
-        <div className="border-2 w-[80vh] h-[65vh] overflow-scroll relative">
+        <div className="border-2 w-[70vh] h-[65vh] overflow-scroll relative">
           {uploading && <ProgressIndicator uploadProgress={uploadProgress} />}
           {!uploading && (
             <InputPreview

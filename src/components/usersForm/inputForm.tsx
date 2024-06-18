@@ -7,7 +7,7 @@ import UserInput from "./userInput";
 import GroupUpload from "../groupUpload";
 import { DataItem, Role } from "@/lib/types";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 
@@ -19,7 +19,9 @@ type FormValues = {
 }[];
 
 const InputForm = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const router = useRouter();
+  const initialActiveTab = useSearchParams().get("activeTab") || 0;
+  const [activeTab, setActiveTab] = useState(Number(initialActiveTab));
   const [hasError, setHasError] = useState(false);
   const [groupData, setGroupData] = useState<Array<DataItem>>([]);
   const [formValues, setFormValues] = useState<FormValues>([
@@ -30,7 +32,6 @@ const InputForm = () => {
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
-  const router = useRouter();
 
   useEffect(() => {
     if (errorOnSubmit) {
@@ -115,13 +116,15 @@ const InputForm = () => {
   };
 
   return (
-    <div className="relative">
-      <InputHeader
-        icon={<IoPersonAddSharp />}
-        title="Add User"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+    <div className="relative w-full">
+      <div className="mobile:hidden laptop:block">
+        <InputHeader
+          icon={<IoPersonAddSharp />}
+          title="Add User"
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      </div>
       <div className="min-h-[68vh]">
         {activeTab === 0 && (
           <UserInput formValues={formValues} setFormValues={setFormValues} />

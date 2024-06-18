@@ -32,6 +32,7 @@ export default function Productmanagement() {
       setTimeout(() => {
         setShowAlert(false);
       }, 3000);
+      console.log("alertMessage", alertMessage);
     }
   }, [alertMessage]);
 

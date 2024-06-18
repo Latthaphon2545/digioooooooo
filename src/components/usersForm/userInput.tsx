@@ -46,7 +46,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
   return (
     <div>
       <form action={""}>
-        <table className="table-auto inline-table w-full">
+        <table className="w-full flex-nowrap overflow-hidden">
           <thead>
             <tr>
               <th>No.</th>
