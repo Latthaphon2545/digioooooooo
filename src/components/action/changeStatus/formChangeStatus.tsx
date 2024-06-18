@@ -29,7 +29,6 @@ export default function FormChangeStatus({ sn }: { sn: string }) {
       onClick={() => setActiveStatus(status)}
     >
       {status}
-      <input type="text" hidden value={activeStatus} name="status" />
     </a>
   );
 
@@ -39,25 +38,28 @@ export default function FormChangeStatus({ sn }: { sn: string }) {
     }
   };
 
-  const submit = () => {
-    console.log(description, files, activeStatus);
-  };
-
   return (
     <>
       <form action={changeProductStatus}>
-        <div className="flex flex-col justify-center items-center gap-5 h-[25vw] w-[40vw]">
+        <div className="flex flex-col items-center gap-5 laptop:h-[25vw] laptop:w-full mobile:w-80 tablet:w-full">
           {/* Description */}
           <textarea
-            className="textarea textarea-bordered h-[60%] w-full"
+            className="textarea textarea-bordered laptop:h-56 desktop:h-80 mobile:h-44 w-full"
             placeholder="Description..."
-            //onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
+            autoFocus={false}
             name="description"
           ></textarea>
 
-          {/* Status */}
-          <div role="tablist" className="tabs tabs-boxed w-full  bg-info">
-            {statuses.map(tapStatus)}
+          {/* Status not mobile */}
+          <div>
+            <div
+              role="tablist"
+              className="tabs tabs-boxed w-full bg-info block text-center"
+            >
+              {statuses.map(tapStatus)}
+            </div>
+            <input type="hidden" value={activeStatus} name="status" />
           </div>
 
           {/* File */}
@@ -69,7 +71,6 @@ export default function FormChangeStatus({ sn }: { sn: string }) {
             multiple
             name="images"
           />
-
           {/* <ViewImg images={files.map((file, index) => URL.createObjectURL(file))} /> */}
         </div>
         {/* <button className="btn w-full btn-primary btn-lg" type="submit">
@@ -79,7 +80,7 @@ export default function FormChangeStatus({ sn }: { sn: string }) {
           header="Change Status"
           description="Are you sure you want to change the status of this product?"
           id="change_status"
-          styles="btn w-full btn-primary btn-lg"
+          styles="btn w-full btn-primary btn-lg mobile:mt-5"
         >
           Submit
         </SubmitPopupButton>

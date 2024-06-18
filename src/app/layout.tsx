@@ -21,7 +21,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <body className={`${inter.className} flex`}>
-        <div className="mobile:hidden tablet:hidden laptop:block">
+        <div className="mobile:hidden tablet:hidden  laptop:block">
           <Sidebar />
         </div>
         <div className="flex flex-col flex-grow ">

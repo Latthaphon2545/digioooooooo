@@ -64,7 +64,7 @@ export default function Productmanagement() {
               icon={<AiOutlineUserAdd size={20} />}
             />
           )}
-          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
+          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14 mobile:hidden laptop:flex">
             <h1 className="text-3xl font-bold">Product</h1>
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
               <ActionButton

@@ -5,8 +5,8 @@ import axios from "axios";
 import { Error, I, Success, Warning } from "../../alertDialog";
 
 export default function InputCheckStock() {
-  const [sn, setSn] = useState(Array(9).fill(""));
-  const [status, setStatus] = useState(Array(9).fill("")); // New state to track status
+  const [sn, setSn] = useState(Array(8).fill(""));
+  const [status, setStatus] = useState(Array(8).fill("")); // New state to track status
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function InputCheckStock() {
       if (sizeWindow > 1100) {
         size = 11;
       } else {
-        size = 9;
+        size = 8;
       }
       setSn(Array(size).fill(""));
       setStatus(Array(size).fill(""));
@@ -106,11 +106,11 @@ export default function InputCheckStock() {
   };
 
   return (
-    <div className="flex flex-col justify-between gap-4">
+    <div className="flex flex-col justify-between items-center gap-4">
       <div className="flex flex-col gap-4">
         {sn.map((barcode, index) => (
-          <li key={index} className="flex flex-col gap-2">
-            <label className="input input-bordered flex items-center gap-2">
+          <li key={index} className="flex flex-col w-[30vw] ">
+            <label className="input input-bordered flex items-center">
               <input
                 type="text"
                 className="grow w-full"
@@ -140,7 +140,9 @@ export default function InputCheckStock() {
       </div>
 
       <button
-        className={`btn btn-${loading ? "block" : "primary"}`}
+        className={`btn btn-${
+          loading ? "block" : "primary"
+        } laptop:w-3/6 mobile:w-full tablet:w-full btn-primary btn-lg`}
         onClick={submit}
         disabled={loading}
       >

@@ -57,7 +57,7 @@ const editor = true;
 export const Sidebar = () => {
   let pathName = usePathname();
   return (
-    <div className="h-screen flex flex-col justify-between max-h-screen items-center w-[14vw] shadow-lg">
+    <div className="h-screen flex flex-col justify-between max-h-screen items-center w-[16vw] shadow-lg">
       <div className="w-full">
         <div className="flex flex-row items-center justify-center my-7">
           <Link href="/">

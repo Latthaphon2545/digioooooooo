@@ -7,7 +7,7 @@ export default function CheckStock() {
     <>
       <div className="flex flex-row mx-5">
         <div className="flex flex-col w-full relative">
-          <div className="flex items-center gap-2 mt-5 mb-1 h-14 mobile:hidden laptop:flex">
+          <div className="flex items-center gap-2 mt-5 mb-1 h-14 mobile:hidden tablet:hidden laptop:flex desktop:flex">
             <h1 className="text-3xl font-bold">Check Stock</h1>
             <Modal
               title="i"

@@ -21,15 +21,17 @@ export default function ChangeStatusPage() {
   };
 
   return (
-    <div>
-      <p className="text-start mx-5 mb-10">
-        Please scan the barcode to check the stock and change the status.
+    <div className=" laptop:mt-0">
+      <p className="text-start mx-5 my-7 mobile:text-center tablet:text-center laptop:text-start desktop:text-start">
+        {!nextStep
+          ? "Please scan the barcode to check the stock and change the status."
+          : "Type field to change status."}
       </p>
 
-      <div className="flex flex-col justify-center items-center gap-5 ">
+      <div className="flex flex-col justify-center items-center gap-5 w-full">
         {!nextStepBtn && (
           <>
-            <div className="flex justify-center items-center h-[25vw] w-[25vw]">
+            <div className="flex justify-center items-center mobile:h-[24rem] mobile:w-72 tablet:h-[45rem] tablet:w-96 laptop:h-96 laptop:w-96">
               {scanner ? (
                 <Scanner
                   setNextStep={setNextStepBtn}
@@ -38,11 +40,11 @@ export default function ChangeStatusPage() {
                   setFindingProduct={setFindingProduct}
                 />
               ) : (
-                <BiBarcodeReader className="text-[25vw]" />
+                <BiBarcodeReader className="text-[24rem]" />
               )}
             </div>
             <button
-              className={`btn w-3/6 btn-primary btn-lg`}
+              className={`btn laptop:w-3/6 mobile:w-full tablet:w-full btn-primary btn-lg`}
               onClick={() => {
                 setScanner(!scanner);
               }}
@@ -60,7 +62,7 @@ export default function ChangeStatusPage() {
         {nextStepBtn && !nextStep && (
           <>
             <div
-              className={`flex flex-col justify-center items-center h-[25vw] w-[25vw] ${
+              className={`flex flex-col justify-center items-center mobile:h-[22rem] mobile:w-72 tablet:h-[45rem] tablet:w-96 laptop:h-96 laptop:w-96 ${
                 message === "Click next to continue"
                   ? "text-success"
                   : "text-error"
@@ -70,7 +72,7 @@ export default function ChangeStatusPage() {
               <h1>{message}</h1>
             </div>
             <button
-              className="btn w-3/6 btn-primary btn-lg"
+              className="btn laptop:w-3/6 mobile:w-full tablet:w-full btn-primary btn-lg"
               onClick={() => {
                 setNextStep(true);
               }}

@@ -44,7 +44,7 @@ export default function productmanagement() {
     <>
       <div className="flex flex-row">
         <div className="flex flex-col w-full relative">
-          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
+          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14 mobile:hidden laptop:flex">
             <h1 className="text-3xl font-bold">Merchant</h1>
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
               <Link href="/merchants/add">

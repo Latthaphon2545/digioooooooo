@@ -114,14 +114,14 @@ export default function Header({ option }: { option: string }) {
   };
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 mobile:mt-3 mobile:justify-center laptop:justify-normal">
       <div className="flex items-center">
         <SearchBar handleSearch={handleSearch} />
         {category.map((item, index) => (
           <DropdownBottom key={index} item={item} index={index} />
         ))}
       </div>
-      <div>
+      <div className="items-center gap-3 mobile:hidden laptop:flex">
         {category.length > 0 && (
           <>
             {filterParamsObjects.map((param) => (

@@ -23,8 +23,8 @@ const config: Config = {
       "2xl": "1536px",
       mobile: "320px",
       tablet: "768px",
-      laptop: "1024px",
-      desktop: "1280px",
+      laptop: "1440px",
+      desktop: "1800px",
     },
   },
   daisyui: {
