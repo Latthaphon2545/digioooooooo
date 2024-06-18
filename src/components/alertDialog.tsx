@@ -11,7 +11,7 @@ export default function AlertDialog({ title, styles, icon }: AlertDialogProps) {
     <div>
       <div
         role="alert"
-        className={`alert ${styles} fixed bottom-4 left-[15%] mobile:hidden tablet:hidden laptop:flex`}
+        className={`alert ${styles} fixed bottom-4 left-[15%] mobile:hidden tablet:hidden laptop:flex desktop:flex w-fit`}
       >
         {icon}
         <span>{title}</span>

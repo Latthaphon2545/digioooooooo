@@ -34,24 +34,20 @@ export default function Scanner() {
       });
       const data = await res.data;
       if (res.status === 200) {
-        showAlert(
-          data.message,
-          "bg-success laptop:w-fit desktop:w-fit",
-          Success
-        );
+        showAlert(data.message, "alert-success mobile:bg-success", Success);
       }
     } catch (error: any) {
       console.log(error);
       if (error.response.status === 404) {
         showAlert(
           error.response.data.message,
-          "bg-error	laptop:w-fit desktop:w-fit",
+          "alert-error mobile:bg-error",
           Error
         );
       } else if (error.response.status === 400) {
         showAlert(
           error.response.data.message,
-          "bg-warning	laptop:w-fit desktop:w-fit",
+          "alert-warning mobile:bg-warning",
           Warning
         );
       }
