@@ -173,12 +173,7 @@ const GroupUpload = ({
 
         const errorCount = filteredData.filter((row) =>
           page === "user"
-            ? // ? !row.email?.endsWith("@digio.co.th") ||
-              //   !Object.values(Role).includes(
-              //     row.role.toUpperCase().replace(/ +/g, "") as Role
-              //   )
-              // : !model?.includes(row.model!.trim().replace(/ +/g, "") || "")
-              validateEmailAndRole(
+            ? validateEmailAndRole(
                 row.email!,
                 row.role!,
                 filteredData,
@@ -203,16 +198,16 @@ const GroupUpload = ({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-center flex-grow space-x-8">
-      <input
-        type="file"
-        ref={fileInputRef}
-        className="border w-full max-w-xs hidden"
-        onChange={handleFileUpload}
-      />
-      <div className="flex flex-col items-center justify-center space-y-4">
+    <div className="flex mobile:flex-col lg:flex-row justify-center flex-grow gap-4  px-10">
+      <div className="flex flex-col items-center justify-center space-y-4 px-10">
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="border w-full max-w-xs hidden"
+          onChange={handleFileUpload}
+        />
         <div
-          className="border-dotted border-2 text-lg text-center min-w-72 min-h-52 flex items-center justify-center hover:cursor-pointer"
+          className="border-dotted border-2 text-lg text-center p-4 tablet:min-w-72 tablet:min-h-52 flex items-center justify-center hover:cursor-pointer"
           onClick={handleDivClick}
         >
           <div>
@@ -239,8 +234,8 @@ const GroupUpload = ({
           <p>Download Template</p>
         </a>
       </div>
-      <div className="relative">
-        <div className="border-2 w-[70vh] h-[65vh] overflow-scroll relative">
+      <div className="relative w-full mobile:h-[48vh] tablet:h-[55vh] flex justify-center">
+        <div className="border-2 h-full w-5/6  overflow-scroll relative">
           {uploading && <ProgressIndicator uploadProgress={uploadProgress} />}
           {!uploading && (
             <InputPreview
@@ -251,6 +246,7 @@ const GroupUpload = ({
             />
           )}
         </div>
+
         {data.length > 0 && (
           <div className="absolute -bottom-10 left-2 flex flex-wrap space-x-2">
             <span className="badge badge-primary badge-lg py-4 px-3">

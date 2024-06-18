@@ -10,10 +10,11 @@ import axios from "axios";
 import { checkFormatInput } from "@/lib/inputUtils";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const InputForm = ({ models }: { models: Model[] }) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const initialActiveTab = useSearchParams().get("activeTab") || 0;
+  const [activeTab, setActiveTab] = useState(Number(initialActiveTab));
   const [hasError, setHasError] = useState(false);
   const [groupData, setGroupData] = useState<Array<DataItem>>([]);
   const [uploading, setUploading] = useState(false);
@@ -104,14 +105,12 @@ const InputForm = ({ models }: { models: Model[] }) => {
 
   return (
     <div className="relative">
-      <div className="mobile:hidden tablet:block">
-        <InputHeader
-          icon={<IoMdAddCircle />}
-          title="Add Product"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </div>
+      <InputHeader
+        icon={<IoMdAddCircle />}
+        title="Add Product"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
       <div className="min-h-[68vh]">
         {activeTab === 0 && (
           <ProductInput
@@ -141,13 +140,13 @@ const InputForm = ({ models }: { models: Model[] }) => {
       {errorOnSubmit && (
         <AlertDialog
           title={errorOnSubmit}
-          styles="alert-error absolute w-fit mx-10 py-3 bottom-0"
+          styles="bg-error"
           icon={<BiError size={20} />}
         />
       )}
       <div className="flex justify-end mr-10">
         <Alert
-          styles="btn-primary px-10"
+          styles="btn-primary px-10 w-full mobile:mt-5 laptop:mt-0 mobile:w-full laptop:w-auto btn-wide fixed mobile:bottom-0 mobile:right-0 laptop:bottom-5 laptop:right-10 mobile:text-xl laptop:text-lg"
           alertHeader="Add Product"
           alertDescroption="Are you sure you want to add these products?"
           id="add_product"

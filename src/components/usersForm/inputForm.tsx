@@ -45,6 +45,11 @@ const InputForm = () => {
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
+      if (activeTab === 1 && groupData.length === 0) {
+        setErrorOnSubmit("Please upload a file before submitting");
+        return;
+      }
+
       if (
         activeTab === 0 &&
         formValues.every(
@@ -117,15 +122,13 @@ const InputForm = () => {
 
   return (
     <div className="relative w-full">
-      <div className="mobile:hidden laptop:block">
-        <InputHeader
-          icon={<IoPersonAddSharp />}
-          title="Add User"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </div>
-      <div className="min-h-[68vh]">
+      <InputHeader
+        icon={<IoPersonAddSharp />}
+        title="Add User"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+      <div className="tablet:min-h-[67vh] mobile:min-h-[75vh]">
         {activeTab === 0 && (
           <UserInput formValues={formValues} setFormValues={setFormValues} />
         )}
@@ -149,13 +152,13 @@ const InputForm = () => {
       {errorOnSubmit && (
         <AlertDialog
           title={errorOnSubmit}
-          styles="alert-error absolute w-fit mx-10 py-3 bottom-0"
+          styles="bg-error"
           icon={<BiError size={20} />}
         />
       )}
-      <div className="flex justify-end mr-10">
+      <div className="flex justify-end w-full tablet:mr-10 align-bottom text-">
         <Alert
-          styles="btn-primary px-10"
+          styles="btn-primary px-10 w-full mobile:mt-5 laptop:mt-0 mobile:w-full laptop:w-auto btn-wide fixed mobile:bottom-0 mobile:right-0 laptop:bottom-5 laptop:right-10 mobile:text-xl laptop:text-lg"
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
           id="add_user"

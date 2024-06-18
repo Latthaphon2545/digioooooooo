@@ -2,6 +2,7 @@
 
 import ActionButton from "@/components/actionButton";
 import AlertDialog from "@/components/alertDialog";
+import FloatingActionButton from "@/components/floatingActionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageProduct from "@/components/table/productTable/productTablePage";
 import axios from "axios";
@@ -31,7 +32,7 @@ export default function Productmanagement() {
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
-      }, 3000);
+      }, 4000);
       console.log("alertMessage", alertMessage);
     }
   }, [alertMessage]);
@@ -67,17 +68,20 @@ export default function Productmanagement() {
           <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14 mobile:hidden laptop:flex">
             <h1 className="text-3xl font-bold">Product</h1>
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
-              <ActionButton
-                action={() => {
-                  router.push("/products/add");
-                }}
-                styles={`btn-primary`}
-                disabled={!isEditor}
-              >
-                Add Product
-              </ActionButton>
+              <div className="mobile:hidden laptop:block">
+                <ActionButton
+                  action={() => {
+                    router.push("/products/add");
+                  }}
+                  styles={`btn-primary`}
+                  disabled={!isEditor}
+                >
+                  Add Product
+                </ActionButton>
+              </div>
             </div>
           </div>
+          <FloatingActionButton page="product" />
           <div className="flex justify-end mx-5"></div>
           {loading ? (
             <TablePageLoading Type="Product" />

@@ -44,9 +44,9 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
   };
 
   return (
-    <div>
+    <div className="overflow-hidden mobile:max-h-[72vh] tablet:max-h-[75vh]">
       <form action={""}>
-        <table className="w-full flex-nowrap overflow-hidden">
+        <table className="w-full flex-nowrap">
           <thead>
             <tr>
               <th>No.</th>

@@ -27,7 +27,7 @@ const UserInputField = ({
     <td>
       <p className="text-center text-xl font-semibold">{index + 1}</p>
     </td>
-    <td>
+    <td className="w-[40%]">
       <label className="input input-sm input-bordered flex items-center gap-2 m-2 relative">
         <input
           type="text"
@@ -36,12 +36,12 @@ const UserInputField = ({
           value={formValues[index].email}
           onChange={handleInputChange(index, "email")}
         />
-        <span className="absolute top-[-1] right-0 bg-primary rounded-r-lg text-white px-5">
+        <span className="absolute top-[-1] right-0 bg-primary rounded-r-lg text-white laptop:px-5 mobile:px-1">
           @digio.co.th
         </span>
       </label>
     </td>
-    <td>
+    <td className="w-[25%]">
       <label className="input input-sm input-bordered flex items-center gap-2 m-1">
         <input
           type="text"
@@ -52,7 +52,7 @@ const UserInputField = ({
         />
       </label>
     </td>
-    <td>
+    <td className="w-[25%]">
       <label className="input input-sm input-bordered flex items-center gap-2 m-1">
         <input
           type="text"
@@ -63,7 +63,7 @@ const UserInputField = ({
         />
       </label>
     </td>
-    <td>
+    <td className="w-[10%]">
       <label className="input input-sm input-bordered flex items-center gap-2 m-1">
         <select
           value={formValues[index].role ?? ""}

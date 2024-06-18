@@ -1,5 +1,6 @@
 "use client";
 
+import FloatingActionButton from "@/components/floatingActionButton";
 import ModelLoading from "@/components/loading/loadingModel/modelPage";
 import Model from "@/components/model/modelPage";
 import axios from "axios";
@@ -38,6 +39,7 @@ export default function Models() {
               <Model models={models} edit={false} />
             )}
           </div>
+          <FloatingActionButton page="model" />
         </div>
       </div>
     </>

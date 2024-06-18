@@ -25,7 +25,7 @@ const ProductInputField = ({
       <p className="text-center text-xl font-semibold">{index + 1}</p>
     </td>
     <td>
-      <label className="input input-sm input-bordered flex items-center gap-2 m-1">
+      <label className="border p-[0.35rem] rounded-lg flex items-center gap-2 m-1">
         <select
           className="grow"
           value={formValues[index].model}

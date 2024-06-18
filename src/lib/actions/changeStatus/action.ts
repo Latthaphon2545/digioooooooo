@@ -56,6 +56,17 @@ export async function changeStatus(sn: string, formData: FormData) {
     });
     console.log("History created");
     console.log(res);
+
+    const updatedProduct = await db.product.update({
+      where: {
+        serialNumber: sn,
+      },
+      data: {
+        status: status,
+      },
+    });
+    console.log("Product updated");
+    console.log(updatedProduct);
   } catch (err) {
     console.error("Error while creating history");
     console.log(err);

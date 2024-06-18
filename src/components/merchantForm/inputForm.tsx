@@ -9,6 +9,7 @@ import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import Alert from "../alert";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 type FormValues = {
   name: string;
@@ -17,7 +18,8 @@ type FormValues = {
 }[];
 
 export default function MerchantInputForm() {
-  const [activeTab, setActiveTab] = useState(0);
+  const initialActiveTab = useSearchParams().get("activeTab") || 0;
+  const [activeTab, setActiveTab] = useState(Number(initialActiveTab));
   const [hasError, setHasError] = useState(false);
   const [groupData, setGroupData] = useState<Array<DataItem>>([]);
   const [formValues, setFormValues] = useState<FormValues>([
@@ -126,7 +128,7 @@ export default function MerchantInputForm() {
       )}
       <div className="flex justify-end mr-10">
         <Alert
-          styles="btn-primary px-10"
+          styles="btn-primary px-10 w-full mobile:mt-5 laptop:mt-0 mobile:w-full laptop:w-auto btn-wide fixed mobile:bottom-0 mobile:right-0 laptop:bottom-5 laptop:right-10 mobile:text-xl laptop:text-lg"
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
           id="add_user"
