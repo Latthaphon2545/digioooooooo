@@ -7,13 +7,20 @@ export default function Dropdown() {
       tabIndex={0}
       className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
     >
+      <li className="laptop:hidden menu-title">
+        <div className="flex flex-row justify-between items-center mb-2">
+          <p>Latthaphon Phoemmanirat</p>
+          <p>Admin</p>
+        </div>
+      </li>
+
       <li>
         <a>History</a>
       </li>
       <li>
         <a>Settings</a>
       </li>
-      <li>
+      <li className="mt-5">
         <Alert
           styles="btn-error btn-sm text-base-100 text-sm w-44"
           action={() => {}}

@@ -195,7 +195,7 @@ export default function Table({
 
   return (
     <>
-      <div className="min-h-[70vh] mt-3 w-[80vw]">
+      <div className="min-h-[63vh] mt-3 w-[80vw]">
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>

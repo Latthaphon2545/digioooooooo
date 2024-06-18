@@ -59,8 +59,16 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center h-full m-auto">
+    <div className="flex flex-col items-center m-auto">
       {loadingBank ? <BankHomeLoading /> : <BankPage banks={bank} />}
+      <div className="divider my-1">
+        <p>
+          <span className="text-xs">Welcome to digio inventory,{`\n\n`}</span>
+          <span className="text-primary font-bold mobile:text-xl laptop:text-lg">
+            Latthaphon
+          </span>
+        </p>
+      </div>
       {loadingModel ? <ModelHomeLoading /> : <ModelPage models={models} />}
     </div>
   );
