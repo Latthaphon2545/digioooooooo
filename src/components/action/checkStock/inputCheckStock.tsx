@@ -5,9 +5,25 @@ import axios from "axios";
 import { Error, I, Success, Warning } from "../../alertDialog";
 
 export default function InputCheckStock() {
-  const [sn, setSn] = useState(["", "", "", "", "", "", "", "", ""]);
+  const [sn, setSn] = useState(Array(9).fill(""));
   const [status, setStatus] = useState(Array(9).fill("")); // New state to track status
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const setSN = async () => {
+      const sizeWindow = await window.innerHeight;
+      console.log(sizeWindow);
+      let size = 0;
+      if (sizeWindow > 1100) {
+        size = 11;
+      } else {
+        size = 9;
+      }
+      setSn(Array(size).fill(""));
+      setStatus(Array(size).fill(""));
+    };
+    setSN();
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,

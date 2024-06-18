@@ -9,10 +9,25 @@ type AlertDialogProps = {
 export default function AlertDialog({ title, styles, icon }: AlertDialogProps) {
   return (
     <div>
-      <div role="alert" className={`alert ${styles}`}>
+      <div
+        role="alert"
+        className={`alert ${styles} fixed bottom-4 left-[15%] mobile:hidden tablet:hidden laptop:flex`}
+      >
         {icon}
         <span>{title}</span>
       </div>
+
+      <dialog
+        id="my_modal_5"
+        className={`modal modal-bottom mobile:flex tablet:flex laptop:hidden desktop:hidden`}
+        open={true}
+      >
+        <div className={`modal-box ${styles}`}>
+          <h3 className="font-bold text-lg flex items-center justify-center gap-5 ">
+            {icon} {title}
+          </h3>
+        </div>
+      </dialog>
     </div>
   );
 }

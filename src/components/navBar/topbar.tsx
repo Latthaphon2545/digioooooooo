@@ -7,11 +7,14 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import logo from "/public/image/digio_logo.png";
 import { useState } from "react";
 import { HamburgerBar } from "./sidebar";
+import { usePathname } from "next/navigation";
 
 export default function Topbar() {
   const [openHamburger, setOpenHamburger] = useState(false);
+  const pathName = usePathname();
+  console.log(pathName);
   return (
-    <div className="w-full">
+    <div className="w-full shadow-lg">
       <div className="navbar text-center mobile:hidden tablet:hidden desktop:flex laptop:flex">
         <div className="flex-1">
           <div className="text-ms breadcrumbs"></div>
@@ -45,7 +48,11 @@ export default function Topbar() {
             setOpenHamburger(!openHamburger);
           }}
         />
-        <img src={logo.src} alt="Digio" className="h-10" />
+        {pathName === "/" ? (
+          <img src={logo.src} alt="Digio" className="h-10" />
+        ) : (
+          <p className="text-lg font-bold">{MENU(pathName)}</p>
+        )}
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -66,3 +73,23 @@ export default function Topbar() {
     </div>
   );
 }
+
+const MENU = (pathname: string) => {
+  if (pathname === "/") {
+    return "Home";
+  } else if (pathname === "/users") {
+    return "Users";
+  } else if (pathname === "/products") {
+    return "Products";
+  } else if (pathname === "/products/models") {
+    return "Models";
+  } else if (pathname === "/merchants") {
+    return "Merchants";
+  } else if (pathname === "/banks") {
+    return "Banks";
+  } else if (pathname === "/action/checkStock") {
+    return "Check Stock";
+  } else if (pathname === "/action/changeStatus") {
+    return "Change Status";
+  }
+};

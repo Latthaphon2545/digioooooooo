@@ -59,10 +59,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center h-full m-auto">
+    <div className="w-full flex flex-col items-center h-full m-auto mb-10">
       {loadingBank ? <BankHomeLoading /> : <BankPage banks={bank} />}
       {loadingModel ? <ModelHomeLoading /> : <ModelPage models={models} />}
-      <h1 className="text-2xl font-bold">Welcome to Digio Stock Inventory</h1>
+      <h1 className=" mobile:text-base laptop:text-2xl font-bold">
+        Welcome to Digio Stock Inventory
+      </h1>
     </div>
   );
 }

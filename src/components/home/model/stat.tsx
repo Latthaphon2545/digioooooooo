@@ -17,16 +17,24 @@ const StatHome = ({ series, instock, installing, image }: StatProps) => {
         <div className="stat-figure text-green-500">
           <TbBuildingWarehouse size={40} />
         </div>
-        <div className="stat-title">In Stock</div>
-        <div className="stat-value text-green-500">{instock}</div>
+        <div className="stat-title mobile:text-xs  laptop:text-base">
+          In Stock
+        </div>
+        <div className="stat-value text-green-500 mobile:text-xl laptop:text-4xl">
+          {instock}
+        </div>
       </div>
 
       <div className="stat">
         <div className="stat-figure text-primary">
           <RiUninstallLine size={40} />
         </div>
-        <div className="stat-title">Installings</div>
-        <div className="stat-value text-primary">{installing}</div>
+        <div className="stat-title mobile:text-xs  laptop:text-base">
+          Installings
+        </div>
+        <div className="stat-value text-primary mobile:text-xl laptop:text-4xl">
+          {installing}
+        </div>
       </div>
 
       <div className="stat">
@@ -37,9 +45,9 @@ const StatHome = ({ series, instock, installing, image }: StatProps) => {
             </div>
           </div>
         </div>
-        <div className="stat-value text-xl">{series}</div>
+        <div className="stat-value laptop:text-xl mobile:text-sm">{series}</div>
         <button
-          className="stat-title btn btn-xs"
+          className="stat-title btn btn-xs "
           onClick={() => {
             router.push(`/products/models`);
           }}

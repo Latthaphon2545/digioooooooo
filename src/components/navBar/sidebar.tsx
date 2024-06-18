@@ -5,9 +5,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "/public/image/digio_logo.png";
 
-import { IoArrowBackSharp } from "react-icons/io5";
-
-const MENU = [
+export const MENU = [
   {
     title: "User",
     links: [
@@ -59,7 +57,7 @@ const editor = true;
 export const Sidebar = () => {
   let pathName = usePathname();
   return (
-    <div className="h-screen flex flex-col justify-between max-h-screen items-center w-[14vw]">
+    <div className="h-screen flex flex-col justify-between max-h-screen items-center w-[14vw] shadow-lg">
       <div className="w-full">
         <div className="flex flex-row items-center justify-center my-7">
           <Link href="/">
@@ -151,7 +149,7 @@ export const HamburgerBar = ({
 
       {/* Sidebar */}
       <div
-        className={`h-full w-[60%] bg-white flex flex-col items-center transform transition-transform duration-500 ease-in-out 
+        className={`h-full mobile:w-[55%] tablet:w-[40%] bg-white flex flex-col items-center transform transition-transform duration-500 ease-in-out 
           ${openHamburger ? "translate-x-0" : "-translate-x-full"} `}
       >
         <div className="flex flex-row items-center justify-center my-5">

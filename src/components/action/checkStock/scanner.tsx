@@ -32,17 +32,28 @@ export default function Scanner() {
         sn: code,
         user: "6650666b7e05719e52aabef7",
       });
-
       const data = await res.data;
       if (res.status === 200) {
-        showAlert(data.message, "bg-success", Success);
+        showAlert(
+          data.message,
+          "bg-success laptop:w-fit desktop:w-fit",
+          Success
+        );
       }
     } catch (error: any) {
       console.log(error);
       if (error.response.status === 404) {
-        showAlert(error.response.data.message, "bg-error", Error);
+        showAlert(
+          error.response.data.message,
+          "bg-error	laptop:w-fit desktop:w-fit",
+          Error
+        );
       } else if (error.response.status === 400) {
-        showAlert(error.response.data.message, "bg-warning", Warning);
+        showAlert(
+          error.response.data.message,
+          "bg-warning	laptop:w-fit desktop:w-fit",
+          Warning
+        );
       }
     } finally {
       setTimeout(() => {
@@ -75,7 +86,7 @@ export default function Scanner() {
           }}
         />
       )}
-      <div className="fixed bottom-4 left-[15%] w-[20%]">
+      <div>
         {alert && (
           <AlertDialog
             title={alertTitle}
