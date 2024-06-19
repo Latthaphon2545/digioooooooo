@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ActionButton from "../actionButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useInView } from "react-intersection-observer"; // Import useInView hook
 
 interface PaginationProps {
   currentPage: number;
@@ -16,6 +17,9 @@ export default function Pagination({
   onPageChange,
 }: PaginationProps) {
   const [pageStart, setPageStart] = useState(1);
+  const [mobileData, setMobileData] = useState(7);
+  const [loading, setLoading] = useState(false);
+
   const pageEnd = Math.min(pageStart + 3, totalPages);
   let manyPage = 0;
 
@@ -86,9 +90,25 @@ export default function Pagination({
     );
   }, [currentPage]);
 
+  const handleMoreData = () => {
+    try {
+      setLoading(true);
+      const newMobileData = Math.min(mobileData + 7, lengthData);
+      setMobileData(newMobileData);
+      const newUrl = `${pathName}?filter=${filterParams}&search=${searchParams}&skip=0&take=${newMobileData}`;
+      router.replace(newUrl, { scroll: false });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
+
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-2">
+      <div className="flex flex-col justify-center items-center mt-2 mobile:hidden tablet:flex laptop:flex">
         <div className="join">
           <ActionButton
             action={handleToFistPage}
@@ -143,6 +163,21 @@ export default function Pagination({
             </span>
           )}
         </p>
+      </div>
+
+      {/* Bottom section for loading more data */}
+      <div className="flex justify-center laptop:hidden tablet:hidden mb-5">
+        {loading ? (
+          <span className="loading loading-dots loading-xs"></span>
+        ) : (
+          <ActionButton
+            action={handleMoreData}
+            styles={"btn btn-xl btn-primary"}
+            disabled={loading || mobileData >= lengthData}
+          >
+            {mobileData < lengthData ? "Load more" : "No more data"}
+          </ActionButton>
+        )}
       </div>
     </>
   );

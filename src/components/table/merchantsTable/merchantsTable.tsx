@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { TbUserEdit } from "react-icons/tb";
-import Link from "next/link";
 import Modal from "@/components/modal";
 import ActionButton from "@/components/actionButton";
 import { TbCopy } from "react-icons/tb";
 import { TbCopyCheckFilled } from "react-icons/tb";
 import axios from "axios";
 import AlertDialog, { Error, Success } from "@/components/alertDialog";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -193,9 +193,75 @@ export default function Table({
     );
   };
 
+  const mobileData = ({ item }: { item: any }) => {
+    const [copySuccess, setCopySuccess] = useState(false);
+
+    const copylink = (e: any) => {
+      e.preventDefault();
+      navigator.clipboard.writeText(item.id);
+      setCopySuccess(true);
+      setTimeout(() => {
+        setCopySuccess(false);
+      }, 2000);
+    };
+    return (
+      <div className="card w-[90vw] bg-base-100 shadow-xl">
+        <div className="card-body p-5">
+          <div className="card-title flex-col">
+            <div className="flex w-full justify-between items-center">
+              <h1 className=" text-gray-500 text-sm">{item.address}</h1>
+              <button className="btn btn-ghost btn-sm">
+                <HiOutlineDotsVertical size={20} />
+              </button>
+            </div>
+            <div className="divider my-0"></div>
+          </div>
+          <div className="flex flex-col gap-5">
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-base font-bold">{item.name}</p>
+              </div>
+              <button
+                onClick={copylink}
+                className="text-lg tooltip"
+                data-tip={copySuccess ? "Copied!" : "Copy"}
+              >
+                {copySuccess ? <TbCopyCheckFilled /> : <TbCopy />}
+              </button>
+            </div>
+
+            <div className="flex flex-col justify-between gap-2">
+              <div className="flex justify-between items-center">
+                <div>
+                  <p>Contact</p>
+                </div>
+                <div>{item.contact}</div>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <div>
+                  <p>Product Serial Number </p>
+                </div>
+                <div>
+                  {item.product && item.product.length > 0 ? (
+                    <p>
+                      {item.product.map((p: any) => p.serialNumber).join(", ")}
+                    </p>
+                  ) : (
+                    <p>No product</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      <div className="min-h-[63vh] mt-3 w-[80vw]">
+      <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:block laptop:block">
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>
@@ -220,6 +286,15 @@ export default function Table({
           </tbody>
         </table>
       </div>
+
+      <div className="mobile:block tablet:hidden laptop:hidden pb-5">
+        {dataForCurrentPage.map((item) => (
+          <div key={item.serialNumber} className="mt-3">
+            {mobileData({ item })}
+          </div>
+        ))}
+      </div>
+
       <div className="fixed bottom-4 left-[15%] w-[20%]">
         {updateAlert && (
           <AlertDialog

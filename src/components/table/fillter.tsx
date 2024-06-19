@@ -58,7 +58,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   };
 
   return (
-    <div key={index} className="dropdown dropdown-hover dropdown-bottom">
+    <div key={index} className="dropdown dropdown-hover dropdown-end">
       <button tabIndex={0} className="btn btn-sm ml-3">
         <IoFilterSharp size={20} />
       </button>

@@ -27,13 +27,21 @@ interface BankPageProps {
 
 export default function BankPage({ banks, products }: BankPageProps) {
   return (
-    <div className="flex flex-row gap-5 m-10">
+    <div className="flex flex-row gap-5 m-10 overflow-x-auto overflow-y-hidden">
       {banks.map((item) => (
-        <div className="card w-96 bg-base-100 shadow-xl" key={item.name}>
+        <div
+          className="card tablet:w-[40%] mobile:w-[70vw] h-[75vh] bg-base-100 shadow-xl"
+          key={item.name}
+        >
           <div className="card-body flex flex-row justify-between items-center">
             <h2 className="card-title">{item.bankName}</h2>
             {/* <p>Bank Name: {item.bankName}</p> */}
-            <img src={item.bankLogo} alt="" width={80} />
+            <img
+              src={item.bankLogo}
+              alt=""
+              width={80}
+              className="mobile:hidden tablet:block laptop:block"
+            />
           </div>
           <figure>
             <Slice products={products} />

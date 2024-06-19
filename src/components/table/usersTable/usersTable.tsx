@@ -3,6 +3,7 @@ import { TbUserEdit } from "react-icons/tb";
 import ActionButton from "../../actionButton";
 import axios from "axios";
 import AlertDialog, { Error, Success } from "../../alertDialog";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -182,9 +183,53 @@ export default function Table({
     }
   };
 
+  const mobileData = ({ item }: { item: any }) => {
+    return (
+      <div className="card w-[90vw] bg-base-100 shadow-xl">
+        <div className="card-body p-5">
+          <div className="card-title flex-col">
+            <div className="flex w-full justify-between items-center">
+              <h1 className=" text-gray-500 text-sm">
+                {handleRoleChange(item.role)}
+              </h1>
+              <button className="btn btn-ghost btn-sm">
+                <HiOutlineDotsVertical size={20} />
+              </button>
+            </div>
+            <div className="divider my-0"></div>
+          </div>
+          <div className="flex flex-col gap-5">
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-base font-bold">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.email}</p>
+              </div>
+              <div
+                className={`badge badge-${colorUserStatus(
+                  item.status
+                )} badge-outline badge-md`}
+              >
+                {handleStatusChange(item.status)}
+              </div>
+            </div>
+
+            <div className="flex justify-between">
+              <div>
+                <p>Contact</p>
+              </div>
+              <div>
+                <p className="text-gray-500">{item.contact}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      <div className="min-h-[63vh] mt-3 w-[80vw]">
+      <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:block laptop:block">
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>
@@ -209,6 +254,7 @@ export default function Table({
           </tbody>
         </table>
       </div>
+
       <div className="fixed bottom-4 left-[15%] w-[20%]">
         {updateAlert && (
           <AlertDialog
@@ -217,6 +263,14 @@ export default function Table({
             icon={alertIcon}
           />
         )}
+      </div>
+
+      <div className="mobile:block tablet:hidden laptop:hidden pb-5">
+        {dataForCurrentPage.map((item) => (
+          <div key={item.name} className="mt-3">
+            {mobileData({ item })}
+          </div>
+        ))}
       </div>
     </>
   );

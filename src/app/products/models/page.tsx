@@ -26,12 +26,12 @@ export default function Models() {
 
   return (
     <>
-      <div className="flex flex-row max-h-screen">
+      <div className="flex flex-row">
         <div className="flex flex-col w-full relative">
-          <div className="flex justify-between items-center mx-5">
+          <div className="flex justify-between items-center mx-5 mt-5 h-14 mobile:hidden laptop:flex">
             <h1 className="text-3xl font-bold mt-5 mb-1">Models</h1>
           </div>
-          <div className="flex flex-wrap justify-center overflow-y-auto w-full h-full">
+          <div>
             {loading ? (
               <ModelLoading length={4} />
             ) : (

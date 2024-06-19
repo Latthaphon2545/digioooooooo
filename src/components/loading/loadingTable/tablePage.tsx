@@ -6,7 +6,7 @@ import TableLoading from "./table";
 
 export default function TablePageLoading({
   Type,
-  length = 8,
+  length = 7,
 }: {
   Type: string;
   length?: number;
