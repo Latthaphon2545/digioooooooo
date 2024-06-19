@@ -141,7 +141,7 @@ export const HamburgerBar = ({
     <div className="fixed top-0 left-0 h-full w-full z-50 ">
       {/* Background overlay */}
       <div
-        className={`absolute top-0 left-0 w-full h-full bg-black opacity-50 ${
+        className={`absolute top-0 left-0 w-full h-full bg-black opacity-50 overflow-hidden${
           openHamburger ? "block" : "hidden"
         }`}
         onClick={() => setOpenHamburger(false)}

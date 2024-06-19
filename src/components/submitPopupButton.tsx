@@ -10,6 +10,7 @@ type AlertProps = {
   description: string;
   id: string;
   disabled?: boolean;
+  isSubmitting?: boolean;
 };
 
 export default function SubmitPopupButton({
@@ -20,6 +21,7 @@ export default function SubmitPopupButton({
   description,
   id,
   disabled,
+  isSubmitting,
 }: AlertProps) {
   const { pending } = useFormStatus();
   return (
@@ -42,11 +44,14 @@ export default function SubmitPopupButton({
                 className="btn"
                 type="submit"
                 disabled={disabled || pending}
+                onClick={() => {
+                  action && action();
+                }}
               >
                 {pending ? (
                   <span className="loading loading-spinner"></span>
                 ) : (
-                  <p>{children}</p>
+                  <>{isSubmitting ? <p>{children}</p> : <p>Confirm</p>}</>
                 )}
               </button>
             </label>

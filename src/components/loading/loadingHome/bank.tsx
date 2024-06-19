@@ -44,7 +44,7 @@ export default function BankHomeLoading() {
 const SlidePaginationSkeleton = () => {
   return (
     <div className="flex justify-center items-center gap-4 mt-4">
-      <div className={`h-3 rounded-full cursor-pointer bg-primary w-7`}></div>
+      <div className={`h-3 rounded-full cursor-pointer bg-gray-200 w-7`}></div>
     </div>
   );
 };

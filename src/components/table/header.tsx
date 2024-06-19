@@ -121,7 +121,7 @@ export default function Header({ option }: { option: string }) {
           <DropdownBottom key={index} item={item} index={index} />
         ))}
       </div>
-      <div className="items-center gap-3 mobile:hidden laptop:flex">
+      <div className="items-center gap-3 mobile:hidden tablet:hidden laptop:flex">
         {category.length > 0 && (
           <>
             {filterParamsObjects.map((param) => (
