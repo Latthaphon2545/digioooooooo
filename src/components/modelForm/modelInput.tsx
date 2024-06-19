@@ -16,29 +16,32 @@ const ModelInput = () => {
 
   return (
     <div>
-      <form action={createModel} className="flex flex-row space-x-6">
+      <form
+        action={createModel}
+        className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 space-x-6 w-full overflow-hidden justify-center items-cente"
+      >
         <div className="w-[50vh]  flex flex-col justify-center">
           <div className="flex flex-row items-center">
             <ImageRenderer />
           </div>
         </div>
-        <div className="w-full flex flex-col space-y-3 justify-center px-10">
-          <label htmlFor="" className="ml-2 font-semibold">
+        <div className="w-full flex flex-col space-y-3 justify-center px-10 ">
+          <label htmlFor="" className="lg:ml-2 font-semibold">
             Series:
             <ModelInputField title="series" fieldset={false} />
           </label>
-          <label htmlFor="" className="ml-2 font-semibold">
+          <label htmlFor="" className="lg:ml-2 font-semibold">
             Description:
             <textarea
               name="description"
               id=""
               rows={2}
               placeholder="Description"
-              className={`ml-7 mt-3 font-normal block p-2.5 min-w-[70vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  w-full  `}
+              className={`lg:ml-7 mt-3 font-normal block p-2.5 lg:min-w-[70vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  w-full  `}
             ></textarea>
           </label>
           <fieldset className="flex flex-col space-y-1">
-            <legend className="ml-2 capitalize font-semibold">
+            <legend className="lg:ml-2 capitalize font-semibold">
               Specification:
             </legend>
             <div className="flex flex-col space-y-2 justify-start  ">

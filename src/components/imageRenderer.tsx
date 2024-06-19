@@ -45,8 +45,8 @@ export default function ImageRenderer() {
     //   />
     // </div>
 
-    <div className="flex flex-col items-center space-y-8 h-full">
-      <div className="w-[40vh] h-[40vh] border-4 relative">
+    <div className="flex flex-col items-center space-y-8 h-full m-auto">
+      <div className="w-[30vh] h-[30vh] lg:w-[40vh] lg:h-[40vh] border-4 relative">
         {selectedImage ? (
           <Image
             src={selectedImage}
@@ -68,7 +68,7 @@ export default function ImageRenderer() {
       </div>
       <input
         type="file"
-        accept="image/png, image/jpeg"
+        accept="image/*"
         id="image"
         name="image"
         onChange={handleImageChange}

@@ -128,7 +128,7 @@ const InputForm = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="tablet:min-h-[67vh] mobile:min-h-[75vh]">
+      <div className="tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0">
         {activeTab === 0 && (
           <UserInput formValues={formValues} setFormValues={setFormValues} />
         )}
@@ -146,7 +146,7 @@ const InputForm = () => {
       </div>
       {submitting && (
         <div className="">
-          <div className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
+          <div className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 right-[33px] "></div>
         </div>
       )}
       {errorOnSubmit && (
@@ -156,9 +156,9 @@ const InputForm = () => {
           icon={<BiError size={20} />}
         />
       )}
-      <div className="flex justify-end w-full tablet:mr-10 align-bottom text-">
+      <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
-          styles="btn-primary px-10 w-full mobile:mt-5 laptop:mt-0 mobile:w-full laptop:w-auto btn-wide fixed mobile:bottom-0 mobile:right-0 laptop:bottom-5 laptop:right-10 mobile:text-xl laptop:text-lg"
+          styles="btn-primary px-10 w-full mobile:mt-5 laptop:mt-0 mobile:w-5/6 laptop:w-auto btn-wide fixed mobile:bottom-8 mobile:right-9 sm:right-20 lg:right-24 laptop:bottom-5 laptop:right-10 mobile:text-xl laptop:text-lg"
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
           id="add_user"

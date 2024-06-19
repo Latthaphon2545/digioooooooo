@@ -37,6 +37,11 @@ const InputForm = ({ models }: { models: Model[] }) => {
   }, [errorOnSubmit]);
 
   const handleSubmit = async () => {
+    if (activeTab === 1 && groupData.length === 0) {
+      setErrorOnSubmit("Please upload a file before submitting");
+      return;
+    }
+
     if (activeTab === 0 && formValues.every(({ model, sn }) => !model && !sn)) {
       setErrorOnSubmit("Please fill out the form");
       return;
@@ -111,7 +116,7 @@ const InputForm = ({ models }: { models: Model[] }) => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[68vh]">
+      <div className="min-h-[68vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0">
         {activeTab === 0 && (
           <ProductInput
             formValues={formValues}

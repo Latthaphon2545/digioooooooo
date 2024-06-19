@@ -95,7 +95,7 @@ export default function MerchantInputForm() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[68vh]">
+      <div className="min-h-[68vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0">
         {activeTab === 0 && (
           <MerchantInput
             formValues={formValues}

@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import UserInputField from "./userInputField";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { Role } from "@/lib/types";
+import MobileInput from "./mobileInput";
 
 type FormValues = {
   email: string;
@@ -44,22 +45,46 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
   };
 
   return (
-    <div className="overflow-hidden mobile:max-h-[72vh] tablet:max-h-[75vh]">
-      <form action={""}>
-        <table className="w-full flex-nowrap">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Email</th>
-              <th>Name</th>
-              <th>Contact</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody className="p-2 ml-2 ">
+    <div>
+      <div className="overflow-hidden mobile:max-h-[72vh] tablet:max-h-[75vh] mobile:hidden sm:block">
+        <form action={""}>
+          <table className="w-full flex-nowrap">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {formValues.map((_, index) => {
+                return (
+                  <UserInputField
+                    key={index}
+                    index={index}
+                    formValues={formValues}
+                    handleInputChange={handleInputChange}
+                    handleRoleChange={handleRoleChange}
+                  />
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="flex items-center justify-center">
+            <button type="button" onClick={addRow}>
+              <IoAddCircleOutline size={40} />
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className="sm:hidden max-h-[67vh] overflow-scroll">
+        <form action="">
+          <div className="flex flex-col gap-5">
             {formValues.map((_, index) => {
               return (
-                <UserInputField
+                <MobileInput
                   key={index}
                   index={index}
                   formValues={formValues}
@@ -68,14 +93,14 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
                 />
               );
             })}
-          </tbody>
-        </table>
-        <div className="flex items-center justify-center">
-          <button type="button" onClick={addRow}>
-            <IoAddCircleOutline size={40} />
-          </button>
-        </div>
-      </form>
+          </div>
+          <div className="flex items-center justify-center mt-2 ">
+            <button type="button" onClick={addRow}>
+              <IoAddCircleOutline size={40} />
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

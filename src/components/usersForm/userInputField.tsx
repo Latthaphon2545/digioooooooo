@@ -23,7 +23,7 @@ const UserInputField = ({
   handleInputChange,
   handleRoleChange,
 }: InputFieldProps) => (
-  <tr key={index}>
+  <tr key={index} className="">
     <td>
       <p className="text-center text-xl font-semibold">{index + 1}</p>
     </td>
@@ -68,7 +68,7 @@ const UserInputField = ({
         <select
           value={formValues[index].role ?? ""}
           onChange={(e) => handleRoleChange(index, e.target.value as Role)}
-          className="grow"
+          className="grow bg-white"
         >
           <option value="" disabled={true}>
             Select a role

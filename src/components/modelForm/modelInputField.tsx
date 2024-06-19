@@ -17,8 +17,9 @@ export default function ModelInputField({
     <input
       type="text"
       name={title}
-      className="ml-7 mt-2 p-2 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary placeholder:capitalize w-full"
+      className="lg:ml-7 mt-2 p-2 sm:py-1 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary placeholder:capitalize w-full"
       placeholder={underScore_to_whiteSpace(title)}
+      required
     />
   );
 }

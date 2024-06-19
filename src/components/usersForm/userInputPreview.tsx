@@ -21,7 +21,7 @@ export default function UserInputPreview({ data }: { data: DataItem[] }) {
           <tr>
             <th>No.</th>
             <th>Email</th>
-            <th>Role</th>
+            <th className="hidden sm:block">Role</th>
           </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@ export default function UserInputPreview({ data }: { data: DataItem[] }) {
             <tr key={index}>
               <td className="text-xl font-medium">{index + 1}.</td>
               <td
-                className={`overflow-scroll p-2  flex flex-row space-x-4 text-lg ${
+                className={`text-xl font-medium ${
                   checkEmail(row.email ?? "", index)
                     ? "text-success"
                     : "text-error"
@@ -38,7 +38,7 @@ export default function UserInputPreview({ data }: { data: DataItem[] }) {
                 {row.email}
               </td>
               <td
-                className={`text-xl font-medium ${
+                className={`text-xl font-medium hidden sm:block ${
                   checkRole(row.role ?? "") ? "text-success" : "text-error"
                 }`}
               >
