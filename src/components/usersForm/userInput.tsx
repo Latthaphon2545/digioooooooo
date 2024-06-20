@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import UserInputField from "./userInputField";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { Role } from "@/lib/types";
 import MobileInput from "./mobileInput";
+import { IoMdRemoveCircleOutline } from "react-icons/io";
 
 type FormValues = {
   email: string;
@@ -30,6 +31,36 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
       }
       setFormValues(newFormValues);
     };
+
+  const endOfForm = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (endOfForm.current) {
+      endOfForm.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [formValues.length]);
+
+  // const deleteRow = (index: number) => {
+  //   setFormValues(prevFormValues => prevFormValues.filter((value, i) => i !== index));
+  // };
+
+  const deleteRow = () => {
+    const newFormValues = [...formValues];
+    newFormValues.pop();
+    setFormValues(newFormValues);
+  };
+
+  const handleChangeFormValues = (newLength: number) => {
+    if (newLength < formValues.length) {
+      setFormValues((prevFormValues) => prevFormValues.slice(0, newLength));
+    } else {
+      const newFormValues = [...formValues];
+      while (newFormValues.length < newLength) {
+        newFormValues.push({ email: "", name: "", contact: "", role: null });
+      }
+      setFormValues(newFormValues);
+    }
+  };
 
   const handleRoleChange = (index: number, newRole: Role) => {
     const newFormValues = [...formValues];
@@ -79,7 +110,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
           </div>
         </form>
       </div>
-      <div className="sm:hidden max-h-[67vh] overflow-scroll">
+      <div className="sm:hidden max-h-[68vh] overflow-scroll">
         <form action="">
           <div className="flex flex-col gap-5">
             {formValues.map((_, index) => {
@@ -94,11 +125,20 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
               );
             })}
           </div>
-          <div className="flex items-center justify-center mt-2 ">
+          <div className="flex items-center justify-center mt-2 fixed bottom-5 left-4 space-x-3">
+            <button
+              type="button"
+              onClick={deleteRow}
+              disabled={formValues.length === 1}
+            >
+              <IoMdRemoveCircleOutline size={40} />
+            </button>
+            <div className="text-2xl font-semibold">{formValues.length}</div>
             <button type="button" onClick={addRow}>
               <IoAddCircleOutline size={40} />
             </button>
           </div>
+          <div ref={endOfForm} />
         </form>
       </div>
     </div>

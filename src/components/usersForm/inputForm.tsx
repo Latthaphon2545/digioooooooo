@@ -27,8 +27,8 @@ const InputForm = () => {
   const [formValues, setFormValues] = useState<FormValues>([
     { email: "", name: "", contact: "", role: null },
     { email: "", name: "", contact: "", role: null },
-    { email: "", name: "", contact: "", role: null },
   ]);
+
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
@@ -41,6 +41,18 @@ const InputForm = () => {
       return () => clearTimeout(timer);
     }
   }, [errorOnSubmit]);
+
+  // useEffect(() => {
+  //   const isMobileView = window.innerWidth <= 768;
+  //   const initialFormValues = isMobileView
+  //     ? [{ email: "", name: "", contact: "", role: null }]
+  //     : [
+  //         { email: "", name: "", contact: "", role: null },
+  //         { email: "", name: "", contact: "", role: null },
+  //         { email: "", name: "", contact: "", role: null },
+  //       ];
+  //   setFormValues(initialFormValues);
+  // }, []);
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -58,6 +70,16 @@ const InputForm = () => {
         )
       ) {
         setErrorOnSubmit("Please fill out the form");
+        return;
+      }
+
+      if (
+        activeTab === 0 &&
+        formValues.some(
+          ({ email }) => email.includes("@") && !email.endsWith("@digio.co.th")
+        )
+      ) {
+        setErrorOnSubmit("Please enter a digio email address");
         return;
       }
 
@@ -99,6 +121,7 @@ const InputForm = () => {
         return;
       }
       if (res.status === 201) {
+        clearForm();
         router.push(
           "/users?filter=&search=&skip=0&take=8&alert=Users added successfully"
         );
@@ -107,13 +130,11 @@ const InputForm = () => {
       console.log("Error:", error);
     } finally {
       setSubmitting(false);
-      clearForm();
     }
   };
 
   const clearForm = () => {
     setFormValues([
-      { email: "", name: "", contact: "", role: null },
       { email: "", name: "", contact: "", role: null },
       { email: "", name: "", contact: "", role: null },
     ]);
@@ -128,7 +149,11 @@ const InputForm = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0">
+      <div
+        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
+          activeTab === 1 ? "flex items-center" : ""
+        } `}
+      >
         {activeTab === 0 && (
           <UserInput formValues={formValues} setFormValues={setFormValues} />
         )}
@@ -158,7 +183,11 @@ const InputForm = () => {
       )}
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
-          styles="btn-primary px-10 w-full mobile:mt-5 laptop:mt-0 mobile:w-5/6 laptop:w-auto btn-wide fixed mobile:bottom-8 mobile:right-9 sm:right-20 lg:right-24 laptop:bottom-5 laptop:right-10 mobile:text-xl laptop:text-lg"
+          styles={`btn-primary px-10 w-full  mobile:mt-5 sm:left-1/2 sm:transform sm:-translate-x-1/2 laptop:mt-0 ${
+            activeTab === 0
+              ? "w-[29vh] right-5 bottom-4"
+              : "w-4/6 left-1/2 transform -translate-x-1/2 bottom-4"
+          } laptop:w-auto btn-wide fixed  sm:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
           id="add_user"

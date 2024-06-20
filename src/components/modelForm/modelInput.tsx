@@ -1,7 +1,9 @@
+"use client";
 import ModelInputField from "./modelInputField";
 import SubmitPopupButton from "../submitPopupButton";
 import ImageRenderer from "../imageRenderer";
 import { createModel } from "@/lib/actions/model/action";
+import { useFormState } from "react-dom";
 
 const ModelInput = () => {
   const INFORMATION_FIELD = [
@@ -13,11 +15,12 @@ const ModelInput = () => {
     "payment_features",
     "cameras",
   ];
+  const [state, formAction] = useFormState(createModel, { errors: [] });
 
   return (
     <div>
       <form
-        action={createModel}
+        action={formAction}
         className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 space-x-6 w-full overflow-hidden justify-center items-cente"
       >
         <div className="w-[50vh]  flex flex-col justify-center">
@@ -25,7 +28,7 @@ const ModelInput = () => {
             <ImageRenderer />
           </div>
         </div>
-        <div className="w-full flex flex-col space-y-3 justify-center px-10 ">
+        <div className="w-full flex relative flex-col space-y-3 justify-center px-10 ">
           <label htmlFor="" className="lg:ml-2 font-semibold">
             Series:
             <ModelInputField title="series" fieldset={false} />
@@ -59,6 +62,14 @@ const ModelInput = () => {
             >
               Add
             </SubmitPopupButton>
+          </div>
+          <div className="absolute -bottom-5 left-0 grid grid-cols-3 ">
+            {state.errors &&
+              state.errors.map((error) => (
+                <div key={error} className="text-error text-sm">
+                  {error}
+                </div>
+              ))}
           </div>
         </div>
       </form>

@@ -35,7 +35,6 @@ export default function FloatingActionButton({
     }
   };
 
-  console.log(page);
   return (
     // <button className="btn btn-circle bottom-5 right-3 btn-lg btn-primary z-50 mobile:fixed laptop:hidden">
     //   <IoMdAdd size={20} />
