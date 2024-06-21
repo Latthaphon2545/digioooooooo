@@ -32,7 +32,7 @@ export default function Home() {
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
-      }, 3000);
+      }, 4000);
     }
   }, [alertMessage]);
 
@@ -78,9 +78,9 @@ export default function Home() {
                   <AiOutlineUserAdd size={20} /> Add users
                 </ActionButton>
               </div>
-              <FloatingActionButton />
             </div>
           </div>
+          <FloatingActionButton page="user" />
           <div className="flex justify-end mx-5"></div>
           {loading ? (
             <TablePageLoading Type="User" />

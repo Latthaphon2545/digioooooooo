@@ -1,6 +1,7 @@
 "use client";
 
 import ActionButton from "@/components/actionButton";
+import FloatingActionButton from "@/components/floatingActionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageMerchants from "@/components/table/merchantsTable/merchantsTablePage";
 import axios from "axios";
@@ -56,6 +57,7 @@ export default function productmanagement() {
               </Link>
             </div>
           </div>
+          <FloatingActionButton page="merchant" />
           <div className="flex justify-end mx-5"></div>
           {loading ? (
             <TablePageLoading Type="Merchant" />

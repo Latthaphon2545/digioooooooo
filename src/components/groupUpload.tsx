@@ -173,12 +173,7 @@ const GroupUpload = ({
 
         const errorCount = filteredData.filter((row) =>
           page === "user"
-            ? // ? !row.email?.endsWith("@digio.co.th") ||
-              //   !Object.values(Role).includes(
-              //     row.role.toUpperCase().replace(/ +/g, "") as Role
-              //   )
-              // : !model?.includes(row.model!.trim().replace(/ +/g, "") || "")
-              validateEmailAndRole(
+            ? validateEmailAndRole(
                 row.email!,
                 row.role!,
                 filteredData,
@@ -203,22 +198,22 @@ const GroupUpload = ({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-center flex-grow space-x-8">
-      <input
-        type="file"
-        ref={fileInputRef}
-        className="border w-full max-w-xs hidden"
-        onChange={handleFileUpload}
-      />
-      <div className="flex flex-col items-center justify-center space-y-4">
+    <div className="flex mobile:flex-col lg:flex-row justify-center items-center flex-grow gap-4 px-0 sm:px-10">
+      <div className="flex flex-row sm:flex-col items-center justify-center space-y-4 px-0 sm:px-10 ">
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="border w-full max-w-xs hidden"
+          onChange={handleFileUpload}
+        />
         <div
-          className="border-dotted border-2 text-lg text-center min-w-72 min-h-52 flex items-center justify-center hover:cursor-pointer"
+          className="border-dotted border-2 text-lg text-center p-4 tablet:min-w-72 tablet:min-h-52 flex items-center justify-center hover:cursor-pointer "
           onClick={handleDivClick}
         >
-          <div>
-            <GrDocumentUpload className="w-10 h-10 mx-auto mb-2" />
+          <div className="flex flex-row sm:flex-col ">
+            <GrDocumentUpload className="w-6 h-6 sm:w-10 sm:h-10 mx-auto mb-2" />
             {data.length >= 1 ? (
-              <p className="text-sm">{fileName}</p>
+              <p>{fileName}</p>
             ) : (
               <p>Click or drag file here</p>
             )}
@@ -236,11 +231,11 @@ const GroupUpload = ({
           download
         >
           <MdOutlineFileDownload className="w-10 h-10" />
-          <p>Download Template</p>
+          <p className="hidden sm:block">Download Template</p>
         </a>
       </div>
-      <div className="relative">
-        <div className="border-2 w-[70vh] h-[65vh] overflow-scroll relative">
+      <div className="relative w-full mobile:h-[50vh] tablet:h-[53vh] flex justify-center ">
+        <div className="border-2 h-full w-full  overflow-scroll relative">
           {uploading && <ProgressIndicator uploadProgress={uploadProgress} />}
           {!uploading && (
             <InputPreview
@@ -251,8 +246,9 @@ const GroupUpload = ({
             />
           )}
         </div>
+
         {data.length > 0 && (
-          <div className="absolute -bottom-10 left-2 flex flex-wrap space-x-2">
+          <div className="absolute -bottom-12 tablet:left-16 laptop:left-20 desktop:left-28 flex flex-wrap space-x-2">
             <span className="badge badge-primary badge-lg py-4 px-3">
               Total {data.length}
             </span>

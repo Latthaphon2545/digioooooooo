@@ -9,6 +9,7 @@ import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import Alert from "../alert";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 type FormValues = {
   name: string;
@@ -17,11 +18,11 @@ type FormValues = {
 }[];
 
 export default function MerchantInputForm() {
-  const [activeTab, setActiveTab] = useState(0);
+  const initialActiveTab = useSearchParams().get("activeTab") || 0;
+  const [activeTab, setActiveTab] = useState(Number(initialActiveTab));
   const [hasError, setHasError] = useState(false);
   const [groupData, setGroupData] = useState<Array<DataItem>>([]);
   const [formValues, setFormValues] = useState<FormValues>([
-    { name: "", contact: "", address: "" },
     { name: "", contact: "", address: "" },
     { name: "", contact: "", address: "" },
   ]);
@@ -90,10 +91,15 @@ export default function MerchantInputForm() {
       <InputHeader
         icon={<MdAddShoppingCart />}
         title="Add Merchant"
+        page="merchant"
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[68vh]">
+      <div
+        className={`min-h-[68vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
+          activeTab === 1 ? "flex items-center" : ""
+        } `}
+      >
         {activeTab === 0 && (
           <MerchantInput
             formValues={formValues}
@@ -126,7 +132,11 @@ export default function MerchantInputForm() {
       )}
       <div className="flex justify-end mr-10">
         <Alert
-          styles="btn-primary px-10"
+          styles={`btn-primary px-10 w-full mobile:mt-5 sm:left-1/2 sm:transform sm:-translate-x-1/2 laptop:mt-0 ${
+            activeTab === 0
+              ? "w-1/2 right-5 bottom-4"
+              : "w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
+          } laptop:w-auto btn-wide fixed  sm:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
           id="add_user"

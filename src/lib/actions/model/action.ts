@@ -6,7 +6,7 @@ import { StatusProduct } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function createModel(formData: FormData) {
+export async function createModel(prevState: any, formData: FormData) {
   const INFORMATION_FIELD = [
     "description",
     "operating_system",
@@ -19,13 +19,34 @@ export async function createModel(formData: FormData) {
   ];
   let image;
   const imageFile = formData.get("image");
+
   try {
     image = await uploadImage(imageFile as File);
   } catch (error) {
     console.error(error);
   }
+  let errors = [];
+
+  const series = formData.get("series") as string;
+
+  if (!series) {
+    errors.push("Series is required");
+  }
+
+  INFORMATION_FIELD.forEach((field) => {
+    const fieldValue = formData.get(field) as string;
+    if (!fieldValue) {
+      errors.push(`${field} is required`);
+    }
+  });
+
+  if (errors.length > 0) {
+    console.error(errors);
+    return { errors };
+  }
+
   const model = {
-    series: formData.get("series") as string,
+    series: series,
     information: INFORMATION_FIELD.reduce(
       (infoObj: { [key: string]: string }, field) => {
         infoObj[field] = formData.get(field) as string;
@@ -54,6 +75,7 @@ export async function createModel(formData: FormData) {
   const res = await db.model.create({
     data: model,
   });
+
   revalidatePath("/products/models");
   redirect("/products/models");
 }

@@ -18,7 +18,7 @@ export function InputPreview({
 }: InputPreviewProps) {
   if (data.length === 0 && !uploading) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full w-full">
         <p className="text-xl font-semibold text-center">Preview List</p>
       </div>
     );
