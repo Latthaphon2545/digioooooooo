@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Modal from "../modal";
 import StatStatus from "../statStatus";
 
 import { FaEdit } from "react-icons/fa";
@@ -35,11 +34,11 @@ export default function Model({ models, edit }: ModelProps) {
           </figure>
           <div className="card-body">
             <div className="card-title gap-3">
-              <Modal
+              {/* <Modal
                 title="Info"
                 titleContent={model.series}
                 content={model.information.description}
-              />
+              /> */}
               <h2>{model.series}</h2>
               <button
                 disabled={!edit}

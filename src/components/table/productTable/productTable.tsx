@@ -9,32 +9,26 @@ import { IoMdAdd } from "react-icons/io";
 import { FaHistory } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import SubmitPopupButton from "@/components/submitPopupButton";
+import Modal from "@/components/modal";
+import { showAlert } from "../showAlert";
+import { DateFromObjectId } from "@/components/dateTime";
+import { ConvertStatus } from "@/components/convertStatusAndRole";
+import { ColorProductStatus } from "../color";
 
 interface TableProps {
   dataForCurrentPage: {
     [key: string]: any;
   }[];
-  colorProductStatus: (status: string) => string;
   editor?: boolean;
 }
 
-export default function Table({
-  dataForCurrentPage,
-  colorProductStatus,
-  editor,
-}: TableProps) {
+export default function Table({ dataForCurrentPage, editor }: TableProps) {
   const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
 
-  const showAlert = (title: string, styles: string, icon?: React.ReactNode) => {
-    setAlertTitle(title);
-    setAlertStyles(styles);
-    setAlertIcon(icon);
-    setUpdateAlert(true);
-    setTimeout(() => setUpdateAlert(false), 3000);
-  };
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const updateMerchant = (
     productId?: string,
@@ -44,7 +38,11 @@ export default function Table({
     if (!productId || !merchant)
       return showAlert(
         "Failed to add merchant",
-        "alert-error mobile:bg-error",
+        "alert-error mobile:bg-error tablet:bg-error",
+        setAlertTitle,
+        setAlertStyles,
+        setAlertIcon,
+        setUpdateAlert,
         Error
       );
     dataForCurrentPage.map((item) => {
@@ -55,28 +53,41 @@ export default function Table({
     showAlert(
       "Merchant added successfully",
       "alert-success mobile:bg-success tablet:bg-success",
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+      setUpdateAlert,
       Success
     );
   };
 
   const deleteMerchant = async (productId: string) => {
     try {
+      setIsDeleting(true);
       const response = await axios.delete(`/api/products/deleteMerchant`, {
         data: { productId },
       });
       showAlert(
         "Merchant deleted successfully",
         "alert-success mobile:bg-success tablet:bg-success",
-        Success
+        setAlertTitle,
+        setAlertStyles,
+        setAlertIcon,
+        setUpdateAlert
       );
     } catch (err) {
       console.log(err);
       showAlert(
         "Failed to delete merchant",
         "alert-error mobile:bg-error tablet:bg-error",
+        setAlertTitle,
+        setAlertStyles,
+        setAlertIcon,
+        setUpdateAlert,
         Error
       );
     } finally {
+      setIsDeleting(false);
       dataForCurrentPage.map((item) => {
         if (item.id === productId) {
           item.merchant = null;
@@ -85,51 +96,61 @@ export default function Table({
     }
   };
 
-  const dateFromObjectId = function (objectId: string) {
-    const timestamp = parseInt(objectId.substring(0, 8), 16) * 1000;
-    const date = new Date(timestamp);
-    return date.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  };
-
-  const TableRow = ({ item }: { item: any }) => {
+  const TableView = ({ item }: { item: any }) => {
     return (
       <tr key={item.serialNumber}>
         <td className={`py-2 px-4 h-[8vh]`}>
-          <p className="w-full">{dateFromObjectId(item.id).toString()}</p>
+          <span className="w-full">{DateFromObjectId(item.id)}</span>
         </td>
 
         {/* Model */}
         <td className={`py-2 px-4 h-[8vh]`}>
-          <p className="w-full">{item.model.series}</p>
+          <span className="w-full">{item.model.series}</span>
+        </td>
+
+        {/* Serial Number */}
+        <td className={`py-2 px-4 h-[8vh]`}>
+          <p className="w-full">{item.serialNumber.slice(0, 6) + "XXXX"}</p>
         </td>
 
         {/* Status */}
         <td className={`py-2 px-4 h-[8vh]`}>
-          <div
-            className={`badge badge-${colorProductStatus(
-              convertStatus(item.status)
+          <span
+            className={`badge badge-${ColorProductStatus(
+              ConvertStatus(item.status)
             )} badge-outline badge-md`}
           >
-            <p>{convertStatus(item.status)}</p>
-          </div>
+            {ConvertStatus(item.status)}
+          </span>
         </td>
 
         {/* Merchant */}
         <td className="py-2 px-4 h-[8vh]">
           {item.merchant ? (
             <div className="flex flex-row items-center justify-evenly">
-              <p>{item.merchant.name}</p>
+              <div className="min-w-28">
+                {item.merchant.name.length > 10 ? (
+                  <Modal
+                    title={
+                      item.merchant.name.length > 10 &&
+                      `${item.merchant.name.slice(0, 10)}...`
+                    }
+                    titleContent="Merchant Name"
+                    content={item.merchant.name}
+                    id={item.merchant.name}
+                  />
+                ) : (
+                  <p>{item.merchant.name}</p>
+                )}
+              </div>
               <SubmitPopupButton
                 action={() => deleteMerchant(item.id)}
                 styles="btn-error btn-ghost btn-xs text-xl text-error"
                 header="Delete Merchant"
                 description="Are you sure you want to delete this merchant?"
-                id="delete-merchant"
-                isSubmitting={false}
+                id={`delete-merchant-${item.id}`}
+                confirmString="Delete"
+                confirmStyle="btn-error"
               >
                 <MdDelete />
               </SubmitPopupButton>
@@ -145,7 +166,7 @@ export default function Table({
         {/* Bank */}
         <td className={`py-2 px-4 h-[8vh] w-full`}>
           {item.bank ? (
-            <p>{item.bank}</p>
+            <span>{item.bank}</span>
           ) : (
             <button className="btn text-xl btn-ghost">
               <IoMdAdd />
@@ -155,7 +176,9 @@ export default function Table({
 
         {/* History */}
         <td className={`py-2 px-4 h-[8vh]`}>
-          <Link href={`products/history/${item.serialNumber}`}>
+          <Link
+            href={`/products/history/${item.serialNumber}?filter=&search=&skip=0&take=7`}
+          >
             <button className="btn text-xl btn-ghost">
               <FaHistory />
             </button>
@@ -165,16 +188,18 @@ export default function Table({
     );
   };
 
-  const mobileData = ({ item }: { item: any }) => {
+  const mobileView = ({ item }: { item: any }) => {
     return (
       <div className="card w-[90vw] bg-base-100 shadow-xl">
         <div className="card-body p-5">
           <div className="card-title flex-col">
             <div className="flex w-full justify-between items-center">
               <h1 className=" text-gray-500 text-sm">
-                {dateFromObjectId(item.id).toString()}
+                {DateFromObjectId(item.id)}
               </h1>
-              <Link href={`products/history/${item.serialNumber}`}>
+              <Link
+                href={`/products/history/${item.serialNumber}?filter=&search=&skip=0&take=7`}
+              >
                 <button className="btn btn-sm text-xl btn-ghost">
                   <FaHistory />
                 </button>
@@ -188,33 +213,48 @@ export default function Table({
                 <p className="text-base font-bold">{item.model.series}</p>
               </div>
               <div
-                className={`badge badge-${colorProductStatus(
-                  convertStatus(item.status)
+                className={`badge badge-${ColorProductStatus(
+                  ConvertStatus(item.status)
                 )} badge-outline badge-md`}
               >
-                {convertStatus(item.status)}
+                {ConvertStatus(item.status)}
               </div>
             </div>
 
             <div className="flex flex-col justify-between gap-2">
               <div className="flex justify-between items-center">
-                <div>
-                  <p>Merchant</p>
-                </div>
+                <p>Merchant</p>
                 <div>
                   {item.merchant ? (
-                    <div className="flex flex-row items-center justify-between">
-                      <div>{item.merchant.name}</div>
-                      <SubmitPopupButton
-                        action={() => deleteMerchant(item.id)}
-                        styles="btn-error"
-                        header="Delete Merchant"
-                        description="Are you sure you want to delete this merchant?"
-                        id="delete-merchant"
-                        isSubmitting={false}
-                      >
-                        <MdDelete />
-                      </SubmitPopupButton>
+                    <div className="flex flex-row items-center justify-between gap-3">
+                      <div>
+                        {item.merchant.name.length > 10 ? (
+                          <Modal
+                            title={
+                              item.merchant.name.length > 10 &&
+                              `${item.merchant.name.slice(0, 10)}...`
+                            }
+                            titleContent="Merchant Name"
+                            content={item.merchant.name}
+                            id={item.merchant.name}
+                          />
+                        ) : (
+                          <p>{item.merchant.name}</p>
+                        )}
+                      </div>
+                      <div>
+                        <SubmitPopupButton
+                          action={() => deleteMerchant(item.id)}
+                          styles="btn-error btn-sm"
+                          header="Delete Merchant"
+                          description="Are you sure you want to delete this merchant?"
+                          id={`delete-merchant-${item.id}`}
+                          confirmString="Delete"
+                          confirmStyle="btn-error"
+                        >
+                          <MdDelete />
+                        </SubmitPopupButton>
+                      </div>
                     </div>
                   ) : (
                     <ModalMerchant
@@ -228,9 +268,7 @@ export default function Table({
               </div>
 
               <div className="flex justify-between items-center">
-                <div>
-                  <p>Bank</p>
-                </div>
+                <p>Bank</p>
                 <div>
                   {item.bank ? (
                     <p>{item.bank}</p>
@@ -256,7 +294,7 @@ export default function Table({
             <tr>
               <th></th>
               <th>Model</th>
-              {/* <th>Serial Number</th> */}
+              <th>Serial Number</th>
               <th>Status</th>
               <th>Merchant</th>
               <th>Bank</th>
@@ -272,7 +310,7 @@ export default function Table({
               </tr>
             )}
             {dataForCurrentPage.map((item) => (
-              <TableRow key={item.serialNumber} item={item} />
+              <TableView key={item.serialNumber} item={item} />
             ))}
           </tbody>
         </table>
@@ -281,7 +319,7 @@ export default function Table({
       <div className="mobile:block tablet:hidden laptop:hidden pb-5">
         {dataForCurrentPage.map((item) => (
           <div key={item.serialNumber} className="mt-3">
-            {mobileData({ item })}
+            {mobileView({ item })}
           </div>
         ))}
       </div>
@@ -298,27 +336,3 @@ export default function Table({
     </>
   );
 }
-
-export const convertStatus = (status: string) => {
-  let showStatus = "";
-  if (typeof status !== "string") {
-    return showStatus;
-  }
-  status = status.toUpperCase().trim();
-  if (status === "INSTOCK") {
-    showStatus = "In Stock";
-  } else if (status === "LOST") {
-    showStatus = "Lost";
-  } else if (status === "DAMAGED") {
-    showStatus = "Damaged";
-  } else if (status === "REPARING") {
-    showStatus = "Reparing";
-  } else if (status === "WAITREPAIR") {
-    showStatus = "Waiting For Repair";
-  } else if (status === "INSTALLED") {
-    showStatus = "Installed";
-  } else if (status === "INSTALLING") {
-    showStatus = "Installing";
-  }
-  return showStatus;
-};

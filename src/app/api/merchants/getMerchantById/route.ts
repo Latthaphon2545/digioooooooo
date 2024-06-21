@@ -12,7 +12,13 @@ export const GET = async (req: NextRequest) => {
       },
     });
 
-    return NextResponse.json(merchant);
+    if (!merchant)
+      return NextResponse.json(
+        { message: "Merchant not found" },
+        { status: 404 }
+      );
+
+    return NextResponse.json({ merchant }, { status: 200 });
   } catch (error) {
     return new NextResponse(JSON.stringify(error));
   }

@@ -3,15 +3,19 @@
 import TablePageProductHistory from "@/components/historyProduct/historyProductTablePage";
 import LoadingHistory from "@/components/loading/loadingHistory/loadingHistory";
 import axios from "axios";
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
-// /api/products/getHistory?sn=test4&skip=0&take=8
 
 export default function Page({ params }: { params: { slug: string } }) {
   const [dataHistory, setDataHistory] = useState([]);
   const [dataProduct, setDataProduct] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+
+  const path = useSearchParams();
+  const filter = path.get("filter") || "";
+  const search = path.get("search") || "";
+  const skip = path.get("skip") || "";
+  const take = path.get("take") || "";
 
   const [loading, setLoading] = useState(true);
 
@@ -19,17 +23,20 @@ export default function Page({ params }: { params: { slug: string } }) {
     const getHistory = async () => {
       try {
         const res = await axios.get(
-          `/api/products/getHistory?sn=${params.slug}&skip=0&take=5`
+          `/api/products/getHistory?sn=${params.slug}&search=${search}&skip=${skip}&take=${take}`
         );
+
         const data = res.data;
         const dataCustomer = data.productsHistory;
         const lengthHistory = data.lengthHistory;
 
         const transformedHistory = dataCustomer.map((item: any) => ({
-          time: new Date(item.createdAt).toLocaleString(),
+          time: new Date(item.createdAt).toString(),
           description: item.description,
           user: item.user.name,
           category: item.category,
+          id: item.id,
+          imageProv: item.imageProve,
         }));
 
         const productDetails = dataCustomer[0]?.product;
@@ -38,39 +45,28 @@ export default function Page({ params }: { params: { slug: string } }) {
         setDataProduct(productDetails);
         setTotalPages(lengthHistory);
       } catch (error) {
-        console.log("[GET TODO]", error);
+        console.log(error);
       } finally {
         setLoading(false);
       }
     };
 
     getHistory();
-  }, []);
+  }, [filter, search, skip, take]);
 
   return (
     <>
-      <div className="flex flex-row">
-        <div className="flex flex-col w-full relative">
-          <div className="flex justify-between items-center mx-5 mt-5 mb-1 h-14">
-            <h1 className="text-3xl font-bold">
-              <Link href="/products" className="curser-pointer">
-                Product
-              </Link>
-              <span className="font-normal">{` > ${params.slug}`}</span>
-            </h1>
-          </div>
-          <div className="flex justify-end mx-5"></div>
-          {loading ? (
-            <LoadingHistory />
-          ) : (
-            <TablePageProductHistory
-              data={dataHistory}
-              dataCustomer={dataProduct}
-              editor={false}
-              lengthHistory={totalPages}
-            />
-          )}
-        </div>
+      <div className="h-full">
+        {loading ? (
+          <LoadingHistory />
+        ) : (
+          <TablePageProductHistory
+            data={dataHistory}
+            dataCustomer={dataProduct}
+            editor={false}
+            lengthHistory={totalPages}
+          />
+        )}
       </div>
     </>
   );
