@@ -113,6 +113,7 @@ const InputForm = ({ models }: { models: Model[] }) => {
       <InputHeader
         icon={<IoMdAddCircle />}
         title="Add Product"
+        page="product"
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />

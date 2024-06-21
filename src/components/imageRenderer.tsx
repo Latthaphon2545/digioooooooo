@@ -52,6 +52,7 @@ export default function ImageRenderer() {
             src={selectedImage}
             alt={`${selectedImage}'s photo`}
             fill
+            objectFit="cover"
             className="w-full h-full"
           />
         ) : (

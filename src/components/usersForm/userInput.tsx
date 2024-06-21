@@ -110,7 +110,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
           </div>
         </form>
       </div>
-      <div className="sm:hidden max-h-[68vh] overflow-scroll">
+      <div className="sm:hidden max-h-[75vh] overflow-scroll">
         <form action="">
           <div className="flex flex-col gap-5">
             {formValues.map((_, index) => {
@@ -125,7 +125,11 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
               );
             })}
           </div>
-          <div className="flex items-center justify-center mt-2 fixed bottom-5 left-4 space-x-3">
+          <div
+            className={`flex items-center justify-center mt-2 fixed bottom-5 left-4 ${
+              formValues.length < 10 ? "space-x-3" : "space-x-1"
+            }`}
+          >
             <button
               type="button"
               onClick={deleteRow}

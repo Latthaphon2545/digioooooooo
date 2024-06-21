@@ -21,7 +21,7 @@ const ModelInput = () => {
     <div>
       <form
         action={formAction}
-        className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 space-x-6 w-full overflow-hidden justify-center items-cente"
+        className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 space-x-6 w-full overflow-hidden justify-center items-center"
       >
         <div className="w-[50vh]  flex flex-col justify-center">
           <div className="flex flex-row items-center">
@@ -47,7 +47,7 @@ const ModelInput = () => {
             <legend className="lg:ml-2 capitalize font-semibold">
               Specification:
             </legend>
-            <div className="flex flex-col space-y-2 justify-start  ">
+            <div className="flex flex-col space-y-2 justify-start lg:ml-2">
               {INFORMATION_FIELD.map((field, index) => (
                 <ModelInputField key={index} title={field} fieldset={true} />
               ))}

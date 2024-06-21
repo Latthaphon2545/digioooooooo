@@ -207,7 +207,7 @@ const GroupUpload = ({
           onChange={handleFileUpload}
         />
         <div
-          className="border-dotted border-2 text-lg text-center p-4 tablet:min-w-72 tablet:min-h-52 flex items-center justify-center hover:cursor-pointer"
+          className="border-dotted border-2 text-lg text-center p-4 tablet:min-w-72 tablet:min-h-52 flex items-center justify-center hover:cursor-pointer "
           onClick={handleDivClick}
         >
           <div className="flex flex-row sm:flex-col ">
@@ -235,7 +235,7 @@ const GroupUpload = ({
         </a>
       </div>
       <div className="relative w-full mobile:h-[50vh] tablet:h-[53vh] flex justify-center ">
-        <div className="border-2 h-full w-5/6  overflow-scroll relative">
+        <div className="border-2 h-full w-full  overflow-scroll relative">
           {uploading && <ProgressIndicator uploadProgress={uploadProgress} />}
           {!uploading && (
             <InputPreview

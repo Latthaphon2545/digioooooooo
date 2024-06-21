@@ -42,7 +42,7 @@ const UserInputField = ({
       </label>
     </td>
     <td className="w-[25%]">
-      <label className="input input-sm input-bordered flex items-center gap-2 m-1">
+      <label className="input input-sm input-bordered flex items-center gap-2 m-1 ">
         <input
           type="text"
           className="grow"
