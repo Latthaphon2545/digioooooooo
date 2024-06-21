@@ -4,6 +4,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { Role } from "@/lib/types";
 import MobileInput from "./mobileInput";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import MobileButtonInput from "./mobileButtonInput";
 
 type FormValues = {
   email: string;
@@ -125,11 +126,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
               );
             })}
           </div>
-          <div
-            className={`flex items-center justify-center mt-2 fixed bottom-5 left-4 ${
-              formValues.length < 10 ? "space-x-3" : "space-x-1"
-            }`}
-          >
+          {/* <div className={`flex items-center justify-center mt-2 fixed bottom-5 left-4 ${formValues.length < 10 ? "space-x-3" : "space-x-1"}`}>
             <button
               type="button"
               onClick={deleteRow}
@@ -141,7 +138,12 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
             <button type="button" onClick={addRow}>
               <IoAddCircleOutline size={40} />
             </button>
-          </div>
+          </div> */}
+          <MobileButtonInput
+            formValues={formValues}
+            addFunction={addRow}
+            deleteFunction={deleteRow}
+          />
           <div ref={endOfForm} />
         </form>
       </div>
