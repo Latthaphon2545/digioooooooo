@@ -1,6 +1,6 @@
 "use client";
 
-export const showAlert = (
+export const ShowAlert = (
   title: string,
   styles: string,
   setAlertTitle: (value: string) => void,

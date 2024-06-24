@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import Header from "../header";
-import Table from "./productTable";
 import Pagination from "../pagination";
 import { itemPage } from "../staticPropsInTable";
+import Table from "./bodyProduct";
 
 interface TablePageProps {
   data: {

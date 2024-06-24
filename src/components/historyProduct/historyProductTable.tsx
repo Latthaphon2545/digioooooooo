@@ -41,7 +41,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
 
   const TableRow = ({ item }: { item: any }) => {
     const { formattedDate, displayTime } = ConvertTime(item.time);
-    console.log(item);
     return (
       <tr key={item.id}>
         <td className={`py-2 px-4 h-[8vh]`}>
