@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Table from "./historyProductTable";
 import Header from "./historyProductHeader";
-import Pagination from "../table/pagination";
+import Pagination from "../pagination";
+import { itemPage } from "../staticPropsInTable";
 
 interface TablePageProps {
   data: {
@@ -23,7 +24,6 @@ export default function TablePageProductHistory({
   lengthHistory,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemPerPage, setItemPerPage] = useState(7);
   const [totalPages, setTotalPages] = useState(0);
 
   const onPageChange = (pageNumber: number) => {
@@ -33,11 +33,11 @@ export default function TablePageProductHistory({
   useEffect(() => {
     const getLengthUsers = async () => {
       if (lengthHistory === 0) return;
-      const totalPages = Math.ceil(lengthHistory / itemPerPage);
+      const totalPages = Math.ceil(lengthHistory / itemPage);
       setTotalPages(totalPages);
     };
     getLengthUsers();
-  }, [lengthHistory, itemPerPage]);
+  }, [lengthHistory, itemPage]);
 
   return (
     <>

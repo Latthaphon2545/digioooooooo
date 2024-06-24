@@ -85,12 +85,7 @@ export default function Home() {
           {loading ? (
             <TablePageLoading Type="User" />
           ) : (
-            <Table
-              data={data}
-              colorStatus="user"
-              editor={isEditor}
-              totalLength={dataLength}
-            />
+            <Table data={data} editor={isEditor} totalLength={dataLength} />
           )}
         </div>
       </div>

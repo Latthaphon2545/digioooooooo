@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ViewImg from "./historyProductViewImg";
-import Modal from "../modal";
-import { ConvertTime } from "../dateTime";
-import { ConvertStatus } from "../convertStatusAndRole";
-import { ColorProductStatus } from "../table/color";
+import Modal from "../../modal";
+import { ConvertTime } from "../../dateTime";
+import { ConvertStatus } from "../../convertStatusAndRole";
+import { ColorProductStatus } from "../color";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -121,7 +121,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
 
   return (
     <>
-      <div className="mobile:hidden tablet:block laptop:block">
+      <div className="mobile:hidden tablet:hidden laptop:block">
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>
@@ -142,7 +142,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         </table>
       </div>
 
-      <div className="mobile:block tablet:hidden laptop:hidden pb-5">
+      <div className="mobile:block tablet:block laptop:hidden pb-5">
         {dataForCurrentPage.map((item) => (
           <div key={item.id} className="mt-3">
             {mobileData({ item })}

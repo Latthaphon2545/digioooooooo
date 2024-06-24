@@ -1,6 +1,6 @@
 "use client";
 
-import TablePageProductHistory from "@/components/historyProduct/historyProductTablePage";
+import TablePageProductHistory from "@/components/table/historyProduct/historyProductTablePage";
 import LoadingHistory from "@/components/loading/loadingHistory/loadingHistory";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";

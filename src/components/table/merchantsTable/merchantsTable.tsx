@@ -11,8 +11,8 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { EditableField } from "../EditableField";
 import { productIdUI } from "../productIdShowEachShop";
 import { copylink } from "../copyText";
-import { showAlert } from "../showAlert";
 import { handleEditToggle } from "../handleEditToggle";
+import { ShowAlert } from "../showAlert";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -45,8 +45,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
       );
     } catch (error) {
       console.error(error);
-      setUpdateAlert(true);
-      showAlert(
+      ShowAlert(
         "Failed to update user",
         "alert-error mobile:bg-error tablet:bg-error ",
         setAlertTitle,
@@ -64,16 +63,16 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         }
       });
       handleEditToggle(id, setIsEditing);
-      setUpdateAlert(true);
-      showAlert(
+      ShowAlert(
         "User updated successfully",
-        "alert-success mobile:bg-success tablet:bg-error",
+        "alert-success mobile:bg-success tablet:bg-success",
         setAlertTitle,
         setAlertStyles,
         setAlertIcon,
         setUpdateAlert,
         Success
       );
+      setUpdateAlert(true);
       setIsUpdating({ ...isUpdating, [id]: false });
       setIsEditing({ ...isEditing, [id]: false });
     }
@@ -339,7 +338,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
 
   return (
     <>
-      <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:block laptop:block">
+      <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:hidden laptop:block">
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>
@@ -365,7 +364,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         </table>
       </div>
 
-      <div className="mobile:block tablet:hidden laptop:hidden pb-5">
+      <div className="mobile:block tablet:block laptop:hidden pb-5">
         {dataForCurrentPage.map((item) => (
           <div key={item.id} className="mt-3">
             {mobileData({ item })}

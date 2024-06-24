@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const EditableField = ({
   defaultValue,
@@ -11,7 +9,12 @@ export const EditableField = ({
   onChange: (value: string) => void;
   textarea?: boolean;
 }) => {
-  const [value, setValue] = useState(defaultValue);
+  // Use useEffect to set the initial value only once
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

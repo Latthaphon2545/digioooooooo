@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Pagination from "../pagination";
-import Table from "./usersTable";
+import BodyUsers from "./bodyUsers";
 import Header from "../header";
 import { itemPage } from "../staticPropsInTable";
 
@@ -10,29 +10,26 @@ interface TablePageProps {
   data: {
     [key: string]: any;
   }[];
-  colorStatus: string;
   editor: boolean;
   totalLength: number;
 }
 
 export default function TablePage({
   data,
-  colorStatus,
   editor,
   totalLength,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemPerPage, setItemPerPage] = useState(itemPage);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     const getLengthUsers = async () => {
       if (totalLength === 0) return;
-      const totalPages = Math.ceil(totalLength / itemPerPage);
+      const totalPages = Math.ceil(totalLength / itemPage);
       setTotalPages(totalPages);
     };
     getLengthUsers();
-  }, [totalLength, itemPerPage]);
+  }, [totalLength, itemPage]);
 
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -44,7 +41,7 @@ export default function TablePage({
         <Header option="User" />
       </div>
       <div className="flex flex-col w-full justify-center items-center">
-        <Table dataForCurrentPage={data} editor={editor} />
+        <BodyUsers dataForCurrentPage={data} editor={editor} />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

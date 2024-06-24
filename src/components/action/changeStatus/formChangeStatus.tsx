@@ -1,4 +1,4 @@
-import ViewImg from "@/components/historyProduct/historyProductViewImg";
+import ViewImg from "@/components/table/historyProduct/historyProductViewImg";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import { changeStatus } from "@/lib/actions/changeStatus/action";
 import Image from "next/image";

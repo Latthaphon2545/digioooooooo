@@ -1,23 +1,42 @@
 import React, { useState } from "react";
+import AlertDialog from "../../alertDialog";
+import { ShowAlert } from "../showAlert";
+import { TableView } from "./view/desktopView";
 
-import AlertDialog from "@/components/alertDialog";
-import { DesktopView } from "./view/desktopView";
 import { MobileView } from "./view/mobileView";
+import { handleUpdate } from "./actions/handleUpdate";
 
 interface TableProps {
   dataForCurrentPage: {
     [key: string]: any;
   }[];
-  editor?: boolean;
+  editor: boolean;
 }
 
-export default function Table({ dataForCurrentPage, editor }: TableProps) {
+export default function BodyUsers({ dataForCurrentPage, editor }: TableProps) {
+  const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
+
   const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
 
-  console.log(alertTitle, updateAlert);
+  const [openEditModal, setOpenEditModal] = useState(false);
+
+  const handleUpdateWrapper = async (
+    id: string,
+    users: { name: string; role: string; status: string; contact: string }
+  ) => {
+    await handleUpdate(id, users, {
+      dataForCurrentPage,
+      setUpdateAlert,
+      showAlert: ShowAlert,
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+      setIsEditing,
+    });
+  };
 
   return (
     <>
@@ -25,32 +44,29 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>
-              <th></th>
-              <th>Model</th>
-              <th>Serial Number</th>
+              <th>Name</th>
+              <th>Role</th>
               <th>Status</th>
-              <th>Merchant</th>
-              <th>Bank</th>
-              <th>History</th>
+              <th>Contact</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {dataForCurrentPage.length === 0 && (
               <tr>
-                <td colSpan={6} className="text-center py-2 px-4 h-[8vh]">
+                <td colSpan={5} className="text-center py-2 px-4 h-[8vh]">
                   No data available
                 </td>
               </tr>
             )}
             {dataForCurrentPage.map((item) => (
-              <DesktopView
-                key={item.serialNumber}
+              <TableView
+                key={item.id}
                 item={item}
-                dataForCurrentPage={dataForCurrentPage}
-                setUpdateAlert={setUpdateAlert}
-                setAlertTitle={setAlertTitle}
-                setAlertStyles={setAlertStyles}
-                setAlertIcon={setAlertIcon}
+                isEditing={isEditing}
+                editor={editor}
+                handleUpdate={handleUpdateWrapper}
+                setIsEditing={setIsEditing}
               />
             ))}
           </tbody>
@@ -59,14 +75,13 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
 
       <div className="mobile:block tablet:block laptop:hidden pb-5">
         {dataForCurrentPage.map((item) => (
-          <div key={item.serialNumber} className="mt-3">
+          <div key={item.name} className="mt-3">
             <MobileView
               item={item}
-              dataForCurrentPage={dataForCurrentPage}
-              setUpdateAlert={setUpdateAlert}
-              setAlertTitle={setAlertTitle}
-              setAlertStyles={setAlertStyles}
-              setAlertIcon={setAlertIcon}
+              editor={editor}
+              setOpenEditModal={setOpenEditModal}
+              openEditModal={openEditModal}
+              handleUpdate={handleUpdateWrapper} // Ensure correct prop passing
             />
           </div>
         ))}

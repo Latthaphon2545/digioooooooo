@@ -2,7 +2,7 @@
 
 import React from "react";
 import { MdImageSearch } from "react-icons/md";
-import Modal from "../modal";
+import Modal from "../../modal";
 
 const ViewImg = ({ id, image }: { id: string; image: any }) => {
   const imageShow = (images: string[] | undefined) => {

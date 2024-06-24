@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ActionButton from "../actionButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer"; // Import useInView hook
+import { itemPage } from "./staticPropsInTable";
 
 interface PaginationProps {
   currentPage: number;
@@ -17,8 +18,12 @@ export default function Pagination({
   onPageChange,
 }: PaginationProps) {
   const [pageStart, setPageStart] = useState(1);
-  const [mobileData, setMobileData] = useState(7);
+  const [mobileData, setMobileData] = useState(itemPage);
   const [loading, setLoading] = useState(false);
+
+  const { ref, inView } = useInView({
+    threshold: 1.0,
+  });
 
   const pageEnd = Math.min(pageStart + 3, totalPages);
   let manyPage = 0;
@@ -72,7 +77,7 @@ export default function Pagination({
     }
   };
 
-  const handleToFistPage = () => {
+  const handleToFirstPage = () => {
     onPageChange(1);
     setPageStart(1);
   };
@@ -85,15 +90,15 @@ export default function Pagination({
   useEffect(() => {
     router.push(
       `${pathName}?filter=${filterParams}&search=${searchParams}&skip=${
-        (currentPage - 1) * 7
-      }&take=7`
+        (currentPage - 1) * itemPage
+      }&take=${itemPage}`
     );
   }, [currentPage]);
 
   const handleMoreData = () => {
     try {
       setLoading(true);
-      const newMobileData = Math.min(mobileData + 7, lengthData);
+      const newMobileData = Math.min(mobileData + itemPage, lengthData);
       setMobileData(newMobileData);
       const newUrl = `${pathName}?filter=${filterParams}&search=${searchParams}&skip=0&take=${newMobileData}`;
       router.replace(newUrl, { scroll: false });
@@ -106,16 +111,21 @@ export default function Pagination({
     }
   };
 
+  useEffect(() => {
+    if (inView && !loading && mobileData < lengthData) {
+      handleMoreData();
+    }
+  }, [inView, loading, mobileData, lengthData]);
+
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-2 mobile:hidden tablet:flex laptop:flex">
+      <div className="flex flex-col justify-center items-center mt-2 mobile:hidden tablet:hidden laptop:flex">
         <div className="join">
           <ActionButton
-            action={handleToFistPage}
+            action={handleToFirstPage}
             styles={"join-item btn btn-sm btn-neutral"}
             disabled={currentPage === 1}
           >
-            {" "}
             {"<<"}
           </ActionButton>
           <ActionButton
@@ -166,7 +176,7 @@ export default function Pagination({
       </div>
 
       {/* Bottom section for loading more data */}
-      <div className="flex justify-center laptop:hidden tablet:hidden mb-5">
+      <div className="flex justify-center mobile:flex tablet:flex laptop:hidden mb-5">
         {loading ? (
           <span className="loading loading-dots loading-xs"></span>
         ) : (
@@ -178,6 +188,11 @@ export default function Pagination({
             {mobileData < lengthData ? "Load more" : "No more data"}
           </ActionButton>
         )}
+      </div>
+
+      {/* Infinite scroll only for mobile and tablet */}
+      <div className="mobile:block tablet:block laptop:hidden">
+        <div ref={ref} className="h-1"></div>
       </div>
     </>
   );

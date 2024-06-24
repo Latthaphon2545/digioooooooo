@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ColorProductStatus } from "../table/color";
-import { ConvertStatus } from "../convertStatusAndRole";
+import { ColorProductStatus } from "../color";
+import { ConvertStatus } from "../../convertStatusAndRole";
 
 interface HeaderProps {
   data: any;
