@@ -21,7 +21,6 @@ export default function BankInput() {
             <input
               type="text"
               name="name"
-              id=""
               required
               placeholder="Name"
               className="mt-3 font-normal block p-2.5  w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
