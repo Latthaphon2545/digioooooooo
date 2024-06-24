@@ -1,7 +1,6 @@
 "use client";
 
 import axios from "axios";
-import Link from "next/link";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import Table from "@/components/table/usersTable/usersTablePage";
 import { useState, useEffect } from "react";

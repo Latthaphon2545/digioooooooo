@@ -46,15 +46,18 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoadingModel(true);
+        setLoadingBank(true);
         const res = await axios.get("/api/model/getModel");
         setModels(res.data.models);
       } catch (e) {
-        console.log(e);
+        console.log("Error fetching data: ", e);
       } finally {
         setLoadingModel(false);
         setLoadingBank(false);
       }
     };
+
     fetchData();
   }, []);
 

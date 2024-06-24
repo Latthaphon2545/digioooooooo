@@ -9,7 +9,6 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { IoMdAddCircle } from "react-icons/io";
 
 export default function Productmanagement() {
   const [data, setData] = useState([]);

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 export default function productmanagement() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(false);
+  const [isEditor, setIseditor] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
@@ -20,8 +20,6 @@ export default function productmanagement() {
   const search = path.get("search") || "";
   const skip = path.get("skip") || "";
   const take = path.get("take") || "";
-
-  const router = useRouter();
 
   useEffect(() => {
     const updateData = async () => {

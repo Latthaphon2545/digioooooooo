@@ -26,7 +26,15 @@ export const GET = async (req: NextRequest) => {
       take: takeInt,
       where: whereClause,
       include: {
-        product: true,
+        product: {
+          include: {
+            model: {
+              select: {
+                series: true,
+              },
+            },
+          },
+        },
       },
     });
     const totalMerchant = await db.merchant.count({

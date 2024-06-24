@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Pagination from "../pagination";
 import Table from "./usersTable";
 import Header from "../header";
+import { itemPage } from "../staticPropsInTable";
 
 interface TablePageProps {
   data: {
@@ -21,7 +22,7 @@ export default function TablePage({
   totalLength,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemPerPage, setItemPerPage] = useState(7);
+  const [itemPerPage, setItemPerPage] = useState(itemPage);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
@@ -33,23 +34,6 @@ export default function TablePage({
     getLengthUsers();
   }, [totalLength, itemPerPage]);
 
-  const colorUserStatus = (status: string) => {
-    status = status.toLocaleLowerCase();
-    let color = "";
-    if (colorStatus === "user") {
-      if (status === "active") {
-        color = "success";
-      } else if (status === "inactive") {
-        color = "";
-      } else if (status === "restricted") {
-        color = "error";
-      } else if (status === "pending") {
-        color = "secondary";
-      }
-    }
-    return color;
-  };
-
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -60,11 +44,7 @@ export default function TablePage({
         <Header option="User" />
       </div>
       <div className="flex flex-col w-full justify-center items-center">
-        <Table
-          dataForCurrentPage={data}
-          colorUserStatus={colorUserStatus}
-          editor={editor}
-        />
+        <Table dataForCurrentPage={data} editor={editor} />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

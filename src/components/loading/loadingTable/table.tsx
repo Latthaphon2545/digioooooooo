@@ -9,7 +9,7 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
     Product: [
       "",
       "Model",
-      // "Serial Number",
+      "Serial Number",
       "Status",
       "Merchant",
       "Bank",
@@ -39,11 +39,8 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
         <div className="card skeleton w-[90vw] bg-base-100 shadow-xl">
           <div className="card-body p-5">
             <div className="card-title flex-col">
-              <div className="flex w-full justify-between items-center">
+              <div className="flex w-full items-center">
                 <div className="skeleton h-5 w-20 bg-opacity-10"></div>
-                <button className="btn btn-ghost btn-sm">
-                  <HiOutlineDotsVertical size={20} />
-                </button>
               </div>
               <div className="divider my-0"></div>
             </div>
@@ -119,18 +116,15 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
             <div className="card-title flex-col">
               <div className="flex w-full justify-between items-center">
                 <div className="skeleton h-5 w-20 bg-opacity-10"></div>
-                <button className="btn btn-ghost btn-sm">
-                  <HiOutlineDotsVertical size={20} />
-                </button>
               </div>
               <div className="divider my-0"></div>
             </div>
             <div className="flex flex-col gap-5">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-base font-bold">
+                  <div className="text-base font-bold">
                     <div className="skeleton h-5 w-20 bg-opacity-10"></div>
-                  </p>
+                  </div>
                 </div>
                 <button className="text-lg tooltip">
                   <TbCopy />

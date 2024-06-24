@@ -18,6 +18,9 @@ export async function GET(request: NextRequest) {
       },
       skip: skipInt,
       take: takeInt,
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         user: {
           select: {
@@ -29,6 +32,7 @@ export async function GET(request: NextRequest) {
             model: {
               select: {
                 series: true,
+                image: true,
               },
             },
             merchant: true,
