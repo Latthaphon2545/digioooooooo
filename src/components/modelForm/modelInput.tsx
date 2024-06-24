@@ -18,17 +18,17 @@ const ModelInput = () => {
   const [state, formAction] = useFormState(createModel, { errors: [] });
 
   return (
-    <div>
+    <div className="pt-4 sm:pt-0">
       <form
         action={formAction}
-        className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 space-x-6 w-full overflow-hidden justify-center items-center"
+        className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 lg:space-x-6 w-full overflow-hidden justify-center items-center"
       >
         <div className="w-[50vh]  flex flex-col justify-center">
           <div className="flex flex-row items-center">
             <ImageRenderer />
           </div>
         </div>
-        <div className="w-full flex relative flex-col space-y-3 justify-center px-10 ">
+        <div className="w-full flex relative flex-col space-y-3 justify-center px-6 sm:px-10">
           <label htmlFor="" className="lg:ml-2 font-semibold">
             Series:
             <ModelInputField title="series" fieldset={false} />
@@ -53,9 +53,9 @@ const ModelInput = () => {
               ))}
             </div>
           </fieldset>
-          <div className="flex justify-end">
+          <div className="flex justify-center tablet:justify-end">
             <SubmitPopupButton
-              styles="btn-primary px-10"
+              styles="btn-primary px-10 mb-4 sm:mb-4 w-full btn-wide"
               header="Add New Model"
               description="Are you sure you want to add this model"
               id="add_model"

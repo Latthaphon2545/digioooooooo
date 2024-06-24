@@ -171,7 +171,7 @@ const InputForm = () => {
       )}
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
-          styles={`btn-primary px-10 w-full mobile:mt-5 sm:left-1/2 sm:transform sm:-translate-x-1/2 laptop:mt-0 ${
+          styles={`btn-primary px-10 w-1/2 mobile:mt-5 sm:left-1/2 sm:transform sm:-translate-x-1/2 laptop:mt-0 ${
             activeTab === 0
               ? " right-5 bottom-4 w-2/4"
               : " w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"

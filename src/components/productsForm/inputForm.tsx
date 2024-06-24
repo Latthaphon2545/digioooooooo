@@ -117,7 +117,12 @@ const InputForm = ({ models }: { models: Model[] }) => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <div className="min-h-[68vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0">
+      <div
+        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
+          activeTab === 1 ? "flex items-center" : ""
+        } `}
+      >
+        {" "}
         {activeTab === 0 && (
           <ProductInput
             formValues={formValues}

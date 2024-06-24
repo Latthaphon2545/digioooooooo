@@ -36,9 +36,13 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
   const endOfForm = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (endOfForm.current) {
-      endOfForm.current.scrollIntoView({ behavior: "smooth" });
-    }
+    const timer = setTimeout(() => {
+      if (endOfForm.current) {
+        endOfForm.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [formValues.length]);
 
   // const deleteRow = (index: number) => {
@@ -111,7 +115,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
           </div>
         </form>
       </div>
-      <div className="sm:hidden max-h-[76vh] overflow-scroll">
+      <div className="sm:hidden max-h-[65vh] overflow-scroll">
         <form action="">
           <div className="flex flex-col gap-5">
             {formValues.map((_, index) => {
