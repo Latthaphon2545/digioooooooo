@@ -36,9 +36,13 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
   const endOfForm = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (endOfForm.current) {
-      endOfForm.current.scrollIntoView({ behavior: "smooth" });
-    }
+    const timer = setTimeout(() => {
+      if (endOfForm.current) {
+        endOfForm.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [formValues.length]);
 
   // const deleteRow = (index: number) => {
@@ -111,7 +115,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
           </div>
         </form>
       </div>
-      <div className="sm:hidden max-h-[75vh] overflow-scroll">
+      <div className="sm:hidden max-h-[65vh] overflow-scroll">
         <form action="">
           <div className="flex flex-col gap-5">
             {formValues.map((_, index) => {
@@ -126,19 +130,6 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
               );
             })}
           </div>
-          {/* <div className={`flex items-center justify-center mt-2 fixed bottom-5 left-4 ${formValues.length < 10 ? "space-x-3" : "space-x-1"}`}>
-            <button
-              type="button"
-              onClick={deleteRow}
-              disabled={formValues.length === 1}
-            >
-              <IoMdRemoveCircleOutline size={40} />
-            </button>
-            <div className="text-2xl font-semibold">{formValues.length}</div>
-            <button type="button" onClick={addRow}>
-              <IoAddCircleOutline size={40} />
-            </button>
-          </div> */}
           <MobileButtonInput
             formValues={formValues}
             addFunction={addRow}

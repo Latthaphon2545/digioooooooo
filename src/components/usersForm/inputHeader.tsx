@@ -16,7 +16,7 @@ const InputHeader = ({
 }: inputHeaderProps) => {
   return (
     <div className="mobile:hidden laptop:block">
-      <div className="flex flex-row justify-between items-center mb-8">
+      <div className="flex flex-row justify-between items-center mb-2">
         <div className="flex flex-row justify-start items-center gap-4 m-4">
           <div className="text-5xl">{icon}</div>
           <h1 className="text-3xl font-bold text-center">{title}</h1>

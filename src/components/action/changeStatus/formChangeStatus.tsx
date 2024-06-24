@@ -64,15 +64,22 @@ export default function FormChangeStatus({ sn }: { sn: string }) {
           </div>
 
           {/* File */}
-          <input
-            type="file"
-            accept="image/*"
-            className="file-input file-input-bordered w-full file-input-info"
-            onChange={handleFileChange}
-            multiple
-            name="images"
-          />
-          {/* <ViewImg images={files.map((file, index) => URL.createObjectURL(file))} /> */}
+          <div className="flex w-full items-center justify-center space-x-4">
+            <input
+              type="file"
+              accept="image/*"
+              className="file-input file-input-bordered w-full file-input-info"
+              onChange={handleFileChange}
+              multiple
+              name="images"
+            />
+            {files.length > 0 && (
+              <ViewImg
+                id="change_status_image"
+                image={files.map((file, index) => URL.createObjectURL(file))}
+              />
+            )}
+          </div>
         </div>
         {/* <button className="btn w-full btn-primary btn-lg" type="submit">
           Submit

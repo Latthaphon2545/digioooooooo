@@ -42,18 +42,6 @@ const InputForm = () => {
     }
   }, [errorOnSubmit]);
 
-  // useEffect(() => {
-  //   const isMobileView = window.innerWidth <= 768;
-  //   const initialFormValues = isMobileView
-  //     ? [{ email: "", name: "", contact: "", role: null }]
-  //     : [
-  //         { email: "", name: "", contact: "", role: null },
-  //         { email: "", name: "", contact: "", role: null },
-  //         { email: "", name: "", contact: "", role: null },
-  //       ];
-  //   setFormValues(initialFormValues);
-  // }, []);
-
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
@@ -74,7 +62,6 @@ const InputForm = () => {
       }
 
       if (
-        activeTab === 0 &&
         formValues.some(
           ({ email }) => email.includes("@") && !email.endsWith("@digio.co.th")
         )
@@ -172,7 +159,7 @@ const InputForm = () => {
       </div>
       {submitting && (
         <div className="">
-          <div className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 right-[33px] "></div>
+          <div className="loading loading-spinner  loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 right-[33px] "></div>
         </div>
       )}
       {errorOnSubmit && (
@@ -184,10 +171,10 @@ const InputForm = () => {
       )}
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
-          styles={`btn-primary px-10 w-full mobile:mt-5 sm:left-1/2 sm:transform sm:-translate-x-1/2 laptop:mt-0 ${
+          styles={`btn-primary px-10 w-1/2 mobile:mt-5 sm:left-1/2 sm:transform sm:-translate-x-1/2 laptop:mt-0 ${
             activeTab === 0
-              ? "w-1/2 right-5 bottom-4"
-              : "w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
+              ? " right-5 bottom-4 w-2/4"
+              : " w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
           } laptop:w-auto btn-wide fixed  sm:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
           alertHeader="Add User"
           alertDescroption="Are you sure you want to add these user?"
