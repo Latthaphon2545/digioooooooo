@@ -44,6 +44,7 @@ const ViewImg = ({ id, image }: { id: string; image: any }) => {
         titleContent="Image Prov."
         content={imageShow(image)}
         id={id}
+        style={image && image.length > 0 ? "" : "btn-disabled"}
       />
     </>
   );
