@@ -3,7 +3,7 @@ import React from "react";
 import { IoMdAdd } from "react-icons/io";
 
 type floatingActionButtonProps = {
-  page: "user" | "product" | "merchant" | "model";
+  page: "user" | "product" | "merchant" | "model" | "bank";
 };
 
 export default function FloatingActionButton({
@@ -43,6 +43,13 @@ export default function FloatingActionButton({
       {page === "model" ? (
         <Link
           href={"/products/models/add"}
+          className="bottom-5 right-3 z-40 mobile:fixed laptop:hidden btn btn-circle btn-primary btn-lg m-1"
+        >
+          <IoMdAdd className="text-2xl" />
+        </Link>
+      ) : page === "bank" ? (
+        <Link
+          href={"/banks/add"}
           className="bottom-5 right-3 z-40 mobile:fixed laptop:hidden btn btn-circle btn-primary btn-lg m-1"
         >
           <IoMdAdd className="text-2xl" />

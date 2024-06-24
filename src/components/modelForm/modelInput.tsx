@@ -4,6 +4,7 @@ import SubmitPopupButton from "../submitPopupButton";
 import ImageRenderer from "../imageRenderer";
 import { createModel } from "@/lib/actions/model/action";
 import { useFormState } from "react-dom";
+import AlertDialog from "../alertDialog";
 
 const ModelInput = () => {
   const INFORMATION_FIELD = [

@@ -1,4 +1,5 @@
 import BankPage from "@/components/bank/bankPage";
+import FloatingActionButton from "@/components/floatingActionButton";
 import LoadingBankPage from "@/components/loading/loadingBank/BankPage";
 
 export default function Page() {
@@ -49,6 +50,7 @@ export default function Page() {
   return (
     <div>
       <BankPage banks={data} products={products} />
+      <FloatingActionButton page="bank" />
       {/* <LoadingBankPage /> */}
     </div>
   );

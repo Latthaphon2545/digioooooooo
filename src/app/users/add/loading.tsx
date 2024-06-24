@@ -1,5 +1,9 @@
 const Loading = () => {
-  return <span className="loading loading-dots loading-lg m-auto block"></span>;
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <span className="loading loading-dots loading-lg m-auto block"></span>;
+    </div>
+  );
 };
 
 export default Loading;
