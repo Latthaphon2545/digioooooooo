@@ -17,8 +17,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
 
-  console.log(alertTitle, updateAlert);
-
   return (
     <>
       <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:hidden laptop:block">

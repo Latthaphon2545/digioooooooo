@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
+import { TabBar } from "./tabBar";
 
 type FormValues = {
   email: string;
@@ -130,22 +131,12 @@ const InputForm = () => {
 
   return (
     <div className="relative w-full">
-      <InputHeader
-        icon={<IoPersonAddSharp />}
-        title="Add User"
-        page="user"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
-      <div
-        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
-          activeTab === 1 ? "flex items-center" : ""
-        } `}
-      >
-        {activeTab === 0 && (
+      <InputHeader icon={<IoPersonAddSharp />} title="Add User" page="user" />
+      <TabBar
+        Individual={
           <UserInput formValues={formValues} setFormValues={setFormValues} />
-        )}
-        {activeTab === 1 && (
+        }
+        Group={
           <GroupUpload
             setHasError={setHasError}
             headers={["email", "name", "contact", "role"]}
@@ -155,8 +146,8 @@ const InputForm = () => {
             setUploading={setUploading}
             setErrorOnSubmit={setErrorOnSubmit}
           />
-        )}
-      </div>
+        }
+      />
       {submitting && (
         <div className="">
           <div className="loading loading-spinner  loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 right-[33px] "></div>

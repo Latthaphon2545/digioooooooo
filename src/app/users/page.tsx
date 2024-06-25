@@ -9,6 +9,7 @@ import ActionButton from "@/components/actionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import AlertDialog from "@/components/alertDialog";
 import FloatingActionButton from "@/components/floatingActionButton";
+import { encode, decode } from "@/lib/generateRandomHref";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -18,10 +19,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   const path = useSearchParams();
-  const filter = path.get("filter") || "";
-  const search = path.get("search") || "";
-  const skip = path.get("skip") || "";
-  const take = path.get("take") || "";
+  const { filter, search, skip, take } = decode(path.toString());
+
   const [showAlert, setShowAlert] = useState(false);
 
   const router = useRouter();

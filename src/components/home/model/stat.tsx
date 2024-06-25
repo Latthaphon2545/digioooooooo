@@ -25,7 +25,7 @@ const StatHome = ({ series, instock, installing, image }: StatProps) => {
         <button
           className="stat-title btn btn-xs mobile:w-fit"
           onClick={() => {
-            router.push(`/products/models`);
+            router.push(`/products/models#${series}`);
           }}
         >
           View More
