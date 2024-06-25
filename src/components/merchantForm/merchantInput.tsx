@@ -50,10 +50,10 @@ const MerchantInput = ({ formValues, setFormValues }: MerchantInputProps) => {
           <table className="table-auto inline-table w-full">
             <thead>
               <tr>
-                <th>No.</th>
+                {/* <th>No.</th>
                 <th>Name</th>
                 <th>Address</th>
-                <th>Contact</th>
+                <th>Contact</th> */}
               </tr>
             </thead>
             <tbody className="p-2 ml-2 ">

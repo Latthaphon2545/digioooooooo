@@ -10,6 +10,7 @@ import { BiError } from "react-icons/bi";
 import Alert from "../alert";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import { TabBar } from "../usersForm/tabBar";
 
 type FormValues = {
   name: string;
@@ -92,21 +93,15 @@ export default function MerchantInputForm() {
         icon={<MdAddShoppingCart />}
         title="Add Merchant"
         page="merchant"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
       />
-      <div
-        className={`min-h-[68vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
-          activeTab === 1 ? "flex items-center" : ""
-        } `}
-      >
-        {activeTab === 0 && (
+      <TabBar
+        Individual={
           <MerchantInput
             formValues={formValues}
             setFormValues={setFormValues}
           />
-        )}
-        {activeTab === 1 && (
+        }
+        Group={
           <GroupUpload
             setHasError={setHasError}
             headers={["name", "address", "contact"]}
@@ -116,8 +111,8 @@ export default function MerchantInputForm() {
             setUploading={setUploading}
             setErrorOnSubmit={setErrorOnSubmit}
           />
-        )}
-      </div>
+        }
+      />
       {submitting && (
         <div className="">
           <div className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>

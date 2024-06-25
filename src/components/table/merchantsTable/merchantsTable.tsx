@@ -128,7 +128,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
           ) : item.address.length > 20 ? (
             <Modal
               title={`${item.address.slice(0, 20)}...`}
-              titleContent="Address"
               content={item.address}
               id={item.address}
               boolClose={true}

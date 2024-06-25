@@ -29,9 +29,11 @@ const ModelInput = () => {
           </div>
         </div>
         <div className="w-full flex relative flex-col space-y-3 justify-center px-6 sm:px-10">
-          <label htmlFor="" className="lg:ml-2 font-semibold">
-            Series:
-            <ModelInputField title="series" fieldset={false} />
+          <label htmlFor="" className="lg:ml-2">
+            <span className="font-semibold">Series:</span>
+            <span className="text-sm">
+              <ModelInputField title="series" fieldset={false} />
+            </span>
           </label>
           <label htmlFor="" className="lg:ml-2 font-semibold">
             Description:
@@ -49,7 +51,9 @@ const ModelInput = () => {
             </legend>
             <div className="flex flex-col space-y-2 justify-start lg:ml-2">
               {INFORMATION_FIELD.map((field, index) => (
-                <ModelInputField key={index} title={field} fieldset={true} />
+                <p className="text-sm">
+                  <ModelInputField key={index} title={field} fieldset={true} />
+                </p>
               ))}
             </div>
           </fieldset>

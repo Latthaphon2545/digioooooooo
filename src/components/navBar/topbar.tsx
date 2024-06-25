@@ -90,5 +90,15 @@ const MENU = (pathname: string) => {
     return "Check Stock";
   } else if (pathname === "/action/changeStatus") {
     return "Change Status";
+  } else if (pathname.startsWith("/products/history/")) {
+    return "History";
+  } else if (pathname === "/users/add") {
+    return "Add User";
+  } else if (pathname === "/products/add") {
+    return "Add Product";
+  } else if (pathname === "/products/models/add") {
+    return "Add Model";
+  } else if (pathname === "/merchants/add") {
+    return "Add Merchant";
   }
 };

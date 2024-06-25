@@ -5,6 +5,7 @@ import AlertDialog from "@/components/alertDialog";
 import FloatingActionButton from "@/components/floatingActionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageProduct from "@/components/table/productTable/productTablePage";
+import { decode } from "@/lib/generateRandomHref";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,10 +20,7 @@ export default function Productmanagement() {
   const [loading, setLoading] = useState(true);
 
   const path = useSearchParams();
-  const filter = path.get("filter") || "";
-  const search = path.get("search") || "";
-  const skip = path.get("skip") || "";
-  const take = path.get("take") || "";
+  const { filter, search, skip, take } = decode(path.toString());
   const router = useRouter();
   const alertMessage = useSearchParams().get("alert") || "";
 
