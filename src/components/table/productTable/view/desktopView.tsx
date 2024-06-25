@@ -11,7 +11,6 @@ import Link from "next/link";
 import { FaHistory } from "react-icons/fa";
 import { ShowAlert } from "../../showAlert";
 import { deleteMerchant } from "../actions/handleDeleteMerchant";
-import { stringToHex } from "@/lib/generateRandomHref";
 
 interface TableViewProps {
   item: any;
@@ -106,14 +105,15 @@ export const DesktopView = ({
       <td className="py-2 px-4 h-[8vh]">
         {item.merchant ? (
           <div className="flex flex-row items-center justify-around">
-            <div className="min-w-28 tooltip">
+            <div className="min-w-28">
               {item.merchant.name.length > 10 ? (
                 <Modal
                   title={
                     item.merchant.name.length > 10 &&
                     `${item.merchant.name.slice(0, 10)}...`
                   }
-                  titleContent={item.merchant.name}
+                  titleContent="Merchant Name"
+                  content={item.merchant.name}
                   id={item.merchant.name}
                   boolClose={true}
                 />
@@ -157,9 +157,7 @@ export const DesktopView = ({
       {/* History */}
       <td className={`py-2 px-4 h-[8vh]`}>
         <Link
-          href={`/products/history/${stringToHex(
-            item.serialNumber
-          )}?skip=0&take=7`}
+          href={`/products/history/${item.serialNumber}?filter=&search=&skip=0&take=7`}
         >
           <button className="btn btn-sm text-xl btn-ghost">
             <FaHistory />

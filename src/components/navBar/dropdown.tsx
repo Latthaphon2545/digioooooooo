@@ -1,6 +1,5 @@
 import { BiLogOut } from "react-icons/bi";
 import Alert from "../alert";
-import Link from "next/link";
 
 export default function Dropdown() {
   return (
@@ -19,7 +18,7 @@ export default function Dropdown() {
         <a>History</a>
       </li>
       <li>
-        <Link href={"/setting"}>Settings</Link>
+        <a>Settings</a>
       </li>
       <li className="mt-5">
         <Alert

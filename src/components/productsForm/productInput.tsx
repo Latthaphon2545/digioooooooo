@@ -38,9 +38,9 @@ const ProductInput = ({
         <table className="table-auto inline-table w-full">
           <thead>
             <tr>
-              {/* <th>No.</th>
+              <th>No.</th>
               <th className="w-[25%]">Model</th>
-              <th>S/N</th> */}
+              <th>S/N</th>
             </tr>
           </thead>
           <tbody className="p-2 ml-2 ">

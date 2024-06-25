@@ -11,7 +11,6 @@ import { checkFormatInput } from "@/lib/inputUtils";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { useRouter, useSearchParams } from "next/navigation";
-import { TabBar } from "../usersForm/tabBar";
 
 const InputForm = ({ models }: { models: Model[] }) => {
   const initialActiveTab = useSearchParams().get("activeTab") || 0;
@@ -115,16 +114,23 @@ const InputForm = ({ models }: { models: Model[] }) => {
         icon={<IoMdAddCircle />}
         title="Add Product"
         page="product"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
-      <TabBar
-        Individual={
+      <div
+        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
+          activeTab === 1 ? "flex items-center" : ""
+        } `}
+      >
+        {" "}
+        {activeTab === 0 && (
           <ProductInput
             formValues={formValues}
             setFormValues={setFormValues}
             models={models}
           />
-        }
-        Group={
+        )}
+        {activeTab === 1 && (
           <GroupUpload
             setHasError={setHasError}
             headers={["model", "sn"]}
@@ -135,8 +141,8 @@ const InputForm = ({ models }: { models: Model[] }) => {
             setUploading={setUploading}
             setErrorOnSubmit={setErrorOnSubmit}
           />
-        }
-      />
+        )}
+      </div>
       {submitting && (
         <div className="">
           <div className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>

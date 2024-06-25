@@ -3,7 +3,6 @@ import ActionButton from "../actionButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer"; // Import useInView hook
 import { itemPage } from "./staticPropsInTable";
-import { encode } from "@/lib/generateRandomHref";
 
 interface PaginationProps {
   currentPage: number;
@@ -89,10 +88,11 @@ export default function Pagination({
   };
 
   useEffect(() => {
-    const skip = (currentPage - 1) * itemPage;
-    const take = itemPage;
-    const nerUrl = `filter=${filterParams}&search=${searchParams}&skip=${skip}&take=${take}`;
-    router.push(`${pathName}?${encode(nerUrl)}`);
+    router.push(
+      `${pathName}?filter=${filterParams}&search=${searchParams}&skip=${
+        (currentPage - 1) * itemPage
+      }&take=${itemPage}`
+    );
   }, [currentPage]);
 
   const handleMoreData = () => {
@@ -180,25 +180,19 @@ export default function Pagination({
         {loading ? (
           <span className="loading loading-dots loading-xs"></span>
         ) : (
-          <>
-            {mobileData < lengthData ? (
-              <ActionButton
-                action={handleMoreData}
-                styles={"btn btn-xl btn-primary"}
-                disabled={loading || mobileData >= lengthData}
-              >
-                Load more
-              </ActionButton>
-            ) : (
-              <span>No more data</span>
-            )}
-          </>
+          <ActionButton
+            action={handleMoreData}
+            styles={"btn btn-xl btn-primary"}
+            disabled={loading || mobileData >= lengthData}
+          >
+            {mobileData < lengthData ? "Load more" : "No more data"}
+          </ActionButton>
         )}
       </div>
 
       {/* Infinite scroll only for mobile and tablet */}
       <div className="mobile:block tablet:block laptop:hidden">
-        <div ref={ref} className="h"></div>
+        <div ref={ref} className="h-1"></div>
       </div>
     </>
   );

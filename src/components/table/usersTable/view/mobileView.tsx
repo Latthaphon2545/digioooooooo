@@ -10,7 +10,6 @@ import ActionButton from "@/components/actionButton";
 import { ColorUserStatus } from "../../color";
 import { EditableField } from "../../EditableField";
 import SubmitPopupButton from "@/components/submitPopupButton";
-import { FaPhoneAlt } from "react-icons/fa";
 
 interface mobileViewProps {
   item: any;
@@ -89,17 +88,7 @@ export const MobileView = ({
                 <p>Contact</p>
               </div>
               <div>
-                <p className="text-gray-500">
-                  <a
-                    className="flex gap-2 link link-primary"
-                    href={`tel:${item.contact}`}
-                  >
-                    <span>{item.contact}</span>
-                    <span>
-                      <FaPhoneAlt />
-                    </span>
-                  </a>
-                </p>
+                <p className="text-gray-500">{item.contact}</p>
               </div>
             </div>
           </div>

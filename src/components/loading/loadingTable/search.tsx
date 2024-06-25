@@ -7,10 +7,6 @@ export default function SearchBar({}: {}) {
       <label className="input input-sm w-64 input-bordered flex items-center gap-2 ">
         <FaSearch />
         <input type="text" className="grow" placeholder="Search" />
-        <div className="mobile:hidden laptop:flex gap-2">
-          <kbd className="kbd kbd-xs bg-transparent">⌘</kbd>
-          <kbd className="kbd kbd-xs bg-transparent">K</kbd>
-        </div>
       </label>
     </div>
   );

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 interface ModalProps {
   title: React.ReactNode;
-  titleContent?: string;
+  titleContent: string;
   content?: React.ReactNode;
   style?: string;
   id: string;

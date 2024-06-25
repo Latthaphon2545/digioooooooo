@@ -1,4 +1,3 @@
-import { ConvertStatus } from "@/components/convertStatusAndRole";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -86,7 +85,7 @@ const StatStatus = ({
         {Object.entries(status).map(([status, value], index) => (
           <div key={index} className="stat">
             <div className="stat-title laptop:text-sm mobile:text-xs">
-              {ConvertStatus(status)}
+              {status}
             </div>
             <div
               className={`stat-value laptop:text-2xl mobile:text-base tablet:text-2xl`}

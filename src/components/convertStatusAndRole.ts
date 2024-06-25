@@ -13,7 +13,7 @@ export const ConvertStatus = (status: string) => {
   } else if (status === "REPARING") {
     showStatus = "Reparing";
   } else if (status === "WAITREPAIR") {
-    showStatus = "Waiting Repair";
+    showStatus = "Waiting For Repair";
   } else if (status === "INSTALLED") {
     showStatus = "Installed";
   } else if (status === "INSTALLING") {

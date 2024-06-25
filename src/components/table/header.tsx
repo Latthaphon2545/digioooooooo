@@ -6,7 +6,6 @@ import DropdownBottom from "./fillter";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { decode, encode } from "@/lib/generateRandomHref";
 
 const CATEGORIES = (option: string, series: string[]) => {
   if (option === "User") {
@@ -80,8 +79,6 @@ export default function Header({ option }: { option: string }) {
   const [category, setCategory] = useState<Category[]>([]);
   const [series, setSeries] = useState([]);
 
-  const { filter, search, skip, take } = decode(params.toString());
-
   useEffect(() => {
     const getCategories = async () => {
       let updatedSeries = [];
@@ -95,7 +92,11 @@ export default function Header({ option }: { option: string }) {
     getCategories();
   }, [option]);
 
-  const filterParamsArray = filter ? filter.split(",") : [];
+  const filterParams = params.get("filter");
+  const skipParams = params.get("skip");
+  const takeParams = params.get("take");
+
+  const filterParamsArray = filterParams ? filterParams.split(",") : [];
   const filterParamsObjects = filterParamsArray.map((param) => ({
     value: param,
   }));
@@ -105,11 +106,11 @@ export default function Header({ option }: { option: string }) {
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchParams = e.target.value;
-    const newUrl = encode(
-      `filter=${filterParamsArray}&search=${searchParams}&skip=${skip}&take=${take}`
+    router.push(
+      `${pathname}?filter=${filterParamsArray.join(",")}&search=${
+        e.target.value
+      }&skip=${skipParams}&take=${takeParams}`
     );
-    router.push(`${pathname}?${newUrl}`);
   };
 
   return (

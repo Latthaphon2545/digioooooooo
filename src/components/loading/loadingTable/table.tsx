@@ -39,17 +39,18 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
           <div className="card-body p-5">
             <div className="card-title flex-col">
               <div className="flex w-full items-center">
-                <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                <div className="skeleton h-5 w-20 bg-opacity-10"></div>
               </div>
               <div className="divider my-0"></div>
             </div>
             <div className="flex flex-col gap-5">
               <div className="flex justify-between items-center">
                 <div className="flex flex-col gap-2">
-                  <div className="skeleton h-10 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 </div>
                 <div>
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 </div>
               </div>
 
@@ -58,7 +59,7 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
                   <p>Contact</p>
                 </div>
                 <div>
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 </div>
               </div>
             </div>
@@ -71,7 +72,7 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
           <div className="card-body p-5">
             <div className="card-title flex-col">
               <div className="flex w-full justify-between items-center">
-                <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 <button className="btn btn-sm text-xl btn-ghost">
                   <FaHistory />
                 </button>
@@ -81,10 +82,10 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
             <div className="flex flex-col gap-5">
               <div className="flex justify-between items-center">
                 <div className="flex flex-col gap-2">
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 </div>
                 <div>
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 </div>
               </div>
 
@@ -93,14 +94,14 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
                   <div>
                     <p>Merchant</p>
                   </div>
-                  <div className="skeleton w-20 h-8 bg-opacity-10"></div>
+                  <div className="skeleton w-20 h-5 bg-opacity-10 btn text-xl btn-ghost"></div>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <div>
                     <p>Bank</p>
                   </div>
-                  <div className="skeleton w-20 h-8 bg-opacity-10"></div>
+                  <div className="skeleton w-20 h-2 bg-opacity-10 btn text-xl btn-ghost"></div>
                 </div>
               </div>
             </div>
@@ -113,7 +114,7 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
           <div className="card-body p-5">
             <div className="card-title flex-col">
               <div className="flex w-full justify-between items-center">
-                <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                <div className="skeleton h-5 w-20 bg-opacity-10"></div>
               </div>
               <div className="divider my-0"></div>
             </div>
@@ -121,7 +122,7 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
               <div className="flex justify-between items-center">
                 <div>
                   <div className="text-base font-bold">
-                    <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                    <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                   </div>
                 </div>
                 <button className="text-lg tooltip">
@@ -134,14 +135,14 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
                   <div>
                     <p>Contact</p>
                   </div>
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <div>
                     <p>Product Serial Number </p>
                   </div>
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-5 w-20 bg-opacity-10"></div>
                 </div>
               </div>
             </div>

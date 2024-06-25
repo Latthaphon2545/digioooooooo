@@ -5,7 +5,6 @@ import Table from "./historyProductTable";
 import Header from "./historyProductHeader";
 import Pagination from "../pagination";
 import { itemPage } from "../staticPropsInTable";
-import Link from "next/link";
 
 interface TablePageProps {
   data: {
@@ -42,7 +41,7 @@ export default function TablePageProductHistory({
 
   return (
     <>
-      <div className="flex flex-col px-5 py-5 gap-4 items-center justify-center h-full overflow-x-hidden">
+      <div className="flex flex-col px-5 py-5 gap-4 items-center justify-center h-full">
         <div>
           <Header data={dataCustomer} />
         </div>

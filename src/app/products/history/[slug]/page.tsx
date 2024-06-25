@@ -5,7 +5,6 @@ import LoadingHistory from "@/components/loading/loadingHistory/loadingHistory";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { hexToString, decode } from "@/lib/generateRandomHref";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const [dataHistory, setDataHistory] = useState([]);
@@ -13,7 +12,10 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [totalPages, setTotalPages] = useState(0);
 
   const path = useSearchParams();
-  const { skip, take } = decode(path.toString());
+  const filter = path.get("filter") || "";
+  const search = path.get("search") || "";
+  const skip = path.get("skip") || "";
+  const take = path.get("take") || "";
 
   const [loading, setLoading] = useState(true);
 
@@ -21,9 +23,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     const getHistory = async () => {
       try {
         const res = await axios.get(
-          `/api/products/getHistory?sn=${hexToString(
-            params.slug
-          )}&skip=${skip}&take=${take}`
+          `/api/products/getHistory?sn=${params.slug}&search=${search}&skip=${skip}&take=${take}`
         );
 
         const data = res.data;
@@ -52,7 +52,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     };
 
     getHistory();
-  }, [skip, take]);
+  }, [filter, search, skip, take]);
 
   return (
     <>

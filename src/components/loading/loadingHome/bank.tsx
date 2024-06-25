@@ -1,4 +1,3 @@
-import { ConvertStatus } from "@/components/convertStatusAndRole";
 import React from "react";
 
 const status = [
@@ -25,7 +24,7 @@ export default function BankHomeLoading() {
                 {status.map((status, index) => (
                   <div key={index} className="stat">
                     <div className="stat-title laptop:text-sm mobile:text-xs">
-                      {ConvertStatus(status)}
+                      {status}
                     </div>
                     <div
                       className={`stat-value skeleton opacity-25  h-6 w-10`}

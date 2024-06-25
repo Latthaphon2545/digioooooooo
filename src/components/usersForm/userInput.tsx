@@ -87,11 +87,11 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
           <table className="w-full flex-nowrap">
             <thead>
               <tr>
-                {/* <th>No.</th>
+                <th>No.</th>
                 <th>Email</th>
                 <th>Name</th>
                 <th>Contact</th>
-                <th>Role</th> */}
+                <th>Role</th>
               </tr>
             </thead>
             <tbody>

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "/public/image/digio_logo.png";
-import { encode } from "@/lib/generateRandomHref";
 
 export const MENU = [
   {
@@ -12,7 +11,7 @@ export const MENU = [
     links: [
       {
         name: "Users",
-        href: `/users?${encode("filter=&search=&skip=0&take=7")}`,
+        href: "/users?filter=&search=&skip=0&take=7",
       },
     ],
   },
@@ -22,7 +21,7 @@ export const MENU = [
       { name: "Models", href: "/products/models" },
       {
         name: "Products",
-        href: `/products?${encode("filter=&search=&skip=0&take=7")}`,
+        href: "/products?filter=&search=&skip=0&take=7",
       },
     ],
   },
@@ -31,7 +30,7 @@ export const MENU = [
     links: [
       {
         name: "Merchants",
-        href: `/merchants?${encode("filter=&search=&skip=0&take=7")}`,
+        href: "/merchants?filter=&search=&skip=0&take=7",
       },
     ],
   },
@@ -40,7 +39,7 @@ export const MENU = [
     links: [
       {
         name: "Banks",
-        href: "/banks",
+        href: "/banks?skip=&take=",
       },
     ],
   },

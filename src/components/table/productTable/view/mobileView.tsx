@@ -10,7 +10,6 @@ import { IoMdAdd } from "react-icons/io";
 import { ShowAlert } from "../../showAlert";
 import { deleteMerchant } from "../actions/handleDeleteMerchant";
 import Modal from "@/components/modal";
-import { stringToHex } from "@/lib/generateRandomHref";
 
 interface MobileViewProps {
   item: any;
@@ -83,9 +82,7 @@ export const MobileView = ({
               {DateFromObjectId(item.id)}
             </h1>
             <Link
-              href={`/products/history/${stringToHex(
-                item.serialNumber
-              )}?filter=&search=&skip=0&take=7`}
+              href={`/products/history/${item.serialNumber}?filter=&search=&skip=0&take=7`}
             >
               <button className="btn btn-sm text-xl btn-ghost">
                 <FaHistory />
@@ -121,7 +118,8 @@ export const MobileView = ({
                             item.merchant.name.length > 10 &&
                             `${item.merchant.name.slice(0, 10)}...`
                           }
-                          titleContent={item.merchant.name}
+                          titleContent="Merchant Name"
+                          content={item.merchant.name}
                           id={item.merchant.name}
                           boolClose={true}
                         />
@@ -132,7 +130,7 @@ export const MobileView = ({
                     <div>
                       <SubmitPopupButton
                         action={() => handleDeleteMerchant(item.id)}
-                        styles="btn-error btn-ghost btn-xs text-xl text-error"
+                        styles="btn-error btn-sm"
                         header="Delete Merchant"
                         description="Are you sure you want to delete this merchant?"
                         id={`delete-merchant-${item.id}`}
