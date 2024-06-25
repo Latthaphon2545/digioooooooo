@@ -41,6 +41,14 @@ export type User = {
   token?: JSON;
 };
 
+export type History = {
+  id: string;
+  description: string;
+  category: StatusProduct;
+  imageProve: string[];
+  createdAt: Date;
+};
+
 export enum StatusUser {
   INACTIVE = "INACTIVE",
   ACTIVE = "ACTIVE",
