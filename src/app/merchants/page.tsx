@@ -4,6 +4,7 @@ import ActionButton from "@/components/actionButton";
 import FloatingActionButton from "@/components/floatingActionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageMerchants from "@/components/table/merchantsTable/merchantsTablePage";
+import { decode } from "@/lib/generateRandomHref";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -17,9 +18,7 @@ export default function productmanagement() {
   const [loading, setLoading] = useState(true);
 
   const path = useSearchParams();
-  const search = path.get("search") || "";
-  const skip = path.get("skip") || "";
-  const take = path.get("take") || "";
+  const { filter, search, skip, take } = decode(path.toString());
 
   useEffect(() => {
     const updateData = async () => {

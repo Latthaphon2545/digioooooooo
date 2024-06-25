@@ -53,9 +53,9 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
           {item?.description.length > 20 ? (
             <Modal
               title={`${item.description.slice(0, 20)}...`}
-              titleContent="Description"
               content={item.description}
               id={item.id}
+              boolClose={true}
             />
           ) : (
             handleShowManyCheckInstock(item.description)

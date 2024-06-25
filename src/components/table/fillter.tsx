@@ -2,6 +2,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import ActionButton from "../actionButton";
+import { encode, decode } from "@/lib/generateRandomHref";
 
 type DropdownBottomProps = {
   item: {
@@ -22,13 +23,10 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   const pathname = usePathname();
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
   const params = useSearchParams();
-  const searchParams = params.get("search") || "";
-  const skipParams = params.get("skip") || "";
-  const takeParams = params.get("take") || "";
-  const filterParams = params.get("filter") || "";
+  const { filter, search, skip, take } = decode(params.toString());
 
   useEffect(() => {
-    const initialCheckboxValues = filterParams.split(",");
+    const initialCheckboxValues = filter.split(",");
     if (initialCheckboxValues[0] === "") {
       return;
     }
@@ -47,10 +45,11 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
     const allChecked =
       checkedValues.length ===
       item.list.flatMap((options) => options.names).length;
-    const filterValue = allChecked ? "" : checkedValues.join(",");
-    router.push(
-      `${pathname}?filter=${filterValue}&search=${searchParams}&skip=${skipParams}&take=${takeParams}`
+    let filterValue = allChecked ? "" : checkedValues.join(",");
+    const newUrl = encode(
+      `filter=${filterValue}&search=${search}&skip=${skip}&take=${take}`
     );
+    router.push(`${pathname}?${newUrl}`);
   }, [checkedValues]);
 
   const handleClear = () => {

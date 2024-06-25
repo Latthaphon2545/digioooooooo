@@ -1,7 +1,10 @@
+"use client";
+
 import BankPage from "@/components/bank/bankPage";
-import LoadingBankPage from "@/components/loading/loadingBank/BankPage";
+import { useState } from "react";
 
 export default function Page() {
+  const [loading, setLoading] = useState(true);
   const data = [
     {
       name: "KBANK",
@@ -12,6 +15,18 @@ export default function Page() {
     {
       name: "SCB",
       bankName: "SIAM COMMERCIAL BANK",
+      bankLogo:
+        "https://seeklogo.com/images/S/siam-commercial-bank-logo-B9BB3E105F-seeklogo.com.png",
+    },
+    {
+      name: "XXXXB",
+      bankName: "XXXXXXX",
+      bankLogo:
+        "https://seeklogo.com/images/S/siam-commercial-bank-logo-B9BB3E105F-seeklogo.com.png",
+    },
+    {
+      name: "asdf",
+      bankName: "12345",
       bankLogo:
         "https://seeklogo.com/images/S/siam-commercial-bank-logo-B9BB3E105F-seeklogo.com.png",
     },
@@ -49,7 +64,6 @@ export default function Page() {
   return (
     <div>
       <BankPage banks={data} products={products} />
-      {/* <LoadingBankPage /> */}
     </div>
   );
 }

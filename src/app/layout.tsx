@@ -18,10 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="shortcut icon" href="#" />
-        <meta
-          name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
-        />
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
       </head>
       <body className={`${inter.className} flex`}>
         <div className="mobile:hidden tablet:hidden laptop:block">

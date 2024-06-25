@@ -215,7 +215,7 @@ const GroupUpload = ({
             {data.length >= 1 ? (
               <p>{fileName}</p>
             ) : (
-              <p>Click or drag file here</p>
+              <p className="text-gray-500 text-sm">Click or drag file here</p>
             )}
           </div>
         </div>

@@ -1,3 +1,5 @@
+import { ConvertStatus } from "../convertStatusAndRole";
+
 interface Product {
   name: string;
   status: {
@@ -18,16 +20,16 @@ interface SliceProps {
 
 export default function lice({ products }: SliceProps) {
   return (
-    <div className="carousel rounded-box w-96">
+    <div className="carousel rounded-box w-full">
       {products.map((item) => (
         <div className={`carousel-item ${item.bg} w-full`}>
-          <div className="flex flex-col p-7 gap-3">
-            <h1 className="text-4xl text-center font-bold">{item.name}</h1>
-            <div className="grid grid-cols-1 stats stats-vertical bg-white bg-opacity-95 w-[21vw]">
+          <div className="flex flex-col p-7 gap-3 justify-center items-center w-full">
+            <div className="grid grid-cols-1 stats stats-vertical bg-white bg-opacity-90 w-full">
+              <h1 className="text-4xl text-center font-bold">{item.name}</h1>
               {Object.keys(item.status).map((key) => (
                 <div className="stat">
                   <div className="stat-title text-base text-black">
-                    {convertStatus(key)}
+                    {ConvertStatus(key)}
                   </div>
                   <div className="stat-figure text-black text-3xl font-bold">
                     {item.status[key as keyof typeof item.status]}
@@ -41,24 +43,3 @@ export default function lice({ products }: SliceProps) {
     </div>
   );
 }
-
-const convertStatus = (status: string) => {
-  status = status.toUpperCase();
-  let showStatus = "";
-  if (status === "INSTOCK") {
-    showStatus = "In Stock";
-  } else if (status === "LOST") {
-    showStatus = "Lost";
-  } else if (status === "DAMAGED") {
-    showStatus = "Damaged";
-  } else if (status === "REPARING") {
-    showStatus = "Reparing";
-  } else if (status === "WAITREPAIR") {
-    showStatus = "Waiting For Repair";
-  } else if (status === "INSTALLED") {
-    showStatus = "Installed";
-  } else if (status === "INSTALLING") {
-    showStatus = "Installing";
-  }
-  return showStatus;
-};
