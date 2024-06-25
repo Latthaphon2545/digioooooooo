@@ -198,8 +198,8 @@ const GroupUpload = ({
   };
 
   return (
-    <div className="flex mobile:flex-col lg:flex-row justify-center items-center flex-grow gap-4 px-0 sm:px-10">
-      <div className="flex flex-row sm:flex-col items-center justify-center space-y-4 px-0 sm:px-10 ">
+    <div className="flex mobile:flex-col lg:flex-row justify-center items-center flex-grow gap-4 px-0 sm:px-10 h-full">
+      <div className="flex flex-row sm:flex-col items-center justify-center space-y-4 px-0 sm:px-10 h-full">
         <input
           type="file"
           ref={fileInputRef}

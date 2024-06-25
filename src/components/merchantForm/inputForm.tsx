@@ -94,17 +94,8 @@ export default function MerchantInputForm() {
         title="Add Merchant"
         page="merchant"
       />
-<<<<<<< Updated upstream
       <TabBar
         Individual={
-=======
-      <div
-        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
-          activeTab === 1 ? "flex items-center" : ""
-        } `}
-      >
-        {activeTab === 0 && (
->>>>>>> Stashed changes
           <MerchantInput
             formValues={formValues}
             setFormValues={setFormValues}

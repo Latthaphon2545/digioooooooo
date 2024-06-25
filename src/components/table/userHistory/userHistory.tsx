@@ -33,14 +33,21 @@ export default function UserHistory({
   }, [totalHistory]);
 
   return (
-    <div className="">
-      <TableUserHistory history={history} />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        lengthData={totalHistory}
-        onPageChange={onPageChange}
-      />
+    <div className="h-full">
+      <div className="font-bold text-3xl pt-4 pl-4">
+        Halo Halo Good Good Good
+      </div>
+      <div className="flex flex-col items-center justify-center h-full">
+        <TableUserHistory history={history} />
+        <div className="">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            lengthData={totalHistory}
+            onPageChange={onPageChange}
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -16,7 +16,9 @@ export default function Dropdown() {
       </li>
 
       <li>
-        <a>History</a>
+        <Link href={`/users/history/66554e8534b8e2bb8f5f42d1/?skip=0&take=7`}>
+          History
+        </Link>
       </li>
       <li>
         <Link href={"/setting"}>Settings</Link>

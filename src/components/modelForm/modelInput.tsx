@@ -19,10 +19,10 @@ const ModelInput = () => {
   const [state, formAction] = useFormState(createModel, { errors: [] });
 
   return (
-    <div className="pt-4 sm:pt-0">
+    <div className="pt-4 sm:pt-0 h-full">
       <form
         action={formAction}
-        className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 lg:space-x-6 w-full overflow-hidden justify-center items-center"
+        className="flex mobile:flex-col lg:flex-row mobile:space-y-8 lg:space-y-0 lg:space-x-6 w-full overflow-hidden justify-center items-center h-full"
       >
         <div className="w-[50vh]  flex flex-col justify-center">
           <div className="flex flex-row items-center">
@@ -52,8 +52,8 @@ const ModelInput = () => {
             </legend>
             <div className="flex flex-col space-y-2 justify-start lg:ml-2">
               {INFORMATION_FIELD.map((field, index) => (
-                <p className="text-sm">
-                  <ModelInputField key={index} title={field} fieldset={true} />
+                <p key={index} className="text-sm">
+                  <ModelInputField title={field} fieldset={true} />
                 </p>
               ))}
             </div>

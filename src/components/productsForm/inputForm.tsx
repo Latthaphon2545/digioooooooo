@@ -4,7 +4,6 @@ import InputHeader from "../usersForm/inputHeader";
 import { IoMdAddCircle } from "react-icons/io";
 import GroupUpload from "../groupUpload";
 import Alert from "../alert";
-import ProductInput from "./productInput";
 import { DataItem, Model } from "@/lib/types";
 import axios from "axios";
 import { checkFormatInput } from "@/lib/inputUtils";
@@ -12,6 +11,7 @@ import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TabBar } from "../usersForm/tabBar";
+import ProductInput from "./productInput";
 
 const InputForm = ({ models }: { models: Model[] }) => {
   const initialActiveTab = useSearchParams().get("activeTab") || 0;
@@ -109,7 +109,7 @@ const InputForm = ({ models }: { models: Model[] }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <InputHeader
         icon={<IoMdAddCircle />}
         title="Add Product"

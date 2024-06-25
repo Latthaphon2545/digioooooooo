@@ -156,7 +156,7 @@ const InputForm = () => {
       {errorOnSubmit && (
         <AlertDialog
           title={errorOnSubmit}
-          styles="bg-error"
+          styles="bg-error text-white "
           icon={<BiError size={20} />}
         />
       )}
