@@ -20,7 +20,7 @@ export default function Topbar({
   openHamburgerDesktop,
   setOpenHamburgerDesktop,
 }: TopbarProps) {
-  const [openHamburgerMobile, setOpenHamburgerMobile] = useState(true);
+  const [openHamburgerMobile, setOpenHamburgerMobile] = useState(false);
   const pathName = usePathname();
 
   return (

@@ -210,7 +210,7 @@ const GroupUpload = ({
           className="border-dotted border-2 text-lg text-center p-4 tablet:min-w-72 tablet:min-h-52 flex items-center justify-center hover:cursor-pointer "
           onClick={handleDivClick}
         >
-          <div className="flex flex-row sm:flex-col ">
+          <div className="flex flex-row items-center sm:flex-col ">
             <GrDocumentUpload className="w-6 h-6 sm:w-10 sm:h-10 mx-auto mb-2" />
             {data.length >= 1 ? (
               <p>{fileName}</p>
