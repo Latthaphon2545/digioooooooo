@@ -42,7 +42,7 @@ export const HamburgerBar = ({
 
       {/* Sidebar */}
       <div
-        className={`h-full z-40 mobile:w-[70%] tablet:w-[60%] bg-white flex flex-col items-center transform transition-transform duration-500 ease-in-out 
+        className={`h-full z-40 mobile:w-[70%] tablet:w-[60%] bg-base-100  flex flex-col items-center transform transition-transform duration-500 ease-in-out 
           ${openHamburger ? "translate-x-0" : "-translate-x-full"} `}
       >
         <div className="flex flex-row items-center justify-center my-5">

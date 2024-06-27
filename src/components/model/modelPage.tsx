@@ -19,7 +19,7 @@ interface ModelProps {
 export default function Model({ models, edit }: ModelProps) {
   return (
     <>
-      <div className="flex gap-5 flex-wrap justify-center overflow-y-auto max-h-[81vh] mt-3 w-full pb-5">
+      <div className="flex gap-5 flex-col justify-center mt-3 w-full pb-5">
         {models.map((model, index) => (
           <div
             key={index}

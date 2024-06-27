@@ -123,14 +123,14 @@ export default function Pagination({
         <div className="join">
           <ActionButton
             action={handleToFirstPage}
-            styles={"join-item btn btn-sm btn-neutral"}
+            styles={"join-item btn btn-sm btn-base-100"}
             disabled={currentPage === 1}
           >
             {"<<"}
           </ActionButton>
           <ActionButton
             action={handlePrev}
-            styles={"join-item btn btn-sm btn-neutral"}
+            styles={"join-item btn btn-sm btn-base-100"}
             disabled={currentPage === 1}
           >
             {"<"}
@@ -142,7 +142,7 @@ export default function Pagination({
                 styles={`join-item btn btn-sm ${
                   currentPage === page
                     ? "btn-accent text-accent-content"
-                    : "btn-neutral"
+                    : "btn-base-100"
                 }`}
               >
                 {String(page)}
@@ -151,14 +151,14 @@ export default function Pagination({
           ))}
           <ActionButton
             action={handleNext}
-            styles={"join-item btn btn-sm btn-neutral"}
+            styles={"join-item btn btn-sm btn-base-100"}
             disabled={currentPage === totalPages}
           >
             {">"}
           </ActionButton>
           <ActionButton
             action={handleToLastPage}
-            styles={"join-item btn btn-sm btn-neutral"}
+            styles={"join-item btn btn-sm btn-base-100"}
             disabled={currentPage === totalPages}
           >
             {">>"}
