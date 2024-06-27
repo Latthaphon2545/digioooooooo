@@ -42,7 +42,7 @@ export const HamburgerBar = ({
 
       {/* Sidebar */}
       <div
-        className={`h-full z-40 mobile:w-[45%] tablet:w-[40%] bg-white flex flex-col items-center transform transition-transform duration-500 ease-in-out 
+        className={`h-full z-40 mobile:w-[70%] tablet:w-[60%] bg-white flex flex-col items-center transform transition-transform duration-500 ease-in-out 
           ${openHamburger ? "translate-x-0" : "-translate-x-full"} `}
       >
         <div className="flex flex-row items-center justify-center my-5">
@@ -69,8 +69,8 @@ export const HamburgerBar = ({
 
                   const isActive = pathName === url;
                   const activeStyle = isActive
-                    ? "bg-primary text-white border-primary"
-                    : "hover:bg-primary hover:text-white hover:border-primary border-transparent";
+                    ? "bg-primary text-white border-primary font-bold"
+                    : "hover:bg-primary hover:text-white hover:border-primary border-transparent font-light";
 
                   if (editor || !link.href.startsWith("/action")) {
                     return (

@@ -31,8 +31,8 @@ export const SideBarFull = () => {
 
                   const isActive = pathName === url;
                   const activeStyle = isActive
-                    ? "bg-primary text-white border-primary"
-                    : "hover:bg-primary hover:text-white hover:border-primary border-transparent";
+                    ? "bg-primary text-white border-primary font-bold"
+                    : "hover:bg-primary hover:text-white hover:border-primary hover:font-bold border-transparent font-light";
 
                   if (editor || !link.href.startsWith("/action")) {
                     return (
@@ -69,12 +69,13 @@ export const SideBarFull = () => {
 
 export const SideBarSmall = () => {
   let pathName = usePathname();
+  const sliceMenu = [MENU[0], MENU[1], MENU[2], MENU[5]];
   return (
     <div className="h-screen flex flex-col justify-between max-h-screen items-center laptop:w-[5vw]">
       <div className="w-full">
         {/* Menu */}
         <div className="flex flex-col px-3 gap-2">
-          {MENU.map((item, index) => (
+          {sliceMenu.map((item, index) => (
             <React.Fragment key={index}>
               {item.links.map((link, linkIndex) => {
                 if (editor || !link.href.startsWith("/action")) {
@@ -92,7 +93,7 @@ export const SideBarSmall = () => {
                   const isActive = pathName === url;
                   const activeStyle = isActive
                     ? "text-primary font-bold"
-                    : "hover:bg-primary hover:text-white font-light";
+                    : "hover:text-primary  font-light";
 
                   return (
                     <Link href={link.href} key={linkIndex}>

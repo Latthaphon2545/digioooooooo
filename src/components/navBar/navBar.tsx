@@ -5,7 +5,7 @@ import { SideBarFull, SideBarSmall } from "./sideBar";
 import Topbar from "./topBar";
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
-  const [openHamburgerDesktop, setOpenHamburgerDesktop] = useState(false);
+  const [openHamburgerDesktop, setOpenHamburgerDesktop] = useState(true);
   return (
     <>
       <div className="flex flex-col flex-grow">
