@@ -5,7 +5,7 @@ interface TabBarProps {
 
 export const TabBar = ({ Individual, Group }: TabBarProps) => {
   return (
-    <div role="tablist" className="tabs tabs-bordered mx-5">
+    <div role="tablist" className="tabs tabs-bordered mx-5 w-full">
       <input
         type="radio"
         name="my_tabs_1"
@@ -14,7 +14,7 @@ export const TabBar = ({ Individual, Group }: TabBarProps) => {
         aria-label="Individual"
         defaultChecked
       />
-      <div role="tabpanel" className="tab-content px-10 mt-3">
+      <div role="tabpanel" className="tab-content px-10 mt-3 ">
         {Individual}
       </div>
 

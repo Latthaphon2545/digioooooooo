@@ -1,4 +1,5 @@
 "use client";
+import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import UserHistory from "@/components/table/userHistory/userHistory";
 import { decode } from "@/lib/generateRandomHref";
 import axios from "axios";
@@ -43,7 +44,12 @@ export default function GetHistory({ params }: { params: { id: string } }) {
     <>
       <div className="h-full">
         {loading ? (
-          <div>Loading Noi</div>
+          <div>
+            <div className="font-bold text-3xl pt-4 pl-4">
+              Halo Halo Good Good Good
+            </div>
+            <TablePageLoading Type="User_History" length={7} />
+          </div>
         ) : (
           <UserHistory
             history={userHistory}
