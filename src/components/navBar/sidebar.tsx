@@ -1,84 +1,31 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import logo from "/public/image/digio_logo.png";
-import { encode } from "@/lib/generateRandomHref";
-
-export const MENU = [
-  {
-    title: "User",
-    links: [
-      {
-        name: "Users",
-        href: `/users?${encode("filter=&search=&skip=0&take=7")}`,
-      },
-    ],
-  },
-  {
-    title: "Product",
-    links: [
-      { name: "Models", href: "/products/models" },
-      {
-        name: "Products",
-        href: `/products?${encode("filter=&search=&skip=0&take=7")}`,
-      },
-    ],
-  },
-  {
-    title: "Merchant",
-    links: [
-      {
-        name: "Merchants",
-        href: `/merchants?${encode("filter=&search=&skip=0&take=7")}`,
-      },
-    ],
-  },
-  {
-    title: "Bank",
-    links: [
-      {
-        name: "Banks",
-        href: "/banks",
-      },
-    ],
-  },
-  {
-    title: "Action",
-    links: [
-      { name: "Check Stock", href: "/action/checkStock" },
-      { name: "Change Status", href: "/action/changeStatus" },
-    ],
-  },
-];
+import { MENU } from "./menu";
 
 const editor = true;
 
-export const Sidebar = () => {
+export const SideBarFull = () => {
   let pathName = usePathname();
   return (
-    <div className="h-screen flex flex-col justify-between max-h-screen items-center w-[16vw] shadow-lg">
+    <div className="h-screen flex flex-col justify-between max-h-screen items-center laptop:w-[14vw] desktop:w-[12vw]">
       <div className="w-full">
-        <div className="flex flex-row items-center justify-center my-7">
-          <Link href="/">
-            <Image src={logo} alt="Digio" width={150} />
-          </Link>
-        </div>
-
         {/* Menu */}
         <div className="flex flex-col text-2xl w-full px-3">
           {MENU.map((item, index) => (
             <React.Fragment key={index}>
-              <div className="divider divider-start text-xs font-bold text-primary">
-                {item.title}
-              </div>
+              {index !== 0 && <div className="divider m-2"></div>}
               <div className="flex flex-col gap-2">
                 {item.links.map((link, linkIndex) => {
                   const url = link.href.split("?")[0];
                   const currentPath = pathName.split("/");
 
-                  if (pathName !== "/products/models") {
+                  if (
+                    pathName !== "/products/models" &&
+                    pathName !== "/action/checkStock" &&
+                    pathName !== "/action/changeStatus"
+                  ) {
                     pathName = `/${currentPath[1]}`;
                   }
 
@@ -91,9 +38,10 @@ export const Sidebar = () => {
                     return (
                       <Link href={link.href} key={linkIndex}>
                         <button
-                          className={`w-full rounded text-sm py-2 px-2 text-left border-l-4 ${activeStyle}`}
+                          className={`w-full flex gap-3 items-center rounded text-sm py-2 px-2 text-left border-l-4 ${activeStyle}`}
                           key={linkIndex}
                         >
+                          <p className="text-xl">{link.icon}</p>
                           {link.name}
                         </button>
                       </Link>
@@ -119,79 +67,57 @@ export const Sidebar = () => {
   );
 };
 
-export const HamburgerBar = ({
-  openHamburger,
-  setOpenHamburger,
-}: {
-  openHamburger: boolean;
-  setOpenHamburger: (value: boolean) => void;
-}) => {
-  useEffect(() => {
-    if (openHamburger) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [openHamburger]);
-
+export const SideBarSmall = () => {
+  let pathName = usePathname();
   return (
-    <div className="fixed top-0 left-0 h-full w-full z-50 ">
-      {/* Background overlay */}
-      <div
-        className={`absolute top-0 left-0 w-full h-full bg-black opacity-50 overflow-hidden${
-          openHamburger ? "block" : "hidden"
-        }`}
-        onClick={() => setOpenHamburger(false)}
-      ></div>
-
-      {/* Sidebar */}
-      <div
-        className={`h-full mobile:w-[55%] tablet:w-[40%] bg-white flex flex-col items-center transform transition-transform duration-500 ease-in-out 
-          ${openHamburger ? "translate-x-0" : "-translate-x-full"} `}
-      >
-        <div className="flex flex-row items-center justify-center my-5">
-          <Link href="/" onClick={() => setOpenHamburger(!openHamburger)}>
-            <Image src={logo} alt="Digio" width={150} />
-          </Link>
-        </div>
-        <div className="flex flex-col text-2xl w-full px-3">
+    <div className="h-screen flex flex-col justify-between max-h-screen items-center laptop:w-[5vw]">
+      <div className="w-full">
+        {/* Menu */}
+        <div className="flex flex-col px-3 gap-2">
           {MENU.map((item, index) => (
             <React.Fragment key={index}>
-              <div className="divider divider-start text-xs font-bold text-primary">
-                {item.title}
-              </div>
-              <div className="flex flex-col gap-2">
-                {item.links.map((link, linkIndex) => {
-                  if (editor || !link.href.startsWith("/action")) {
-                    return (
-                      <Link href={link.href} key={linkIndex}>
-                        <button
-                          className={`w-full rounded text-sm py-2 px-2 text-left border-l-4`}
-                          key={linkIndex}
-                          onClick={() => setOpenHamburger(!openHamburger)}
-                        >
-                          {link.name}
-                        </button>
-                      </Link>
-                    );
-                  } else {
-                    return (
-                      <button
-                        className={`w-full rounded text-sm py-2 px-2 text-left border-l-4 bg-gray-200 text-gray-400 cursor-not-allowed`}
-                        key={linkIndex}
-                        disabled={true}
-                        onClick={() => setOpenHamburger(!openHamburger)}
-                      >
-                        {link.name}
-                      </button>
-                    );
+              {item.links.map((link, linkIndex) => {
+                if (editor || !link.href.startsWith("/action")) {
+                  const url = link.href.split("?")[0];
+                  const currentPath = pathName.split("/");
+
+                  if (
+                    pathName !== "/products/models" &&
+                    pathName !== "/action/checkStock" &&
+                    pathName !== "/action/changeStatus"
+                  ) {
+                    pathName = `/${currentPath[1]}`;
                   }
-                })}
-              </div>
+
+                  const isActive = pathName === url;
+                  const activeStyle = isActive
+                    ? "text-primary font-bold"
+                    : "hover:bg-primary hover:text-white font-light";
+
+                  return (
+                    <Link href={link.href} key={linkIndex}>
+                      <button
+                        className={`btn btn-circle btn-lg btn-ghost flex flex-col gap-1 items-center ${activeStyle}`}
+                        key={linkIndex}
+                      >
+                        <p className="text-xl">{link.icon}</p>
+                        <p className="text-xs">{link.name}</p>
+                      </button>
+                    </Link>
+                  );
+                } else {
+                  return (
+                    <button
+                      className={`btn btn-circle btn-ghost bg-gray-200 text-gray-400 cursor-not-allowed`}
+                      key={linkIndex}
+                      disabled={true}
+                    >
+                      <p className="text-xl">{link.icon}</p>
+                      <p className="text-xs">{link.name}</p>
+                    </button>
+                  );
+                }
+              })}
             </React.Fragment>
           ))}
         </div>

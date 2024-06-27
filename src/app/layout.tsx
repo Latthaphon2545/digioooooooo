@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Topbar from "@/components/navBar/topbar";
-import { Sidebar } from "@/components/navBar/sidebar";
+import Topbar from "@/components/navBar/topBar";
+import { SideBarFull } from "@/components/navBar/sideBar";
+import { useState } from "react";
+import NavBar from "@/components/navBar/navBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +23,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </head>
       <body className={`${inter.className} flex`}>
-        <div className="mobile:hidden tablet:hidden laptop:block">
-          <Sidebar />
-        </div>
-        <div className="flex flex-col flex-grow">
-          <Topbar />
-          <main className="flex-grow boxshadow mobile:mt-16 laptop:mt-0">
-            {children}
-          </main>
-        </div>
+        <NavBar>{children}</NavBar>
       </body>
     </html>
   );

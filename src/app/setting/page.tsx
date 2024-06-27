@@ -1,3 +1,4 @@
+import SettingPage from "@/components/setting/settingPage";
 import React from "react";
 
 export default function page() {
@@ -12,30 +13,7 @@ export default function page() {
         </div>
       </div>
 
-      <div role="tablist" className="tabs tabs-bordered mx-5">
-        <input
-          type="radio"
-          name="my_tabs_1"
-          role="tab"
-          className="tab"
-          aria-label="Account"
-          defaultChecked
-        />
-        <div role="tabpanel" className="tab-content p-10">
-          Tab content 1
-        </div>
-
-        <input
-          type="radio"
-          name="my_tabs_1"
-          role="tab"
-          className="tab"
-          aria-label="Coming soon....."
-        />
-        <div role="tabpanel" className="tab-content p-10">
-          Tab content 2
-        </div>
-      </div>
+      <SettingPage />
     </>
   );
 }

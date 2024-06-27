@@ -43,19 +43,19 @@ export default function FloatingActionButton({
       {page === "model" ? (
         <Link
           href={"/products/models/add"}
-          className="bottom-5 right-3 z-40 mobile:fixed laptop:hidden btn btn-circle btn-primary btn-lg m-1"
+          className="bottom-5 right-3 z-10 mobile:fixed laptop:hidden btn btn-circle btn-primary btn-lg m-1"
         >
           <IoMdAdd className="text-2xl" />
         </Link>
       ) : page === "bank" ? (
         <Link
           href={"/banks/add"}
-          className="bottom-5 right-3 z-40 mobile:fixed laptop:hidden btn btn-circle btn-primary btn-lg m-1"
+          className="bottom-5 right-3 z-10 mobile:fixed laptop:hidden btn btn-circle btn-primary btn-lg m-1"
         >
           <IoMdAdd className="text-2xl" />
         </Link>
       ) : (
-        <div className="dropdown dropdown-top dropdown-end mobile:bottom-2 tablet:bottom-5 right-3 rounded-xl z-50 mobile:fixed laptop:hidden">
+        <div className="dropdown dropdown-top dropdown-end mobile:bottom-2 tablet:bottom-5 right-3 rounded-xl z-10 mobile:fixed laptop:hidden">
           <div
             tabIndex={0}
             role="button"
