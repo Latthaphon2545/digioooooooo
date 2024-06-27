@@ -5,6 +5,8 @@ import { ConvertStatus } from "@/components/convertStatusAndRole";
 import Link from "next/link";
 import { ColorProductStatus } from "../color";
 import Modal from "@/components/modal";
+import ActionButton from "@/components/actionButton";
+import { TbUserEdit } from "react-icons/tb";
 
 type TableUserHistoryProps = {
   history: any[];
@@ -19,12 +21,16 @@ const TableRow = ({ item }: { item: any }) => {
         <h3 className="text-sm">{displayTime}</h3>
       </td>
       <td>
-        <Modal
-          title={`${item.description.slice(0, 20)}...`}
-          titleContent="Description"
-          content={item.description}
-          id={item.id}
-        />
+        {item.description.length > 20 ? (
+          <Modal
+            title={`${item.description.slice(0, 20)}...`}
+            titleContent="Description"
+            content={item.description}
+            id={item.id}
+          />
+        ) : (
+          item.description
+        )}
       </td>
       <td className={`py-2 px-4 h-[8vh]`}>
         <span
@@ -35,15 +41,24 @@ const TableRow = ({ item }: { item: any }) => {
           {ConvertStatus(item.category)}
         </span>
       </td>
-      {/* <td className="link link-primary">
+      <td className="link link-primary">
         <Link
-          href={`products/history/${item.product.serialNumber}?filter=&search=&skip=0&take=7`}
+          href={`products/history/${item.product.serialNumber}?filter=&search=&skip=&take=`}
         >
           {item.product.serialNumber}
         </Link>
-      </td> */}
+      </td>
       <td>
         <ViewImg id={item.id} image={item.imageProve} />
+      </td>
+      <td>
+        <ActionButton
+          action={() => {}}
+          styles="btn-info btn-sm"
+          disabled={false}
+        >
+          <TbUserEdit size={20} /> Edit
+        </ActionButton>
       </td>
     </tr>
   );
@@ -57,9 +72,10 @@ export default function TableUserHistory({ history }: TableUserHistoryProps) {
           <tr>
             <th>Time</th>
             <th>Description</th>
-            <th>Category</th>
-            {/* <th>Product</th> */}
+            <th>Status</th>
+            <th>Product</th>
             <th>Image</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>

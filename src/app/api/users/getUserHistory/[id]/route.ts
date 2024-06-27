@@ -28,14 +28,14 @@ export async function GET(
       where: {
         userId: id,
       },
-      // include: {
-      //   product: {
-      //     select: {
-      //       id: true,
-      //       serialNumber: true,
-      //     },
-      //   },
-      // },
+      include: {
+        product: {
+          select: {
+            id: true,
+            serialNumber: true,
+          },
+        },
+      },
       skip,
       take,
       orderBy: {
@@ -56,3 +56,4 @@ export async function GET(
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
+2;
