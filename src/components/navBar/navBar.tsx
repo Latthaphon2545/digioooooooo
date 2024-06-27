@@ -22,7 +22,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
             {openHamburgerDesktop ? <SideBarSmall /> : <SideBarFull />}
           </div>
           <main
-            className={`flex-grow mx-8 box mobile:mt-16 laptop:mt-12 ${
+            className={`flex-grow box mobile:mt-16 laptop:mt-12 ${
               openHamburgerDesktop ? "laptop:ml-20" : "laptop:ml-52"
             }`}
           >

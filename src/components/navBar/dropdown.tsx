@@ -18,6 +18,7 @@ export default function Dropdown() {
   }, []);
 
   useEffect(() => {
+    localStorage.setItem("theme", theme);
     document.querySelector("html")?.setAttribute("data-theme", theme);
   }, [theme]);
 
@@ -57,11 +58,13 @@ export default function Dropdown() {
 
       {/* Theme */}
       <li className="m-1">
-        <label className="swap swap-rotate justify-start">
-          <input type="checkbox" onChange={handleTheme} />
-          {sun}
-          {moon}
-          {theme}
+        <label className="justify-start flex flex-row">
+          <label className="swap swap-rotate ">
+            <input type="checkbox" onChange={handleTheme} />
+            {sun}
+            {moon}
+          </label>
+          Dark mode {theme === "light" ? "off" : "on"}
         </label>
       </li>
 
@@ -71,7 +74,7 @@ export default function Dropdown() {
           styles="btn-error btn-sm text-base-100 text-sm w-44"
           action={() => {}}
           alertHeader="You're about to logout"
-          alertDescroption="Are you sure you want to logout?"
+          alertDescription="Are you sure you want to logout?"
           id="logout"
         >
           <div className="flex flex-row justify-center items-center gap-3">
@@ -86,7 +89,7 @@ export default function Dropdown() {
 
 const sun = (
   <svg
-    className={`swap-on fill-current ${size}`}
+    className={`swap-off fill-current ${size}`}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
   >
@@ -96,7 +99,7 @@ const sun = (
 
 const moon = (
   <svg
-    className={`swap-off fill-current ${size}`}
+    className={`swap-on fill-current ${size}`}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
   >
