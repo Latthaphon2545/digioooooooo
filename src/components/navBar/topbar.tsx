@@ -28,7 +28,7 @@ export default function Topbar({
       <div className="navbar text-center mobile:hidden tablet:hidden desktop:flex laptop:flex">
         <div className="flex-1 gap-5">
           <button
-            className="text-[3vh] btn btn-ghost btn-circle"
+            className="text-[3vh] btn btn-ghost btn-base ml-1"
             onClick={() => {
               if (setOpenHamburgerDesktop) {
                 setOpenHamburgerDesktop(!openHamburgerDesktop);
@@ -61,7 +61,7 @@ export default function Topbar({
         </div>
       </div>
 
-      <div className="navbar flex justify-between mobile:flex tablet:flex desktop:hidden laptop:hidden fixed top-0 left-0 right-0 bg-white z-50 shadow-lg">
+      <div className="navbar flex justify-between mobile:flex tablet:flex desktop:hidden laptop:hidden fixed top-0 left-0 right-0 bg-base-100  z-50 shadow-lg">
         <GiHamburgerMenu
           className="text-[4vh]"
           onClick={() => setOpenHamburgerMobile(!openHamburgerMobile)}

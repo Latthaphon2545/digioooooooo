@@ -9,15 +9,23 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="flex flex-col flex-grow">
-        <Topbar
-          openHamburgerDesktop={openHamburgerDesktop}
-          setOpenHamburgerDesktop={setOpenHamburgerDesktop}
-        />
+        <div className="fixed top-0 w-full z-10 bg-base-100 ">
+          <Topbar
+            openHamburgerDesktop={openHamburgerDesktop}
+            setOpenHamburgerDesktop={setOpenHamburgerDesktop}
+          />
+        </div>
         <div className="flex">
-          <div className="mobile:hidden tablet:hidden laptop:block">
+          <div
+            className={`mobile:hidden tablet:hidden laptop:block fixed h-full z-10 left-0 bg-base-100 top-14`}
+          >
             {openHamburgerDesktop ? <SideBarSmall /> : <SideBarFull />}
           </div>
-          <main className="flex-grow mx-5 box mobile:mt-16 laptop:mt-0">
+          <main
+            className={`flex-grow mx-8 box mobile:mt-16 laptop:mt-12 ${
+              openHamburgerDesktop ? "laptop:ml-20" : "laptop:ml-52"
+            }`}
+          >
             {children}
           </main>
         </div>

@@ -9,7 +9,7 @@ const editor = true;
 export const SideBarFull = () => {
   let pathName = usePathname();
   return (
-    <div className="h-screen flex flex-col justify-between max-h-screen items-center laptop:w-[14vw] desktop:w-[12vw]">
+    <div className="h-screen flex flex-col justify-between max-h-screen items-center mt-4 laptop:w-[14vw] desktop:w-[12vw]">
       <div className="w-full">
         {/* Menu */}
         <div className="flex flex-col text-2xl w-full px-3">
@@ -71,7 +71,7 @@ export const SideBarSmall = () => {
   let pathName = usePathname();
   const sliceMenu = [MENU[0], MENU[1], MENU[2], MENU[5]];
   return (
-    <div className="h-screen flex flex-col justify-between max-h-screen items-center laptop:w-[5vw]">
+    <div className="h-screen flex flex-col justify-between max-h-screen items-center laptop:w-[3vw]">
       <div className="w-full">
         {/* Menu */}
         <div className="flex flex-col px-3 gap-2">

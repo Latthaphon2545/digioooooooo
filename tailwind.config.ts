@@ -30,7 +30,7 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        mytheme: {
+        light: {
           primary: "#3b82f6",
           "primary-content": "#f3f4f6",
           secondary: "#74b4ea",
@@ -53,6 +53,7 @@ const config: Config = {
           "error-content": "#f3f4f6",
         },
       },
+      "dark",
     ],
   },
   plugins: [require("daisyui")],
