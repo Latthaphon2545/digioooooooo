@@ -19,7 +19,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="#" />
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </head>
-      <body className={`${inter.className} flex overflow-hidden`}>
+      <body className={`${inter.className} flex`}>
         <NavBar>{children}</NavBar>
       </body>
     </html>
