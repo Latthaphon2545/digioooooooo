@@ -34,16 +34,16 @@ export const TabBar = ({ Individual, Group }: TabBarProps) => {
         type="radio"
         name="my_tabs_1"
         role="tab"
-        className={`tab ${paramPage ? "hidden" : ""}`}
+        className={`tab w-full ${paramPage ? "hidden" : ""}`}
         aria-label="Individual"
         checked={activeTab === "Individual"}
         onChange={() => setActiveTab("Individual")}
       />
       <div
         role="tabpanel"
-        className={`tab-content ${
+        className={`tab-content w-full ${
           activeTab === "Individual" ? "block" : "hidden"
-        } ${!paramPage && "px-10 mt-3"}`}
+        } ${!paramPage ? "px-10 mt-3" : "w-full  mx-auto"}`}
       >
         {Individual}
       </div>
@@ -59,9 +59,9 @@ export const TabBar = ({ Individual, Group }: TabBarProps) => {
       />
       <div
         role="tabpanel"
-        className={`tab-content ${activeTab === "Group" ? "block" : "hidden"} ${
-          !paramPage && "px-10 mt-3"
-        }`}
+        className={`tab-content w-full ${
+          activeTab === "Group" ? "block" : "hidden"
+        } ${!paramPage && "px-10 mt-3"}`}
       >
         {Group}
       </div>

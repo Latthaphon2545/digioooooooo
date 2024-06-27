@@ -5,7 +5,7 @@ import { createBank } from "@/app/action/bank/actions";
 
 export default function BankInput() {
   return (
-    <div className="flex justify-center items-center h-full  my-auto">
+    <div className="flex justify-center items-center  h-full  my-auto">
       <form
         action={createBank}
         className="flex flex-col mobile:space-y-8 lg:space-y-0  w-full overflow-hidden justify-center items-center"

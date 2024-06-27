@@ -42,10 +42,10 @@ export default function GetHistory({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div className="h-full">
+      <div className="h-full px-4">
         {loading ? (
           <div>
-            <div className="font-bold text-3xl pt-4 pl-4">
+            <div className="font-bold text-3xl pt-4 pl-4 mb-20">
               Halo Halo Good Good Good
             </div>
             <TablePageLoading Type="User_History" length={7} />

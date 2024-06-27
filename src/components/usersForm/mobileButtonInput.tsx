@@ -15,7 +15,7 @@ export default function MobileButtonInput({
 }: mobileButtonInputProps) {
   return (
     <div
-      className={`flex items-center w-1/3 z-20 justify-between mt-2 fixed bottom-5 left-5 ${
+      className={`flex items-center w-1/3 z-20 justify-between pt-2 fixed bottom-5 left-5 ${
         formValues.length < 10 ? "space-x-3" : "space-x-1"
       }`}
     >
@@ -23,6 +23,7 @@ export default function MobileButtonInput({
         type="button"
         onClick={deleteFunction}
         disabled={formValues.length === 1}
+        className="disabled:opacity-20"
       >
         <IoMdRemoveCircleOutline size={40} />
       </button>
