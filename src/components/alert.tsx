@@ -6,7 +6,7 @@ type AlertProps = {
   action?: () => void;
   styles: string;
   alertHeader: string;
-  alertDescroption: string;
+  alertDescription: string;
   id: string;
   disabled?: boolean;
 };
@@ -16,7 +16,7 @@ const Alert = ({
   action,
   styles,
   alertHeader,
-  alertDescroption,
+  alertDescription,
   id,
   disabled,
 }: AlertProps) => {
@@ -34,7 +34,7 @@ const Alert = ({
       <dialog id={id} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">{alertHeader}</h3>
-          <p className="py-4">{alertDescroption}</p>
+          <p className="py-4">{alertDescription}</p>
           <div className="modal-action">
             <form method="dialog">
               <button className="btn mr-5">Close</button>

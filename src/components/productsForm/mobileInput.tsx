@@ -25,6 +25,9 @@ export default function MobileInput({
 }: mobileInputProps) {
   return (
     <div>
+      <div className="text-2xl font-bold flex items-center justify-center btn btn-circle mx-auto mb-3">
+        <p>{index + 1}</p>
+      </div>
       <label className="border p-1 rounded-lg flex items-center gap-2 m-1">
         <select
           className="grow bg-white"

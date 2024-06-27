@@ -160,7 +160,11 @@ const InputForm = () => {
           icon={<BiError size={20} />}
         />
       )}
-      <div className="flex justify-end w-full tablet:mr-10 align-bottom">
+      <div
+        className={`flex ${
+          activeTab === 1 ? "justify-center" : ""
+        } sm:justify-end w-full tablet:mr-10 align-bottom`}
+      >
         <Alert
           styles={`btn-primary px-10 w-1/2 mobile:mt-5 sm:left-1/2 sm:transform sm:-translate-x-1/2 laptop:mt-0 ${
             activeTab === 0
@@ -168,7 +172,7 @@ const InputForm = () => {
               : " w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
           } laptop:w-auto btn-wide fixed  sm:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
           alertHeader="Add User"
-          alertDescroption="Are you sure you want to add these user?"
+          alertDescription="Are you sure you want to add these user?"
           id="add_user"
           disabled={hasError || uploading}
           action={handleSubmit}

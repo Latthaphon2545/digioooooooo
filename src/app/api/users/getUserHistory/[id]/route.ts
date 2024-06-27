@@ -11,10 +11,10 @@ export async function GET(
 
     const skip = parseInt(searchParams.get("skip") || "");
     const take = parseInt(searchParams.get("take") || "");
-    console.log("skip", skip);
-    console.log("take", take);
+    // console.log("skip", skip);
+    // console.log("take", take);
 
-    console.log("id", id);
+    // console.log("id", id);
 
     if (!id) {
       console.log("User with this id is not found");
@@ -49,7 +49,7 @@ export async function GET(
       },
     });
 
-    console.log(userHistory, totalHistory);
+    // console.log(userHistory, totalHistory);
     return NextResponse.json({ userHistory, totalHistory });
   } catch (error) {
     console.error(error);

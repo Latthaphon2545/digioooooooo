@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Topbar from "@/components/navBar/topBar";
-import { SideBarFull } from "@/components/navBar/sideBar";
-import { useState } from "react";
 import NavBar from "@/components/navBar/navBar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,7 +19,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="#" />
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </head>
-      <body className={`${inter.className} flex`}>
+      <body className={`${inter.className} flex overflow-hidden`}>
         <NavBar>{children}</NavBar>
       </body>
     </html>
