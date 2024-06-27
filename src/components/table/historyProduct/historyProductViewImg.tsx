@@ -19,20 +19,26 @@ const ViewImg = ({ id, image }: { id: string; image: any }) => {
               >
                 <img
                   src={item}
-                  className="w-[50vw]"
+                  className="w-[50vw] h-[30vh]"
                   alt={`carousel item ${index + 1}`}
                 />
               </div>
             ))}
         </div>
 
-        <div className="block  relative overflow-hidden">
-          <div className="flex justify-between gap-10">
-            <span className="animate-bounce-x2 inline-block">{"<<<<<<<<"}</span>
-            <span>Slice to see more</span>
-            <span className="animate-bounce-x1 inline-block">{">>>>>>>>"}</span>
+        {images && images.length > 1 && (
+          <div className="block  relative overflow-hidden">
+            <div className="flex justify-between gap-10">
+              <span className="animate-bounce-x2 inline-block">
+                {"<<<<<<<<"}
+              </span>
+              <span>Slice to see more</span>
+              <span className="animate-bounce-x1 inline-block">
+                {">>>>>>>>"}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
       </>
     );
   };
@@ -45,6 +51,7 @@ const ViewImg = ({ id, image }: { id: string; image: any }) => {
         content={imageShow(image)}
         id={id}
         style={image && image.length > 0 ? "" : "btn-disabled"}
+        boolClose={true}
       />
     </>
   );

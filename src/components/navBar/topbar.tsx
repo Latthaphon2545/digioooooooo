@@ -1,25 +1,46 @@
 "use client";
 
+import React, { useState } from "react";
 import Profile from "./profileImg";
 import Dropdown from "./dropdown";
-
 import { GiHamburgerMenu } from "react-icons/gi";
 import logo from "/public/image/digio_logo.png";
-import { useState } from "react";
-import { HamburgerBar } from "./sidebar";
 import { usePathname } from "next/navigation";
+import { pathMenu } from "./pathMenu";
+import { HamburgerBar } from "./HamburgerBar";
+import Image from "next/image";
+import Link from "next/link";
 
-export default function Topbar() {
-  const [openHamburger, setOpenHamburger] = useState(false);
+interface TopbarProps {
+  openHamburgerDesktop?: boolean;
+  setOpenHamburgerDesktop?: (value: boolean) => void;
+}
+
+export default function Topbar({
+  openHamburgerDesktop,
+  setOpenHamburgerDesktop,
+}: TopbarProps) {
+  const [openHamburgerMobile, setOpenHamburgerMobile] = useState(true);
   const pathName = usePathname();
-  return (
-    <div className="w-full shadow-lg">
-      <div className="navbar text-center mobile:hidden tablet:hidden desktop:flex laptop:flex">
-        <div className="flex-1">
-          <div className="text-ms breadcrumbs"></div>
-        </div>
 
-        {/* Profile */}
+  return (
+    <div className="w-full">
+      <div className="navbar text-center mobile:hidden tablet:hidden desktop:flex laptop:flex">
+        <div className="flex-1 gap-5">
+          <button
+            className="text-[3vh] btn btn-ghost btn-circle"
+            onClick={() => {
+              if (setOpenHamburgerDesktop) {
+                setOpenHamburgerDesktop(!openHamburgerDesktop);
+              }
+            }}
+          >
+            <GiHamburgerMenu />
+          </button>
+          <Link href="/">
+            <Image src={logo} alt="Digio" width={100} />
+          </Link>
+        </div>
         <div className="flex-none gap-2">
           <div className="flex flex-col gap-0 text-right">
             <p className="text-lg font-bold">Latthaphon Permmanirat</p>
@@ -43,14 +64,12 @@ export default function Topbar() {
       <div className="navbar flex justify-between mobile:flex tablet:flex desktop:hidden laptop:hidden fixed top-0 left-0 right-0 bg-white z-50 shadow-lg">
         <GiHamburgerMenu
           className="text-[4vh]"
-          onClick={() => {
-            setOpenHamburger(!openHamburger);
-          }}
+          onClick={() => setOpenHamburgerMobile(!openHamburgerMobile)}
         />
         {pathName === "/" ? (
           <img src={logo.src} alt="Digio" className="h-10" />
         ) : (
-          <p className="text-lg font-bold">{MENU(pathName)}</p>
+          <p className="text-lg font-bold">{pathMenu(pathName)}</p>
         )}
         <div className="dropdown dropdown-end">
           <div
@@ -62,43 +81,13 @@ export default function Topbar() {
           </div>
           <Dropdown />
         </div>
-        {openHamburger && (
+        {openHamburgerMobile && (
           <HamburgerBar
-            setOpenHamburger={setOpenHamburger}
-            openHamburger={openHamburger}
+            setOpenHamburger={setOpenHamburgerMobile}
+            openHamburger={openHamburgerMobile}
           />
         )}
       </div>
     </div>
   );
 }
-
-const MENU = (pathname: string) => {
-  if (pathname === "/") {
-    return "Home";
-  } else if (pathname === "/users") {
-    return "Users";
-  } else if (pathname === "/products") {
-    return "Products";
-  } else if (pathname === "/products/models") {
-    return "Models";
-  } else if (pathname === "/merchants") {
-    return "Merchants";
-  } else if (pathname === "/banks") {
-    return "Banks";
-  } else if (pathname === "/action/checkStock") {
-    return "Check Stock";
-  } else if (pathname === "/action/changeStatus") {
-    return "Change Status";
-  } else if (pathname.startsWith("/products/history/")) {
-    return "History";
-  } else if (pathname === "/users/add") {
-    return "Add User";
-  } else if (pathname === "/products/add") {
-    return "Add Product";
-  } else if (pathname === "/products/models/add") {
-    return "Add Model";
-  } else if (pathname === "/merchants/add") {
-    return "Add Merchant";
-  }
-};
