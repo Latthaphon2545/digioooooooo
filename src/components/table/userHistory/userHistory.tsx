@@ -38,7 +38,7 @@ export default function UserHistory({
         Halo Halo Good Good Good
       </div>
       <div className="flex flex-col items-center pt-20 justify-start h-full">
-        <TableUserHistory history={history} isEditor={editor} />
+        <TableUserHistory historyData={history} isEditor={editor} />
         <div className="">
           <Pagination
             currentPage={currentPage}
