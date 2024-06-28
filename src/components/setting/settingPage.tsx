@@ -21,7 +21,7 @@ export default function SettingPage() {
               role: "asd",
               status: "asd",
               name: "asd",
-              contact: "660949054456",
+              contact: "0949054456",
             }}
           />
         </div>

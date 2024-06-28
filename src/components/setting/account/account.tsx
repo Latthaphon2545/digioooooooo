@@ -6,6 +6,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import generateTooltip from "../toolTip";
+import { PreFix } from "../prefix";
 
 interface AccountInfo {
   email: string;
@@ -93,67 +94,75 @@ const AccountInfo: React.FC<AccountInfoProps> = ({
 
   const [value, setValue] = useState("");
 
-  const handleChange = (value: string) => {
-    setValue(value);
+  const handleChange = (inputValue: string) => {
+    let formattedValue = inputValue;
+    if (title === "Contact") {
+      // Remove non-digit characters
+      formattedValue = inputValue.replace(/\D/g, "");
+      // Apply formatting
+      if (formattedValue.length > 3 && formattedValue.length <= 6) {
+        formattedValue = `${formattedValue.slice(0, 3)}-${formattedValue.slice(
+          3
+        )}`;
+      } else if (formattedValue.length > 6) {
+        formattedValue = `${formattedValue.slice(0, 3)}-${formattedValue.slice(
+          3,
+          6
+        )}-${formattedValue.slice(6, 10)}`;
+      }
+    }
+    setValue(formattedValue);
     if (onChange) {
-      onChange(value);
+      onChange(formattedValue);
     }
   };
 
   useEffect(() => {
     const tooltipArray = generateTooltip(title);
     setTooltip(tooltipArray);
-    setValue(
-      defaultValue.startsWith("+") ? defaultValue.slice(3) : defaultValue
-    );
+    if (title === "Contact") {
+      setValue(
+        defaultValue.slice(0, 3) +
+          "-" +
+          defaultValue.slice(3, 6) +
+          "-" +
+          defaultValue.slice(6, 10)
+      );
+    } else {
+      setValue(defaultValue);
+    }
   }, []);
 
   return (
     <div className="flex items-center w-full mb-4 gap-5">
       <div className="w-2/6 font-medium">{title}</div>
-      <div className="w-3/6 flex flex-col gap-2">
-        {title === "Contact" ? (
-          <div>
-            <PhoneInput
-              country={"th"}
-              value={value}
-              onChange={(phone) => handleChange(phone)}
-              onlyCountries={["th"]}
-              inputStyle={{
-                width: "100%",
-                height: "3rem",
-                fontSize: "1rem",
-                borderRadius: "0.5rem",
-              }}
-              isValid={(value, country) => {
-                if (value.length < 12) {
-                  return "Invalid phone number";
-                } else {
-                  return true;
-                }
-              }}
-            />
-          </div>
-        ) : (
-          <label className="input input-bordered flex items-center gap-2">
-            <input
-              className="grow"
-              type={title === "Password" && !showPassword ? "password" : "text"}
-              value={value}
-              onChange={(e) => handleChange(e.target.value)}
-              disabled={disabled}
-              aria-label={title}
-            />
-            {title === "Password" && (
-              <button
-                onClick={() => setShowPassword(!showPassword)}
-                className="text-xl"
-              >
-                {!showPassword ? <FaEye /> : <FaEyeSlash />}
-              </button>
-            )}
-          </label>
-        )}
+      <div className={`w-3/6 flex flex-col gap-2`}>
+        <label className="input input-bordered flex items-center gap-2">
+          <input
+            className="grow"
+            type={
+              title === "Password" && !showPassword
+                ? "password"
+                : title === "Contact"
+                ? "tel"
+                : "text"
+            }
+            value={value}
+            onChange={(e) => handleChange(e.target.value)}
+            disabled={disabled}
+            aria-label={title}
+            placeholder={title === "Contact" ? "09X-XXX-XXXX" : ""}
+            pattern={title === "Contact" ? "[0-9]{3}-[0-9]{3}-[0-9]{4}" : ""}
+          />
+          {title === "Password" && (
+            <button
+              onClick={() => setShowPassword(!showPassword)}
+              className="text-xl"
+            >
+              {!showPassword ? <FaEye /> : <FaEyeSlash />}
+            </button>
+          )}
+        </label>
         {tooltip &&
           tooltip.map((tip, index) => (
             <div
