@@ -25,6 +25,8 @@ export const pathMenu = (pathname: string) => {
     case "/merchants/add":
       return "Add Merchant";
     case "/setting":
+      return "Setting";
+    case "/setting/account":
       return "Account";
     default:
       if (pathname.startsWith("/products/history/")) {
