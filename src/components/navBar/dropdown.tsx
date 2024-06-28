@@ -9,17 +9,23 @@ import { IoMdSettings } from "react-icons/io";
 
 const size = "h-6 w-6";
 export default function Dropdown() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("");
 
   useEffect(() => {
-    const localTheme = "light";
+    const localTheme = localStorage.getItem("theme") || "";
     setTheme(localTheme);
-    document.querySelector("html")?.setAttribute("data-theme", localTheme);
+    const htmlElement = document.querySelector("html");
+    if (htmlElement) {
+      htmlElement.setAttribute("data-theme", localTheme);
+    }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    document.querySelector("html")?.setAttribute("data-theme", theme);
+    const htmlElement = document.querySelector("html");
+    if (htmlElement) {
+      htmlElement.setAttribute("data-theme", theme);
+    }
   }, [theme]);
 
   const handleTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +58,12 @@ export default function Dropdown() {
       <li className="m-1">
         <label>
           <IoMdSettings className={size} />
-          <Link href={"/setting"}>Settings</Link>
+          <span className="mobile:hidden laptop:block">
+            <Link href={"/setting"}>Settings</Link>
+          </span>
+          <span className="mobile:block laptop:hidden">
+            <Link href={"/setting?mobile=true"}>Settings</Link>
+          </span>
         </label>
       </li>
 
@@ -61,8 +72,7 @@ export default function Dropdown() {
         <label className="justify-start flex flex-row">
           <label className="swap swap-rotate ">
             <input type="checkbox" onChange={handleTheme} />
-            {sun}
-            {moon}
+            {theme === "light" ? sun : moon}
           </label>
           Dark mode {theme === "light" ? "off" : "on"}
         </label>
@@ -89,7 +99,7 @@ export default function Dropdown() {
 
 const sun = (
   <svg
-    className={`swap-off fill-current ${size}`}
+    className={`swap-active	 fill-current ${size}`}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
   >
@@ -99,7 +109,7 @@ const sun = (
 
 const moon = (
   <svg
-    className={`swap-on fill-current ${size}`}
+    className={`swap-active	 fill-current ${size}`}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
   >

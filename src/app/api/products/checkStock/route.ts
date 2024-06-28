@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 // Helper function to create responses
-const createResponse = (message: string, status: number) => {
+export const createResponse = (message: string, status: number) => {
   return new NextResponse(JSON.stringify({ message }), {
     status,
     headers: { "Content-Type": "application/json" },

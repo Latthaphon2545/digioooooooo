@@ -96,3 +96,10 @@ model Bank {
   image   String
   product Product[]
 }
+
+model phoneNumberOtp {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  otp         String
+  phoneNumber String
+  createdAt   DateTime @default(now())
+}
