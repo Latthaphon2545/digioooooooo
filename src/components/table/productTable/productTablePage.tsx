@@ -12,14 +12,18 @@ interface TablePageProps {
   }[];
   editor: boolean;
   totalLength: number;
+  skip: number;
 }
 
 export default function TablePageProduct({
   data,
   editor,
   totalLength,
+  skip,
 }: TablePageProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+  );
   const [itemPerPage, setItemPerPage] = useState(itemPage);
   const [totalPages, setTotalPages] = useState(0);
 

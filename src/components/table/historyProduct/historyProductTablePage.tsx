@@ -16,6 +16,7 @@ interface TablePageProps {
   };
   editor?: boolean;
   lengthHistory: number;
+  skip: number;
 }
 
 export default function TablePageProductHistory({
@@ -23,8 +24,11 @@ export default function TablePageProductHistory({
   dataCustomer,
   editor,
   lengthHistory,
+  skip,
 }: TablePageProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+  );
   const [totalPages, setTotalPages] = useState(0);
 
   const onPageChange = (pageNumber: number) => {
