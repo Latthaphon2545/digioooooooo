@@ -81,7 +81,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="overflow-hidden mobile:max-h-[72vh] tablet:max-h-[75vh] mobile:hidden sm:block">
         <form action={""}>
           <table className="w-full flex-nowrap">
@@ -109,13 +109,18 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
             </tbody>
           </table>
           <div className="flex items-center justify-center">
-            <button type="button" onClick={addRow}>
+            <button
+              type="button"
+              onClick={addRow}
+              disabled={formValues.length >= 10}
+              className="disabled:opacity-20"
+            >
               <IoAddCircleOutline size={40} />
             </button>
           </div>
         </form>
       </div>
-      <div className="sm:hidden max-h-[65vh] overflow-scroll">
+      <div className="sm:hidden max-h-[65vh] overflow-scroll w-full">
         <form action="">
           <div className="flex flex-col gap-5">
             {formValues.map((_, index) => {

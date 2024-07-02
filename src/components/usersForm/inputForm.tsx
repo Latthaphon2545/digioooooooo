@@ -149,8 +149,8 @@ const InputForm = () => {
         }
       />
       {submitting && (
-        <div className="">
-          <div className="loading loading-spinner  loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 right-[33px] "></div>
+        <div>
+          <div className="loading loading-spinner loading-lg absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
       )}
       {errorOnSubmit && (

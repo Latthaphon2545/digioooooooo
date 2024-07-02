@@ -4,10 +4,12 @@ export const EditableField = ({
   defaultValue,
   onChange,
   textarea = false,
+  name,
 }: {
   defaultValue: string;
   onChange: (value: string) => void;
   textarea?: boolean;
+  name?: string;
 }) => {
   // Use useEffect to set the initial value only once
   const [value, setValue] = useState("");
@@ -29,6 +31,7 @@ export const EditableField = ({
         value={value}
         className="border-2 border-base-content rounded-md p-1 w-full h-24"
         onChange={handleChange}
+        name={name}
       />
     );
   } else {
@@ -38,6 +41,7 @@ export const EditableField = ({
         value={value}
         className="border-2 border-base-content rounded-md p-1 w-full text-start"
         onChange={handleChange}
+        name={name}
       />
     );
   }

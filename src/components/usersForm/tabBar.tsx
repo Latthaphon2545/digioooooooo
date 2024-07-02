@@ -29,7 +29,7 @@ export const TabBar = ({ Individual, Group }: TabBarProps) => {
   }, [paramPage]);
 
   return (
-    <div role="tablist" className="tabs tabs-bordered w-full">
+    <div role="tablist" className="tabs tabs-bordered w-full ">
       <input
         type="radio"
         name="my_tabs_1"
@@ -42,7 +42,7 @@ export const TabBar = ({ Individual, Group }: TabBarProps) => {
       <div
         role="tabpanel"
         className={`tab-content w-full ${
-          activeTab === "Individual" ? "block" : "hidden"
+          activeTab === "Individual" ? "block mx-auto" : "hidden"
         } ${!paramPage ? "px-10 mt-3" : "w-full  mx-auto"}`}
       >
         {Individual}
