@@ -55,6 +55,7 @@ export default function GetHistory({ params }: { params: { id: string } }) {
             history={userHistory}
             editor={true}
             totalHistory={totalHistory}
+            skip={parseInt(skip)}
           />
         )}
       </div>

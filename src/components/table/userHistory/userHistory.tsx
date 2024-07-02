@@ -9,14 +9,18 @@ type UserHistoryProps = {
   history: any[];
   editor: boolean;
   totalHistory: number;
+  skip: number;
 };
 
 export default function UserHistory({
   history,
   editor,
   totalHistory,
+  skip,
 }: UserHistoryProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+  );
   const [totalPages, setTotalPages] = useState(0);
 
   const onPageChange = (pageNumber: number) => {

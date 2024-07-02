@@ -12,14 +12,18 @@ interface TablePageProps {
   }[];
   editor: boolean;
   totalLength: number;
+  skip: number;
 }
 
 export default function TablePage({
   data,
   editor,
   totalLength,
+  skip,
 }: TablePageProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+  );
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
@@ -34,6 +38,8 @@ export default function TablePage({
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
+  console.log(currentPage);
 
   return (
     <>

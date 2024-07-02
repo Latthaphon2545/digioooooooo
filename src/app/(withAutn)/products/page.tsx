@@ -87,6 +87,7 @@ export default function Productmanagement() {
               data={data}
               editor={isEditor}
               totalLength={dataLength}
+              skip={parseInt(skip)}
             />
           )}
         </div>

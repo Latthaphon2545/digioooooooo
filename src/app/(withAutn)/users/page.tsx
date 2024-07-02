@@ -84,7 +84,12 @@ export default function Home() {
           {loading ? (
             <TablePageLoading Type="User" />
           ) : (
-            <Table data={data} editor={isEditor} totalLength={dataLength} />
+            <Table
+              data={data}
+              editor={isEditor}
+              totalLength={dataLength}
+              skip={parseInt(skip)}
+            />
           )}
         </div>
       </div>

@@ -65,6 +65,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             dataCustomer={dataProduct}
             editor={false}
             lengthHistory={totalPages}
+            skip={parseInt(skip)}
           />
         )}
       </div>
