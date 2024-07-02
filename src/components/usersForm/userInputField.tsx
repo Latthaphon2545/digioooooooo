@@ -68,7 +68,7 @@ const UserInputField = ({
         <select
           value={formValues[index].role ?? ""}
           onChange={(e) => handleRoleChange(index, e.target.value as Role)}
-          className="grow bg-white"
+          className="grow bg-transparent"
         >
           <option value="" disabled={true}>
             Select a role

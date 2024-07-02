@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { TbUserEdit } from "react-icons/tb";
 import Modal from "@/components/modal";
 import Link from "next/link";
@@ -14,6 +14,7 @@ import { handleEditToggle } from "../handleEditToggle";
 
 import SubmitPopupButton from "@/components/submitPopupButton";
 import EditImage from "./editImage";
+import { updateUserHistoryOnServer } from "./action/serverUpdate";
 
 interface TableRowProps {
   item: any;
@@ -26,7 +27,7 @@ interface TableRowProps {
   >;
   handleUpdateUserHistory: (
     id: string,
-    history: { description: string; category: string }
+    history: { description: string; category: string; imageProves: File[] }
   ) => Promise<void>;
 }
 
@@ -39,7 +40,9 @@ const TableRow: React.FC<TableRowProps> = ({
 }) => {
   const { formattedDate, displayTime } = ConvertTime(item.createdAt);
   const [description, setDescription] = useState(item.description);
+  const [oldImages, setOldImages] = useState(item.imageProve);
   const [status, setStatus] = useState(item.category);
+  const [images, setImages] = useState<File[]>([]);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const toggleEdit = (id: string) =>
@@ -53,7 +56,11 @@ const TableRow: React.FC<TableRowProps> = ({
       </td>
       <td>
         {isEditing[item.id] ? (
-          <EditableField defaultValue={description} onChange={setDescription} />
+          <EditableField
+            defaultValue={description}
+            onChange={setDescription}
+            name="description"
+          />
         ) : item.description.length > 20 ? (
           <Modal
             title={`${item.description.slice(0, 20)}...`}
@@ -67,7 +74,11 @@ const TableRow: React.FC<TableRowProps> = ({
       </td>
       <td className={`py-2 px-4 h-[8vh]`}>
         {isEditing[item.id] ? (
-          <DropdownProduct selected={status} onChange={setStatus} />
+          <DropdownProduct
+            selected={status}
+            onChange={setStatus}
+            name="category"
+          />
         ) : (
           <span
             className={`badge badge-${ColorProductStatus(
@@ -90,9 +101,17 @@ const TableRow: React.FC<TableRowProps> = ({
       </td>
       <td>
         {isEditing[item.id] ? (
-          <EditImage oldImageUrls={item.imageProve} />
+          <EditImage
+            oldImageUrls={item.imageProve}
+            images={images}
+            setImages={setImages}
+          />
         ) : (
-          <ViewImg id={`viewImg-${item.id}`} image={item.imageProve} />
+          <ViewImg
+            id={`viewImg-${item.id}`}
+            image={oldImages}
+            setOldImages={setOldImages}
+          />
         )}
       </td>
       <td className={`py-2 px-4 ${isEditing ? "" : "cursor-not-allowed"}`}>
@@ -110,8 +129,19 @@ const TableRow: React.FC<TableRowProps> = ({
                 await handleUpdateUserHistory(item.id, {
                   description,
                   category: status,
+                  imageProves: images,
                 });
               }}
+              // action={() => {
+              //   startTransition(() => {
+              //     updateUserHistoryOnServer(
+              //       item.id,
+              //       description,
+              //       status,
+              //       images
+              //     );
+              //   });
+              // }}
               styles="btn-success btn-sm"
               confirmString={"Update"}
               isSubmitting={isUpdating}
@@ -125,6 +155,12 @@ const TableRow: React.FC<TableRowProps> = ({
                   <p>
                     Status{" "}
                     <span className="font-bold">{ConvertStatus(status)}</span>
+                  </p>
+                  <p>
+                    Image{" "}
+                    <span className="font-bold">
+                      {images.length > 0 ? "Updated" : "Not updated"}
+                    </span>
                   </p>
                 </div>
               }

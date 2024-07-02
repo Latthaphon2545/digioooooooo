@@ -1,3 +1,4 @@
+"use server";
 import { v2 as cloudinary } from "cloudinary";
 
 if (!process.env.CLOUDINARY_CLOUD_NAME) {
@@ -31,4 +32,21 @@ export async function uploadImage(image: {
     folder: "digiooooo",
   });
   return result.secure_url;
+}
+
+export async function uploadImage64(
+  base64Image: string,
+  mimeType: string
+): Promise<string> {
+  try {
+    const result = await cloudinary.uploader.upload(base64Image, {
+      folder: "digiooooo",
+      format: mimeType.split("/")[1],
+    });
+
+    return result.secure_url;
+  } catch (error) {
+    console.error("Failed to upload image to Cloudinary:", error);
+    throw error;
+  }
 }

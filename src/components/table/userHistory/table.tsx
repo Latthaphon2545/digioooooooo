@@ -10,6 +10,7 @@ import TableRow from "./tableRow";
 import { ShowAlert } from "../showAlert";
 import { updateUserHistory } from "./action/updateUserHistory";
 import AlertDialog from "@/components/alertDialog";
+import { updateUserHistoryOnServer } from "./action/serverUpdate";
 
 type TableUserHistoryProps = {
   historyData: {
@@ -30,7 +31,7 @@ export default function TableUserHistory({
 
   const handleUpdateWrapper = async (
     id: string,
-    history: { description: string; category: string }
+    history: { description: string; category: string; imageProves: File[] }
   ) => {
     await updateUserHistory(id, history, {
       historyData,
@@ -73,7 +74,6 @@ export default function TableUserHistory({
           </tbody>
         </table>
       </div>
-
       <div className="mobile:block laptop:hidden">
         {historyData.map((item) => {
           const { formattedDate } = ConvertTime(item.createdAt);

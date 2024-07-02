@@ -1,20 +1,26 @@
-import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { IoAddCircleOutline, IoTrashOutline } from "react-icons/io5";
+import ViewImg from "../historyProduct/historyProductViewImg";
 
 type EditImageProps = {
   oldImageUrls: string[];
+  images: File[];
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
 };
 
-export default function EditImage({ oldImageUrls }: EditImageProps) {
-  const [images, setImages] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<string[]>(oldImageUrls);
+export default function EditImage({
+  oldImageUrls,
+  images,
+  setImages,
+}: EditImageProps) {
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [deleteMode, setDeleteMode] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const newPreviewUrls = images.map((image) => URL.createObjectURL(image));
-    setPreviewUrls([...oldImageUrls, ...newPreviewUrls]);
+    const newImagePreviews = images.map((file) => URL.createObjectURL(file));
+    setPreviewUrls([...oldImageUrls, ...newImagePreviews]);
   }, [images, oldImageUrls]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,27 +31,32 @@ export default function EditImage({ oldImageUrls }: EditImageProps) {
   };
 
   const handleDeleteImage = (index: number) => {
+    const isOldImage = index < oldImageUrls.length;
     setPreviewUrls((prevUrls) => prevUrls.filter((_, i) => i !== index));
-    setImages((prevImages) =>
-      prevImages.filter((_, i) => i + oldImageUrls.length !== index)
-    );
+    if (!isOldImage) {
+      const newIndex = index - oldImageUrls.length;
+      setImages((prevImages) => prevImages.filter((_, i) => i !== newIndex));
+    }
     setDeleteMode(false);
   };
 
-  const triggerFileInput = () => {
-    fileInputRef.current?.click();
-  };
-
-  const toggleDeleteMode = () => {
-    setDeleteMode(!deleteMode);
-  };
+  const triggerFileInput = () => fileInputRef.current?.click();
+  const toggleDeleteMode = () => setDeleteMode(!deleteMode);
 
   return (
     <div className="relative">
       <div className="flex justify-center items-center space-x-2">
         <IoAddCircleOutline size={30} onClick={triggerFileInput} />
-        {oldImageUrls.length > 0 && (
-          <IoTrashOutline size={30} onClick={toggleDeleteMode} />
+        {(oldImageUrls.length > 0 || images.length > 0) && (
+          // <div className="flex justify-center items-center space-x-2">
+          //   <p className="text-xl">{previewUrls.length}</p>
+          //   <IoTrashOutline size={30} onClick={toggleDeleteMode} />
+          // </div>
+          <ViewImg
+            id="editImg"
+            image={[...oldImageUrls, ...previewUrls]}
+            editing={true}
+          />
         )}
       </div>
       <input
@@ -55,20 +66,8 @@ export default function EditImage({ oldImageUrls }: EditImageProps) {
         multiple
         onChange={handleImageChange}
         className="hidden"
+        name="image"
       />
-      {previewUrls.map((url, index) => (
-        <div key={index} className="inline-block relative">
-          <Image src={url} alt="Preview" width={100} height={100} />
-          {deleteMode && (
-            <button
-              className="absolute top-0 right-0"
-              onClick={() => handleDeleteImage(index)}
-            >
-              Delete
-            </button>
-          )}
-        </div>
-      ))}
     </div>
   );
 }

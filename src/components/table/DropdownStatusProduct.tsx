@@ -13,17 +13,20 @@ let PRODUCTSTATUS = [
 interface DropdownProps {
   selected: any;
   onChange: (value: string) => void;
+  name?: string;
 }
 
 export const DropdownProduct: React.FC<DropdownProps> = ({
   selected,
   onChange,
+  name,
 }) => {
   return (
     <select
       className="border-2 border-base-content rounded-md p-1 w-full text-center"
       value={selected}
       onChange={(e) => onChange(e.target.value)}
+      name={name}
     >
       {PRODUCTSTATUS.map((option) => (
         <option key={option} value={option}>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Error, Success } from "@/components/alertDialog";
 import { handleEditToggle } from "../../handleEditToggle";
+import { updateUserHistoryOnServer } from "./serverUpdate";
 
 interface UpdateUserHistoryProps {
   historyData: {
@@ -16,7 +17,7 @@ interface UpdateUserHistoryProps {
 
 export const updateUserHistory = async (
   id: string,
-  history: { description: string; category: string },
+  history: { description: string; category: string; imageProves: File[] },
   {
     historyData,
     setUpdateAlert,
@@ -28,7 +29,14 @@ export const updateUserHistory = async (
   }: UpdateUserHistoryProps
 ) => {
   try {
-    await axios.patch(`/api/users/updateUserHistory/${id}`, history);
+    console.log("history", history);
+
+    const formData = new FormData();
+    formData.append("description", history.description);
+    formData.append("category", history.category);
+    history.imageProves.forEach((file) => formData.append("images", file));
+
+    await updateUserHistoryOnServer(id, formData);
   } catch (err) {
     console.log(err);
     setUpdateAlert(true);
@@ -42,14 +50,13 @@ export const updateUserHistory = async (
       Error
     );
   } finally {
-    console.log("historyData", historyData);
-
-    historyData.map((item) => {
-      if (item.id === id) {
-        item.description = history.description;
-        item.status = history.category;
-      }
-    });
+    // historyData.map((item) => {
+    //   if (item.id === id) {
+    //     item.description = history.description;
+    //     item.category = history.category;
+    //     item.imageProve = history.imageProves;
+    //   }
+    // });
     handleEditToggle(id, setIsEditing);
     setUpdateAlert(true);
     showAlert(
