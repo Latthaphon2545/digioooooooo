@@ -28,10 +28,12 @@ export const pathMenu = (pathname: string) => {
       return "Setting";
     case "/setting/account":
       return "Account";
+    case "/setting/changePassword":
+      return "Change Password";
     default:
       if (pathname.startsWith("/products/history/")) {
         return "History";
       }
-      return "Page";
+      return "";
   }
 };

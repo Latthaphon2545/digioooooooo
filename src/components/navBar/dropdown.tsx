@@ -28,8 +28,12 @@ export default function Dropdown() {
     }
   }, [theme]);
 
-  const handleTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTheme(e.target.checked ? "dark" : "light");
+  const handleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
   };
 
   return (
@@ -58,12 +62,9 @@ export default function Dropdown() {
       <li className="m-1">
         <label>
           <IoMdSettings className={size} />
-          <span className="mobile:hidden laptop:block">
-            <Link href={"/setting"}>Settings</Link>
-          </span>
-          <span className="mobile:block laptop:hidden">
-            <Link href={"/setting?mobile=true"}>Settings</Link>
-          </span>
+          <Link href={"/setting/account"}>
+            <p>Settings</p>
+          </Link>
         </label>
       </li>
 

@@ -83,10 +83,18 @@ export default function Pagination({
     setPageStart(1);
   };
 
+  // set current page to last page
+
   const handleToLastPage = () => {
     onPageChange(totalPages);
     setPageStart(totalPages - 4);
   };
+
+  //set current page when refresh page or change page
+  useEffect(() => {
+    const skip = (currentPage - 1) * itemPage;
+    let setWhenReload = totalPages * itemPage - skip;
+  }, []);
 
   useEffect(() => {
     const skip = (currentPage - 1) * itemPage;
