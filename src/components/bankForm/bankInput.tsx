@@ -1,7 +1,7 @@
 import React from "react";
 import SubmitPopupButton from "../submitPopupButton";
 import ImageRenderer from "../imageRenderer";
-import { createBank } from "@/app/action/bank/actions";
+import { createBank } from "@/app/(withAutn)/action/bank/actions";
 
 export default function BankInput() {
   return (

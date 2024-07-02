@@ -9,7 +9,11 @@ export const decode = (str: string) => {
   const search = params.get("search") || "";
   const skip = params.get("skip") || "";
   const take = params.get("take") || "";
-  return { filter, search, skip, take };
+  const email = params.get("email") || "";
+  const password = params.get("password") || "";
+  const id = params.get("id") || "";
+  const name = params.get("name") || "";
+  return { filter, search, skip, take, email, password, id, name };
 };
 
 export const stringToHex = (str: string) => {

@@ -45,19 +45,16 @@ const Modal = ({
         role="dialog"
       >
         <div className="modal-box">
+          {boolClose && (
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={() => setOpen(!open)}
+            >
+              ✕
+            </button>
+          )}
           <h3 className="text-lg font-bold">{titleContent}</h3>
           <div className="text-sm text-start">{content}</div>
-          <div className="modal-action">
-            {boolClose && (
-              <label
-                htmlFor={id}
-                className="btn btn-sm"
-                onClick={() => setOpen(!open)}
-              >
-                Close
-              </label>
-            )}
-          </div>
         </div>
         <label
           className="modal-backdrop"

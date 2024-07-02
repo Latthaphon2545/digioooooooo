@@ -98,8 +98,9 @@ model Bank {
 }
 
 model phoneNumberOtp {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  otp         String
-  phoneNumber String
-  createdAt   DateTime @default(now())
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  otp             String
+  ReferenceNumber String
+  phoneNumber     String
+  createdAt       DateTime @default(now())
 }

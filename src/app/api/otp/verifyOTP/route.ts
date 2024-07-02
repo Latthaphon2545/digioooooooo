@@ -5,11 +5,9 @@ const bcrypt = require("bcrypt");
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { phone, otp } = await req.json();
+    const { phone, otp, refNum } = await req.json();
 
     const otpDb = await db.phoneNumberOtp.findMany({});
-
-    console.log(phone, otp);
 
     for (const record of otpDb) {
       const isMatchPhone = await bcrypt.compare(
@@ -17,23 +15,19 @@ export const POST = async (req: NextRequest) => {
         record.phoneNumber
       );
 
+      const isMatchRefNum = await bcrypt.compare(
+        refNum.toString(),
+        record.ReferenceNumber
+      );
+
+      const timeOut30Second =
+        new Date().getTime() - new Date(record.createdAt).getTime() <= 30000;
+
       // Check if the phone number matches
-      if (isMatchPhone) {
-        // Check if the OTP matches
+      if (isMatchPhone && isMatchRefNum && timeOut30Second) {
         const isMatchOtp = await bcrypt.compare(otp.toString(), record.otp);
 
-        // Check if the OTP is within the valid time (30 seconds)
-        const timeOut30Second =
-          new Date().getTime() - new Date(record.createdAt).getTime() <= 30000;
-
-        if (timeOut30Second && isMatchOtp) {
-          // Delete the OTP record from the database
-          const deleteOtp = await db.phoneNumberOtp.delete({
-            where: {
-              id: record.id,
-            },
-          });
-
+        if (isMatchOtp) {
           return new NextResponse(
             JSON.stringify({
               isMatchOtp,
@@ -50,7 +44,9 @@ export const POST = async (req: NextRequest) => {
             JSON.stringify({
               isMatchOtp,
               timeOut30Second,
-              message: "OTP verified failed",
+              message: `OTP verification failed. ${
+                isMatchOtp ? "" : "OTP does not match."
+              } ${timeOut30Second ? "" : "OTP has expired."}`,
             }),
             {
               status: 400,

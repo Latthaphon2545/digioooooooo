@@ -12,7 +12,7 @@ type AlertProps = {
   id: string;
   disabled?: boolean;
   isSubmitting?: boolean;
-  confirmString?: string;
+  confirmString?: string | React.ReactNode;
   confirmStyle?: string;
 };
 

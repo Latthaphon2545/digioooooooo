@@ -1,20 +1,30 @@
 "use client";
 
 import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { sendOtp } from "./sentOTP";
 
 interface VerifyOtpProps {
   phoneNumber: string;
+  referenceNumber: string;
+  setShowModal: (value: boolean) => void;
   setValue: (value: string) => void;
 }
 
-export function VertifyOtp({ phoneNumber, setValue }: VerifyOtpProps) {
+export function VertifyOtp({
+  phoneNumber,
+  referenceNumber,
+  setShowModal,
+  setValue,
+}: VerifyOtpProps) {
   const [timeLeft, setTimeLeft] = useState(30);
   const [reSendOtp, setResendOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+
+  const [refNum, setRefNum] = useState(referenceNumber);
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -37,20 +47,6 @@ export function VertifyOtp({ phoneNumber, setValue }: VerifyOtpProps) {
     }
   }, [error]);
 
-  const sendOtp = async () => {
-    try {
-      setError(false);
-      await axios.post("/api/otp/generateOTP", {
-        phone: phoneNumber,
-      });
-      setTimeLeft(30);
-      setResendOtp(false);
-      console.log(`Sending OTP to ${phoneNumber}`);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -58,10 +54,12 @@ export function VertifyOtp({ phoneNumber, setValue }: VerifyOtpProps) {
       const res = await axios.post("/api/otp/verifyOTP", {
         phone: phoneNumber,
         otp: otp,
+        refNum: refNum,
       });
 
       if (res.status === 200) {
-        window.location.reload();
+        setValue(phoneNumber);
+        setShowModal(false);
       }
     } catch (e) {
       console.log(e);
@@ -101,6 +99,13 @@ export function VertifyOtp({ phoneNumber, setValue }: VerifyOtpProps) {
 
       <div className="flex flex-row gap-2 text-xs">
         <div>
+          <span className="text-xs">Ref Number: </span>
+          <span className="text-xs text-primary">{refNum}</span>
+        </div>
+      </div>
+
+      <div className="flex flex-row gap-2 text-xs">
+        <div>
           <span className="countdown font-mono text-4xl">{timeLeft}</span>
           sec
         </div>
@@ -109,9 +114,23 @@ export function VertifyOtp({ phoneNumber, setValue }: VerifyOtpProps) {
       <div className="flex flex-row gap-2 text-xs">
         <button
           className={`btn btn-xs ${!reSendOtp && "btn-disabled"}`}
-          onClick={sendOtp}
+          onClick={async () => {
+            setResendLoading(true);
+            await sendOtp({
+              phoneNumber: phoneNumber,
+              email: "games2545.lattapon@gmail.com",
+              setRefNum,
+              setTimeLeft,
+              setResendOtp,
+            });
+            setResendLoading(false);
+          }}
         >
-          Resend OTP
+          {resendLoading ? (
+            <span className="loading loading-spinner loading-xs"></span>
+          ) : (
+            <span>Resend OTP</span>
+          )}
         </button>
       </div>
 

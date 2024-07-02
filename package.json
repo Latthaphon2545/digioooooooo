@@ -11,6 +11,7 @@
   "dependencies": {
     "@ericblade/quagga2": "^1.8.4",
     "@prisma/client": "^5.14.0",
+    "@react-email/components": "^0.0.20",
     "@upstash/ratelimit": "^1.2.1",
     "@upstash/redis": "^1.31.6",
     "@zxing/browser": "^0.1.5",
@@ -30,6 +31,7 @@
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.3",
     "react-phone-input-2": "^2.15.1",
+    "resend": "^3.4.0",
     "textlink-sms": "^0.0.3",
     "twilio": "^5.2.1",
     "xlsx": "^0.18.5"

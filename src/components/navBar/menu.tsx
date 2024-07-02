@@ -1,9 +1,9 @@
 "use client";
 
 import { encode } from "@/lib/generateRandomHref";
-import { IoMdHome } from "react-icons/io";
+import { IoMdHome, IoMdSettings } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
-import { MdOutlineDevicesOther } from "react-icons/md";
+import { MdHistory, MdOutlineDevicesOther } from "react-icons/md";
 import { RxBoxModel } from "react-icons/rx";
 import { FaShop } from "react-icons/fa6";
 import { AiFillBank } from "react-icons/ai";
@@ -74,6 +74,21 @@ export const MENU = [
         name: "Change Status",
         href: "/action/changeStatus",
         icon: <MdOutlinePublishedWithChanges />,
+      },
+    ],
+  },
+  {
+    title: "Account",
+    links: [
+      {
+        name: "My History",
+        href: "/action/checkStock",
+        icon: <MdHistory />,
+      },
+      {
+        name: "Setting",
+        href: "/setting/account",
+        icon: <IoMdSettings />,
       },
     ],
   },
