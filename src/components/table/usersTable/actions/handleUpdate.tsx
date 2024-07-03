@@ -29,9 +29,9 @@ export const handleUpdate = async (
 ) => {
   try {
     await axios.patch(`/api/users/updateUsers/${id}`, users);
+    setUpdateAlert(true);
   } catch (err) {
     console.log(err);
-    setUpdateAlert(true);
     showAlert(
       "Failed to update user",
       "alert-error mobile:bg-error tablet:bg-error",
@@ -51,7 +51,6 @@ export const handleUpdate = async (
       }
     });
     handleEditToggle(id, setIsEditing);
-    setUpdateAlert(true);
     showAlert(
       "User updated successfully",
       "alert-success  mobile:bg-success tablet:bg-success",

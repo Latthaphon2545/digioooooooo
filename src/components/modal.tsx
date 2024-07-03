@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { IoMdCloseCircle } from "react-icons/io";
 
 interface ModalProps {
   title: React.ReactNode;
@@ -44,14 +45,15 @@ const Modal = ({
         }`}
         role="dialog"
       >
-        <div className="modal-box">
+        <div className="modal-box p-8">
           {boolClose && (
-            <button
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            <label
+              htmlFor={id}
+              className="btn btn-xs btn-circle btn-error absolute right-4 top-2"
               onClick={() => setOpen(!open)}
             >
-              ✕
-            </button>
+              X
+            </label>
           )}
           <h3 className="text-lg font-bold">{titleContent}</h3>
           <div className="text-sm text-start">{content}</div>

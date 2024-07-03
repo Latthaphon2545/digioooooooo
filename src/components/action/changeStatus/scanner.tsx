@@ -3,7 +3,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { BarcodeScanner } from "react-barcode-scanner";
-import "react-barcode-scanner/polyfill";
 
 export default function Scanner({
   setNextStep,

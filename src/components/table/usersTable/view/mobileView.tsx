@@ -123,6 +123,8 @@ const ModalEditMobileUser = ({
   const [status, setStatus] = useState(item?.status || "");
   const [contact, setContact] = useState(item?.contact || "");
 
+  const [isLoad, setIsLoad] = useState(false);
+
   return (
     <div className="px-5 flex flex-col gap-5 items-center">
       <div className="w-full">
@@ -144,6 +146,7 @@ const ModalEditMobileUser = ({
 
       <SubmitPopupButton
         action={async () => {
+          setIsLoad(true);
           await handleUpdate(item.id, {
             name,
             role,
@@ -153,10 +156,16 @@ const ModalEditMobileUser = ({
           const modal = document.getElementById(`editUser${item.id}`);
           const checkbox = modal?.nextElementSibling as HTMLInputElement;
           checkbox.checked = false;
+          setIsLoad(false);
         }}
         styles="btn-xl btn-primary"
-        confirmString="Update"
-        isSubmitting={false}
+        confirmString={
+          isLoad ? (
+            <span className="loading loading-spinner loading-xs"></span>
+          ) : (
+            "Update"
+          )
+        }
         confirmStyle="btn-success btn-sm"
         header="Are you sure you want to update this user?"
         description={""}

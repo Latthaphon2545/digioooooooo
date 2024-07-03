@@ -1,10 +1,10 @@
 import { User } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
-import { VercelInviteUserEmail } from "@/components/email/userInvite";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { Resend } from "resend";
 import { db } from "@/lib/db";
+import passwordSetEmail from "@/components/email/password";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -25,10 +25,11 @@ export const POST = async (req: NextRequest) => {
         from: "onboarding@resend.dev",
         to: "games2545.lattapon@gmail.com",
         subject: `Create your account`,
-        react: VercelInviteUserEmail({
+        react: passwordSetEmail({
           invitedByEmail: element.email,
           invitedByName: element.name,
           invitedByPassword: password,
+          type: "setPassword",
         }),
       });
 

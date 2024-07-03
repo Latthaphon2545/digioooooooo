@@ -34,7 +34,7 @@ export const TableView = ({
   const [status, setStatus] = useState(item.status);
   const [contact, setContact] = useState(item.contact);
 
-  const [isUpdate, setIsUpdate] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
 
   return (
     <tr key={item.id}>
@@ -84,17 +84,23 @@ export const TableView = ({
             </ActionButton>
             <SubmitPopupButton
               action={async () => {
-                setIsUpdate(true);
+                setIsLoad(true);
                 await handleUpdate(item.id, {
                   name,
                   role,
                   status,
                   contact,
                 });
+                setIsLoad(false);
               }}
               styles="btn-success btn-sm"
-              confirmString={"Update"}
-              isSubmitting={isUpdate}
+              confirmString={
+                isLoad ? (
+                  <span className="loading loading-spinner loading-xs"></span>
+                ) : (
+                  "Update"
+                )
+              }
               confirmStyle="btn-success btn-sm"
               header="Are you sure you want to update this user?"
               description={

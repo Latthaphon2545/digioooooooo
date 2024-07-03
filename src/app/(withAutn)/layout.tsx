@@ -16,7 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="shortcut icon" href="#" />
+        <link rel="icon" href="data:," />
+
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </head>
       <body className={`${inter.className} flex`}>

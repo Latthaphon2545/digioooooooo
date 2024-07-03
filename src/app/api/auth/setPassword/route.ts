@@ -1,18 +1,16 @@
 import { db } from "@/lib/db";
 
 import { NextRequest, NextResponse } from "next/server";
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, oldPassword, newPassword } = body ?? {};
+    const { email, oldPassword, newPassword, method } = body ?? {};
 
     const user = await db.user.findUnique({
       where: { email },
     });
-
-    console.log(user);
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
@@ -23,8 +21,6 @@ export async function PATCH(request: NextRequest) {
       user.hashedPassword
     );
 
-    console.log(isPasswordMatch);
-
     if (!isPasswordMatch) {
       return NextResponse.json(
         { message: "Old password does not match" },
@@ -34,12 +30,17 @@ export async function PATCH(request: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    const passwordSet = await db.user.update({
-      where: { email },
-      data: { hashedPassword, status: "ACTIVE" },
-    });
-
-    console.log(passwordSet);
+    if (method === "setPasswors") {
+      const passwordSet = await db.user.update({
+        where: { email },
+        data: { hashedPassword, status: "ACTIVE" },
+      });
+    } else {
+      const passwordSet = await db.user.update({
+        where: { email },
+        data: { hashedPassword },
+      });
+    }
 
     return NextResponse.json({ message: "Password updated" }, { status: 200 });
   } catch (e) {

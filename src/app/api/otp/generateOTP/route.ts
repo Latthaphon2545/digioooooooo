@@ -10,39 +10,49 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { phone, email } = await req.json();
+    const { phoneNumber, email } = await req.json();
 
     const otp = crypto.randomInt(100000, 999999);
 
     // random 6 characters in english
     const refNum = crypto.randomBytes(3).toString("hex");
-    const refNumInDB = await bcrypt.hash(refNum, 10);
+    const hashedRefNum = await bcrypt.hash(refNum, 10);
 
     const hashedOtp = await bcrypt.hash(otp.toString(), 10);
-    const hashedPhoneNumber = await bcrypt.hash(phone.toString(), 10);
 
-    const OTP = await db.phoneNumberOtp.create({
-      data: {
-        otp: hashedOtp,
-        phoneNumber: hashedPhoneNumber,
-        ReferenceNumber: refNumInDB,
-        createdAt: new Date(),
-      },
-    });
+    if (phoneNumber) {
+      const hashedPhoneNumber = await bcrypt.hash(phoneNumber.toString(), 10);
+      await db.otp.create({
+        data: {
+          otp: hashedOtp,
+          phoneNumber: hashedPhoneNumber,
+          referenceNumber: hashedRefNum,
+          createdAt: new Date(),
+        },
+      });
+    }
 
-    const { data, error } = await resend.emails.send({
+    if (email) {
+      const hashedEmail = await bcrypt.hash(email.toString(), 10);
+      await db.otp.create({
+        data: {
+          otp: hashedOtp,
+          email: hashedEmail,
+          referenceNumber: hashedRefNum,
+          createdAt: new Date(),
+        },
+      });
+    }
+
+    await resend.emails.send({
       from: "onboarding@resend.dev",
       to: email,
-      subject: `Verify your ${otp}`,
+      subject: `Verify your identity`,
       react: PlaidVerifyIdentityEmail({
         validationCode: otp.toString(),
         referenceNumber: refNum,
       }),
     });
-
-    if (error) {
-      return Response.json({ error }, { status: 500 });
-    }
 
     return new NextResponse(
       JSON.stringify({

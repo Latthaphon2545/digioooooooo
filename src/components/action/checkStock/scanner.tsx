@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { BarcodeScanner } from "react-barcode-scanner";
-import "react-barcode-scanner/polyfill";
 import AlertDialog, { Error, Success, Warning } from "../../alertDialog";
 import axios from "axios";
 

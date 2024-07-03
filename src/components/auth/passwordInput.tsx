@@ -1,48 +1,19 @@
 "use client";
 
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import logo from "/public/image/digio_logo.png";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
-import { handleChange } from "../setting/handleChange";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { tooltipShow } from "../setting/tooltipShow";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { SetPasswordProps } from "./setPassword/setPassword";
 
-interface SetPasswordProps {
-  email: string;
-  password: string;
-  name: string;
-}
-
-export default function SetPassword({
+export const passwordInput = ({
   email,
   password,
   name,
-}: SetPasswordProps) {
-  return (
-    <>
-      <div className="flex justify-center">
-        <Image
-          src={logo}
-          alt="logo"
-          className="mobile:w-[50%] laptop:w-[100%]
-        "
-        />
-      </div>
-      <div className="flex flex-col items-center gap-5 px-5">
-        <h1 className="text-2xl font-bold text-center">Welcome to Digio</h1>
-        <p className="text-center">
-          Please set your password to continue using our inventory system
-        </p>
-        {passwordSet({ email, password, name })}
-      </div>
-    </>
-  );
-}
-
-const passwordSet = ({ email, password, name }: SetPasswordProps) => {
+  type,
+}: SetPasswordProps) => {
   const tooltipPassword = [
     "Please enter at least 8 characters password and at most 30 characters",
     "Required Uppercase",
@@ -116,6 +87,7 @@ const passwordSet = ({ email, password, name }: SetPasswordProps) => {
         email,
         oldPassword: password,
         newPassword: value,
+        method: type,
       });
       setOpen(true);
     } catch (e) {

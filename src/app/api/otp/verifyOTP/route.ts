@@ -1,30 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createResponse } from "../../products/checkStock/route";
 import { db } from "@/lib/db";
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { phone, otp, refNum } = await req.json();
+    const { phone, email, otp, refNum } = await req.json();
 
-    const otpDb = await db.phoneNumberOtp.findMany({});
+    const otpRecords = await db.otp.findMany({
+      where: {
+        used: false,
+      },
+    });
 
-    for (const record of otpDb) {
-      const isMatchPhone = await bcrypt.compare(
-        phone.toString(),
-        record.phoneNumber
-      );
+    for (const record of otpRecords) {
+      let isMatchVia = false;
+
+      if (email && record.email) {
+        isMatchVia = await bcrypt.compare(email.toString(), record.email);
+      }
+
+      if (phone && record.phoneNumber) {
+        isMatchVia = await bcrypt.compare(phone.toString(), record.phoneNumber);
+      }
+
+      if (!isMatchVia) {
+        continue;
+      }
 
       const isMatchRefNum = await bcrypt.compare(
         refNum.toString(),
-        record.ReferenceNumber
+        record.referenceNumber
       );
-
       const timeOut30Second =
         new Date().getTime() - new Date(record.createdAt).getTime() <= 30000;
 
-      // Check if the phone number matches
-      if (isMatchPhone && isMatchRefNum && timeOut30Second) {
+      if (isMatchVia && isMatchRefNum && timeOut30Second) {
         const isMatchOtp = await bcrypt.compare(otp.toString(), record.otp);
 
         if (isMatchOtp) {
@@ -59,7 +70,7 @@ export const POST = async (req: NextRequest) => {
 
     return new NextResponse(
       JSON.stringify({
-        message: "Phone number not found.",
+        message: "Phone number or email not found.",
       }),
       {
         status: 404,

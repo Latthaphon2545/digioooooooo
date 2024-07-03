@@ -31,7 +31,7 @@ export const HamburgerBar = ({
   }, [openHamburger]);
 
   return (
-    <div className="fixed top-0 left-0 h-full w-full ">
+    <div className="fixed top-0 left-0 h-full w-full">
       {/* Background overlay */}
       <div
         className={`absolute top-0 left-0 w-full z-30 h-full bg-black opacity-50 overflow-hidden${
@@ -42,7 +42,7 @@ export const HamburgerBar = ({
 
       {/* Sidebar */}
       <div
-        className={`h-full z-40 mobile:w-[70%] tablet:w-[60%] bg-base-100  flex flex-col items-center transform transition-transform duration-500 ease-in-out 
+        className={`h-full z-40 mobile:w-[70%] tablet:w-[60%] bg-base-100  flex flex-col items-center transform transition-transform duration-500 ease-in-out
           ${openHamburger ? "translate-x-0" : "-translate-x-full"} `}
       >
         <div className="flex flex-row items-center justify-center my-5">
@@ -50,7 +50,7 @@ export const HamburgerBar = ({
             <Image src={logo} alt="Digio" width={150} />
           </Link>
         </div>
-        <div className="flex flex-col text-2xl w-full px-3">
+        <div className="flex flex-col text-2xl w-full px-3 mb-5 overflow-auto ">
           {MENU.map((item, index) => (
             <React.Fragment key={index}>
               {index !== 0 && <div className="divider m-2"></div>}

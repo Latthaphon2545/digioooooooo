@@ -25,7 +25,7 @@ export const sendOtp = async ({
     if (setBoolGenerateOtp) setBoolGenerateOtp(true);
     if (setError) setError(false);
     const res = await axios.post("/api/otp/generateOTP", {
-      phone: phoneNumber,
+      phoneNumber: phoneNumber,
       email: email,
     });
     setRefNum(res.data.message);

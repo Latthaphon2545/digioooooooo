@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { sendOtp } from "./sentOTP";
+import { sendOtp } from "../../../lib/sentOTP";
 
 interface VerifyOtpProps {
   phoneNumber: string;

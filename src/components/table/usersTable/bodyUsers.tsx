@@ -20,6 +20,7 @@ export default function BodyUsers({ dataForCurrentPage, editor }: TableProps) {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
+  const [isLoad, setIsLoad] = useState(false);
 
   const [openEditModal, setOpenEditModal] = useState(false);
 
@@ -81,7 +82,7 @@ export default function BodyUsers({ dataForCurrentPage, editor }: TableProps) {
               editor={editor}
               setOpenEditModal={setOpenEditModal}
               openEditModal={openEditModal}
-              handleUpdate={handleUpdateWrapper} // Ensure correct prop passing
+              handleUpdate={handleUpdateWrapper}
             />
           </div>
         ))}

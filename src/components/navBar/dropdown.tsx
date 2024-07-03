@@ -2,14 +2,17 @@
 
 import { BiLogOut } from "react-icons/bi";
 import Alert from "../alert";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdHistory } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 const size = "h-6 w-6";
+
+const userId = "66554e8534b8e2bb8f5f42d1";
 export default function Dropdown() {
   const [theme, setTheme] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const localTheme = localStorage.getItem("theme") || "";
@@ -48,23 +51,22 @@ export default function Dropdown() {
         </div>
       </li>
 
-      {/* Profile */}
       <li className="m-1">
-        <label>
+        <label
+          onClick={() => {
+            router.push(`/users/history/${userId}/?skip=0&take=7`);
+          }}
+        >
           <MdHistory className={size} />
-          <Link href={`/users/history/66554e8534b8e2bb8f5f42d1/?skip=0&take=7`}>
-            History
-          </Link>
+          <p>History</p>
         </label>
       </li>
 
       {/* Settings */}
       <li className="m-1">
-        <label>
+        <label onClick={() => router.push("/setting/account")}>
           <IoMdSettings className={size} />
-          <Link href={"/setting/account"}>
-            <p>Settings</p>
-          </Link>
+          <p>Settings</p>
         </label>
       </li>
 
@@ -83,7 +85,9 @@ export default function Dropdown() {
       <li className="mt-5">
         <Alert
           styles="btn-error btn-sm text-base-100 text-sm w-44"
-          action={() => {}}
+          action={() => {
+            router.push("/login");
+          }}
           alertHeader="You're about to logout"
           alertDescription="Are you sure you want to logout?"
           id="logout"

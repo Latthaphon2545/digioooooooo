@@ -97,10 +97,12 @@ model Bank {
   product Product[]
 }
 
-model phoneNumberOtp {
+model Otp {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   otp             String
-  ReferenceNumber String
-  phoneNumber     String
+  referenceNumber String
+  email           String?
+  phoneNumber     String?
   createdAt       DateTime @default(now())
+  used            Boolean  @default(false)
 }

@@ -77,19 +77,4 @@ export const MENU = [
       },
     ],
   },
-  {
-    title: "Account",
-    links: [
-      {
-        name: "My History",
-        href: "/action/checkStock",
-        icon: <MdHistory />,
-      },
-      {
-        name: "Setting",
-        href: "/setting/account",
-        icon: <IoMdSettings />,
-      },
-    ],
-  },
 ];

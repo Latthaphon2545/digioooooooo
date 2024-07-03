@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ericblade/quagga2": "^1.8.4",
     "@prisma/client": "^5.14.0",
     "@react-email/components": "^0.0.20",
     "@upstash/ratelimit": "^1.2.1",
@@ -18,10 +17,8 @@
     "@zxing/library": "^0.21.0",
     "axios": "^1.7.1",
     "bcrypt": "^5.1.1",
-    "bcryptjs": "^2.4.3",
     "cloudinary": "^2.2.0",
     "fs": "^0.0.1-security",
-    "javascript-barcode-reader": "^0.6.9",
     "jsqr": "^1.4.0",
     "mongodb": "^6.8.0",
     "next": "14.2.3",
@@ -30,13 +27,11 @@
     "react-dom": "^18",
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.3",
-    "react-phone-input-2": "^2.15.1",
     "resend": "^3.4.0",
-    "textlink-sms": "^0.0.3",
-    "twilio": "^5.2.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

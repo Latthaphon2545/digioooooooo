@@ -6,7 +6,7 @@ import { VertifyOtp } from "./vertifyOtp";
 import axios from "axios";
 import { handleChange } from "../handleChange";
 import { tooltipShow } from "../tooltipShow";
-import { sendOtp } from "./sentOTP";
+import { sendOtp } from "../../../lib/sentOTP";
 
 interface AccountInfoProps {
   title: string;

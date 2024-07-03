@@ -185,13 +185,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
               styles="btn-info btn-sm"
               disabled={!editor}
             >
-              {isUpdating[item.id] ? (
-                <span className="loading loading-spinner"></span>
-              ) : (
-                <>
-                  <TbUserEdit size={20} /> Edit
-                </>
-              )}
+              <TbUserEdit size={20} /> Edit
             </ActionButton>
           )}
         </td>
@@ -394,18 +388,25 @@ const renderSubmitPopupButton = (
     merchant: { name: string; address: string; contact: string }
   ) => Promise<void>
 ) => {
+  const [loading, setLoading] = useState(false);
   return (
     <SubmitPopupButton
       action={async () => {
+        setLoading(true);
         await handleUpdate(id, { name, address, contact });
-
-        const modal = document.getElementById(`editUser${id}`);
+        setLoading(false);
+        const modal = document.getElementById(`editMerchants${id}`);
         const checkbox = modal?.nextElementSibling as HTMLInputElement;
         checkbox.style.display = "none";
       }}
       styles="btn-sm btn-success"
-      confirmString={"Update"}
-      isSubmitting={false}
+      confirmString={
+        loading ? (
+          <span className="loading loading-spinner"></span>
+        ) : (
+          <>Confirm</>
+        )
+      }
       confirmStyle="btn-success btn-sm"
       header="Are you sure you want to update this user?"
       description={
@@ -424,7 +425,7 @@ const renderSubmitPopupButton = (
           </div>
         </div>
       }
-      id={`editUser${id}`}
+      id={`editMerchants${id}`}
     >
       Confirm
     </SubmitPopupButton>
