@@ -34,19 +34,10 @@ export async function uploadImage(image: {
   return result.secure_url;
 }
 
-export async function uploadImage64(
-  base64Image: string,
-  mimeType: string
-): Promise<string> {
-  try {
-    const result = await cloudinary.uploader.upload(base64Image, {
-      folder: "digiooooo",
-      format: mimeType.split("/")[1],
-    });
-
-    return result.secure_url;
-  } catch (error) {
-    console.error("Failed to upload image to Cloudinary:", error);
-    throw error;
-  }
+export async function deleteImage(image: string) {
+  const parts = image.split("/");
+  const publicId = parts.slice(-2).join("/");
+  await cloudinary.uploader.destroy(publicId, function (error, result) {
+    console.log(result, error);
+  });
 }

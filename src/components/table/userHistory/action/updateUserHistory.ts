@@ -18,6 +18,7 @@ interface UpdateUserHistoryProps {
 export const updateUserHistory = async (
   id: string,
   history: { description: string; category: string; imageProves: File[] },
+  imageToDelete: string[],
   {
     historyData,
     setUpdateAlert,
@@ -35,8 +36,19 @@ export const updateUserHistory = async (
     formData.append("description", history.description);
     formData.append("category", history.category);
     history.imageProves.forEach((file) => formData.append("images", file));
+    imageToDelete.forEach((image) => formData.append("imagesToDelete", image));
 
-    await updateUserHistoryOnServer(id, formData);
+    console.log("Image to delete", imageToDelete);
+
+    const updatedData = await updateUserHistoryOnServer(id, formData);
+    console.log("Updated data", updatedData);
+    // historyData.map((item) => {
+    //   if (item.id === id) {
+    //     item.description = updatedData && updatedData.description;
+    //     item.category = updatedData && updatedData.category;
+    //     item.imageProve = updatedData && updatedData.imageProve;
+    //   }
+    // });
   } catch (err) {
     console.log(err);
     setUpdateAlert(true);
@@ -49,14 +61,8 @@ export const updateUserHistory = async (
       setUpdateAlert,
       Error
     );
+    return;
   } finally {
-    // historyData.map((item) => {
-    //   if (item.id === id) {
-    //     item.description = history.description;
-    //     item.category = history.category;
-    //     item.imageProve = history.imageProves;
-    //   }
-    // });
     handleEditToggle(id, setIsEditing);
     setUpdateAlert(true);
     showAlert(
