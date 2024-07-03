@@ -14,49 +14,62 @@ export const updateUserHistoryOnServer = async (
   id: string,
   formData: FormData
 ) => {
-  console.log("test");
-
   try {
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
     const imageFiles = formData.getAll("images");
+    const imageToDelete = formData.getAll("imagesToDelete");
+    console.log("image", imageFiles);
 
-    const images = [];
-    if (imageFiles.length > 0) {
-      for (const image of imageFiles) {
-        try {
-          images.push(await uploadImage(image as File));
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
+    console.log("image to delete", imageToDelete);
 
-    const updateData: UpdateData = {
-      description,
-      category: category as StatusProduct,
-    };
+    // const images = [];
+    // if (imageFiles.length > 0) {
+    //   for (const image of imageFiles) {
+    //     try {
+    //       images.push(await uploadImage(image as File));
+    //       console.log("Image uploaded");
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    //   }
+    // }
 
-    if (images.length > 0) {
-      const currentHistory = await db.history.findUnique({ where: { id: id } });
+    // const updateData: UpdateData = {
+    //   description,
+    //   category: category as StatusProduct,
+    // };
 
-      if (!currentHistory) {
-        console.error("History not found");
-        return;
-      }
+    // if (images.length > 0 || imageToDelete.length > 0) {
+    //   const currentHistory = await db.history.findUnique({ where: { id: id } });
 
-      const existingImages = currentHistory?.imageProve || [];
-      const combinedImages = [...existingImages, ...images];
-      updateData.imageProve = combinedImages;
-    }
+    //   if (!currentHistory) {
+    //     console.error("History not found");
+    //     return;
+    //   }
 
-    const updateUserHistory = await db.history.update({
-      where: { id: id },
-      data: updateData,
-    });
+    //   const existingImages = currentHistory?.imageProve || [];
 
-    console.log("User history updated", updateUserHistory);
-    revalidatePath("/", "layout");
+    //   let updatedImages = [...existingImages, ...images];
+
+    //   if (imageToDelete.length > 0) {
+    //     console.log("Image to delete", imageToDelete);
+
+    //     updatedImages = updatedImages.filter(
+    //       (image) => !imageToDelete.includes(image)
+    //     );
+    //   }
+    //   updateData.imageProve = updatedImages;
+    // }
+
+    // console.log("Update data", updateData);
+    // const updateUserHistory = await db.history.update({
+    //   where: { id: id },
+    //   data: updateData,
+    // });
+    // console.log("User history updated", updateUserHistory);
+    // revalidatePath("/", "layout");
+    // return updateUserHistory;
   } catch (error) {
     console.error(error);
   }

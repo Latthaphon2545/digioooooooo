@@ -27,7 +27,8 @@ interface TableRowProps {
   >;
   handleUpdateUserHistory: (
     id: string,
-    history: { description: string; category: string; imageProves: File[] }
+    history: { description: string; category: string; imageProves: File[] },
+    imageToDelete: string[]
   ) => Promise<void>;
 }
 
@@ -41,12 +42,10 @@ const TableRow: React.FC<TableRowProps> = ({
   const { formattedDate, displayTime } = ConvertTime(item.createdAt);
   const [description, setDescription] = useState(item.description);
   const [oldImages, setOldImages] = useState(item.imageProve);
+  const [imageToDelete, setImageToDelete] = useState<string[]>([]);
   const [status, setStatus] = useState(item.category);
   const [images, setImages] = useState<File[]>([]);
   const [isUpdating, setIsUpdating] = useState(false);
-
-  const toggleEdit = (id: string) =>
-    setIsEditing((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
     <tr key={item.id}>
@@ -105,13 +104,10 @@ const TableRow: React.FC<TableRowProps> = ({
             oldImageUrls={item.imageProve}
             images={images}
             setImages={setImages}
+            setImageToDelete={setImageToDelete}
           />
         ) : (
-          <ViewImg
-            id={`viewImg-${item.id}`}
-            image={oldImages}
-            setOldImages={setOldImages}
-          />
+          <ViewImg id={`viewImg-${item.id}`} image={oldImages} />
         )}
       </td>
       <td className={`py-2 px-4 ${isEditing ? "" : "cursor-not-allowed"}`}>
@@ -126,11 +122,15 @@ const TableRow: React.FC<TableRowProps> = ({
             <SubmitPopupButton
               action={async () => {
                 setIsUpdating(true);
-                await handleUpdateUserHistory(item.id, {
-                  description,
-                  category: status,
-                  imageProves: images,
-                });
+                await handleUpdateUserHistory(
+                  item.id,
+                  {
+                    description,
+                    category: status,
+                    imageProves: images,
+                  },
+                  imageToDelete
+                );
               }}
               // action={() => {
               //   startTransition(() => {

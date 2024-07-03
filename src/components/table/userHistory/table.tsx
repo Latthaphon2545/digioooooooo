@@ -31,9 +31,10 @@ export default function TableUserHistory({
 
   const handleUpdateWrapper = async (
     id: string,
-    history: { description: string; category: string; imageProves: File[] }
+    history: { description: string; category: string; imageProves: File[] },
+    imageToDelete: string[]
   ) => {
-    await updateUserHistory(id, history, {
+    await updateUserHistory(id, history, imageToDelete, {
       historyData,
       setUpdateAlert,
       showAlert: ShowAlert,
