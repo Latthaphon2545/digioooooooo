@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { IoAddCircleOutline, IoTrashOutline } from "react-icons/io5";
+import { IoAddCircleOutline } from "react-icons/io5";
 import ViewImg from "../historyProduct/historyProductViewImg";
 
 type EditImageProps = {
@@ -7,6 +7,7 @@ type EditImageProps = {
   images: File[];
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
   setImageToDelete?: React.Dispatch<React.SetStateAction<string[]>>;
+  imageToDelete: string[];
 };
 
 export default function EditImage({
@@ -14,14 +15,19 @@ export default function EditImage({
   images,
   setImages,
   setImageToDelete,
+  imageToDelete,
 }: EditImageProps) {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const newImagePreviews = images.map((file) => URL.createObjectURL(file));
-    setPreviewUrls([...oldImageUrls, ...newImagePreviews]);
-  }, [images, oldImageUrls]);
+    setPreviewUrls(newImagePreviews);
+
+    return () => {
+      newImagePreviews.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [images]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -33,7 +39,19 @@ export default function EditImage({
   const triggerFileInput = () => fileInputRef.current?.click();
 
   const handleDeleteImage = (index: number) => {
-    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    if (index < oldImageUrls.length) {
+      if (setImageToDelete) {
+        setImageToDelete((prev) => [...prev, oldImageUrls[index]]);
+      }
+      oldImageUrls.splice(index, 1);
+    } else {
+      setImages((prevImages) =>
+        prevImages.filter((_, i) => i !== index - oldImageUrls.length)
+      );
+      setPreviewUrls((prevUrls) =>
+        prevUrls.filter((_, i) => i !== index - oldImageUrls.length)
+      );
+    }
   };
 
   return (
@@ -45,16 +63,13 @@ export default function EditImage({
         {(oldImageUrls.length > 0 || images.length > 0) && (
           <ViewImg
             id="editImg"
-            image={[
-              ...oldImageUrls,
-              ...previewUrls,
-              ...images.map((file) => URL.createObjectURL(file)),
-            ]}
+            image={[...oldImageUrls, ...previewUrls]}
             setImage={handleDeleteImage}
             editing={true}
             setImageToDelete={setImageToDelete}
             inputRef={fileInputRef}
             triggerFileInput={triggerFileInput}
+            imageToDelete={imageToDelete}
           />
         )}
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MdImageSearch } from "react-icons/md"; // Import MdDelete for the delete icon
+import { MdImageSearch } from "react-icons/md";
 import Modal from "../../modal";
 import { TbHttpDelete } from "react-icons/tb";
 import SubmitPopupButton from "@/components/submitPopupButton";
@@ -13,6 +13,7 @@ const ViewImg = ({
   setImage,
   setImageToDelete,
   triggerFileInput,
+  imageToDelete,
 }: {
   id: string;
   image: string[];
@@ -21,6 +22,7 @@ const ViewImg = ({
   setImageToDelete?: React.Dispatch<React.SetStateAction<string[]>>;
   inputRef?: React.RefObject<HTMLInputElement>;
   triggerFileInput?: () => void;
+  imageToDelete?: string[];
 }) => {
   const [images, setImages] = useState<string[]>([]);
 
@@ -34,7 +36,14 @@ const ViewImg = ({
     if (setImage) {
       setImage(index);
     }
-    if (setImageToDelete && image.includes(deletedImage)) {
+    if (
+      setImageToDelete &&
+      index < image.length &&
+      !deletedImage.startsWith("blob:") &&
+      !imageToDelete?.includes(deletedImage)
+    ) {
+      console.log("deletedImage", deletedImage);
+
       setImageToDelete((prev) => [...prev, deletedImage]);
     }
   };
@@ -61,7 +70,7 @@ const ViewImg = ({
                     header="Delete Image?"
                     description="Are you sure you want to delete this image?"
                     styles="absolute -top-2 -right-2  bg-base-100 btn-circle"
-                    id="deleteImage_onEdit"
+                    id={`deleteImage-${index}`}
                     action={() => handleDeleteImage(index)}
                     confirmString="Delete"
                   >
@@ -70,9 +79,6 @@ const ViewImg = ({
                 )}
               </div>
             ))}
-          <div className="carousel-item w-full h-full flex items-center justify-center">
-            <IoAddCircleOutline onClick={triggerFileInput} size={40} />
-          </div>
         </div>
 
         {images && images.length > 1 && (
@@ -86,6 +92,11 @@ const ViewImg = ({
                 {">>>>>>>>"}
               </span>
             </div>
+          </div>
+        )}
+        {editing && (
+          <div className="carousel-item w-full h-full flex items-center justify-center">
+            <IoAddCircleOutline onClick={triggerFileInput} size={40} />
           </div>
         )}
       </>

@@ -65,6 +65,7 @@ export default function SubmitPopupButton({
                 disabled={disabled || pending}
                 onClick={() => {
                   action && action();
+                  setOpen(!open);
                 }}
               >
                 {pending ? (
