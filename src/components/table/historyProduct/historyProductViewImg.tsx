@@ -5,7 +5,6 @@ import { TbHttpDelete } from "react-icons/tb";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import { FaRegEdit } from "react-icons/fa";
 import { IoAddCircleOutline } from "react-icons/io5";
-import Image from "next/image";
 
 const ViewImg = ({
   id,
@@ -43,68 +42,50 @@ const ViewImg = ({
   const imageShow = (images: string[] | undefined) => {
     return (
       <>
-        {editing ? (
-          <div>
-            {images &&
-              images.map((item, index) => (
-                <div key={index}>
-                  <Image
-                    src={item}
-                    alt={`Image No.${index + 1}`}
-                    fill
-                    objectFit="cover"
-                  />
-                </div>
-              ))}
-          </div>
-        ) : (
-          <div>
-            <div className="carousel w-full">
-              {images &&
-                images.map((item, index) => (
-                  <div
-                    key={index}
-                    id={`item${index + 1}`}
-                    className="carousel-item w-full justify-center relative"
+        <div className="carousel w-full">
+          {images &&
+            images.map((item, index) => (
+              <div
+                key={index}
+                id={`item${index + 1}`}
+                className="carousel-item w-full justify-center relative"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item}
+                  className="w-[50vw] h-[30vh]"
+                  alt={`carousel item ${index + 1}`}
+                />
+                {editing && (
+                  <SubmitPopupButton
+                    header="Delete Image?"
+                    description="Are you sure you want to delete this image?"
+                    styles="absolute -top-2 -right-2  bg-base-100 btn-circle"
+                    id="deleteImage_onEdit"
+                    action={() => handleDeleteImage(index)}
+                    confirmString="Delete"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item}
-                      className="w-[50vw] h-[30vh]"
-                      alt={`carousel item ${index + 1}`}
-                    />
-                    {editing && (
-                      <SubmitPopupButton
-                        header="Delete Image?"
-                        description="Are you sure you want to delete this image?"
-                        styles="absolute -top-2 -right-2  bg-base-100 btn-circle"
-                        id="deleteImage_onEdit"
-                        action={() => handleDeleteImage(index)}
-                        confirmString="Delete"
-                      >
-                        <TbHttpDelete size={30} className="text-error" />
-                      </SubmitPopupButton>
-                    )}
-                  </div>
-                ))}
-              <div className="carousel-item w-full h-full flex items-center justify-center">
-                <IoAddCircleOutline onClick={triggerFileInput} size={40} />
+                    <TbHttpDelete size={30} className="text-error" />
+                  </SubmitPopupButton>
+                )}
               </div>
-            </div>
+            ))}
+          <div className="carousel-item w-full h-full flex items-center justify-center">
+            <IoAddCircleOutline onClick={triggerFileInput} size={40} />
+          </div>
+        </div>
 
-            {images && images.length > 1 && (
-              <div className="block  relative overflow-hidden">
-                <div className="flex justify-between gap-10">
-                  <span className="animate-bounce-x2 inline-block">
-                    {"<<<<<<<<"}
-                  </span>
-                  <span>Swipe to see more</span>
-                  <span className="animate-bounce-x1 inline-block">
-                    {">>>>>>>>"}
-                  </span>
-                </div>
-              </div>
-            )}
+        {images && images.length > 1 && (
+          <div className="block  relative overflow-hidden">
+            <div className="flex justify-between gap-10">
+              <span className="animate-bounce-x2 inline-block">
+                {"<<<<<<<<"}
+              </span>
+              <span>Swipe to see more</span>
+              <span className="animate-bounce-x1 inline-block">
+                {">>>>>>>>"}
+              </span>
+            </div>
           </div>
         )}
       </>
