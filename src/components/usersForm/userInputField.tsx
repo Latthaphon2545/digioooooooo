@@ -60,6 +60,8 @@ const UserInputField = ({
           placeholder="Contact"
           value={formValues[index].contact}
           onChange={handleInputChange(index, "contact")}
+          minLength={10}
+          maxLength={10}
         />
       </label>
     </td>

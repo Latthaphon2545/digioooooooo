@@ -7,13 +7,16 @@ export const decode = (str: string) => {
   const params = new URLSearchParams(pathSring);
   const filter = params.get("filter") || "";
   const search = params.get("search") || "";
-  const skip = params.get("skip") || "";
-  const take = params.get("take") || "";
+  let skip = params.get("skip") || "";
+  skip = parseInt(skip).toString();
+  let take = params.get("take") || "";
+  take = parseInt(take).toString();
   const email = params.get("email") || "";
   const password = params.get("password") || "";
   const id = params.get("id") || "";
   const name = params.get("name") || "";
-  return { filter, search, skip, take, email, password, id, name };
+  const type = params.get("type") || "";
+  return { filter, search, skip, take, email, password, id, name, type };
 };
 
 export const stringToHex = (str: string) => {

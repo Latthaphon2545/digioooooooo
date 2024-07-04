@@ -6,15 +6,20 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const searchFilter = searchParams.get("filter") || "";
     const searchSearch = searchParams.get("search") || "";
-    const skip = searchParams.get("skip") || "";
-    const take = searchParams.get("take") || "";
+    const skip = searchParams.get("skip") || 0;
+    const take = searchParams.get("take") || 0;
     const skipInt = skip ? parseInt(skip) : undefined;
     const takeInt = take ? parseInt(take) : undefined;
 
-    const filters = searchFilter
+    let filters = searchFilter
       .split(",")
       .map((f) => f.trim().toLocaleUpperCase())
       .filter(Boolean);
+
+    // CALL CENTER -> CALLCENTER for filtering
+    filters = filters.map((filter) =>
+      filter === "CALL CENTER" ? "CALLCENTER" : filter
+    );
 
     const statusFilters = ["ACTIVE", "INACTIVE", "RESTRICTED", "PENDING"];
     const roleFilters = ["ADMIN", "OPERATOR", "CALLCENTER"];

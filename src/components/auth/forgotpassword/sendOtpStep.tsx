@@ -20,12 +20,24 @@ export const ViaStep = () => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      console.log(email, phone);
-      const res = await axios.post("/api/auth/forgotPassword", {
-        email,
-        phoneNumber: phone,
-      });
-      setAlert(res.data.message);
+
+      let updatedEmail = email;
+      if (!updatedEmail.includes("@digio.co.th")) {
+        updatedEmail = updatedEmail.trim();
+        updatedEmail = updatedEmail.replace(/@/g, "");
+        updatedEmail += "@digio.co.th";
+        setEmail(updatedEmail);
+      }
+
+      const res = await axios
+        .post("/api/auth/forgotPassword", {
+          email: updatedEmail,
+          phoneNumber: phone,
+        })
+        .then((res) => {
+          setError(false);
+          setAlert(res.data.message);
+        });
     } catch (e: any) {
       console.log(e);
       setAlert(e.response.data.error);
@@ -84,20 +96,21 @@ export const ViaStep = () => {
         <div className="flex flex-col gap-5">
           {viaEmail && (
             <>
-              <label className="input input-bordered flex items-center">
+              <label className="input input-sm input-bordered flex items-center gap-2 m-2 relative">
                 <input
                   type="text"
                   className="grow"
+                  placeholder="Email"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
-                <span className="badge badge-primary badge-lg">
+                <span className="absolute top-[-1] right-0 bg-primary rounded-r-lg text-white laptop:px-5 mobile:px-1">
                   @digio.co.th
                 </span>
               </label>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center gap-2">
                 <p>Can change send OTP to </p>
                 <p onClick={handleSMSClick} className="link">
                   SMS
@@ -107,7 +120,7 @@ export const ViaStep = () => {
           )}
           {viaSMS && (
             <>
-              <label className="input input-bordered flex items-center gap-2">
+              <label className="input input-sm input-bordered flex items-center gap-2 m-2">
                 <CiPhone />
                 <input
                   type="text"
@@ -119,7 +132,7 @@ export const ViaStep = () => {
                 />
               </label>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center gap-2">
                 <p>Can change send OTP to </p>
                 <p onClick={handleEmailClick} className="link">
                   EMAIL
@@ -131,15 +144,6 @@ export const ViaStep = () => {
       )}
 
       <div className="w-full flex flex-col gap-4">
-        <div className="flex flex-col items-end">
-          {alert && (
-            <div
-              className={`text-base ${error ? "text-error" : "text-success"}`}
-            >
-              {alert}
-            </div>
-          )}
-        </div>
         <div>
           {viaEmail || viaSMS ? (
             <div className="flex flex-col gap-4 justify-center items-center">
@@ -161,6 +165,18 @@ export const ViaStep = () => {
             </div>
           ) : null}
         </div>
+      </div>
+
+      <div>
+        {alert && (
+          <p
+            className={`text-base text-center p-2 ${
+              error ? "text-error bg-red-100" : "text-success bg-green-100"
+            }`}
+          >
+            {alert}
+          </p>
+        )}
       </div>
     </>
   );

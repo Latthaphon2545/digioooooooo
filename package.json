@@ -22,6 +22,8 @@
     "jsqr": "^1.4.0",
     "mongodb": "^6.8.0",
     "next": "14.2.3",
+    "nodemailer": "^6.9.14",
+    "nookies": "^2.5.2",
     "react": "^18",
     "react-barcode-scanner": "^2.0.2",
     "react-dom": "^18",
@@ -33,6 +35,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "daisyui": "^4.11.1",

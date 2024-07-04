@@ -21,7 +21,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   if (isRole) {
     return (
       <select
-        className="border-2 border-base-content rounded-md p-1 w-full text-center"
+        className="border border-primary bg-base-100 rounded-md p-1 w-full text-center"
         value={selected}
         onChange={(e) => onChange(e.target.value)}
       >
@@ -35,7 +35,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   } else if (isStatus) {
     return (
       <select
-        className="border-2 border-base-content rounded-md p-1 w-full text-center"
+        className="border border-primary bg-base-100 rounded-md p-1 w-full text-center"
         value={selected}
         onChange={(e) => onChange(e.target.value)}
       >

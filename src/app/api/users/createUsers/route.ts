@@ -4,9 +4,8 @@ import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { Resend } from "resend";
 import { db } from "@/lib/db";
-import passwordSetEmail from "@/components/email/password";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { passwordSetEmail } from "@/components/email/password";
+import { formAccount, transporter } from "@/lib/sendEmail";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -21,11 +20,11 @@ export const POST = async (req: NextRequest) => {
       console.log(password, passwordHash);
 
       // Send email
-      const { error } = await resend.emails.send({
-        from: "onboarding@resend.dev",
-        to: "games2545.lattapon@gmail.com",
-        subject: `Create your account`,
-        react: passwordSetEmail({
+      const info = await transporter.sendMail({
+        from: formAccount,
+        to: "Latthaphon.p@kkumail.com",
+        subject: `Welcome to Digio Stock ${element.name}`,
+        html: passwordSetEmail({
           invitedByEmail: element.email,
           invitedByName: element.name,
           invitedByPassword: password,
@@ -33,10 +32,7 @@ export const POST = async (req: NextRequest) => {
         }),
       });
 
-      if (error) {
-        console.error(`Error sending email to ${element.email}:`, error);
-        throw new Error(`Failed to send email to ${element.email}`);
-      }
+      console.log(info);
 
       return element;
     });
