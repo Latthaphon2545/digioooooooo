@@ -1,20 +1,18 @@
 import { ConvertTime } from "@/components/dateTime";
 import { stringToHex } from "@/lib/generateRandomHref";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { ColorProductStatus } from "../color";
 import { ConvertStatus } from "@/components/convertStatusAndRole";
 import ViewImg from "../historyProduct/historyProductViewImg";
+import Modal from "@/components/modal";
+import { TbUserEdit } from "react-icons/tb";
+import { EditableField } from "../EditableField";
+import { Dropdown } from "../DropdownField";
+import SubmitPopupButton from "@/components/submitPopupButton";
 
 interface UserHistoryMobileViewProps {
   item: any;
-  isEditor: boolean;
-  isEditing: { [key: string]: boolean };
-  setIsEditing: React.Dispatch<
-    React.SetStateAction<{
-      [key: string]: boolean;
-    }>
-  >;
   handleUpdateUserHistory: (
     id: string,
     history: { description: string; category: string; imageProves: File[] },
@@ -24,16 +22,30 @@ interface UserHistoryMobileViewProps {
 
 export default function UserHistoryMobileView({
   item,
-  isEditor,
-  isEditing,
-  setIsEditing,
   handleUpdateUserHistory,
 }: UserHistoryMobileViewProps) {
+  const [openEditModal, setOpenEditModal] = useState(false);
   const { formattedDate } = ConvertTime(item.createdAt);
   return (
     <div key={item.id} className="mt-3 card bg-base-100 w-96 shadow-xl">
       <div className="card-body">
-        <div className="card-actions flex justify-end">Edit</div>
+        <div className="card-actions flex justify-end">
+          <Modal
+            title={
+              <>
+                <TbUserEdit size={20} /> Edit
+              </>
+            }
+            titleContent=""
+            style="btn-info btn-sm"
+            id={`editUserHistory${item.id}`}
+            content={ModalEdit({ item, handleUpdate: handleUpdateUserHistory })}
+            action={() => {
+              setOpenEditModal(!openEditModal);
+            }}
+            boolClose={false}
+          />
+        </div>
         <div className="card-title flex justify-between">
           <Link
             href={`/products/history/${stringToHex(
@@ -62,3 +74,62 @@ export default function UserHistoryMobileView({
     </div>
   );
 }
+
+interface ModalEditMobileUserProps {
+  item: any;
+  handleUpdate: any;
+}
+
+const ModalEdit = ({ item, handleUpdate }: ModalEditMobileUserProps) => {
+  const [description, setDescription] = useState(item?.description || "");
+  const [status, setStatus] = useState(item?.category || "");
+  const [contact, setContact] = useState(item?.contact || "");
+
+  const [isLoad, setIsLoad] = useState(false);
+
+  return (
+    <div className="px-5 flex flex-col gap-5 items-center">
+      <div className="w-full">
+        <p className="text-gray-500">Description</p>
+        <EditableField defaultValue={description} onChange={setDescription} />
+      </div>
+      <div className="w-full ">
+        <p className="text-gray-500">Status</p>
+        <Dropdown selected={status} isStatus={true} onChange={setStatus} />
+      </div>
+      <div className="w-full">
+        <p className="text-gray-500">Contact</p>
+        <EditableField defaultValue={contact} onChange={setContact} />
+      </div>
+
+      <SubmitPopupButton
+        action={async () => {
+          setIsLoad(true);
+          await handleUpdate(item.id, {
+            description,
+            status,
+            contact,
+          });
+          const modal = document.getElementById(`editUserHistory${item.id}`);
+          const checkbox = modal?.nextElementSibling as HTMLInputElement;
+          checkbox.checked = false;
+          setIsLoad(false);
+        }}
+        styles="btn-xl btn-primary"
+        confirmString={
+          isLoad ? (
+            <span className="loading loading-spinner loading-xs"></span>
+          ) : (
+            "Update"
+          )
+        }
+        confirmStyle="btn-success btn-sm"
+        header="Are you sure you want to update this user history?"
+        description={""}
+        id={`editUserHistory${item.id}`}
+      >
+        Confirm
+      </SubmitPopupButton>
+    </div>
+  );
+};

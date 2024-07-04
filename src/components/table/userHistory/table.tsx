@@ -21,6 +21,7 @@ export default function TableUserHistory({
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   const handleUpdateWrapper = async (
     id: string,
@@ -74,9 +75,6 @@ export default function TableUserHistory({
             <UserHistoryMobileView
               key={item.id}
               item={item}
-              isEditor={isEditor}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
               handleUpdateUserHistory={handleUpdateWrapper}
             />
           );
