@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Table from "./historyProductTable";
+import Table from "./historyProductBody";
 import Header from "./historyProductHeader";
 import Pagination from "../pagination";
 import { itemPage } from "../staticPropsInTable";
-import Link from "next/link";
 
 interface TablePageProps {
   data: {

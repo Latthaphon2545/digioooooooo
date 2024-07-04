@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
-import ViewImg from "../historyProduct/historyProductViewImg";
+import ViewImg from "../historyProduct/view/historyProductViewImg";
 
 type EditImageProps = {
   oldImageUrls: string[];

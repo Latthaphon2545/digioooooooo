@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import TableRow from "./tableRow";
 import { ShowAlert } from "../showAlert";
 import { updateUserHistory } from "./action/updateUserHistory";
 import AlertDialog from "@/components/alertDialog";
-import UserHistoryMobileView from "./mobileView";
+import UserHistoryMobileView from "./view/mobileView";
+import { DesktopHistoryView } from "./view/desktopView";
 
 type TableUserHistoryProps = {
   historyData: {
@@ -41,7 +41,7 @@ export default function TableUserHistory({
 
   return (
     <>
-      <div className="mobile:hidden tablet:hidden laptop:block">
+      <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:hidden laptop:block">
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>
@@ -56,7 +56,7 @@ export default function TableUserHistory({
           <tbody>
             {historyData.map((item) => {
               return (
-                <TableRow
+                <DesktopHistoryView
                   key={item.id}
                   item={item}
                   isEditor={isEditor}

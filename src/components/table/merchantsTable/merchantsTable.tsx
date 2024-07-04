@@ -13,6 +13,8 @@ import { productIdUI } from "../productIdShowEachShop";
 import { copylink } from "../copyText";
 import { handleEditToggle } from "../handleEditToggle";
 import { ShowAlert } from "../showAlert";
+import { RenderSubmitPopupButton } from "./renderSubmitPopupButton";
+import { useWindowSize } from "@/lib/windowSize";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -78,7 +80,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
     }
   };
 
-  const TableRow = ({ item }: { item: any }) => {
+  const DestopView = ({ item }: { item: any }) => {
     const [copySuccess, setCopySuccess] = useState(false);
 
     const [name, setName] = useState(item.name);
@@ -87,68 +89,82 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
 
     return (
       <tr key={item.productId}>
-        {/* Name */}
-        <td className={` py-2 px-4 h-[8vh]`}>
-          {isEditing[item.id] ? (
-            EditableField({ defaultValue: item.name, onChange: setName })
-          ) : (
-            <div className="flex justify-around items-center">
-              <div className=" w-full">
-                {item.name.length > 30 ? (
-                  <Modal
-                    title={`${item.name.slice(0, 30)}...`}
-                    titleContent="Merchant Name"
-                    content={item.name}
-                    id={item.name}
-                    boolClose={true}
-                  />
-                ) : (
-                  <p>{item.name}</p>
-                )}
+        {isEditing[item.id] ? (
+          <>
+            <td className={` py-2 px-4 h-[8vh]`}>
+              <EditableField defaultValue={item.name} onChange={setName} />
+            </td>
+            <td className="py-2 px-4 h-[8vh]">
+              <EditableField
+                defaultValue={item.address}
+                onChange={setAddress}
+                textarea={true}
+              />
+            </td>
+            <td className={` py-2 px-4 h-[8vh]`}>
+              <EditableField
+                defaultValue={item.contact}
+                onChange={setContact}
+                contact={true}
+              />
+            </td>
+          </>
+        ) : (
+          <>
+            {/* Name */}
+            <td className={` py-2 px-4 h-[8vh]`}>
+              <div className="flex justify-around items-center">
+                <div className=" w-full">
+                  {item.name.length > 30 ? (
+                    <Modal
+                      title={`${item.name.slice(0, 30)}...`}
+                      titleContent="Merchant Name"
+                      content={item.name}
+                      id={item.name}
+                      boolClose={true}
+                    />
+                  ) : (
+                    <p>{item.name}</p>
+                  )}
+                </div>
+                <button
+                  onClick={(e) => copylink(e, item.id, setCopySuccess)}
+                  className="text-lg tooltip"
+                  data-tip={copySuccess ? "Copied!" : "Copy"}
+                >
+                  {copySuccess ? <TbCopyCheckFilled /> : <TbCopy />}
+                </button>
               </div>
-              <button
-                onClick={(e) => copylink(e, item.id, setCopySuccess)}
-                className="text-lg tooltip"
-                data-tip={copySuccess ? "Copied!" : "Copy"}
-              >
-                {copySuccess ? <TbCopyCheckFilled /> : <TbCopy />}
-              </button>
-            </div>
-          )}
-        </td>
+            </td>
 
-        {/* Address */}
-        <td className={`py-2 px-4 h-[8vh]`}>
-          {isEditing[item.id] ? (
-            EditableField({
-              defaultValue: item.address,
-              onChange: setAddress,
-              textarea: true,
-            })
-          ) : item.address.length > 20 ? (
-            <Modal
-              title={`${item.address.slice(0, 20)}...`}
-              content={item.address}
-              id={item.address}
-              boolClose={true}
-            />
-          ) : (
-            <p>{item.address}</p>
-          )}
-        </td>
+            {/* Address */}
+            <td className={`py-2 px-4 h-[8vh]`}>
+              {item.address.length > 20 ? (
+                <Modal
+                  title={`${item.address.slice(0, 20)}...`}
+                  content={item.address}
+                  id={item.address}
+                  boolClose={true}
+                />
+              ) : (
+                <p>{item.address}</p>
+              )}
+            </td>
 
-        {/* Contact */}
-        <td className={` py-2 px-4 h-[8vh]`}>
-          {isEditing[item.id] ? (
-            EditableField({
-              defaultValue: item.contact,
-              onChange: setContact,
-              contact: true,
-            })
-          ) : (
-            <p>{item.contact}</p>
-          )}
-        </td>
+            {/* Contact */}
+            <td className={` py-2 px-4 h-[8vh]`}>
+              {isEditing[item.id] ? (
+                EditableField({
+                  defaultValue: item.contact,
+                  onChange: setContact,
+                  contact: true,
+                })
+              ) : (
+                <p>{item.contact}</p>
+              )}
+            </td>
+          </>
+        )}
 
         {/* Product Id */}
         <td className="py-2 px-4 h-[8vh]">
@@ -161,7 +177,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
               boolClose={true}
             />
           ) : (
-            <p>-</p>
+            <p>No Product</p>
           )}
         </td>
 
@@ -175,13 +191,13 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
               >
                 Cancle
               </ActionButton>
-              {renderSubmitPopupButton(
-                item.id,
-                name,
-                address,
-                contact,
-                handleUpdate
-              )}
+              <RenderSubmitPopupButton
+                id={item.id}
+                name={name}
+                address={address}
+                contact={contact}
+                handleUpdate={handleUpdate}
+              />
             </div>
           ) : (
             <ActionButton
@@ -197,9 +213,8 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
     );
   };
 
-  const mobileData = ({ item }: { item: any }) => {
+  const MobileView = ({ item }: { item: any }) => {
     const [copySuccess, setCopySuccess] = useState(false);
-
     return (
       <div className="card w-[90vw] bg-base-100 shadow-xl">
         <div className="card-body p-5">
@@ -330,12 +345,20 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
           />
         </div>
 
-        {renderSubmitPopupButton(item.id, name, address, contact, handleUpdate)}
+        <RenderSubmitPopupButton
+          id={item.id}
+          name={name}
+          address={address}
+          contact={contact}
+          handleUpdate={handleUpdate}
+        />
 
         {isUpdating[item.id] && <div className="loading loading-spinner"></div>}
       </div>
     );
   };
+
+  console.log(useWindowSize());
 
   return (
     <>
@@ -359,7 +382,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
               </tr>
             )}
             {dataForCurrentPage.map((item) => (
-              <TableRow key={item.id} item={item} />
+              <DestopView key={item.id} item={item} />
             ))}
           </tbody>
         </table>
@@ -368,7 +391,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
       <div className="mobile:block tablet:block laptop:hidden pb-5">
         {dataForCurrentPage.map((item) => (
           <div key={item.id} className="mt-3">
-            {mobileData({ item })}
+            {MobileView({ item })}
           </div>
         ))}
       </div>
@@ -385,60 +408,3 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
     </>
   );
 }
-
-const renderSubmitPopupButton = (
-  id: string,
-  name: string,
-  address: string,
-  contact: string,
-  handleUpdate: (
-    id: string,
-    merchant: { name: string; address: string; contact: string }
-  ) => Promise<void>
-) => {
-  const [loading, setLoading] = useState(false);
-  return (
-    <SubmitPopupButton
-      action={async () => {
-        setLoading(true);
-        await handleUpdate(id, { name, address, contact });
-        setLoading(false);
-        const modal = document.getElementById(`editMerchants${id}`);
-        const checkbox = modal?.nextElementSibling as HTMLInputElement;
-        checkbox.style.display = "none";
-      }}
-      styles={`btn-success btn-sm ${
-        contact.length !== 10 || name.length === 0 ? "btn-disabled" : ""
-      }`}
-      disabled={contact.length !== 10 || name.length === 0}
-      confirmString={
-        loading ? (
-          <span className="loading loading-spinner"></span>
-        ) : (
-          <>Confirm</>
-        )
-      }
-      confirmStyle="btn-success btn-sm"
-      header="Are you sure you want to update this user?"
-      description={
-        <div className="text-start">
-          <div>
-            <label>Name:</label>
-            <p className="font-bold">{name}</p>
-          </div>
-          <div>
-            <label>Address:</label>
-            <p className="font-bold">{address}</p>
-          </div>
-          <div>
-            <label>Contact:</label>
-            <p className="font-bold">{contact}</p>
-          </div>
-        </div>
-      }
-      id={`editMerchants${id}`}
-    >
-      Confirm
-    </SubmitPopupButton>
-  );
-};

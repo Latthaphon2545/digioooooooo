@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdImageSearch } from "react-icons/md";
-import Modal from "../../modal";
+import Modal from "../../../modal";
 import { TbHttpDelete } from "react-icons/tb";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import { FaRegEdit } from "react-icons/fa";
