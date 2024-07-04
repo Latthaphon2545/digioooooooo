@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MdImageSearch } from "react-icons/md"; // Import MdDelete for the delete icon
+import { MdImageSearch } from "react-icons/md";
 import Modal from "../../modal";
 import { TbHttpDelete } from "react-icons/tb";
 import SubmitPopupButton from "@/components/submitPopupButton";
@@ -13,6 +13,7 @@ const ViewImg = ({
   setImage,
   setImageToDelete,
   triggerFileInput,
+  imageToDelete,
 }: {
   id: string;
   image: string[];
@@ -21,6 +22,7 @@ const ViewImg = ({
   setImageToDelete?: React.Dispatch<React.SetStateAction<string[]>>;
   inputRef?: React.RefObject<HTMLInputElement>;
   triggerFileInput?: () => void;
+  imageToDelete?: string[];
 }) => {
   const [images, setImages] = useState<string[]>([]);
 
@@ -34,9 +36,63 @@ const ViewImg = ({
     if (setImage) {
       setImage(index);
     }
-    if (setImageToDelete && image.includes(deletedImage)) {
-      setImageToDelete((prev) => [...prev, deletedImage]);
+    if (
+      setImageToDelete &&
+      index < image.length &&
+      !deletedImage.startsWith("blob:") &&
+      !imageToDelete?.includes(deletedImage)
+    ) {
+      // console.log("imageToDelete", !imageToDelete?.includes(deletedImage));
+      // console.log("deletedImage", deletedImage);
+
+      setImageToDelete((prev) => {
+        if (!prev.includes(deletedImage)) {
+          return [...prev, deletedImage];
+        }
+        return prev;
+      });
     }
+  };
+
+  const editImageShow = (images: string[] | undefined) => {
+    return (
+      <>
+        <div className="grid grid-cols-2 gap-2 content-center p-2">
+          {images &&
+            images.map((item, index) => (
+              <div
+                key={index}
+                id={`item${index + 1}`}
+                className="w-full justify-center relative"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item}
+                  className="w-[20vw] h-[20vh]"
+                  alt={`${index + 1}`}
+                />
+                {editing && (
+                  <SubmitPopupButton
+                    header="Delete Image?"
+                    description="Are you sure you want to delete this image?"
+                    styles="absolute -top-2 -right-2  bg-base-100 btn-circle"
+                    id={`deleteImage-${index + 1}`}
+                    action={() => handleDeleteImage(index)}
+                    confirmString="Delete"
+                  >
+                    <TbHttpDelete size={30} className="text-error" />
+                  </SubmitPopupButton>
+                )}
+              </div>
+            ))}
+          {editing && (
+            <div className="carousel-item w-full h-full flex items-center justify-center border-none">
+              <IoAddCircleOutline onClick={triggerFileInput} size={40} />
+            </div>
+          )}
+        </div>
+      </>
+    );
   };
 
   const imageShow = (images: string[] | undefined) => {
@@ -61,7 +117,7 @@ const ViewImg = ({
                     header="Delete Image?"
                     description="Are you sure you want to delete this image?"
                     styles="absolute -top-2 -right-2  bg-base-100 btn-circle"
-                    id="deleteImage_onEdit"
+                    id={`deleteImage-${index + 1}`}
                     action={() => handleDeleteImage(index)}
                     confirmString="Delete"
                   >
@@ -70,9 +126,6 @@ const ViewImg = ({
                 )}
               </div>
             ))}
-          <div className="carousel-item w-full h-full flex items-center justify-center">
-            <IoAddCircleOutline onClick={triggerFileInput} size={40} />
-          </div>
         </div>
 
         {images && images.length > 1 && (
@@ -88,6 +141,11 @@ const ViewImg = ({
             </div>
           </div>
         )}
+        {editing && (
+          <div className="carousel-item w-full h-full flex items-center justify-center">
+            <IoAddCircleOutline onClick={triggerFileInput} size={40} />
+          </div>
+        )}
       </>
     );
   };
@@ -101,7 +159,7 @@ const ViewImg = ({
           </div>
         }
         titleContent="Image Prov."
-        content={imageShow(images)}
+        content={editing ? editImageShow(images) : imageShow(images)}
         id={id}
         style={images && images.length > 0 ? "" : "btn-disabled"}
         boolClose={true}

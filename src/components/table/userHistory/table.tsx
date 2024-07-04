@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import ViewImg from "../historyProduct/historyProductViewImg";
-import { ConvertTime } from "@/components/dateTime";
-import { ConvertStatus } from "@/components/convertStatusAndRole";
-import Link from "next/link";
-import { ColorProductStatus } from "../color";
-import { stringToHex } from "@/lib/generateRandomHref";
-
 import TableRow from "./tableRow";
 import { ShowAlert } from "../showAlert";
 import { updateUserHistory } from "./action/updateUserHistory";
 import AlertDialog from "@/components/alertDialog";
-import { updateUserHistoryOnServer } from "./action/serverUpdate";
+import UserHistoryMobileView from "./mobileView";
 
 type TableUserHistoryProps = {
   historyData: {
@@ -77,36 +70,15 @@ export default function TableUserHistory({
       </div>
       <div className="mobile:block laptop:hidden">
         {historyData.map((item) => {
-          const { formattedDate } = ConvertTime(item.createdAt);
           return (
-            <div key={item.id} className="mt-3 card bg-base-100 w-96 shadow-xl">
-              <div className="card-body">
-                <div className="card-title flex justify-between">
-                  <Link
-                    href={`/products/history/${stringToHex(
-                      item.product.serialNumber
-                    )}?skip=0&take=7`}
-                    className="link link-primary"
-                  >
-                    {item.product.serialNumber.slice(0, 6) + "XXXX"}
-                  </Link>
-                  <div>
-                    <h2 className="text-sm">{formattedDate}</h2>
-                  </div>
-                </div>
-                <p>{item.description}</p>
-                <div className="flex justify-between">
-                  <div
-                    className={`badge badge-${ColorProductStatus(
-                      ConvertStatus(item.category)
-                    )} badge-outline badge-md`}
-                  >
-                    <p>{ConvertStatus(item.category)}</p>
-                  </div>
-                  <ViewImg id={item.id} image={item.imageProve} />
-                </div>
-              </div>
-            </div>
+            <UserHistoryMobileView
+              key={item.id}
+              item={item}
+              isEditor={isEditor}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              handleUpdateUserHistory={handleUpdateWrapper}
+            />
           );
         })}
       </div>

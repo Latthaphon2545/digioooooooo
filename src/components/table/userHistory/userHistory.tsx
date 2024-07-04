@@ -41,7 +41,7 @@ export default function UserHistory({
       <div className="font-bold text-3xl pt-4 pl-4">
         Halo Halo Good Good Good
       </div>
-      <div className="flex flex-col items-center pt-20 justify-start h-full">
+      <div className="flex flex-col items-center sm:pt-20 justify-start h-full">
         <TableUserHistory historyData={history} isEditor={editor} />
         <div className="">
           <Pagination

@@ -105,6 +105,7 @@ const TableRow: React.FC<TableRowProps> = ({
             images={images}
             setImages={setImages}
             setImageToDelete={setImageToDelete}
+            imageToDelete={imageToDelete}
           />
         ) : (
           <ViewImg id={`viewImg-${item.id}`} image={oldImages} />
@@ -164,7 +165,7 @@ const TableRow: React.FC<TableRowProps> = ({
                   </p>
                 </div>
               }
-              id={item.id}
+              id={`update-${item.id}`}
             >
               Update
             </SubmitPopupButton>
