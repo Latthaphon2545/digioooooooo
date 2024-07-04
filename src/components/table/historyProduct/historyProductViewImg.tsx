@@ -42,10 +42,57 @@ const ViewImg = ({
       !deletedImage.startsWith("blob:") &&
       !imageToDelete?.includes(deletedImage)
     ) {
-      console.log("deletedImage", deletedImage);
+      // console.log("imageToDelete", !imageToDelete?.includes(deletedImage));
+      // console.log("deletedImage", deletedImage);
 
-      setImageToDelete((prev) => [...prev, deletedImage]);
+      setImageToDelete((prev) => {
+        if (!prev.includes(deletedImage)) {
+          return [...prev, deletedImage];
+        }
+        return prev;
+      });
     }
+  };
+
+  const editImageShow = (images: string[] | undefined) => {
+    return (
+      <>
+        <div className="grid grid-cols-2 gap-2 content-center p-2">
+          {images &&
+            images.map((item, index) => (
+              <div
+                key={index}
+                id={`item${index + 1}`}
+                className="w-full justify-center relative"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item}
+                  className="w-[20vw] h-[20vh]"
+                  alt={`${index + 1}`}
+                />
+                {editing && (
+                  <SubmitPopupButton
+                    header="Delete Image?"
+                    description="Are you sure you want to delete this image?"
+                    styles="absolute -top-2 -right-2  bg-base-100 btn-circle"
+                    id={`deleteImage-${index + 1}`}
+                    action={() => handleDeleteImage(index)}
+                    confirmString="Delete"
+                  >
+                    <TbHttpDelete size={30} className="text-error" />
+                  </SubmitPopupButton>
+                )}
+              </div>
+            ))}
+          {editing && (
+            <div className="carousel-item w-full h-full flex items-center justify-center border-none">
+              <IoAddCircleOutline onClick={triggerFileInput} size={40} />
+            </div>
+          )}
+        </div>
+      </>
+    );
   };
 
   const imageShow = (images: string[] | undefined) => {
@@ -70,7 +117,7 @@ const ViewImg = ({
                     header="Delete Image?"
                     description="Are you sure you want to delete this image?"
                     styles="absolute -top-2 -right-2  bg-base-100 btn-circle"
-                    id={`deleteImage-${index}`}
+                    id={`deleteImage-${index + 1}`}
                     action={() => handleDeleteImage(index)}
                     confirmString="Delete"
                   >
@@ -112,7 +159,7 @@ const ViewImg = ({
           </div>
         }
         titleContent="Image Prov."
-        content={imageShow(images)}
+        content={editing ? editImageShow(images) : imageShow(images)}
         id={id}
         style={images && images.length > 0 ? "" : "btn-disabled"}
         boolClose={true}

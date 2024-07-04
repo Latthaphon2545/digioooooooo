@@ -58,16 +58,16 @@ export default function SubmitPopupButton({
             >
               Close
             </label>
-            <label htmlFor={id}>
-              <button
-                className={`btn btn-sm ${confirmStyle}`}
-                type="submit"
-                disabled={disabled || pending}
-                onClick={() => {
-                  action && action();
-                  setOpen(!open);
-                }}
-              >
+            <button
+              className={`btn btn-sm ${confirmStyle}`}
+              type="submit"
+              disabled={disabled || pending}
+              onClick={() => {
+                action && action();
+                setOpen(!open);
+              }}
+            >
+              <label htmlFor={id}>
                 {pending ? (
                   <span className="loading loading-spinner"></span>
                 ) : (
@@ -79,8 +79,8 @@ export default function SubmitPopupButton({
                     )}
                   </div>
                 )}
-              </button>
-            </label>
+              </label>
+            </button>
           </div>
         </div>
         <label

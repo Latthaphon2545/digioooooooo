@@ -27,7 +27,7 @@ const ProductInputField = ({
     <td>
       <label className="border p-[0.35rem] rounded-lg flex items-center gap-2 m-1">
         <select
-          className="grow bg-white"
+          className="grow bg-transparent"
           value={formValues[index].model}
           onChange={handleInputChange(index, "model")}
         >
