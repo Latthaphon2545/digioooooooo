@@ -3,20 +3,20 @@ import { TbUserEdit } from "react-icons/tb";
 import Modal from "@/components/modal";
 import Link from "next/link";
 import { ConvertTime } from "@/components/dateTime";
-import { EditableField } from "../EditableField";
-import { DropdownProduct } from "../DropdownStatusProduct";
-import { ColorProductStatus } from "../color";
+
 import { ConvertStatus } from "@/components/convertStatusAndRole";
 import { stringToHex } from "@/lib/generateRandomHref";
-import ViewImg from "../historyProduct/historyProductViewImg";
 import ActionButton from "@/components/actionButton";
-import { handleEditToggle } from "../handleEditToggle";
 
 import SubmitPopupButton from "@/components/submitPopupButton";
-import EditImage from "./editImage";
-import { updateUserHistoryOnServer } from "./action/serverUpdate";
+import { EditableField } from "../../EditableField";
+import { DropdownProduct } from "../../DropdownStatusProduct";
+import { ColorProductStatus } from "../../color";
+import EditImage from "../editImage";
+import ViewImg from "../../historyProduct/view/historyProductViewImg";
+import { handleEditToggle } from "../../handleEditToggle";
 
-interface TableRowProps {
+interface HistoryProps {
   item: any;
   isEditor: boolean;
   isEditing: { [key: string]: boolean };
@@ -32,13 +32,13 @@ interface TableRowProps {
   ) => Promise<void>;
 }
 
-const TableRow: React.FC<TableRowProps> = ({
+export const DesktopHistoryView = ({
   item,
   isEditor,
   isEditing,
   setIsEditing,
   handleUpdateUserHistory,
-}) => {
+}: HistoryProps) => {
   const { formattedDate, displayTime } = ConvertTime(item.createdAt);
   const [description, setDescription] = useState(item.description);
   const [oldImages, setOldImages] = useState(item.imageProve);
@@ -183,5 +183,3 @@ const TableRow: React.FC<TableRowProps> = ({
     </tr>
   );
 };
-
-export default TableRow;

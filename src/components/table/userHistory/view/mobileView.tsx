@@ -2,9 +2,9 @@ import { ConvertTime } from "@/components/dateTime";
 import { stringToHex } from "@/lib/generateRandomHref";
 import Link from "next/link";
 import React from "react";
-import { ColorProductStatus } from "../color";
+import { ColorProductStatus } from "../../color";
 import { ConvertStatus } from "@/components/convertStatusAndRole";
-import ViewImg from "../historyProduct/historyProductViewImg";
+import ViewImg from "../../historyProduct/view/historyProductViewImg";
 
 interface UserHistoryMobileViewProps {
   item: any;
