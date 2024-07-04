@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { passwordSetEmail } from "@/components/email/password";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
-import { Resend } from "resend";
 import { db } from "@/lib/db";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { formAccount, transporter } from "@/lib/sendEmail";
+import { encode } from "@/lib/generateRandomHref";
+import { passwordSetEmail } from "@/components/email/password";
 
 export const POST = async (req: NextRequest) => {
   try {
     const { email, phoneNumber } = await req.json();
-    console.log(email, phoneNumber);
 
     if (email && email.length > 0) {
       if (!email.includes("@") || !email.includes(".")) {
@@ -47,9 +45,14 @@ export const POST = async (req: NextRequest) => {
     });
 
     if (!user) {
-      return new NextResponse(JSON.stringify({ error: "User not found" }), {
-        status: 404,
-      });
+      return new NextResponse(
+        JSON.stringify({
+          error: "User not found. Please check your email or phone number.",
+        }),
+        {
+          status: 404,
+        }
+      );
     }
 
     // // Change password
@@ -64,27 +67,16 @@ export const POST = async (req: NextRequest) => {
       },
     });
 
-    const { error } = await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: "games2545.lattapon@gmail.com",
+    const info = await transporter.sendMail({
+      from: formAccount,
+      to: "Latthaphon.p@kkumail.com",
       subject: `Forgot Password - ${updatedUser.name}`,
-      react: passwordSetEmail({
+      html: passwordSetEmail({
         invitedByEmail: updatedUser.email,
         invitedByName: updatedUser.name,
         invitedByPassword: password,
-        type: "forgotPassword",
       }),
     });
-
-    if (error) {
-      console.error(`Error sending email to ${updatedUser.email}:`, error);
-      return new NextResponse(
-        JSON.stringify({ error: "Failed to send email" }),
-        {
-          status: 500,
-        }
-      );
-    }
 
     return new NextResponse(
       JSON.stringify({ message: "Password reset email sent" }),

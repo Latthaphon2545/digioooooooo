@@ -140,7 +140,11 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         {/* Contact */}
         <td className={` py-2 px-4 h-[8vh]`}>
           {isEditing[item.id] ? (
-            EditableField({ defaultValue: item.contact, onChange: setContact })
+            EditableField({
+              defaultValue: item.contact,
+              onChange: setContact,
+              contact: true,
+            })
           ) : (
             <p>{item.contact}</p>
           )}
@@ -319,7 +323,11 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
 
         <div className="w-full">
           <p className="text-gray-500">Contact</p>
-          <EditableField defaultValue={contact} onChange={setContact} />
+          <EditableField
+            defaultValue={contact}
+            onChange={setContact}
+            contact={true}
+          />
         </div>
 
         {renderSubmitPopupButton(item.id, name, address, contact, handleUpdate)}
@@ -399,7 +407,10 @@ const renderSubmitPopupButton = (
         const checkbox = modal?.nextElementSibling as HTMLInputElement;
         checkbox.style.display = "none";
       }}
-      styles="btn-sm btn-success"
+      styles={`btn-success btn-sm ${
+        contact.length !== 10 || name.length === 0 ? "btn-disabled" : ""
+      }`}
+      disabled={contact.length !== 10 || name.length === 0}
       confirmString={
         loading ? (
           <span className="loading loading-spinner"></span>

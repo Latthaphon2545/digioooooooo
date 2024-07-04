@@ -16,9 +16,6 @@ export default function SetPassword({
   name,
   type,
 }: SetPasswordProps) {
-  // only chraacters id Game=? -> Game
-  const nameShow = name.split("=")[0];
-
   return (
     <>
       <div className="flex justify-center">
@@ -29,10 +26,10 @@ export default function SetPassword({
         />
       </div>
       <div className="flex flex-col items-center gap-5 px-5">
-        {type === "setPasswors" && (
+        {type === "setPassword" && (
           <>
             <h1 className="text-2xl font-bold text-center">Welcome to Digio</h1>
-            <span className="text-4xl text-primary font-bold">{nameShow}</span>
+            <span className="text-4xl text-primary font-bold">{name}</span>
             <p className="text-center">
               Please set your password to using our inventory system
             </p>
@@ -43,7 +40,7 @@ export default function SetPassword({
             <h1 className="text-xl font-bold text-center">
               Password Reset for{" "}
             </h1>
-            <span className="text-4xl text-primary font-bold">{nameShow}</span>
+            <span className="text-4xl text-primary font-bold">{name}</span>
             <p className="text-center">
               Please set your new password to continue using our inventory
               system

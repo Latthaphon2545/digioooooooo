@@ -68,11 +68,16 @@ export const TableView = ({
       </td>
       <td className="py-2 px-4">
         {isEditing[item.id] ? (
-          <EditableField defaultValue={contact} onChange={setContact} />
+          <EditableField
+            defaultValue={contact}
+            onChange={setContact}
+            contact={true}
+          />
         ) : (
           <p>{item.contact}</p>
         )}
       </td>
+
       <td className={`py-2 px-4 ${editor ? "" : "cursor-not-allowed"}`}>
         {isEditing[item.id] ? (
           <div className="flex gap-1 justify-center">
@@ -93,7 +98,10 @@ export const TableView = ({
                 });
                 setIsLoad(false);
               }}
-              styles="btn-success btn-sm"
+              styles={`btn-success btn-sm ${
+                contact.length !== 10 || name.length === 0 ? "btn-disabled" : ""
+              }`}
+              disabled={contact.length !== 10 || name.length === 0}
               confirmString={
                 isLoad ? (
                   <span className="loading loading-spinner loading-xs"></span>

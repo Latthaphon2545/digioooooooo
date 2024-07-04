@@ -21,6 +21,8 @@ export async function PATCH(request: NextRequest) {
       user.hashedPassword
     );
 
+    console.log(isPasswordMatch);
+
     if (!isPasswordMatch) {
       return NextResponse.json(
         { message: "Old password does not match" },
@@ -30,12 +32,12 @@ export async function PATCH(request: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    if (method === "setPasswors") {
+    if (method === "setPassword") {
       const passwordSet = await db.user.update({
         where: { email },
         data: { hashedPassword, status: "ACTIVE" },
       });
-    } else {
+    } else if (method === "forgotPassword") {
       const passwordSet = await db.user.update({
         where: { email },
         data: { hashedPassword },

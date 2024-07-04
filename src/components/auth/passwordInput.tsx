@@ -14,6 +14,8 @@ export const passwordInput = ({
   name,
   type,
 }: SetPasswordProps) => {
+  const [error, setError] = useState("");
+
   const tooltipPassword = [
     "Please enter at least 8 characters password and at most 30 characters",
     "Required Uppercase",
@@ -28,6 +30,7 @@ export const passwordInput = ({
   const [tooltipStyle, setTooltipStyle] = useState<string[]>(
     Array(8).fill("stroke-neutral-content")
   );
+
   const [tooltipStyleConfirm, setTooltipStyleConfirm] = useState<string[]>([
     "stroke-neutral-content",
   ]);
@@ -91,7 +94,8 @@ export const passwordInput = ({
       });
       setOpen(true);
     } catch (e) {
-      console.error("Error updating password:", e);
+      console.error("Error updating password:");
+      setError("Error updating password. Try sending Reset Password again.");
     } finally {
       setChangePassword(false);
     }
@@ -180,6 +184,14 @@ export const passwordInput = ({
             "Submit"
           )}
         </button>
+      </div>
+
+      <div>
+        {error && (
+          <p className={`text-base text-center p-2 text-error bg-red-100`}>
+            {error}
+          </p>
+        )}
       </div>
 
       {/* Modal */}

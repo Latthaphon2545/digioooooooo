@@ -9,7 +9,7 @@ export default function page() {
   const path = useSearchParams();
   const { email, password, name } = decode(path.toString());
   return (
-    <div className="flex items-center  h-screen w-screen mobile:flex-col laptop:flex-row">
+    <div className="flex items-center justify-evenly h-screen w-screen mobile:flex-col laptop:flex-row">
       <SetPassword
         name={name}
         email={email}

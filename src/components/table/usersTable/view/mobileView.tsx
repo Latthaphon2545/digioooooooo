@@ -141,7 +141,11 @@ const ModalEditMobileUser = ({
       </div>
       <div className="w-full">
         <p className="text-gray-500">Contact</p>
-        <EditableField defaultValue={contact} onChange={setContact} />
+        <EditableField
+          defaultValue={contact}
+          onChange={setContact}
+          contact={true}
+        />
       </div>
 
       <SubmitPopupButton
@@ -158,7 +162,9 @@ const ModalEditMobileUser = ({
           checkbox.checked = false;
           setIsLoad(false);
         }}
-        styles="btn-xl btn-primary"
+        styles={`btn-success btn-sm ${
+          contact.length !== 10 || name.length === 0 ? "btn-disabled" : ""
+        }`}
         confirmString={
           isLoad ? (
             <span className="loading loading-spinner loading-xs"></span>
@@ -166,6 +172,7 @@ const ModalEditMobileUser = ({
             "Update"
           )
         }
+        disabled={contact.length !== 10 || name.length === 0}
         confirmStyle="btn-success btn-sm"
         header="Are you sure you want to update this user?"
         description={""}

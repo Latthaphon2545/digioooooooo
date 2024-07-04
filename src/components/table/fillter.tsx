@@ -64,13 +64,13 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
       <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-60">
         {item.list.map((options, optionsIndex) => (
           <div key={optionsIndex}>
-            <p className="text-xs mb-2 mt-2">{options.title}</p>
+            <p className="text-xs my-2 mx-1">{options.title}</p>
             {options.names.map((option, optionIndex) => (
               <li key={option.name} className="form-control">
                 <label className="cursor-pointer">
                   <input
                     type="checkbox"
-                    className="checkbox checkbox-primary mr-3"
+                    className="checkbox checkbox-xs checkbox-primary mr-3"
                     name={option.name}
                     onChange={getCheckBoxValue}
                     checked={checkedValues.includes(option.name)}

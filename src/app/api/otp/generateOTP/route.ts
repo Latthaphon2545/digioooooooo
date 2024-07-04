@@ -2,11 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { createResponse } from "../../products/checkStock/route";
 import { db } from "@/lib/db";
 import { PlaidVerifyIdentityEmail } from "@/components/email/emailOtp";
-import { Resend } from "resend";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { formAccount, transporter } from "@/lib/sendEmail";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -44,11 +42,11 @@ export const POST = async (req: NextRequest) => {
       });
     }
 
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: `Verify your identity`,
-      react: PlaidVerifyIdentityEmail({
+    const info = await transporter.sendMail({
+      from: formAccount,
+      to: "Latthaphon.p@kkumail.com",
+      subject: `Verify your identity : ${otp}`,
+      html: PlaidVerifyIdentityEmail({
         validationCode: otp.toString(),
         referenceNumber: refNum,
       }),
