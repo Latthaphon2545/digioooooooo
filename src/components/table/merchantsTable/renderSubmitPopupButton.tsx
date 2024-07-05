@@ -12,6 +12,8 @@ interface RenderSubmitPopupButtonProps {
     id: string,
     merchant: { name: string; address: string; contact: string }
   ) => Promise<void>;
+  isUpdating: boolean;
+  mobile?: boolean;
 }
 
 export const RenderSubmitPopupButton = ({
@@ -20,24 +22,27 @@ export const RenderSubmitPopupButton = ({
   address,
   contact,
   handleUpdate,
+  isUpdating,
+  mobile,
 }: RenderSubmitPopupButtonProps) => {
-  const [loading, setLoading] = useState(false);
   return (
     <SubmitPopupButton
       action={async () => {
-        setLoading(true);
         await handleUpdate(id, { name, address, contact });
-        setLoading(false);
-        const modal = document.getElementById(`editMerchants${id}`);
-        const checkbox = modal?.nextElementSibling as HTMLInputElement;
-        checkbox.style.display = "none";
+        if (isUpdating) return;
+
+        if (mobile) {
+          const modal = document.getElementById(`editMerchants${id}`);
+          const checkbox = modal?.nextElementSibling as HTMLInputElement;
+          checkbox.style.display = "none";
+        }
       }}
       styles={`btn-success btn-sm ${
         contact.length !== 10 || name.length === 0 ? "btn-disabled" : ""
       }`}
       disabled={contact.length !== 10 || name.length === 0}
       confirmString={
-        loading ? (
+        isUpdating ? (
           <span className="loading loading-spinner"></span>
         ) : (
           <>Confirm</>

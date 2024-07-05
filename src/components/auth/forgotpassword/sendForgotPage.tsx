@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import logo from "/public/image/digio_logo.png";
-import { ViaStep } from "./sendOtpStep";
+import { ViaStep } from "./sendForgot";
 
 export default function ForgotPasswordPage() {
   return (

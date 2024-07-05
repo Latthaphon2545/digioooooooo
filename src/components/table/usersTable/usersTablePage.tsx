@@ -39,8 +39,6 @@ export default function TablePage({
     setCurrentPage(pageNumber);
   };
 
-  console.log(currentPage);
-
   return (
     <>
       <div className="ml-[3vw]">

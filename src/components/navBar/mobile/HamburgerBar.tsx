@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { MENU } from "./menu";
 import Image from "next/image";
 import logo from "/public/image/digio_logo.png";
 import { usePathname } from "next/navigation";
+import { MENU } from "../menu";
 
 const editor = true;
 

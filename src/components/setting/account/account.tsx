@@ -63,6 +63,7 @@ export default function Account({ account }: { account: AccountInfo }) {
           title="Contact"
           defaultValue={account.contact}
           onChange={setContact}
+          email={account.email}
         />
       </div>
 

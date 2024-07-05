@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import Profile from "./profileImg";
-import Dropdown from "./dropdown";
+import Profile from "./profile/profileImg";
+import Dropdown from "./profile/dropdown";
 import { GiHamburgerMenu } from "react-icons/gi";
 import logo from "/public/image/digio_logo.png";
 import { usePathname } from "next/navigation";
 import { pathMenu } from "./pathMenu";
-import { HamburgerBar } from "./HamburgerBar";
 import Image from "next/image";
 import Link from "next/link";
+import { HamburgerBar } from "./mobile/HamburgerBar";
 
 interface TopbarProps {
   openHamburgerDesktop?: boolean;

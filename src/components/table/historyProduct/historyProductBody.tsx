@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ViewImg from "./view/historyProductViewImg";
 import Modal from "../../modal";
-import { ConvertTime } from "../../dateTime";
-import { ConvertStatus } from "../../convertStatusAndRole";
-import { ColorProductStatus } from "../color";
 import { DesktopView } from "./view/desktopView";
 import { MobileData } from "./view/mobileView";
 
@@ -66,9 +63,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
       <div className="mobile:block tablet:block laptop:hidden pb-5">
         {dataForCurrentPage.map((item) => (
           <div key={item.id} className="mt-3">
-            return (
             <MobileData item={item} manyCheckInstock={manyCheckInstock} />
-            );
           </div>
         ))}
       </div>

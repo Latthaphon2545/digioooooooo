@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { VertifyOtp } from "./vertifyOtp";
-import axios from "axios";
 import { handleChange } from "../handleChange";
 import { tooltipShow } from "../tooltipShow";
 import { sendOtp } from "../../../lib/sentOTP";
@@ -112,7 +110,16 @@ export const NameInfo: React.FC<AccountInfoProps> = ({
   onChange,
 }) => {
   const tooltip = ["Please enter your full name."];
+  const [tooltipStyle, setTooltipStyle] = useState(["stroke-accent"]);
   const [value, setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    if (value !== defaultValue && value.length > 0) {
+      setTooltipStyle(["stroke-success text-success"]);
+    } else if (value.length === 0) {
+      setTooltipStyle(["stroke-error text-error"]);
+    }
+  }, [value]);
 
   return (
     <>
@@ -123,7 +130,11 @@ export const NameInfo: React.FC<AccountInfoProps> = ({
         <div className={`flex flex-col gap-2 mobile:w-full laptop:w-3/6`}>
           <label
             className={`input input-bordered flex items-center gap-2 ${
-              value !== defaultValue ? "input-success border-2" : ""
+              value.length === 0
+                ? "input-error border-2"
+                : value !== defaultValue
+                ? "input-success border-2"
+                : ""
             }`}
           >
             <input
@@ -136,27 +147,43 @@ export const NameInfo: React.FC<AccountInfoProps> = ({
               pattern="[A-Za-zก-ฮ]*"
             />
           </label>
-          {tooltip && tooltipShow(tooltip)}
+          {tooltip && tooltipShow(tooltip, tooltipStyle)}
         </div>
       </div>
     </>
   );
 };
 
-export const ContactInfo: React.FC<AccountInfoProps> = ({
+export const ContactInfo: React.FC<AccountInfoProps & { email: string }> = ({
   title,
   defaultValue,
   onChange,
+  email,
 }) => {
   const tooltip = [
     "Please enter your 10 digits phone number",
     "You can change your phone number by sending OTP. and verify it.",
   ];
+  const [tooltipStyle, setTooltipStyle] = useState([
+    "stroke-accent",
+    "stroke-accent",
+  ]);
+
   const [refNum, setRefNum] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [boolGenerateOtp, setBoolGenerateOtp] = useState(false);
 
   const [value, setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    if (value.length < 10 || value.length > 10) {
+      setTooltipStyle(["stroke-error text-error", "stroke-accent"]);
+    } else if (value.length === 10 && value !== defaultValue) {
+      setTooltipStyle(["stroke-success text-success", "stroke-accent"]);
+    } else {
+      setTooltipStyle(["stroke-accent", "stroke-accent"]);
+    }
+  }, [value]);
 
   return (
     <>
@@ -182,19 +209,20 @@ export const ContactInfo: React.FC<AccountInfoProps> = ({
               aria-label={title}
               placeholder={"09XXXXXXXX"}
               pattern={"[0-9]{3}-[0-9]{3}-[0-9]{4}"}
+              minLength={10}
+              maxLength={10}
             />
 
             <span>
               <button
-                onClick={() =>
+                onClick={() => {
                   sendOtp({
-                    phoneNumber: value,
-                    email: "games2545.lattapon@gmail.com",
+                    email: email,
                     setShowModal,
                     setRefNum,
                     setBoolGenerateOtp,
-                  })
-                }
+                  });
+                }}
                 className={`btn btn-ghost btn-sm`}
                 disabled={!(value.length === 10 && value !== defaultValue)}
               >
@@ -206,7 +234,7 @@ export const ContactInfo: React.FC<AccountInfoProps> = ({
               </button>
             </span>
           </label>
-          {tooltip && tooltipShow(tooltip)}
+          {tooltip && tooltipShow(tooltip, tooltipStyle)}
         </div>
       </div>
 
@@ -235,6 +263,7 @@ export const ContactInfo: React.FC<AccountInfoProps> = ({
                 referenceNumber={refNum}
                 setShowModal={setShowModal}
                 setValue={onChange as (value: string) => void}
+                email={email}
               />
             </div>
           </div>

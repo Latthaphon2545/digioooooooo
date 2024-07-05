@@ -29,6 +29,8 @@ export const PlaidVerifyIdentityEmail = ({
     .img {
       display: block;
       margin: 0 auto;
+      width: 270px;
+      height: 150px;
     }
     .text-blue {
       color: #1a73e8;
@@ -96,7 +98,7 @@ export const PlaidVerifyIdentityEmail = ({
 <body>
   <div class="container">
     <img
-      src="https://static.wixstatic.com/media/59c690_63b573c211fd44ec89b0103477bfc986~mv2.png/v1/fill/w_87,h_53,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/digio_logo.png"
+      src = "cid:digio_logo"  
       alt="Digio Stock"
       class="img"
     />
