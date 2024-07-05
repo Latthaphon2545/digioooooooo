@@ -1,3 +1,4 @@
+import { IoMdAddCircle } from "react-icons/io";
 import Slice from "./sliceBank";
 
 interface Bank {
@@ -28,7 +29,7 @@ interface BankPageProps {
 export default function BankPage({ banks, products }: BankPageProps) {
   return (
     <>
-      <div className="w-full laptop:hidden">
+      <div className="w-full tablet:block mobile:block laptop:hidden">
         <div className="flex justify-center gap-5 mx-10 my-5 mobile:flex-wrap tablet:flex-wrap ">
           {banks.map((item) => (
             <div
@@ -47,12 +48,12 @@ export default function BankPage({ banks, products }: BankPageProps) {
         </div>
       </div>
 
-      <div className=" laptop:block tablet:hidden px-10 py-5 h-full max-w-[83vw]">
-        <div className="flex flex-rol gap-5 pb-14 px-5  overflow-x-scroll scroll-smooth">
-          {banks.map((item) => (
+      <div className="laptop:block tablet:hidden mobile:hidden px-10 py-5 h-full">
+        <div className="grid grid-cols-3 gap-5 justify-items-center">
+          {banks.map((item, index) => (
             <div
-              className="card bg-base-100 shadow-xl min-w-[25vw]"
-              key={item.name}
+              className="card bg-base-100 shadow-xl laptop:w-80 desktop:w-96"
+              key={index}
             >
               <div className="card-body flex flex-row justify-between items-center">
                 <h2 className="card-title">{item.bankName}</h2>
@@ -63,8 +64,16 @@ export default function BankPage({ banks, products }: BankPageProps) {
               </figure>
             </div>
           ))}
+          <div
+            className="card bg-base-200 bg-opacity-40 shadow-xl laptop:w-80 desktop:w-96 flex flex-col justify-center items-center gap-5"
+            key="Add"
+          >
+            <p className="text-4xl">
+              <IoMdAddCircle />
+            </p>
+            <p className="text-2xl">Add Bank</p>
+          </div>
         </div>
-        <p className="text-center">Move left or right to see more banks</p>
       </div>
     </>
   );

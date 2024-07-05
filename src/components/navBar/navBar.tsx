@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { SideBarFull, SideBarSmall } from "./sideBar";
+import { SideBarFull, SideBarSmall } from "./desktop/sideBar";
 import Topbar from "./topBar";
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
-  const [openHamburgerDesktop, setOpenHamburgerDesktop] = useState(true);
+  const [openHamburgerDesktop, setOpenHamburgerDesktop] = useState(false);
 
   return (
     <>

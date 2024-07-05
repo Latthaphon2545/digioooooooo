@@ -1,9 +1,11 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 export function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0,
   });
 
   useEffect(() => {
@@ -22,3 +24,8 @@ export function useWindowSize() {
 
   return windowSize;
 }
+
+export const isMobile = 320;
+export const isTablet = 768;
+export const isLaptop = 1440;
+export const isDesktop = 1800;

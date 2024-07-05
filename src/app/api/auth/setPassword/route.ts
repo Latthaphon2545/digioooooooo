@@ -33,12 +33,12 @@ export async function PATCH(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     if (method === "setPassword") {
-      const passwordSet = await db.user.update({
+      await db.user.update({
         where: { email },
         data: { hashedPassword, status: "ACTIVE" },
       });
     } else if (method === "forgotPassword") {
-      const passwordSet = await db.user.update({
+      await db.user.update({
         where: { email },
         data: { hashedPassword },
       });

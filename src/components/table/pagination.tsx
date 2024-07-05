@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer"; // Import useInView hook
 import { itemPage } from "./staticPropsInTable";
 import { encode } from "@/lib/generateRandomHref";
+import Modal from "../modal";
 
 interface PaginationProps {
   currentPage: number;
@@ -12,6 +13,8 @@ interface PaginationProps {
   onPageChange: (pageNumber: number) => void;
 }
 
+const btnClass = "btn btn-sm btn-base-100 join-item";
+
 export default function Pagination({
   currentPage,
   totalPages,
@@ -19,8 +22,13 @@ export default function Pagination({
   onPageChange,
 }: PaginationProps) {
   const [pageStart, setPageStart] = useState(1);
-  const [mobileData, setMobileData] = useState(itemPage);
-  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // const [mobileData, setMobileData] = useState(itemPage);
+  // const [loading, setLoading] = useState(false);
+  // const [debouncedWidth, setDebouncedWidth] = useState(sizeWindow.width);
+  let skip = 0;
+  let take = itemPage;
 
   const { ref, inView } = useInView({
     threshold: 1.0,
@@ -83,96 +91,152 @@ export default function Pagination({
     setPageStart(1);
   };
 
-  // set current page to last page
-
   const handleToLastPage = () => {
     onPageChange(totalPages);
     setPageStart(totalPages - 4);
   };
 
-  //set current page when refresh page or change page
   useEffect(() => {
     const skip = (currentPage - 1) * itemPage;
-    let setWhenReload = totalPages * itemPage - skip;
-  }, []);
-
-  useEffect(() => {
-    const skip = (currentPage - 1) * itemPage;
-    const take = itemPage;
-    const nerUrl = `filter=${filterParams}&search=${searchParams}&skip=${skip}&take=${take}`;
-    router.push(`${pathName}?${encode(nerUrl)}`);
   }, [currentPage]);
 
-  const handleMoreData = () => {
-    try {
-      setLoading(true);
-      const newMobileData = Math.min(mobileData + itemPage, lengthData);
-      setMobileData(newMobileData);
-      const newUrl = `${pathName}?filter=${filterParams}&search=${searchParams}&skip=0&take=${newMobileData}`;
-      router.replace(newUrl, { scroll: false });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-  };
-
   useEffect(() => {
-    if (inView && !loading && mobileData < lengthData) {
-      handleMoreData();
-    }
-  }, [inView, loading, mobileData, lengthData]);
+    skip = (currentPage - 1) * itemPage;
+    const newUrl = `${pathName}?${encode(
+      `filter=${filterParams}&search=${searchParams}&skip=${skip}&take=${take}`
+    )}`;
+    router.replace(newUrl, { scroll: true });
+  }, [currentPage]);
+
+  // const handleMoreData = () => {
+  //   try {
+  //     setLoading(true);
+  //     take = Math.min(mobileData + itemPage, lengthData);
+  //     setMobileData(take);
+  //     const newUrl = `${pathName}?${encode(
+  //       `filter=${filterParams}&search=${searchParams}&skip=0&take=${take}`
+  //     )}`;
+  //     router.replace(newUrl, { scroll: false });
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, 1000);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (inView && !loading && mobileData < lengthData) {
+  //     handleMoreData();
+  //     onPageChange(currentPage + 1);
+  //     console.log(currentPage);
+  //   }
+  // }, [inView, loading, mobileData, lengthData]);
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setDebouncedWidth(sizeWindow.width);
+  //   };
+
+  //   const debounceResize = setTimeout(handleResize, 200);
+
+  //   return () => clearTimeout(debounceResize);
+  // }, [sizeWindow]);
+
+  // useEffect(() => {
+  //   if (debouncedWidth <= isLaptop) {
+  //     skip = 0;
+  //     take = itemPage;
+  //     // console.log("mobile", skip, take);
+  //   } else {
+  //     take = itemPage;
+  //     skip = (currentPage - 1) * itemPage;
+  //     // console.log("laptop", skip, take);
+  //   }
+  // }, [debouncedWidth, mobileData, currentPage]);
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-2 mobile:hidden tablet:hidden laptop:flex">
+      <div className="flex flex-col justify-center items-center mt-2">
         <div className="join">
           <ActionButton
             action={handleToFirstPage}
-            styles={"join-item btn btn-sm btn-base-100"}
+            styles={`${btnClass} mobile:hidden tablet:hidden laptop:block`}
             disabled={currentPage === 1}
           >
             {"<<"}
           </ActionButton>
           <ActionButton
             action={handlePrev}
-            styles={"join-item btn btn-sm btn-base-100"}
+            styles={btnClass}
             disabled={currentPage === 1}
           >
             {"<"}
           </ActionButton>
+
+          {/* In desktop */}
           {pages.map((page) => (
-            <div key={page}>
+            <div
+              key={page}
+              className="mobile:hidden tablet:hidden laptop:block"
+            >
               <ActionButton
                 action={() => handleCurrentPage(page)}
-                styles={`join-item btn btn-sm ${
-                  currentPage === page
-                    ? "btn-accent text-accent-content"
-                    : "btn-base-100"
-                }`}
+                styles={`${btnClass} ${currentPage === page && "btn-accent"}`}
               >
                 {String(page)}
               </ActionButton>
             </div>
           ))}
+
+          {/* In mobile */}
+          <div className="mobile:block tablet:block laptop:hidden mb-5">
+            <Modal
+              title={currentPage}
+              style={btnClass}
+              titleContent="Select page"
+              content={
+                <div className="wrap flex flex-nowrap overflow-x-auto gap-1 py-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <button
+                        key={page}
+                        className={`btn btn-sm ${
+                          currentPage === page ? "btn-accent" : ""
+                        }`}
+                        onClick={() => {
+                          handleCurrentPage(page);
+                          setModalOpen(false);
+                        }}
+                      >
+                        {page}
+                      </button>
+                    )
+                  )}
+                </div>
+              }
+              id="Select page"
+              boolClose={true}
+            />
+          </div>
+
           <ActionButton
             action={handleNext}
-            styles={"join-item btn btn-sm btn-base-100"}
+            styles={btnClass}
             disabled={currentPage === totalPages}
           >
             {">"}
           </ActionButton>
           <ActionButton
             action={handleToLastPage}
-            styles={"join-item btn btn-sm btn-base-100"}
+            styles={`${btnClass} mobile:hidden tablet:hidden laptop:block`}
             disabled={currentPage === totalPages}
           >
             {">>"}
           </ActionButton>
         </div>
-        <p className="mt-3">
+        <p className="mt-3 mobile:hidden tablet:hidden laptop:block">
           {lengthData === 0 ? (
             <span>Not found data</span>
           ) : (
@@ -183,8 +247,7 @@ export default function Pagination({
         </p>
       </div>
 
-      {/* Bottom section for loading more data */}
-      <div className="flex justify-center mobile:flex tablet:flex laptop:hidden mb-5">
+      {/* <div className="flex justify-center mobile:flex tablet:flex laptop:hidden mb-5">
         {loading ? (
           <span className="loading loading-dots loading-xs"></span>
         ) : (
@@ -204,10 +267,9 @@ export default function Pagination({
         )}
       </div>
 
-      {/* Infinite scroll only for mobile and tablet */}
       <div className="mobile:block tablet:block laptop:hidden">
         <div ref={ref} className="h"></div>
-      </div>
+      </div> */}
     </>
   );
 }

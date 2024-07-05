@@ -32,7 +32,7 @@ export const EditableField = ({
     return (
       <textarea
         value={value}
-        className="input input-sm input-primary input-bordered h-24"
+        className="input input-sm input-primary input-bordered h-24 w-full"
         onChange={handleChange}
         name={name}
       />

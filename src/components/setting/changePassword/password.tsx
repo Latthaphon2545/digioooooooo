@@ -62,7 +62,9 @@ export const PasswordChange = () => {
     ];
 
     setTooltipStyle(
-      checks.map((check) => (check ? "stroke-success" : "stroke-error"))
+      checks.map((check) =>
+        check ? "stroke-success text-success" : "stroke-error text-error"
+      )
     );
   };
 
@@ -71,7 +73,9 @@ export const PasswordChange = () => {
     confirmPassword: string
   ) => {
     setTooltipStyleConfirm([
-      password === confirmPassword ? "stroke-success" : "stroke-error",
+      password === confirmPassword
+        ? "stroke-success text-success"
+        : "stroke-error text-error",
     ]);
   };
 
@@ -83,7 +87,7 @@ export const PasswordChange = () => {
   const activeButton = () =>
     oldPassword.length > 0 &&
     value.length > 0 &&
-    tooltipStyle.every((style) => style === "stroke-success") &&
+    tooltipStyle.every((style) => style === "stroke-success text-success") &&
     value === valueConfirm;
 
   const submit = async () => {
@@ -152,7 +156,9 @@ export const PasswordChange = () => {
           {/* New Password */}
           <label
             className={`input input-bordered flex items-center gap-2 ${
-              tooltipStyle.every((style) => style === "stroke-success")
+              tooltipStyle.every(
+                (style) => style === "stroke-success text-success"
+              )
                 ? "input-success border-2"
                 : value.length > 0
                 ? "input-error border-2"

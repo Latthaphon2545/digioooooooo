@@ -1,5 +1,5 @@
-import ViewImg from "@/components/table/historyProduct/historyProductViewImg";
 import SubmitPopupButton from "@/components/submitPopupButton";
+import ViewImg from "@/components/table/historyProduct/view/historyProductViewImg";
 import { changeStatus } from "@/lib/actions/changeStatus/action";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -89,6 +89,8 @@ export default function FormChangeStatus({ sn }: { sn: string }) {
           description="Are you sure you want to change the status of this product?"
           id="change_status"
           styles="btn w-full btn-primary btn-lg mobile:mt-5"
+          confirmString="Confirm"
+          confirmStyle="btn btn-success"
         >
           Submit
         </SubmitPopupButton>

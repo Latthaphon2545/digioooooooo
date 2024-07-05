@@ -4,6 +4,7 @@ import { updateUserHistory } from "./action/updateUserHistory";
 import AlertDialog from "@/components/alertDialog";
 import UserHistoryMobileView from "./view/mobileView";
 import { DesktopHistoryView } from "./view/desktopView";
+import { isLaptop, isMobile, isTablet, useWindowSize } from "@/lib/windowSize";
 
 type TableUserHistoryProps = {
   historyData: {

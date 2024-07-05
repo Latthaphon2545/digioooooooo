@@ -30,6 +30,8 @@ export const pathMenu = (pathname: string) => {
       return "Account";
     case "/setting/changePassword":
       return "Change Password";
+    case "/setting/theme":
+      return "Theme";
     default:
       if (pathname.startsWith("/products/history/")) {
         return "History";

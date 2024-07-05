@@ -3,7 +3,7 @@
 import { encode } from "@/lib/generateRandomHref";
 import { IoMdHome, IoMdSettings } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
-import { MdHistory, MdOutlineDevicesOther } from "react-icons/md";
+import { MdOutlineDevicesOther } from "react-icons/md";
 import { RxBoxModel } from "react-icons/rx";
 import { FaShop } from "react-icons/fa6";
 import { AiFillBank } from "react-icons/ai";

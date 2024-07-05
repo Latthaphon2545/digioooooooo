@@ -27,7 +27,7 @@ export const passwordSetEmail = ({
         concerned about your account's safety, please reply to this email to get
         in touch with us.
      `;
-  } else {
+  } else if (type === "forgotPassword") {
     inviteLink += `/setpassword?${url}&type=forgotPassword`;
     previewText = "Reset your password";
     header = `Reset your password on <strong>Digio Stock</strong>`;
@@ -106,15 +106,21 @@ export const passwordSetEmail = ({
       text-align: center;
       margin-top: 0;
       margin-bottom: 0;
+      .img {
+      display: block;
+      margin: 0 auto;
+      width: 270px;
+      height: 150px;
+    }
     }
   </style>
 </head>
 <body style="background-color: white; font-family: sans-serif; padding: 20px;">
   <div class="container">
     <img
-      src="https://static.wixstatic.com/media/59c690_63b573c211fd44ec89b0103477bfc986~mv2.png/v1/fill/w_87,h_53,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/digio_logo.png"
-      alt="Plaid"
-      style="display: block; margin: 0 auto;"
+      src = "cid:digio_logo"  
+      alt="Digio Stock"
+      class="img"
     />
     <p class="text-blue-header">
      ${header}

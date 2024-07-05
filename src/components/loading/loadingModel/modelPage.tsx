@@ -6,7 +6,7 @@ export default function ModelLoading({ length }: { length: number }) {
           key={index}
           className="card card-side bg-base-100 shadow-xl mx-20 mt-5"
         >
-          <div className="card-body skeleton bg-opacity-10 h-[28vh] w-[75vw]"></div>
+          <div className="card-body skeleton bg-opacity-10 w-[80%] h-[30vh]"></div>
         </div>
       ))}
     </div>

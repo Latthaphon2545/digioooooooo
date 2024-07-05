@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { db } from "@/lib/db";
-import { formAccount, transporter } from "@/lib/sendEmail";
-import { encode } from "@/lib/generateRandomHref";
-import { passwordSetEmail } from "@/components/email/password";
+import { forgotPasswordSend } from "@/lib/actions/email/forgotPassword";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -55,7 +53,6 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    // // Change password
     const password = crypto.randomBytes(10).toString("hex");
     const passwordHash = await bcrypt.hash(password, 10);
     const updatedUser = await db.user.update({
@@ -67,16 +64,8 @@ export const POST = async (req: NextRequest) => {
       },
     });
 
-    const info = await transporter.sendMail({
-      from: formAccount,
-      to: "Latthaphon.p@kkumail.com",
-      subject: `Forgot Password - ${updatedUser.name}`,
-      html: passwordSetEmail({
-        invitedByEmail: updatedUser.email,
-        invitedByName: updatedUser.name,
-        invitedByPassword: password,
-      }),
-    });
+    // Send email
+    const info = await forgotPasswordSend({ updatedUser, password });
 
     return new NextResponse(
       JSON.stringify({ message: "Password reset email sent" }),

@@ -6,7 +6,6 @@ import { TbCopyCheckFilled } from "react-icons/tb";
 import axios from "axios";
 import AlertDialog, { Error, Success } from "@/components/alertDialog";
 import Modal from "@/components/modal";
-import SubmitPopupButton from "@/components/submitPopupButton";
 import { FaPhoneAlt } from "react-icons/fa";
 import { EditableField } from "../EditableField";
 import { productIdUI } from "../productIdShowEachShop";
@@ -14,7 +13,6 @@ import { copylink } from "../copyText";
 import { handleEditToggle } from "../handleEditToggle";
 import { ShowAlert } from "../showAlert";
 import { RenderSubmitPopupButton } from "./renderSubmitPopupButton";
-import { useWindowSize } from "@/lib/windowSize";
 
 interface TableProps {
   dataForCurrentPage: {
@@ -197,6 +195,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                 address={address}
                 contact={contact}
                 handleUpdate={handleUpdate}
+                isUpdating={isUpdating[item.id]}
               />
             </div>
           ) : (
@@ -238,12 +237,12 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                   }
                   titleContent=""
                   style="btn-info btn-sm"
-                  id={`editUser${item.id}`}
+                  id={`editMerchants${item.id}`}
                   content={ModalEditMobileMerchant({ item })}
                   action={() => {
                     setOpenEditModal(!openEditModal);
                   }}
-                  boolClose={false}
+                  boolClose={true}
                 />
               ) : (
                 <>
@@ -351,14 +350,12 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
           address={address}
           contact={contact}
           handleUpdate={handleUpdate}
+          isUpdating={isUpdating[item.id]}
+          mobile={true}
         />
-
-        {isUpdating[item.id] && <div className="loading loading-spinner"></div>}
       </div>
     );
   };
-
-  console.log(useWindowSize());
 
   return (
     <>

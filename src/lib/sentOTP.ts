@@ -1,7 +1,6 @@
 import axios from "axios";
 
 interface IProps {
-  phoneNumber: string;
   email: string;
   setShowModal?: (value: boolean) => void;
   setError?: (value: boolean) => void;
@@ -12,7 +11,6 @@ interface IProps {
 }
 
 export const sendOtp = async ({
-  phoneNumber,
   email,
   setShowModal,
   setError,
@@ -25,16 +23,15 @@ export const sendOtp = async ({
     if (setBoolGenerateOtp) setBoolGenerateOtp(true);
     if (setError) setError(false);
     const res = await axios.post("/api/otp/generateOTP", {
-      phoneNumber: phoneNumber,
       email: email,
     });
     setRefNum(res.data.message);
-    if (setTimeLeft) setTimeLeft(30);
-    if (setResendOtp) setResendOtp(false);
-    if (setShowModal) setShowModal(true);
   } catch (e) {
     console.log(e);
   } finally {
     if (setBoolGenerateOtp) setBoolGenerateOtp(false);
+    if (setTimeLeft) setTimeLeft(30);
+    if (setResendOtp) setResendOtp(false);
+    if (setShowModal) setShowModal(true);
   }
 };

@@ -2,12 +2,11 @@ import { BiLogOut } from "react-icons/bi";
 import { MdHistory } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { useRouter } from "next/navigation";
-import ThemePage from "../theme/themePage";
-import Alert from "../alert";
+import Alert from "../../alert";
 
 const size = "h-6 w-6";
-
 const userId = "66554e8534b8e2bb8f5f42d1";
+
 export default function Dropdown() {
   const router = useRouter();
   return (
@@ -33,17 +32,20 @@ export default function Dropdown() {
         </label>
       </li>
 
-      {/* Settings */}
-      <li className="m-1">
-        <label onClick={() => router.push("/setting/account")}>
+      {/* Settings laptop*/}
+      <li className="m-1 mobile:block laptop:hidden">
+        <label onClick={() => router.push("/setting")}>
           <IoMdSettings className={size} />
           <p>Settings</p>
         </label>
       </li>
 
-      {/* Theme */}
-      <li className="m-1">
-        <ThemePage />
+      {/* Settings mobile */}
+      <li className="m-1 mobile:hidden laptop:block">
+        <label onClick={() => router.push("/setting/account")}>
+          <IoMdSettings className={size} />
+          <p>Settings</p>
+        </label>
       </li>
 
       {/* Logout */}

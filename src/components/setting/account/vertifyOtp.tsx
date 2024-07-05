@@ -9,6 +9,7 @@ interface VerifyOtpProps {
   referenceNumber: string;
   setShowModal: (value: boolean) => void;
   setValue: (value: string) => void;
+  email: string;
 }
 
 export function VertifyOtp({
@@ -16,6 +17,7 @@ export function VertifyOtp({
   referenceNumber,
   setShowModal,
   setValue,
+  email,
 }: VerifyOtpProps) {
   const [timeLeft, setTimeLeft] = useState(30);
   const [reSendOtp, setResendOtp] = useState(false);
@@ -52,7 +54,6 @@ export function VertifyOtp({
       setLoading(true);
       console.log(otp);
       const res = await axios.post("/api/otp/verifyOTP", {
-        phone: phoneNumber,
         otp: otp,
         refNum: refNum,
       });
@@ -117,8 +118,7 @@ export function VertifyOtp({
           onClick={async () => {
             setResendLoading(true);
             await sendOtp({
-              phoneNumber: phoneNumber,
-              email: "games2545.lattapon@gmail.com",
+              email: email,
               setRefNum,
               setTimeLeft,
               setResendOtp,

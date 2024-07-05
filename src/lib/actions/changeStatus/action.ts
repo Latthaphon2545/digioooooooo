@@ -2,6 +2,7 @@
 
 import { uploadImage } from "@/lib/cloudinary";
 import { db } from "@/lib/db";
+import { encode, stringToHex } from "@/lib/generateRandomHref";
 import { StatusProduct } from "@/lib/types";
 import { redirect } from "next/navigation";
 
@@ -71,5 +72,9 @@ export async function changeStatus(sn: string, formData: FormData) {
     console.error("Error while creating history");
     console.log(err);
   }
-  redirect(`/products/history/${sn}?filter=&search=&skip=0&take=8`);
+  redirect(
+    `/products/history/${stringToHex(sn)}?${encode(
+      `filter=&search=&skip=0&take=8`
+    )}`
+  );
 }
