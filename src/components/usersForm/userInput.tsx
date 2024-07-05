@@ -120,7 +120,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
           </div>
         </form>
       </div>
-      <div className="sm:hidden max-h-[65vh] overflow-scroll w-full">
+      <div className="sm:hidden max-h-[85vh] overflow-scroll w-full">
         <form action="">
           <div className="flex flex-col gap-5">
             {formValues.map((_, index) => {

@@ -25,7 +25,7 @@ export default function ChangeStatusPage() {
       <p className="text-start mx-5 my-7 mobile:text-center tablet:text-center laptop:text-start desktop:text-start">
         {!nextStep
           ? "Please scan the barcode to check the stock and change the status."
-          : "Type field to change status."}
+          : ""}
       </p>
 
       <div className="flex flex-col justify-center items-center gap-5 w-full">

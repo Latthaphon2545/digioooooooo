@@ -38,7 +38,7 @@ export default function UserHistory({
 
   return (
     <div className="h-full">
-      <div className="font-bold text-3xl pt-4 pl-4">
+      <div className="font-bold text-3xl pt-4 pl-4 hidden sm:block">
         Halo Halo Good Good Good
       </div>
       <div className="flex flex-col items-center sm:pt-20 justify-start h-full">

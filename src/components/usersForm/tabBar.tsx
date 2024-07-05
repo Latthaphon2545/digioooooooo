@@ -6,27 +6,30 @@ import { useEffect, useState } from "react";
 interface TabBarProps {
   Individual: JSX.Element;
   Group: JSX.Element;
+  activeTab: number;
+  setActiveTab: (value: number) => void;
 }
 
-export const TabBar = ({ Individual, Group }: TabBarProps) => {
+export const TabBar = ({
+  Individual,
+  Group,
+  activeTab,
+  setActiveTab,
+}: TabBarProps) => {
   const searchParams = useSearchParams();
-  const paramPage = searchParams.get("activeTab");
-
-  const [activeTab, setActiveTab] = useState<"Individual" | "Group">(
-    "Individual"
-  );
+  const paramPage = Number(searchParams.get("activeTab"));
 
   useEffect(() => {
     if (paramPage === null) {
-      setActiveTab("Individual");
+      setActiveTab(0);
     }
 
-    if (paramPage === "1") {
-      setActiveTab("Group");
+    if (paramPage === 1) {
+      setActiveTab(1);
     } else {
-      setActiveTab("Individual");
+      setActiveTab(0);
     }
-  }, [paramPage]);
+  }, [paramPage, setActiveTab]);
 
   return (
     <div role="tablist" className="tabs tabs-bordered w-full ">
@@ -34,15 +37,15 @@ export const TabBar = ({ Individual, Group }: TabBarProps) => {
         type="radio"
         name="my_tabs_1"
         role="tab"
-        className={`tab w-full ${paramPage ? "hidden" : ""}`}
+        className={`tab w-full ${paramPage ? "hidden" : ""} hidden sm:block`}
         aria-label="Individual"
-        checked={activeTab === "Individual"}
-        onChange={() => setActiveTab("Individual")}
+        checked={activeTab === 0}
+        onChange={() => setActiveTab(0)}
       />
       <div
         role="tabpanel"
         className={`tab-content w-full ${
-          activeTab === "Individual" ? "block mx-auto" : "hidden"
+          activeTab === 0 ? "block mx-auto" : "hidden"
         } ${!paramPage ? "px-10 mt-3" : "w-full  mx-auto"}`}
       >
         {Individual}
@@ -52,15 +55,15 @@ export const TabBar = ({ Individual, Group }: TabBarProps) => {
         type="radio"
         name="my_tabs_1"
         role="tab"
-        className={`tab ${paramPage ? "hidden" : ""}`}
+        className={`tab ${paramPage ? "hidden" : ""} hidden sm:block`}
         aria-label="Group"
-        checked={activeTab === "Group"}
-        onChange={() => setActiveTab("Group")}
+        checked={activeTab === 1}
+        onChange={() => setActiveTab(1)}
       />
       <div
         role="tabpanel"
         className={`tab-content w-full ${
-          activeTab === "Group" ? "block" : "hidden"
+          activeTab === 1 ? "block" : "hidden"
         } ${!paramPage && "px-10 mt-3"}`}
       >
         {Group}

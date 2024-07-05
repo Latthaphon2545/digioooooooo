@@ -204,15 +204,6 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
                   <div className="skeleton h-8 w-20 bg-opacity-10"></div>
                 </div>
               </div>
-
-              <div className="flex justify-between">
-                <div>
-                  <p>Contact</p>
-                </div>
-                <div>
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

@@ -11,6 +11,7 @@ import Alert from "../alert";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { TabBar } from "../usersForm/tabBar";
+import { isFormEmpty } from "@/lib/inputUtils";
 
 type FormValues = {
   name: string;
@@ -112,10 +113,12 @@ export default function MerchantInputForm() {
             setErrorOnSubmit={setErrorOnSubmit}
           />
         }
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
       {submitting && (
         <div className="">
-          <div className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
+          <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
       )}
       {errorOnSubmit && (
@@ -133,9 +136,11 @@ export default function MerchantInputForm() {
               : " w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
           } laptop:w-auto btn-wide fixed  sm:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
           alertHeader="Add Merchant"
-          alertDescroption="Are you sure you want to add these merchants?"
+          alertDescription="Are you sure you want to add these merchants?"
           id="add_merchant"
-          disabled={hasError || uploading}
+          disabled={
+            hasError || uploading || submitting || isFormEmpty(formValues)
+          }
           action={handleSubmit}
         >
           Add

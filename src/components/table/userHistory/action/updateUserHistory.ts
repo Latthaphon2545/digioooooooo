@@ -36,9 +36,12 @@ export const updateUserHistory = async (
     formData.append("description", history.description);
     formData.append("category", history.category);
     history.imageProves.forEach((file) => formData.append("images", file));
-    imageToDelete.forEach((image) => formData.append("imagesToDelete", image));
 
-    console.log("Image to delete", imageToDelete);
+    if (imageToDelete && imageToDelete.length > 0) {
+      imageToDelete.forEach((image) =>
+        formData.append("imagesToDelete", image)
+      );
+    }
 
     const updatedData = await updateUserHistoryOnServer(id, formData);
     console.log("Updated data", updatedData);

@@ -8,6 +8,7 @@ type EditImageProps = {
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
   setImageToDelete?: React.Dispatch<React.SetStateAction<string[]>>;
   imageToDelete: string[];
+  mobileImg?: boolean;
 };
 
 export default function EditImage({
@@ -16,6 +17,7 @@ export default function EditImage({
   setImages,
   setImageToDelete,
   imageToDelete,
+  mobileImg,
 }: EditImageProps) {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -70,6 +72,7 @@ export default function EditImage({
             inputRef={fileInputRef}
             triggerFileInput={triggerFileInput}
             imageToDelete={imageToDelete}
+            mobileImg={mobileImg}
           />
         )}
       </div>

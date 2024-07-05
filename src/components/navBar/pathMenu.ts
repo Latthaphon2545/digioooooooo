@@ -35,6 +35,8 @@ export const pathMenu = (pathname: string) => {
     default:
       if (pathname.startsWith("/products/history/")) {
         return "History";
+      } else if (pathname.startsWith("/users/history")) {
+        return "My history";
       }
       return "";
   }

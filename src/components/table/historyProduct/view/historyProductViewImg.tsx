@@ -5,6 +5,7 @@ import { TbHttpDelete } from "react-icons/tb";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import { FaRegEdit } from "react-icons/fa";
 import { IoAddCircleOutline } from "react-icons/io5";
+import ModalImageMobile from "@/components/modalImageMobile";
 
 const ViewImg = ({
   id,
@@ -14,6 +15,7 @@ const ViewImg = ({
   setImageToDelete,
   triggerFileInput,
   imageToDelete,
+  mobileImg,
 }: {
   id: string;
   image: string[];
@@ -23,6 +25,7 @@ const ViewImg = ({
   inputRef?: React.RefObject<HTMLInputElement>;
   triggerFileInput?: () => void;
   imageToDelete?: string[];
+  mobileImg?: boolean;
 }) => {
   const [images, setImages] = useState<string[]>([]);
 
@@ -57,7 +60,11 @@ const ViewImg = ({
   const editImageShow = (images: string[] | undefined) => {
     return (
       <>
-        <div className="grid grid-cols-2 gap-2 content-center p-2">
+        <div
+          className={`grid grid-cols-2 gap-2 content-center p-2 ${
+            mobileImg ? "" : ""
+          }`}
+        >
           {images &&
             images.map((item, index) => (
               <div
@@ -68,7 +75,7 @@ const ViewImg = ({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item}
-                  className="w-[20vw] h-[20vh]"
+                  className="w-[60vh] h-20[vh]  sm:w-[20vw] sm:h-[20vh]"
                   alt={`${index + 1}`}
                 />
                 {editing && (

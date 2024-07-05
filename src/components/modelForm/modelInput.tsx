@@ -4,7 +4,6 @@ import SubmitPopupButton from "../submitPopupButton";
 import ImageRenderer from "../imageRenderer";
 import { createModel } from "@/lib/actions/model/action";
 import { useFormState } from "react-dom";
-import AlertDialog from "../alertDialog";
 
 const ModelInput = () => {
   const INFORMATION_FIELD = [
@@ -43,7 +42,7 @@ const ModelInput = () => {
               id=""
               rows={2}
               placeholder="Description"
-              className={`lg:ml-7 mt-3 font-normal block p-2.5 lg:min-w-[70vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  w-full  `}
+              className={`lg:ml-7 mt-3 font-normal block p-2.5 lg:min-w-[70vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  w-full  bg-transparent`}
             ></textarea>
           </label>
           <fieldset className="flex flex-col space-y-1">
@@ -64,6 +63,7 @@ const ModelInput = () => {
               header="Add New Model"
               description="Are you sure you want to add this model"
               id="add_model"
+              disabled={state.errors.length > 0}
             >
               Add
             </SubmitPopupButton>

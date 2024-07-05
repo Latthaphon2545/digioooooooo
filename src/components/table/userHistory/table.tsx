@@ -4,7 +4,6 @@ import { updateUserHistory } from "./action/updateUserHistory";
 import AlertDialog from "@/components/alertDialog";
 import UserHistoryMobileView from "./view/mobileView";
 import { DesktopHistoryView } from "./view/desktopView";
-import { isLaptop, isMobile, isTablet, useWindowSize } from "@/lib/windowSize";
 
 type TableUserHistoryProps = {
   historyData: {
@@ -22,8 +21,7 @@ export default function TableUserHistory({
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
-
-  const windowSize = useWindowSize();
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   const handleUpdateWrapper = async (
     id: string,
@@ -43,53 +41,45 @@ export default function TableUserHistory({
 
   return (
     <>
-      {windowSize.width >= isLaptop && (
-        <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:hidden laptop:block">
-          <table className="table table-fixed w-full text-center">
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Product</th>
-                <th>Image</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {historyData.map((item) => {
-                return (
-                  <DesktopHistoryView
-                    key={item.id}
-                    item={item}
-                    isEditor={isEditor}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                    handleUpdateUserHistory={handleUpdateWrapper}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {windowSize.width >= isMobile && windowSize.width <= isTablet && (
-        <div className="mobile:block laptop:hidden">
-          {historyData.map((item) => {
-            return (
-              <UserHistoryMobileView
-                key={item.id}
-                item={item}
-                isEditor={isEditor}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                handleUpdateUserHistory={handleUpdateWrapper}
-              />
-            );
-          })}
-        </div>
-      )}
+      <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:hidden laptop:block">
+        <table className="table table-fixed w-full text-center">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Product</th>
+              <th>Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {historyData.map((item) => {
+              return (
+                <DesktopHistoryView
+                  key={item.id}
+                  item={item}
+                  isEditor={isEditor}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  handleUpdateUserHistory={handleUpdateWrapper}
+                />
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="mobile:block laptop:hidden">
+        {historyData.map((item) => {
+          return (
+            <UserHistoryMobileView
+              key={item.id}
+              item={item}
+              handleUpdateUserHistory={handleUpdateWrapper}
+            />
+          );
+        })}
+      </div>
       <div className="fixed bottom-4 left-[15%] w-[20%]">
         {updateAlert && (
           <AlertDialog
