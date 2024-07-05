@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 
-interface ModalProps {
+interface ModalImageMobileProps {
   title: React.ReactNode;
   titleContent?: string;
   content?: React.ReactNode;
@@ -11,10 +11,9 @@ interface ModalProps {
   id: string;
   boolClose?: boolean;
   action?: () => void;
-  mobileImg?: boolean;
 }
 
-const Modal = ({
+const ModalImageMobile = ({
   title,
   titleContent,
   content,
@@ -22,10 +21,8 @@ const Modal = ({
   id,
   boolClose,
   action,
-  mobileImg,
-}: ModalProps) => {
+}: ModalImageMobileProps) => {
   const [open, setOpen] = useState(false);
-
   return (
     <React.Fragment>
       <label
@@ -43,9 +40,9 @@ const Modal = ({
 
       <input type="checkbox" id={id} className="modal-toggle" />
       <div
-        className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom ${
+        className={`modal modal-middle  w-full h-full  ${
           open ? "modal-open" : ""
-        } ${mobileImg ? "w-full h-full" : ""}`}
+        }`}
         role="dialog"
       >
         <div className="modal-box p-8">
@@ -75,4 +72,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default ModalImageMobile;

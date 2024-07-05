@@ -20,8 +20,10 @@ export const updateUserHistoryOnServer = async (
     const imageFiles = formData.getAll("images");
     const imageToDelete = formData.getAll("imagesToDelete");
     console.log("image", imageFiles);
-
     console.log("image to delete", imageToDelete);
+
+    console.log("Description", description);
+    console.log("Category", category);
 
     // const images = [];
     // if (imageFiles.length > 0) {

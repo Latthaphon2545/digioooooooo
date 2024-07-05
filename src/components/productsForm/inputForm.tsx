@@ -6,7 +6,7 @@ import GroupUpload from "../groupUpload";
 import Alert from "../alert";
 import { DataItem, Model } from "@/lib/types";
 import axios from "axios";
-import { checkFormatInput } from "@/lib/inputUtils";
+import { checkFormatInput, isFormEmpty } from "@/lib/inputUtils";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -135,10 +135,12 @@ const InputForm = ({ models }: { models: Model[] }) => {
             setErrorOnSubmit={setErrorOnSubmit}
           />
         }
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
       {submitting && (
         <div className="">
-          <div className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
+          <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
       )}
       {errorOnSubmit && (
@@ -156,9 +158,11 @@ const InputForm = ({ models }: { models: Model[] }) => {
               : " w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
           } laptop:w-auto btn-wide fixed  sm:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
           alertHeader="Add Product"
-          alertDescroption="Are you sure you want to add these products?"
+          alertDescription="Are you sure you want to add these products?"
           id="add_product"
-          disabled={hasError || uploading}
+          disabled={
+            hasError || uploading || submitting || isFormEmpty(formValues)
+          }
           action={handleSubmit}
         >
           Add

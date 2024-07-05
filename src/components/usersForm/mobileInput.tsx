@@ -69,7 +69,7 @@ export default function MobileInput({
                 handleRoleChange &&
                 handleRoleChange(index, e.target.value as Role)
               }
-              className="grow bg-white"
+              className="grow bg-transparent"
             >
               <option value="" disabled={true}>
                 Select a role

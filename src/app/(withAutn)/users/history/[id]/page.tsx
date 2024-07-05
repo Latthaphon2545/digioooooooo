@@ -13,8 +13,6 @@ export default function GetHistory({ params }: { params: { id: string } }) {
 
   const path = useSearchParams();
   const { skip, take } = decode(path.toString());
-  console.log("skip", skip);
-  console.log("take", take);
 
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +24,6 @@ export default function GetHistory({ params }: { params: { id: string } }) {
         );
 
         const data = res.data;
-        console.log(data);
 
         setUserHistory(data.userHistory);
         setTotalHistory(data.totalHistory);
@@ -45,7 +42,7 @@ export default function GetHistory({ params }: { params: { id: string } }) {
       <div className="h-full px-4">
         {loading ? (
           <div>
-            <div className="font-bold text-3xl pt-4 pl-4 mb-20">
+            <div className="font-bold text-3xl pt-4 pl-4 mb-20 hidden sm:block">
               Halo Halo Good Good Good
             </div>
             <TablePageLoading Type="User_History" length={7} />

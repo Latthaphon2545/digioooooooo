@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { TabBar } from "./tabBar";
+import { isFormEmpty } from "@/lib/inputUtils";
 
 type FormValues = {
   email: string;
@@ -45,22 +46,23 @@ const InputForm = () => {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    try {
-      if (activeTab === 1 && groupData.length === 0) {
-        setErrorOnSubmit("Please upload a file before submitting");
-        return;
-      }
 
-      if (
-        activeTab === 0 &&
-        formValues.every(
-          ({ email, name, contact, role }) =>
-            !email && !name && !contact && !role
-        )
-      ) {
-        setErrorOnSubmit("Please fill out the form");
-        return;
-      }
+    try {
+      // if (activeTab === 1 && groupData.length === 0) {
+      //   setErrorOnSubmit("Please upload a file before submitting");
+      //   return;
+      // }
+
+      // if (
+      //   activeTab === 0 &&
+      //   formValues.every(
+      //     ({ email, name, contact, role }) =>
+      //       !email && !name && !contact && !role
+      //   )
+      // ) {
+      //   setErrorOnSubmit("Please fill out the form");
+      //   return;
+      // }
 
       if (
         formValues.some(
@@ -83,7 +85,10 @@ const InputForm = () => {
               )
               .map((value) => ({
                 ...value,
-                email: value.email + "@digio.co.th",
+                //email: value.email + "@digio.co.th",
+                email: value.email.endsWith("@digio.co.th")
+                  ? value.email
+                  : value.email + "@digio.co.th",
               }))
           : groupData;
 
@@ -147,10 +152,12 @@ const InputForm = () => {
             setErrorOnSubmit={setErrorOnSubmit}
           />
         }
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
       {submitting && (
         <div>
-          <div className="loading loading-spinner loading-lg absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
+          <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
       )}
       {errorOnSubmit && (
@@ -174,7 +181,9 @@ const InputForm = () => {
           alertHeader="Add User"
           alertDescription="Are you sure you want to add these user?"
           id="add_user"
-          disabled={hasError || uploading}
+          disabled={
+            hasError || uploading || submitting || isFormEmpty(formValues)
+          }
           action={handleSubmit}
         >
           Add

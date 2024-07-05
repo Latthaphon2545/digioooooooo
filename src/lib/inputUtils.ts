@@ -10,3 +10,11 @@ export const formatRoles = (role: Role) => {
   }
   return role.charAt(0) + role.slice(1).toLowerCase();
 };
+
+export const isFormEmpty = (formValues: any[]) => {
+  return formValues.every((formValue) => {
+    return Object.values(formValue).every(
+      (value) => value === "" || value === null
+    );
+  });
+};
