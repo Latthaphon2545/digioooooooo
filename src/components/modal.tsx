@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { IoMdCloseCircle } from "react-icons/io";
 
 interface ModalProps {
   title: React.ReactNode;
@@ -25,13 +26,6 @@ const Modal = ({
 }: ModalProps) => {
   const [open, setOpen] = useState(false);
 
-<<<<<<< HEAD
-=======
-  const handleClose = () => {
-    setOpen(false);
-  };
-
->>>>>>> Game
   return (
     <React.Fragment>
       <label
@@ -47,13 +41,7 @@ const Modal = ({
         {title}
       </label>
 
-      <input
-        type="checkbox"
-        id={id}
-        className="modal-toggle"
-        checked={open}
-        readOnly
-      />
+      <input type="checkbox" id={id} className="modal-toggle" />
       <div
         className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom ${
           open ? "modal-open" : ""
@@ -62,17 +50,24 @@ const Modal = ({
       >
         <div className="modal-box p-8">
           {boolClose && (
-            <button
+            <label
+              htmlFor={id}
               className="btn btn-xs btn-circle btn-error absolute right-4 top-2"
-              onClick={handleClose}
+              onClick={() => setOpen(!open)}
             >
               X
-            </button>
+            </label>
           )}
           <h3 className="text-lg font-bold">{titleContent}</h3>
           <div className="text-sm text-start">{content}</div>
         </div>
-        <label className="modal-backdrop" htmlFor={id} onClick={handleClose}>
+        <label
+          className="modal-backdrop"
+          htmlFor={id}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
           Close
         </label>
       </div>
