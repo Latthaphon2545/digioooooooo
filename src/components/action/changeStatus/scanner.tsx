@@ -1,5 +1,6 @@
 "use client";
 
+import BarcodeScan from "@/components/scaner/barcodeScan";
 import axios from "axios";
 import { useState } from "react";
 import { BarcodeScanner } from "react-barcode-scanner";
@@ -48,10 +49,9 @@ export default function Scanner({
           <p className="text-center flex flex-col gap-3">Checking product...</p>
         </div>
       ) : (
-        <BarcodeScanner
-          options={{ formats: ["code_128"] }}
-          onCapture={(code) => {
-            checkProduct(code.rawValue);
+        <BarcodeScan
+          action={(code) => {
+            checkProduct(code);
           }}
         />
       )}

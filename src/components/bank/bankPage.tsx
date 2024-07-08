@@ -1,10 +1,11 @@
 import { IoMdAddCircle } from "react-icons/io";
 import Slice from "./sliceBank";
+import Link from "next/link";
 
 interface Bank {
   name: string;
-  bankName: string;
-  bankLogo: string;
+  image: string;
+  product: Record<string, Product>;
 }
 
 interface Product {
@@ -18,15 +19,14 @@ interface Product {
     LOST: number;
     WAITREPAIR: number;
   };
-  bg: string;
+  image: string;
 }
 
 interface BankPageProps {
   banks: Bank[];
-  products: Product[];
 }
 
-export default function BankPage({ banks, products }: BankPageProps) {
+export default function BankPage({ banks }: BankPageProps) {
   return (
     <>
       <div className="w-full tablet:block mobile:block laptop:hidden">
@@ -37,11 +37,11 @@ export default function BankPage({ banks, products }: BankPageProps) {
               key={item.name}
             >
               <div className="card-body flex flex-row justify-between items-center">
-                <h2 className="card-title">{item.bankName}</h2>
-                <img src={item.bankLogo} alt={item.bankName} width={80} />
+                <h2 className="card-title">{item.name}</h2>
+                <img src={item.image} alt={item.name} width={80} />
               </div>
               <figure>
-                <Slice products={products} />
+                <Slice productsData={item.product} bankName={item.name} />
               </figure>
             </div>
           ))}
@@ -56,15 +56,16 @@ export default function BankPage({ banks, products }: BankPageProps) {
               key={index}
             >
               <div className="card-body flex flex-row justify-between items-center">
-                <h2 className="card-title">{item.bankName}</h2>
-                <img src={item.bankLogo} alt={item.bankName} width={80} />
+                <h2 className="card-title">{item.name}</h2>
+                <img src={item.image} alt={item.name} width={80} />
               </div>
               <figure>
-                <Slice products={products} />
+                <Slice productsData={item.product} bankName={item.name} />
               </figure>
             </div>
           ))}
-          <div
+          <Link
+            href="/banks/add"
             className="card bg-base-200 bg-opacity-40 shadow-xl laptop:w-80 desktop:w-96 flex flex-col justify-center items-center gap-5"
             key="Add"
           >
@@ -72,7 +73,7 @@ export default function BankPage({ banks, products }: BankPageProps) {
               <IoMdAddCircle />
             </p>
             <p className="text-2xl">Add Bank</p>
-          </div>
+          </Link>
         </div>
       </div>
     </>

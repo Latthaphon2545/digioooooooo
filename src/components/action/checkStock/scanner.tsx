@@ -4,6 +4,7 @@ import { useState } from "react";
 import { BarcodeScanner } from "react-barcode-scanner";
 import AlertDialog, { Error, Success, Warning } from "../../alertDialog";
 import axios from "axios";
+import BarcodeScan from "@/components/scaner/barcodeScan";
 
 export default function Scanner() {
   const [code, setCode] = useState("");
@@ -78,10 +79,9 @@ export default function Scanner() {
           </p>
         </div>
       ) : (
-        <BarcodeScanner
-          options={{ formats: ["code_128"] }}
-          onCapture={(code) => {
-            checkStock(code.rawValue);
+        <BarcodeScan
+          action={(code) => {
+            checkStock(code);
           }}
         />
       )}
