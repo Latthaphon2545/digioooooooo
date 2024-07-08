@@ -28,7 +28,7 @@ export default function MobileInput({
   handleRoleChange,
 }: mobileInputProps) {
   return (
-    <div className="">
+    <div className="w-full ">
       {/* <div className="divider">8;p {index + 1}</div> */}
       <div className="text-2xl font-bold flex items-center justify-center btn btn-circle mx-auto mb-3">
         <p>{index + 1}</p>

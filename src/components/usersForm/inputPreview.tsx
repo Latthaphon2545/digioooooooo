@@ -18,7 +18,7 @@ export function InputPreview({
 }: InputPreviewProps) {
   if (data.length === 0 && !uploading) {
     return (
-      <div className="flex items-center justify-center h-full w-full">
+      <div className="flex items-center justify-center h-full">
         <p className="text-xl font-semibold text-center text-gray-500">
           Preview List
         </p>
@@ -27,7 +27,7 @@ export function InputPreview({
   }
 
   return (
-    <div className="relative ">
+    <div className="relative w-full">
       <div className="">
         {page === "user" ? (
           <UserInputPreview data={data} />

@@ -32,6 +32,7 @@ export default function BankInput() {
               header="Add New Bank"
               description="Are you sure you want to add this Bank"
               id="add_bank"
+              confirmString="Add"
             >
               Add
             </SubmitPopupButton>

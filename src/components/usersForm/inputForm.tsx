@@ -99,7 +99,7 @@ const InputForm = () => {
         }
       }
 
-      console.log("Sending data:", filledOutInputs);
+      //console.log("Sending data:", filledOutInputs);
 
       const res = await axios.post("/api/users/createUsers", filledOutInputs, {
         headers: {
@@ -182,7 +182,10 @@ const InputForm = () => {
           alertDescription="Are you sure you want to add these user?"
           id="add_user"
           disabled={
-            hasError || uploading || submitting || isFormEmpty(formValues)
+            hasError ||
+            uploading ||
+            submitting ||
+            isFormEmpty(activeTab === 0 ? formValues : groupData)
           }
           action={handleSubmit}
         >
