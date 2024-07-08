@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface TabBarProps {
   Individual: JSX.Element;
@@ -32,7 +32,10 @@ export const TabBar = ({
   }, [paramPage, setActiveTab]);
 
   return (
-    <div role="tablist" className="tabs tabs-bordered w-full ">
+    <div
+      role="tablist"
+      className="tabs tabs-bordered w-full mx-auto bg-yellow-50 "
+    >
       <input
         type="radio"
         name="my_tabs_1"
@@ -44,9 +47,9 @@ export const TabBar = ({
       />
       <div
         role="tabpanel"
-        className={`tab-content w-full ${
+        className={`tab-content w-full  bg-green-50 ${
           activeTab === 0 ? "block mx-auto" : "hidden"
-        } ${!paramPage ? "px-10 mt-3" : "w-full  mx-auto"}`}
+        } ${!paramPage ? "sm:px-10 mt-3" : "w-full  mx-auto"}`}
       >
         {Individual}
       </div>
@@ -55,16 +58,16 @@ export const TabBar = ({
         type="radio"
         name="my_tabs_1"
         role="tab"
-        className={`tab ${paramPage ? "hidden" : ""} hidden sm:block`}
+        className={`tab w-full  ${paramPage ? "hidden" : ""} hidden sm:block`}
         aria-label="Group"
         checked={activeTab === 1}
         onChange={() => setActiveTab(1)}
       />
       <div
         role="tabpanel"
-        className={`tab-content w-full ${
-          activeTab === 1 ? "block" : "hidden"
-        } ${!paramPage && "px-10 mt-3"}`}
+        className={`tab-content w-full  ${
+          activeTab === 1 ? "block mx-auto" : "hidden"
+        } ${!paramPage && "px-5 sm:px-10 mt-3"}`}
       >
         {Group}
       </div>

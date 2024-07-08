@@ -27,7 +27,7 @@ export async function createModel(prevState: any, formData: FormData) {
   }
   let errors = [];
 
-  const series = formData.get("series") as string;
+  const series = formData.get("series")?.toString().trim() as string;
 
   if (!series) {
     errors.push("Series is required");
