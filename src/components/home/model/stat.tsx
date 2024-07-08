@@ -1,6 +1,8 @@
 import { TbBuildingWarehouse } from "react-icons/tb";
 import { RiUninstallLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
+import { encode } from "@/lib/generateRandomHref";
+import Link from "next/link";
 
 interface StatProps {
   series: string;
@@ -22,14 +24,11 @@ const StatHome = ({ series, instock, installing, image }: StatProps) => {
           </div>
         </div>
         <div className="stat-value laptop:text-xl mobile:text-sm">{series}</div>
-        <button
-          className="stat-title btn btn-xs mobile:w-fit"
-          onClick={() => {
-            router.push(`/products/models#${series}`);
-          }}
-        >
-          View More
-        </button>
+        <Link href={`/products?filter=${series}&search=&skip=0&take=8`}>
+          <button className="stat-title btn btn-xs mobile:w-fit">
+            View More
+          </button>
+        </Link>
       </div>
 
       <div className="stat">

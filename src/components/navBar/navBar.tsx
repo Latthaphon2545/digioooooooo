@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { SideBarFull, SideBarSmall } from "./desktop/sideBar";
-import Topbar from "./topBar";
+import Topbar from "./topbar";
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
   const [openHamburgerDesktop, setOpenHamburgerDesktop] = useState(false);

@@ -11,45 +11,17 @@ export default function Home() {
   const [models, setModels] = useState([]);
   const [loadingModel, setLoadingModel] = useState(true);
   const [loadingBank, setLoadingBank] = useState(true);
-
-  const bank = [
-    {
-      name: "Bank 1",
-      status: {
-        INSTOCK: 122,
-        INSTALLED: 31,
-        INSTALLING: 10,
-        REPARING: 30,
-        DAMAGED: 50,
-        LOST: 60,
-        WAITREPAIR: 30,
-      },
-      image:
-        "https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png",
-    },
-    {
-      name: "Bank 2",
-      status: {
-        INSTOCK: 212,
-        INSTALLED: 31,
-        INSTALLING: 12,
-        REPARING: 3,
-        DAMAGED: 20,
-        LOST: 30,
-        WAITREPAIR: 10,
-      },
-      image:
-        "https://seeklogo.com/images/S/siam-commercial-bank-logo-B9BB3E105F-seeklogo.com.png",
-    },
-  ];
+  const [bank, setBank] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoadingModel(true);
         setLoadingBank(true);
-        const res = await axios.get("/api/model/getModel");
-        setModels(res.data.models);
+        const resModels = await axios.get("/api/model/getModel");
+        const resBank = await axios.get("/api/bank/home");
+        setModels(resModels.data.models);
+        setBank(resBank.data.bankStatus);
       } catch (e) {
         console.log("Error fetching data: ", e);
       } finally {
