@@ -1,61 +1,95 @@
+"use client";
+
+import { Error, Success } from "@/components/alertDialog";
 import Modal from "@/components/modal";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
+
+export interface HandleUpdateProps {
+  productId: string;
+  dataForCurrentPage: {
+    [key: string]: any;
+  }[];
+  setUpdateAlert: any;
+  setAlertTitle: any;
+  setAlertStyles: any;
+  setAlertIcon: any;
+  ShowAlert: any;
+}
 
 export default function ModalMerchant({
   productId,
-  onMerchantAdded,
-}: {
-  productId: string;
-  onMerchantAdded: (merchant: any) => void;
-}) {
-  const [merchantName, setMerchantName] = useState("");
-  const [merchantId, setMerchantId] = useState("");
-  const [findMerchant, setFindMerchant] = useState(false);
-  const [boolAddMerchant, setBoolAddMerchant] = useState(false);
-  const [textAddMerchant, setTextAddMerchant] = useState("Add");
+  dataForCurrentPage,
+  setUpdateAlert,
+  setAlertTitle,
+  setAlertStyles,
+  setAlertIcon,
+  ShowAlert,
+}: HandleUpdateProps) {
+  const [merchant, setMerchant] = useState([]);
+  const [loadingAdd, setLoadingAdd] = useState(false);
+  const [searchBool, setSearchBool] = useState(false);
 
-  const handleSearch = async () => {
+  const handleSearch = async (merchantSearch: string) => {
     try {
-      if (merchantId === "") {
-        setMerchantName("Please enter merchant ID");
-        return;
-      }
-      setFindMerchant(true);
+      setSearchBool(true);
       const res = await axios.get(
-        `/api/merchants/getMerchantById?id=${merchantId}`
+        `/api/merchants/getMerchantByNameContact?name=${merchantSearch}`
       );
-      setMerchantName(res.data.merchant.name);
+      setMerchant(res.data.merchant);
     } catch (e) {
-      setFindMerchant(false);
-      setMerchantName("Merchant not found");
+      console.log(e);
     } finally {
-      setFindMerchant(false);
+      setSearchBool(false);
     }
   };
 
   const handleAdd = async ({
     productID,
     merchantID,
+    merchantName,
   }: {
     productID: string;
     merchantID: string;
+    merchantName: string;
   }) => {
     try {
-      setBoolAddMerchant(true);
+      setLoadingAdd(true);
       await axios.patch(`/api/products/addMerchant`, {
         productId: productID,
         merchantId: merchantID,
       });
+      ShowAlert(
+        "Merchant added successfully",
+        "alert-success mobile:bg-success tablet:bg-success",
+        setAlertTitle,
+        setAlertStyles,
+        setAlertIcon,
+        setUpdateAlert,
+        Success
+      );
+      setUpdateAlert(true);
     } catch (e) {
       console.log(e);
-      onMerchantAdded({ success: false });
+      ShowAlert(
+        "Failed to delete bank",
+        "alert-error mobile:bg-error tablet:bg-error",
+        setAlertTitle,
+        setAlertStyles,
+        setAlertIcon,
+        setUpdateAlert,
+        Error
+      );
     } finally {
-      onMerchantAdded({ id: merchantID, name: merchantName, success: true });
-      setBoolAddMerchant(false);
-      setTextAddMerchant("Added");
+      setLoadingAdd(false);
+      dataForCurrentPage.map((item) => {
+        if (item.id === productId) {
+          item.merchantId = merchantID;
+          item.merchant = merchantName;
+        }
+      });
     }
   };
 
@@ -67,84 +101,144 @@ export default function ModalMerchant({
       titleContent=""
       boolClose={true}
       content={uiModalMerchant(
-        setMerchantId,
         handleSearch,
-        merchantName,
-        findMerchant,
+        merchant,
+        loadingAdd,
+        handleAdd,
         productId,
-        merchantId,
-        handleAdd
+        searchBool
       )}
     />
   );
 }
 
 const uiModalMerchant = (
-  setMerchantId: any,
   handleSearch: any,
-  merchantName: any,
-  findMerchant: any,
-  productId: any,
-  merchantId: any,
-  handleAdd: any
+  merchant: any[],
+  loading: boolean,
+  handleAdd: any,
+  productId: string,
+  searchBool: boolean
 ) => {
+  const [merchantId, setMerchantId] = useState("");
+  const [merchantSelect, setMerchantSelect] = useState<any>([]);
+  const [search, setSearch] = useState("");
+
   return (
     <div className="px-5 flex flex-col gap-5 items-center">
       <div className="flex flex-col gap-4">
-        <div className="flex flex-row gap-2 justify-center">
+        <div className="flex flex-row gap-5 justify-center">
           <label className="input input-bordered flex items-center gap-2">
             <input
               type="text"
               className="grow"
               placeholder="Merchant ID"
-              onChange={(e) => setMerchantId(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                handleSearch(e.target.value);
+              }}
             />
+            <div>
+              {searchBool && (
+                <span className="loading loading-spinner loading-xs"></span>
+              )}
+            </div>
           </label>
-          <button className="btn btn-primary" onClick={handleSearch}>
-            Search
-          </button>
-        </div>
-        <div
-          className={`text-center text-xl font-bold ${
-            merchantName === "Merchant not found" ||
-            merchantName === "Please enter merchant ID"
-              ? "text-error"
-              : merchantName === ""
-              ? ""
-              : "text-success"
-          }`}
-        >
-          {merchantName === "" && !findMerchant ? "Type the merchant ID" : ""}
-          {findMerchant ? (
-            <span className="loading loading-dots loading-xs text-black"></span>
-          ) : (
-            <span>{merchantName}</span>
-          )}
         </div>
       </div>
 
+      <div className="text-center h-60">
+        {merchant.length === 0 && search.length === 0 && (
+          <p>Please search for a merchant.</p>
+        )}
+
+        {merchant.length === 0 && search.length > 0 && (
+          <p>No merchant found.</p>
+        )}
+
+        {merchant.length >= 1 && search.length >= 1 && (
+          <div className="overflow-y-auto max-h-60 w-96">
+            <table className="table text-center">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Contact</th>
+                </tr>
+              </thead>
+              <tbody>
+                {merchant.map((m) => (
+                  <tr key={m.id}>
+                    <td className="w-1/12">
+                      <label>
+                        <input
+                          type="checkbox"
+                          className="checkbox"
+                          value={m.id}
+                          onClick={() => {
+                            if (merchantId === m.id) {
+                              setMerchantId("");
+                              setMerchantSelect([]);
+                              return;
+                            }
+                            setMerchantId(m.id);
+                            setMerchantSelect(m);
+                          }}
+                          checked={merchantId === m.id}
+                        />
+                      </label>
+                    </td>
+                    <td className="w-10/12">{m.name}</td>
+                    <td className="w-1/12">{m.contact}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-row gap-2 items-center">
+        <p>{merchantSelect ? merchantSelect.name : ""}</p>
+        {merchantId && (
+          <button
+            className="link link-error"
+            onClick={() => {
+              setMerchantId("");
+              setMerchantSelect([]);
+            }}
+          >
+            Clear
+          </button>
+        )}
+      </div>
+
       <SubmitPopupButton
-        action={async () => {
-          await handleAdd({ productID: productId, merchantID: merchantId });
-          const modal = document.getElementById(`modal-merchant-${productId}`);
-          const checkbox = modal?.nextElementSibling as HTMLInputElement;
-          checkbox.checked = false;
-        }}
-        styles={`btn-xl btn-success ${
-          merchantName === "" ||
-          merchantName === "Merchant not found" ||
-          merchantName === "Please enter merchant ID"
-            ? "btn-disabled"
-            : ""
-        }`}
-        confirmString="Update"
-        isSubmitting={false}
-        confirmStyle="btn-success btn-sm"
-        header="Are you sure you want to update this user?"
-        description={""}
-        id={`modal-merchant-${productId}`}
+        action={() =>
+          handleAdd({
+            productID: productId,
+            merchantID: merchantId,
+            merchantName: merchantSelect,
+          })
+        }
+        header="Add Merchant"
+        styles={`btn-primary w-full ${merchantId === "" ? "btn-disabled" : ""}`}
+        description={`Are you sure you want to add ${merchantSelect.name} as a merchant?`}
+        id={`add-merchant`}
+        confirmString={
+          loading ? (
+            <span className="loading loading-spinner loading-xs"></span>
+          ) : (
+            "Confirm"
+          )
+        }
+        confirmStyle="btn-success"
       >
-        Next
+        {loading ? (
+          <span className="loading loading-spinner loading-xs"></span>
+        ) : (
+          "Add Merchant"
+        )}
       </SubmitPopupButton>
     </div>
   );

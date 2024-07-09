@@ -9,9 +9,16 @@ interface TableProps {
     [key: string]: any;
   }[];
   editor?: boolean;
+  bankData: {
+    [key: string]: any;
+  }[];
 }
 
-export default function Table({ dataForCurrentPage, editor }: TableProps) {
+export default function Table({
+  dataForCurrentPage,
+  editor,
+  bankData,
+}: TableProps) {
   const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
@@ -49,6 +56,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                 setAlertTitle={setAlertTitle}
                 setAlertStyles={setAlertStyles}
                 setAlertIcon={setAlertIcon}
+                dataBank={bankData}
               />
             ))}
           </tbody>
@@ -65,6 +73,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
               setAlertTitle={setAlertTitle}
               setAlertStyles={setAlertStyles}
               setAlertIcon={setAlertIcon}
+              dataBank={bankData}
             />
           </div>
         ))}

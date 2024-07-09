@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { TbUserEdit } from "react-icons/tb";
 import ActionButton from "@/components/actionButton";
-import { TbCopy } from "react-icons/tb";
-import { TbCopyCheckFilled } from "react-icons/tb";
 import axios from "axios";
 import AlertDialog, { Error, Success } from "@/components/alertDialog";
 import Modal from "@/components/modal";
 import { FaPhoneAlt } from "react-icons/fa";
 import { EditableField } from "../EditableField";
 import { productIdUI } from "../productIdShowEachShop";
-import { copylink } from "../copyText";
 import { handleEditToggle } from "../handleEditToggle";
 import { ShowAlert } from "../showAlert";
 import { RenderSubmitPopupButton } from "./renderSubmitPopupButton";
@@ -24,6 +21,8 @@ interface TableProps {
 export default function Table({ dataForCurrentPage, editor }: TableProps) {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
   const [isUpdating, setIsUpdating] = useState<{ [key: string]: boolean }>({});
+
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
@@ -79,8 +78,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
   };
 
   const DestopView = ({ item }: { item: any }) => {
-    const [copySuccess, setCopySuccess] = useState(false);
-
     const [name, setName] = useState(item.name);
     const [address, setAddress] = useState(item.address);
     const [contact, setContact] = useState(item.contact);
@@ -125,13 +122,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                     <p>{item.name}</p>
                   )}
                 </div>
-                <button
-                  onClick={(e) => copylink(e, item.id, setCopySuccess)}
-                  className="text-lg tooltip"
-                  data-tip={copySuccess ? "Copied!" : "Copy"}
-                >
-                  {copySuccess ? <TbCopyCheckFilled /> : <TbCopy />}
-                </button>
               </div>
             </td>
 
@@ -213,7 +203,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
   };
 
   const MobileView = ({ item }: { item: any }) => {
-    const [copySuccess, setCopySuccess] = useState(false);
     return (
       <div className="card w-[90vw] bg-base-100 shadow-xl">
         <div className="card-body p-5">
@@ -266,13 +255,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                   <p className="font-bold">{item.name}</p>
                 </div>
               </div>
-              <button
-                onClick={(e) => copylink(e, item.id, setCopySuccess)}
-                className="text-lg tooltip"
-                data-tip={copySuccess ? "Copied!" : "Copy"}
-              >
-                {copySuccess ? <TbCopyCheckFilled /> : <TbCopy />}
-              </button>
             </div>
 
             {/* Contact */}
@@ -315,9 +297,9 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
   };
 
   const ModalEditMobileMerchant = ({ item }: { item: any }) => {
-    const [name, setName] = useState(item?.name || "");
-    const [address, setAddress] = useState(item?.address || "");
-    const [contact, setContact] = useState(item?.contact || "");
+    const [name, setName] = useState(item.name);
+    const [address, setAddress] = useState(item.address);
+    const [contact, setContact] = useState(item.contact);
 
     return (
       <div className="px-5 flex flex-col gap-5 items-center">
@@ -388,7 +370,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
       <div className="mobile:block tablet:block laptop:hidden pb-5">
         {dataForCurrentPage.map((item) => (
           <div key={item.id} className="mt-3">
-            {MobileView({ item })}
+            <MobileView item={item} />
           </div>
         ))}
       </div>

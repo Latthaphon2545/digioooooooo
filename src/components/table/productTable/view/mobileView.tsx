@@ -6,15 +6,19 @@ import { ConvertStatus } from "@/components/convertStatusAndRole";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import { MdDelete } from "react-icons/md";
 import ModalMerchant from "../actions/handleUpdateMerchant";
-import { IoMdAdd } from "react-icons/io";
 import { ShowAlert } from "../../showAlert";
-import { deleteMerchant } from "../actions/handleDeleteMerchant";
 import Modal from "@/components/modal";
 import { stringToHex } from "@/lib/generateRandomHref";
+import BankAdd from "../actions/handleBankAdd";
+import { deleteMerchant } from "../actions/handleDeleteMerchant";
+import { deleteBank } from "../actions/handleDeleteBank";
 
 interface MobileViewProps {
   item: any;
   dataForCurrentPage: {
+    [key: string]: any;
+  }[];
+  dataBank: {
     [key: string]: any;
   }[];
   setUpdateAlert: any;
@@ -26,44 +30,26 @@ interface MobileViewProps {
 export const MobileView = ({
   item,
   dataForCurrentPage,
+  dataBank,
   setUpdateAlert,
   setAlertTitle,
   setAlertStyles,
   setAlertIcon,
 }: MobileViewProps) => {
-  const handleMerchantAdded = (productId: string, merchant: string) => {
-    if (!productId || !merchant) {
-      ShowAlert(
-        "Failed to add merchant",
-        "alert-error mobile:bg-error tablet:bg-error",
-        setAlertTitle,
-        setAlertStyles,
-        setAlertIcon,
-        setUpdateAlert
-      );
-      setUpdateAlert(true);
-      return;
-    }
-
-    dataForCurrentPage.forEach((item) => {
-      if (item.id === productId) {
-        item.merchant = merchant;
-      }
-    });
-
-    ShowAlert(
-      "Merchant added successfully",
-      "alert-success mobile:bg-success tablet:bg-success",
+  const handleDeleteMerchant = (id: string) => {
+    deleteMerchant({
+      productId: id,
+      dataForCurrentPage,
+      setUpdateAlert,
       setAlertTitle,
       setAlertStyles,
       setAlertIcon,
-      setUpdateAlert
-    );
-    setUpdateAlert(true);
+      ShowAlert,
+    });
   };
 
-  const handleDeleteMerchant = (id: string) => {
-    deleteMerchant({
+  const handleDeleteBank = (id: string) => {
+    deleteBank({
       productId: id,
       dataForCurrentPage,
       setUpdateAlert,
@@ -146,9 +132,12 @@ export const MobileView = ({
                 ) : (
                   <ModalMerchant
                     productId={item.id}
-                    onMerchantAdded={(merchant) =>
-                      handleMerchantAdded(item.id, merchant)
-                    }
+                    dataForCurrentPage={dataForCurrentPage}
+                    setUpdateAlert={setUpdateAlert}
+                    setAlertTitle={setAlertTitle}
+                    setAlertStyles={setAlertStyles}
+                    setAlertIcon={setAlertIcon}
+                    ShowAlert={ShowAlert}
                   />
                 )}
               </div>
@@ -157,12 +146,34 @@ export const MobileView = ({
             <div className="flex justify-between items-center">
               <p>Bank</p>
               <div>
-                {item.bank ? (
-                  <p>{item.bank}</p>
+                {item.bankId ? (
+                  <div className="flex flex-row items-center justify-around">
+                    <span>{item.bank.name}</span>
+                    <SubmitPopupButton
+                      action={() => {
+                        handleDeleteBank(item.id);
+                      }}
+                      styles="btn-error btn-ghost btn-xs text-xl text-error"
+                      header="Delete Merchant"
+                      description="Are you sure you want to delete this merchant?"
+                      id={`delete-merchant-${item.id}`}
+                      confirmString="Delete"
+                      confirmStyle="btn-error"
+                    >
+                      <MdDelete />
+                    </SubmitPopupButton>
+                  </div>
                 ) : (
-                  <button className="btn btn-xs text-xl btn-ghost py-2">
-                    <IoMdAdd />
-                  </button>
+                  <BankAdd
+                    productId={item.id}
+                    dataForCurrentPage={dataForCurrentPage}
+                    banks={dataBank}
+                    setUpdateAlert={setUpdateAlert}
+                    setAlertTitle={setAlertTitle}
+                    setAlertStyles={setAlertStyles}
+                    setAlertIcon={setAlertIcon}
+                    ShowAlert={ShowAlert}
+                  />
                 )}
               </div>
             </div>

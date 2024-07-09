@@ -7,6 +7,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { decode, encode } from "@/lib/generateRandomHref";
+import { itemPage } from "./staticPropsInTable";
 
 const CATEGORIES = (option: string, series: string[]) => {
   if (option === "User") {
@@ -75,12 +76,14 @@ interface Category {
 
 export default function Header({ option }: { option: string }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathName = usePathname();
   const params = useSearchParams();
   const [category, setCategory] = useState<Category[]>([]);
   const [series, setSeries] = useState([]);
 
-  const { filter, search, skip, take } = decode(params.toString());
+  const { filter } = decode(params.toString());
+  const skip = 0;
+  const take = itemPage;
 
   useEffect(() => {
     const getCategories = async () => {
@@ -106,10 +109,10 @@ export default function Header({ option }: { option: string }) {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchParams = e.target.value;
-    const newUrl = encode(
+    const newUrl = `${pathName}?${encode(
       `filter=${filterParamsArray}&search=${searchParams}&skip=${skip}&take=${take}`
-    );
-    router.push(`${pathname}?${newUrl}`);
+    )}`;
+    router.replace(newUrl, { scroll: true });
   };
 
   return (

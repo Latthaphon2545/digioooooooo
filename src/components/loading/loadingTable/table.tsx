@@ -132,9 +132,6 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
                     <div className="skeleton h-8 w-20 bg-opacity-10"></div>
                   </div>
                 </div>
-                <button className="text-lg tooltip">
-                  <TbCopy />
-                </button>
               </div>
 
               <div className="flex flex-col justify-between gap-2">

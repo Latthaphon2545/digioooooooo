@@ -66,7 +66,8 @@ export default function BankPage({ banks }: BankPageProps) {
           ))}
           <Link
             href="/banks/add"
-            className="card bg-base-200 bg-opacity-40 shadow-xl laptop:w-80 desktop:w-96 flex flex-col justify-center items-center gap-5"
+            className="card bg-base-200 bg-opacity-40 shadow-xl laptop:w-80 desktop:w-96 flex flex-col justify-center items-center gap-5  hover:bg-opacity-80
+            "
             key="Add"
           >
             <p className="text-4xl">

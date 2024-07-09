@@ -31,6 +31,7 @@ export default function TablePage({
       if (totalLength === 0) return;
       const totalPages = Math.ceil(totalLength / itemPage);
       setTotalPages(totalPages);
+      onPageChange(1);
     };
     getLengthUsers();
   }, [totalLength, itemPage]);
@@ -38,7 +39,6 @@ export default function TablePage({
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-
   return (
     <>
       <div className="ml-[3vw]">
