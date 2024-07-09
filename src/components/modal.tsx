@@ -43,7 +43,7 @@ const Modal = ({
 
       <input type="checkbox" id={id} className="modal-toggle" />
       <div
-        className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom ${
+        className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom  ${
           open ? "modal-open" : ""
         } ${mobileImg ? "w-full h-full" : ""}`}
         role="dialog"

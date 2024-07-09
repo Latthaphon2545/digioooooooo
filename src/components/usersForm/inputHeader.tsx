@@ -9,7 +9,7 @@ type inputHeaderProps = {
 
 const InputHeader = ({ icon, title }: inputHeaderProps) => {
   return (
-    <div className="mobile:hidden laptop:block">
+    <div className="mobile:hidden laptop:block ">
       <div className="items-center mb-2">
         <div className="flex flex-row justify-start items-center gap-4 mx-5 mt-5 mb-1">
           <div className="text-5xl">{icon}</div>

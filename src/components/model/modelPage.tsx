@@ -68,7 +68,7 @@ export default function Model({ models, edit }: ModelProps) {
             <div className="text-4xl">
               <IoMdAddCircle />
             </div>
-            <div className="text-2xl">Add Bank</div>
+            <div className="text-2xl">Add Model</div>
           </div>
         </div>
       </div>

@@ -7,9 +7,11 @@ import { redirect } from "next/navigation";
 
 export async function createBank(formData: FormData) {
   const name = formData.get("name")?.toString().trim();
+  const bankAbbreviation = formData.get("bankAbbreviation")?.toString().trim();
   const imageFile = formData.get("image");
 
   console.log("name", name);
+  console.log("bankAbbreviation", bankAbbreviation);
   console.log("imageFile", imageFile);
 
   let image;
@@ -29,6 +31,7 @@ export async function createBank(formData: FormData) {
 
   const bank = {
     name: name as string,
+    bankAbbreviations: bankAbbreviation as string,
     image,
   };
 

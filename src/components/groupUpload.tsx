@@ -216,7 +216,7 @@ const GroupUpload = ({
               <p>{fileName}</p>
             ) : (
               <p className="text-gray-500 text-sm">Click or drag file here</p>
-            )}
+            )} 
           </div>
         </div>
         <a

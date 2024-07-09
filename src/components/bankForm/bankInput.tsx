@@ -5,25 +5,35 @@ import { createBank } from "@/app/(withAutn)/action/bank/actions";
 
 export default function BankInput() {
   return (
-    <div className="flex justify-center items-center  h-[100%]  my-auto">
+    <div className="flex justify-center items-center  h-full  my-auto">
       <form
         action={createBank}
-        className="flex flex-col mobile:space-y-8 lg:space-y-0  w-full overflow-hidden justify-center items-center"
+        className="flex flex-col mobile:space-y-8 lg:space-y-0   w-full overflow-hidden justify-center items-center"
       >
         <div className="w-full  flex flex-col justify-center">
           <div className="flex flex-row items-center">
             <ImageRenderer />
           </div>
         </div>
-        <div className="flex relative flex-col space-y-3 items-center justify-center px-10 pt-6 w-[50vh]">
+        <div className="flex relative flex-col space-y-3 items-center justify-center px-10 pt-4 w-[50vh]">
           <label htmlFor="" className=" font-semibold w-full">
             Name:
             <input
               type="text"
               name="name"
               required
-              placeholder="Name"
-              className="mt-3 font-normal block p-2.5  w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Kasikorn Bank"
+              className="mt-3 font-normal block p-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
+            />
+          </label>
+          <label htmlFor="" className=" font-semibold w-full">
+            Abbreviation:
+            <input
+              type="text"
+              name="bankAbbreviation"
+              required
+              placeholder="Kasikorn Bank = KBANK"
+              className="mt-3 font-normal block p-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
             />
           </label>
           <div className="w-full">

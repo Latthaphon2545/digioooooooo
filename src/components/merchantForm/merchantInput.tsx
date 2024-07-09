@@ -3,6 +3,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import MerchantInputField from "./merchantInputField";
 import MobileInput from "./mobileInput";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import MobileButtonInput from "../usersForm/mobileButtonInput";
 
 type FormValues = {
   name: string;
@@ -90,23 +91,11 @@ const MerchantInput = ({ formValues, setFormValues }: MerchantInputProps) => {
               );
             })}
           </div>
-          <div
-            className={`flex items-center justify-center mt-2 fixed bottom-5 left-4 ${
-              formValues.length < 10 ? "space-x-3" : "space-x-1"
-            }`}
-          >
-            <button
-              type="button"
-              onClick={deleteRow}
-              disabled={formValues.length === 1}
-            >
-              <IoMdRemoveCircleOutline size={40} />
-            </button>
-            <div className="text-2xl font-semibold">{formValues.length}</div>
-            <button type="button" onClick={addRow}>
-              <IoAddCircleOutline size={40} />
-            </button>
-          </div>
+          <MobileButtonInput
+            formValues={formValues}
+            addFunction={addRow}
+            deleteFunction={deleteRow}
+          />
           <div ref={endOfForm} />
         </form>
       </div>
