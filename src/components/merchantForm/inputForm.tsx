@@ -48,7 +48,8 @@ export default function MerchantInputForm() {
       const filledOutInputs =
         activeTab === 0
           ? formValues.filter(
-              ({ name, contact, address }) => name || contact || address
+              ({ name, contact, address }) =>
+                name.trim() || contact.trim() || address.trim()
             )
           : groupData;
 

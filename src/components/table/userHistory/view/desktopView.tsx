@@ -9,12 +9,12 @@ import { stringToHex } from "@/lib/generateRandomHref";
 import ActionButton from "@/components/actionButton";
 
 import SubmitPopupButton from "@/components/submitPopupButton";
-import { EditableField } from "../../EditableField";
 import { DropdownProduct } from "../../DropdownStatusProduct";
 import { ColorProductStatus } from "../../color";
 import EditImage from "../editImage";
 import ViewImg from "../../historyProduct/view/historyProductViewImg";
 import { handleEditToggle } from "../../handleEditToggle";
+import { EditableField } from "@/components/editableField";
 
 interface HistoryProps {
   item: any;
@@ -59,6 +59,7 @@ export const DesktopHistoryView = ({
             defaultValue={description}
             onChange={setDescription}
             name="description"
+            tooltip="Enter a description"
           />
         ) : item.description.length > 20 ? (
           <Modal

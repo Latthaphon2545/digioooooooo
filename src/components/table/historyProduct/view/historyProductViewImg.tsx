@@ -61,7 +61,7 @@ const ViewImg = ({
     return (
       <>
         <div
-          className={`grid grid-cols-2 gap-2 content-center p-2 ${
+          className={`grid grid-cols-2 sm:grid-cols-3 gap-2 content-center p-2 overflow-y-auto  ${
             mobileImg ? "" : ""
           }`}
         >
@@ -75,7 +75,8 @@ const ViewImg = ({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item}
-                  className="w-[60vh] h-20[vh]  sm:w-[20vw] sm:h-[20vh]"
+                  //className="w-[60vh] h-20[vh]  sm:w-[20vw] sm:h-[20vh]"
+                  className="w-full h-auto"
                   alt={`${index + 1}`}
                 />
                 {editing && (

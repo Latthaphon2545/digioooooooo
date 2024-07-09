@@ -59,7 +59,9 @@ const Modal = ({
             </label>
           )}
           <h3 className="text-lg font-bold">{titleContent}</h3>
-          <div className="text-sm text-start">{content}</div>
+          <div className="text-sm text-start max-h-[70vh] overflow-y-auto">
+            {content}
+          </div>
         </div>
         <label
           className="modal-backdrop"
