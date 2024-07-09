@@ -91,10 +91,11 @@ model Merchant {
 }
 
 model Bank {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  image   String
-  product Product[]
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  bankAbbreviations String
+  image             String
+  product           Product[]
 }
 
 model Otp {

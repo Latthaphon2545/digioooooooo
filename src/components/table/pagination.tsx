@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import ActionButton from "../actionButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useInView } from "react-intersection-observer"; // Import useInView hook
-import { itemPage } from "./staticPropsInTable";
-import { encode } from "@/lib/generateRandomHref";
+import { decode, encode } from "@/lib/generateRandomHref";
 import Modal from "../modal";
+import { itemPage } from "./staticPropsInTable";
 
 interface PaginationProps {
   currentPage: number;
@@ -22,68 +21,48 @@ export default function Pagination({
   onPageChange,
 }: PaginationProps) {
   const [pageStart, setPageStart] = useState(1);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // const [mobileData, setMobileData] = useState(itemPage);
-  // const [loading, setLoading] = useState(false);
-  // const [debouncedWidth, setDebouncedWidth] = useState(sizeWindow.width);
-  let skip = 0;
-  let take = itemPage;
-
-  const { ref, inView } = useInView({
-    threshold: 1.0,
-  });
-
-  const pageEnd = Math.min(pageStart + 3, totalPages);
-  let manyPage = 0;
 
   const router = useRouter();
   const pathName = usePathname();
-  const searchParams = useSearchParams().get("search") || "";
-  const filterParams = useSearchParams().get("filter") || "";
+  const params = useSearchParams();
+  const { filter, search } = decode(params.toString());
 
-  if (lengthData === 0) {
-    manyPage = 0;
-  } else if (lengthData <= 32) {
-    manyPage = 1;
-  } else {
-    manyPage = 2;
-  }
+  const updatePageRange = (page: number) => {
+    let start = Math.max(page - 2, 1);
+    let end = Math.min(page + 2, totalPages);
+    if (end - start < 4) {
+      if (start === 1) {
+        end = Math.min(start + 4, totalPages);
+      } else if (end === totalPages) {
+        start = Math.max(end - 4, 1);
+      }
+    }
+    setPageStart(start);
+  };
+
+  useEffect(() => {
+    updatePageRange(currentPage);
+  }, [currentPage, totalPages]);
 
   const pages = Array.from(
-    { length: pageEnd - pageStart + manyPage },
+    { length: Math.min(5, totalPages) },
     (_, i) => pageStart + i
   );
 
   const handleNext = () => {
     if (currentPage < totalPages) {
       onPageChange(currentPage + 1);
-      if (currentPage - pageStart >= 2 && pageEnd < totalPages - 1) {
-        setPageStart(pageStart + 1);
-      }
     }
   };
 
   const handlePrev = () => {
-    onPageChange(currentPage - 1);
     if (currentPage > 1) {
-      if (pageStart - currentPage >= -2 && pageStart > 1) {
-        setPageStart(pageStart - 1);
-      }
+      onPageChange(currentPage - 1);
     }
   };
 
   const handleCurrentPage = (page: number) => {
     onPageChange(page);
-    if (page - pageStart >= 2 && pageEnd < totalPages - 1) {
-      setPageStart(page - 2);
-    } else if (page - pageStart <= 1 && pageStart > 1) {
-      if (page === 2) {
-        setPageStart(page - 1);
-      } else {
-        setPageStart(page - 2);
-      }
-    }
   };
 
   const handleToFirstPage = () => {
@@ -93,68 +72,16 @@ export default function Pagination({
 
   const handleToLastPage = () => {
     onPageChange(totalPages);
-    setPageStart(totalPages - 4);
+    setPageStart(Math.max(totalPages - 4, 1));
   };
 
   useEffect(() => {
-    const skip = (currentPage - 1) * itemPage;
-  }, [currentPage]);
-
-  useEffect(() => {
-    skip = (currentPage - 1) * itemPage;
+    const skipPage = (currentPage - 1) * itemPage;
     const newUrl = `${pathName}?${encode(
-      `filter=${filterParams}&search=${searchParams}&skip=${skip}&take=${take}`
+      `filter=${filter}&search=${search}&skip=${skipPage}&take=${itemPage}`
     )}`;
     router.replace(newUrl, { scroll: true });
   }, [currentPage]);
-
-  // const handleMoreData = () => {
-  //   try {
-  //     setLoading(true);
-  //     take = Math.min(mobileData + itemPage, lengthData);
-  //     setMobileData(take);
-  //     const newUrl = `${pathName}?${encode(
-  //       `filter=${filterParams}&search=${searchParams}&skip=0&take=${take}`
-  //     )}`;
-  //     router.replace(newUrl, { scroll: false });
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setTimeout(() => {
-  //       setLoading(false);
-  //     }, 1000);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (inView && !loading && mobileData < lengthData) {
-  //     handleMoreData();
-  //     onPageChange(currentPage + 1);
-  //     console.log(currentPage);
-  //   }
-  // }, [inView, loading, mobileData, lengthData]);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setDebouncedWidth(sizeWindow.width);
-  //   };
-
-  //   const debounceResize = setTimeout(handleResize, 200);
-
-  //   return () => clearTimeout(debounceResize);
-  // }, [sizeWindow]);
-
-  // useEffect(() => {
-  //   if (debouncedWidth <= isLaptop) {
-  //     skip = 0;
-  //     take = itemPage;
-  //     // console.log("mobile", skip, take);
-  //   } else {
-  //     take = itemPage;
-  //     skip = (currentPage - 1) * itemPage;
-  //     // console.log("laptop", skip, take);
-  //   }
-  // }, [debouncedWidth, mobileData, currentPage]);
 
   return (
     <>
@@ -207,7 +134,6 @@ export default function Pagination({
                         }`}
                         onClick={() => {
                           handleCurrentPage(page);
-                          setModalOpen(false);
                         }}
                       >
                         {page}
@@ -246,30 +172,6 @@ export default function Pagination({
           )}
         </p>
       </div>
-
-      {/* <div className="flex justify-center mobile:flex tablet:flex laptop:hidden mb-5">
-        {loading ? (
-          <span className="loading loading-dots loading-xs"></span>
-        ) : (
-          <>
-            {mobileData < lengthData ? (
-              <ActionButton
-                action={handleMoreData}
-                styles={"btn btn-xl btn-primary"}
-                disabled={loading || mobileData >= lengthData}
-              >
-                Load more
-              </ActionButton>
-            ) : (
-              <span>No more data</span>
-            )}
-          </>
-        )}
-      </div>
-
-      <div className="mobile:block tablet:block laptop:hidden">
-        <div ref={ref} className="h"></div>
-      </div> */}
     </>
   );
 }

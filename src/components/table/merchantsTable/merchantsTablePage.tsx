@@ -32,6 +32,7 @@ export default function TablePageMerchants({
       if (totalLength === 0) return;
       const totalPages = Math.ceil(totalLength / itemPerPage);
       setTotalPages(totalPages);
+      onPageChange(1);
     };
     getLengthUsers();
   }, [totalLength, itemPerPage]);

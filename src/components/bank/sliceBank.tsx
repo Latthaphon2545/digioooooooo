@@ -27,7 +27,7 @@ interface SliceProps {
 export default function Slice({ bankName, productsData }: SliceProps) {
   return (
     <div className="w-full">
-      <div className="flex flex-nowrap overflow-y-auto gap-3 px-5">
+      <div className="flex flex-nowrap overflow-y-auto gap-3 mx-5">
         {Object.keys(productsData).map((productName, index) => (
           <Link href={`#${bankName}-${index}`} key={index}>
             <button key={index} className={`btn btn-outline btn-xs `}>
