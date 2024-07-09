@@ -5,12 +5,12 @@ import React, { useState } from "react";
 import { ColorProductStatus } from "../../color";
 import { ConvertStatus } from "@/components/convertStatusAndRole";
 import ViewImg from "../../historyProduct/view/historyProductViewImg";
-import { EditableField } from "../../EditableField";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import Modal from "@/components/modal";
 import { TbUserEdit } from "react-icons/tb";
 import { DropdownProduct } from "../../DropdownStatusProduct";
 import EditImage from "../editImage";
+import { EditableField } from "@/components/editableField";
 
 interface UserHistoryMobileViewProps {
   item: any;
@@ -95,7 +95,12 @@ const ModalEdit = ({ item, handleUpdate }: ModalEditMobileUserProps) => {
     <div className="px-5 flex flex-col gap-5 items-center">
       <div className="w-full">
         <p className="text-gray-500">Description</p>
-        <EditableField defaultValue={description} onChange={setDescription} />
+        <EditableField
+          defaultValue={description}
+          onChange={setDescription}
+          name="description"
+          tooltip="Enter a description"
+        />
       </div>
       <div className="w-full ">
         <p className="text-gray-500">Status</p>

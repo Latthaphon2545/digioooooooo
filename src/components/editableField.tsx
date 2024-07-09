@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { tooltipShow } from "../setting/tooltipShow";
 
 export const EditableField = ({
   defaultValue,
@@ -42,7 +41,7 @@ export const EditableField = ({
   } else {
     return (
       <label
-        className={`input input-sm input-primary input-bordered flex items-center gap-2 ${
+        className={`input input-sm input-primary input-bordered relative flex items-center gap-2 ${
           value.length === 0
             ? "input-error"
             : contact && value.length !== 10
@@ -56,33 +55,29 @@ export const EditableField = ({
           className="grow"
           onChange={handleChange}
           name={name}
-          minLength={contact ? 10 : undefined}
+          minLength={contact ? 10 : 1}
           maxLength={contact ? 10 : undefined}
         />
-        <div
-          className="tooltip"
-          data-tip={
-            tooltip
-              ? tooltip
-              : contact
-              ? "10 digit contact number"
-              : "Please enter a name"
-          }
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className={`h-4 w-4 shrink-0 stroke-warning`}
+        {tooltip && (
+          <div
+            className="tooltip absolute right-1 top-1/2 transform -translate-y-1/2"
+            data-tip={tooltip}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
-        </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className={`h-4 w-4 shrink-0 stroke-warning`}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+        )}
       </label>
     );
   }

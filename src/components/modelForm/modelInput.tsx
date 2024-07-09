@@ -57,13 +57,14 @@ const ModelInput = () => {
               ))}
             </div>
           </fieldset>
-          <div className="flex justify-center tablet:justify-end">
+          <div className="flex justify-center tablet:justify-end w-full">
             <SubmitPopupButton
-              styles="btn-primary px-10 mb-4 sm:mb-4 w-full btn-wide"
+              styles="btn-primary mb-4 btn-wide rounded-xl"
               header="Add New Model"
               description="Are you sure you want to add this model"
               id="add_model"
               disabled={state.errors.length > 0}
+              confirmString="Add"
             >
               Add
             </SubmitPopupButton>
