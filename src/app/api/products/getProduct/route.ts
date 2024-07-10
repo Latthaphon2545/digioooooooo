@@ -104,6 +104,7 @@ export async function GET(request: NextRequest) {
         bank: {
           select: {
             name: true,
+            bankAbbreviations: true,
           },
         },
       },

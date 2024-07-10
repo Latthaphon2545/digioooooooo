@@ -1,8 +1,9 @@
 import Link from "next/link";
-import StatStatus from "../statStatus";
 
 import { FaEdit } from "react-icons/fa";
 import { IoMdAddCircle } from "react-icons/io";
+import { StatStatus } from "../statStatus";
+import ModalInfo from "./modalInfo";
 
 interface Model {
   series: string;
@@ -24,32 +25,31 @@ export default function Model({ models, edit }: ModelProps) {
         {models.map((model, index) => (
           <div
             key={index}
-            className="card card-side bg-base-100 shadow-xl mx-auto w-[80%] h-[30vh]"
+            className="card card-side bg-base-100 shadow-xl mx-auto w-[80%] h-full"
             id={model.series}
           >
             <figure>
               <img
                 src={model.image}
                 alt="Model"
-                className="h-[30vh] w-[20vw] mobile:hidden tablet:block laptop:block"
+                className="h-full w-[20vw] mobile:hidden tablet:block laptop:block"
               />
             </figure>
             <div className="card-body">
-              <div className="card-title gap-3">
-                {/* <Modal
-                title="Info"
-                titleContent={model.series}
-                content={model.information.description}
-              /> */}
+              <div className="card-title">
+                <ModalInfo
+                  information={model.information}
+                  series={model.series}
+                />
                 <h2>{model.series}</h2>
-                <button
+                {/* <button
                   disabled={!edit}
                   className={`${edit ? "" : "cursor-not-allowed"}`}
                 >
                   <FaEdit color={`${edit ? "black" : "gray"}`} />
-                </button>
+                </button> */}
               </div>
-              {StatStatus(model.status)}
+              <StatStatus status={model.status} />
               <div className="card-actions justify-end mt-3">
                 <Link
                   href={`/products?filter=${model.series}&search=&skip=0&take=8`}
@@ -68,7 +68,7 @@ export default function Model({ models, edit }: ModelProps) {
             <div className="text-4xl">
               <IoMdAddCircle />
             </div>
-            <div className="text-2xl">Add Bank</div>
+            <div className="text-2xl">Add Model</div>
           </div>
         </div>
       </div>

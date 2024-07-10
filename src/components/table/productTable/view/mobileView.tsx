@@ -107,7 +107,7 @@ export const MobileView = ({
                             item.merchant.name.length > 10 &&
                             `${item.merchant.name.slice(0, 10)}...`
                           }
-                          titleContent={item.merchant.name}
+                          content={item.merchant.name}
                           id={item.merchant.name}
                           boolClose={true}
                         />
@@ -148,7 +148,7 @@ export const MobileView = ({
               <div>
                 {item.bankId ? (
                   <div className="flex flex-row items-center justify-around">
-                    <span>{item.bank.name}</span>
+                    <span>{item.bank.bankAbbreviations}</span>
                     <SubmitPopupButton
                       action={() => {
                         handleDeleteBank(item.id);

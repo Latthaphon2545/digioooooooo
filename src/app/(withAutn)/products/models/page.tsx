@@ -34,7 +34,7 @@ export default function Models() {
           </div>
           <div>
             {loading ? (
-              <ModelLoading length={4} />
+              <ModelLoading />
             ) : (
               <Model models={models} edit={false} />
             )}

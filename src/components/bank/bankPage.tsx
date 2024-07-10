@@ -1,6 +1,9 @@
+"use client";
+
 import { IoMdAddCircle } from "react-icons/io";
-import Slice from "./sliceBank";
+import { LaptopUI, MobileUI } from "./sliceBank";
 import Link from "next/link";
+import { use, useEffect, useState } from "react";
 
 interface Bank {
   name: string;
@@ -27,6 +30,19 @@ interface BankPageProps {
 }
 
 export default function BankPage({ banks }: BankPageProps) {
+  const [bankName, setBankName] = useState("");
+  const [bankSelected, setBankSelected] = useState<Record<string, Product>>({});
+
+  const setBank = (name: string, product: Record<string, Product>) => {
+    setBankName(name);
+    setBankSelected(product);
+  };
+
+  useEffect(() => {
+    // Set the first bank as default
+    setBank(banks[0].name, banks[0].product);
+  }, []);
+
   return (
     <>
       <div className="w-full tablet:block mobile:block laptop:hidden">
@@ -41,33 +57,30 @@ export default function BankPage({ banks }: BankPageProps) {
                 <img src={item.image} alt={item.name} width={80} />
               </div>
               <figure>
-                <Slice productsData={item.product} bankName={item.name} />
+                <MobileUI productsData={item.product} bankName={item.name} />
               </figure>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="laptop:block tablet:hidden mobile:hidden px-10 py-5 h-full">
-        <div className="grid grid-cols-3 gap-5 justify-items-center">
+      <div className="laptop:flex tablet:hidden mobile:hidden py-5 h-full flex-col justify-center items-center ">
+        <div className="join join-horizontal gap-5 overflow-x-auto w-[90%]">
           {banks.map((item, index) => (
             <div
-              className="card bg-base-100 shadow-xl laptop:w-80 desktop:w-96"
               key={index}
+              className={`btn w-56 h-32 flex flex-col ${
+                bankName === item.name ? "btn-primary bg-opacity-100" : ""
+              }`}
+              onClick={() => setBank(item.name, item.product)}
             >
-              <div className="card-body flex flex-row justify-between items-center">
-                <h2 className="card-title">{item.name}</h2>
-                <img src={item.image} alt={item.name} width={80} />
-              </div>
-              <figure>
-                <Slice productsData={item.product} bankName={item.name} />
-              </figure>
+              <img src={item.image} alt={item.name} width={80} />
+              <p>{item.name}</p>
             </div>
           ))}
           <Link
             href="/banks/add"
-            className="card bg-base-200 bg-opacity-40 shadow-xl laptop:w-80 desktop:w-96 flex flex-col justify-center items-center gap-5  hover:bg-opacity-80
-            "
+            className="btn w-56 h-32 flex flex-col "
             key="Add"
           >
             <p className="text-4xl">
@@ -76,6 +89,8 @@ export default function BankPage({ banks }: BankPageProps) {
             <p className="text-2xl">Add Bank</p>
           </Link>
         </div>
+
+        <LaptopUI productsData={bankSelected} bankName={bankName} />
       </div>
     </>
   );
