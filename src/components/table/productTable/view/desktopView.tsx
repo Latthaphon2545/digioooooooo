@@ -92,14 +92,14 @@ export const DesktopView = ({
       <td className="py-2 px-4 h-[8vh]">
         {item.merchant ? (
           <div className="flex flex-row items-center justify-around">
-            <div className="min-w-28 tooltip">
+            <div className="min-w-20 tooltip">
               {item.merchant.name.length > 10 ? (
                 <Modal
                   title={
                     item.merchant.name.length > 10 &&
                     `${item.merchant.name.slice(0, 10)}...`
                   }
-                  titleContent={item.merchant.name}
+                  content={item.merchant.name}
                   id={item.merchant.name}
                   boolClose={true}
                 />
@@ -138,7 +138,7 @@ export const DesktopView = ({
       <td className={`py-2 px-4 h-[8vh] w-full`}>
         {item.bankId ? (
           <div className="flex flex-row items-center justify-around">
-            <span>{item.bank.name}</span>
+            <div className="min-w-20 ">{item.bank.bankAbbreviations}</div>
             <SubmitPopupButton
               action={() => {
                 handleDeleteBank(item.id);

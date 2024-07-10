@@ -89,13 +89,13 @@ export default function BankAdd({
         boolClose={true}
         content={
           <div className="flex flex-col items-center justify-center gap-5">
-            <div className="grid grid-cols-2 gap-2 justify-items-center">
+            <div className="grid grid-cols-2 gap-2 justify-items-center w-full">
               {banks.map((bank, index) => {
                 const isSelected = bankId === bank.id;
                 return (
                   <div
                     key={index}
-                    className={`flex flex-col p-2 w-full btn btn-outline btn-base-100 h-32 ${
+                    className={`flex flex-col p-2 w-full  btn btn-outline btn-base-100 h-32 ${
                       isSelected ? "btn-primary border-2" : ""
                     } hover:btn-primary`}
                     onClick={() => {
@@ -108,7 +108,12 @@ export default function BankAdd({
                       alt={bank.image}
                       className="w-14 h-14 rounded-lg"
                     />
-                    <h2 className="text-center p-2">{bank.name}</h2>
+                    <h2 className="text-center p-2 mobile:hidden tablet:block">
+                      {bank.name}
+                    </h2>
+                    <h2 className="text-center p-2 tablet:hidden mobile:block">
+                      {bank.bankAbbreviations}
+                    </h2>
                   </div>
                 );
               })}

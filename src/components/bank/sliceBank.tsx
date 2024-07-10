@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ConvertStatus } from "../convertStatusAndRole";
 import { ColorProductStatus } from "../table/color";
@@ -24,7 +26,7 @@ interface SliceProps {
   productsData: ProductsData;
 }
 
-export default function Slice({ bankName, productsData }: SliceProps) {
+export const MobileUI = ({ bankName, productsData }: SliceProps) => {
   return (
     <div className="w-full">
       <div className="flex flex-nowrap overflow-y-auto gap-3 mx-5">
@@ -52,11 +54,7 @@ export default function Slice({ bankName, productsData }: SliceProps) {
                       <div className="stat-title text-base">
                         {ConvertStatus(statusKey)}
                       </div>
-                      <div
-                        className={`stat-figure text-${ColorProductStatus(
-                          ConvertStatus(statusKey)
-                        )} text-3xl font-bold`}
-                      >
+                      <div className={`stat-figure text-3xl font-bold`}>
                         {
                           productsData[productName].status[
                             statusKey as keyof (typeof productsData)[typeof productName]["status"]
@@ -86,4 +84,58 @@ export default function Slice({ bankName, productsData }: SliceProps) {
       </div>
     </div>
   );
-}
+};
+
+export const LaptopUI = ({ bankName, productsData }: SliceProps) => {
+  return (
+    <>
+      <div className="flex flex-nowrap overflow-y-auto gap-3 py-5 divider">
+        {Object.keys(productsData).map((productName, index) => (
+          <div
+            key={index}
+            className={`badge badge-primary badge-outline badge-md`}
+          >
+            {productName}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-5 overflow-y-auto overflow-x-hidden w-[90%] h-[65vh]  px-10">
+        {Object.keys(productsData).map((productName, index) => (
+          <div
+            key={index}
+            id={`${bankName}-${index}`}
+            className="flex flex-col justify-center items-center gap-5 shadow-xl p-5 w-full"
+          >
+            <h2 className="text-4xl font-bold">{productName}</h2>
+            <div className="flex flex-row justify-center items-center gap-5 w-full">
+              <img
+                src={productsData[productName].image}
+                className="w-1/4 h-48"
+                alt={productsData[productName].image}
+              />
+              <div className="stats stats-horizontal shadow w-3/4 grid-rows-2 h-fit">
+                {Object.keys(productsData[productName].status).map(
+                  (statusKey, statusIndex) => (
+                    <div key={statusIndex} className="stat w-12">
+                      <div className="stat-desc">
+                        {ConvertStatus(statusKey)}
+                      </div>
+                      <div className="stat-value text-2xl">
+                        {
+                          productsData[productName].status[
+                            statusKey as keyof (typeof productsData)[typeof productName]["status"]
+                          ]
+                        }
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};

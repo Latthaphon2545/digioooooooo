@@ -61,7 +61,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
       <button tabIndex={0} className="btn btn-sm ml-3">
         <IoFilterSharp size={20} />
       </button>
-      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-60">
+      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-60">
         {item.list.map((options, optionsIndex) => (
           <div key={optionsIndex}>
             <p className="text-xs my-2 mx-1">{options.title}</p>
@@ -70,7 +70,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
                 <label className="cursor-pointer">
                   <input
                     type="checkbox"
-                    className="checkbox checkbox-xs checkbox-primary mr-3"
+                    className="checkbox checkbox-sm checkbox-primary mr-3"
                     name={option.name}
                     onChange={getCheckBoxValue}
                     checked={checkedValues.includes(option.name)}
