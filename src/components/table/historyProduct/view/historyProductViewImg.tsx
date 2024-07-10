@@ -61,7 +61,7 @@ const ViewImg = ({
     return (
       <>
         <div
-          className={`grid grid-cols-2 sm:grid-cols-3 gap-2 content-center p-2 overflow-y-auto  ${
+          className={`grid grid-cols-2 sm:grid-cols-3 gap-2 content-center p-2 overflow-y-scroll h-auto ${
             mobileImg ? "" : ""
           }`}
         >

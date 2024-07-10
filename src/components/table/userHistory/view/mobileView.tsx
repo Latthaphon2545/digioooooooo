@@ -29,8 +29,9 @@ export default function UserHistoryMobileView({
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const { formattedDate } = ConvertTime(item.createdAt);
+
   return (
-    <div key={item.id} className="mt-3 card bg-base-100 w-96 shadow-xl">
+    <div className="mt-3 card bg-base-100 w-96 shadow-xl ">
       <div className="card-body">
         <div className="card-actions flex justify-end">
           <Modal

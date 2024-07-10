@@ -85,7 +85,6 @@ const InputForm = () => {
               )
               .map((value) => ({
                 ...value,
-                //email: value.email + "@digio.co.th",
                 email: value.email.endsWith("@digio.co.th")
                   ? value.email
                   : value.email + "@digio.co.th",
@@ -135,8 +134,9 @@ const InputForm = () => {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full ">
       <InputHeader icon={<IoPersonAddSharp />} title="Add User" page="user" />
+
       <TabBar
         Individual={
           <UserInput formValues={formValues} setFormValues={setFormValues} />
@@ -178,6 +178,7 @@ const InputForm = () => {
               ? " right-5 bottom-4 w-1/2"
               : " w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
           } laptop:w-auto btn-wide fixed  sm:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
+          // styles="btn-wide fixed  w-1/2 left-1/2 transform -translate-x-1/2 bottom-4"
           alertHeader="Add User"
           alertDescription="Are you sure you want to add these user?"
           id="add_user"

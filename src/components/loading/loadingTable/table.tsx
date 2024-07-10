@@ -186,19 +186,33 @@ const TableLoading = ({ Type, length }: { Type: string; length: number }) => {
       return (
         <div className="card skeleton w-[90vw] bg-base-100 shadow-xl">
           <div className="card-body p-5">
-            <div className="card-title flex-col">
-              <div className="flex w-full items-center">
-                <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+            {" "}
+            <div className="card-title flex-ol">
+              <div className="flex w-full items-center justify-end">
+                <div className="skeleton h-8 w-14 bg-opacity-10"></div>
               </div>
-              <div className="divider my-0"></div>
             </div>
-            <div className="flex flex-col gap-5">
+            <div className="card-title flex-ol">
+              <div className="flex w-full items-center justify-between">
+                <div className="skeleton h-6 w-20 bg-opacity-10"></div>
+                <div className="skeleton h-6 w-20 bg-opacity-10"></div>
+              </div>
+              {/* <div className="divider my-0"></div> */}
+            </div>
+            <div className="flex flex-col gap-5 ">
               <div className="flex justify-between items-center">
                 <div className="flex flex-col gap-2">
-                  <div className="skeleton h-10 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-6 w-20 bg-opacity-10"></div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-5 ">
+              <div className="flex justify-between items-center">
+                <div className="flex flex-col gap-2">
+                  <div className="skeleton h-6 w-20 bg-opacity-10"></div>
                 </div>
                 <div>
-                  <div className="skeleton h-8 w-20 bg-opacity-10"></div>
+                  <div className="skeleton h-8 w-8 bg-opacity-10"></div>
                 </div>
               </div>
             </div>

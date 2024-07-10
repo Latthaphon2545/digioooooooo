@@ -54,6 +54,14 @@ export default function TableUserHistory({
             </tr>
           </thead>
           <tbody>
+            {historyData.length === 0 && (
+              <tr>
+                <td colSpan={6} className="text-center py-2 px-4 h-[8vh]">
+                  No data available
+                </td>
+              </tr>
+            )}
+
             {historyData.map((item) => {
               return (
                 <DesktopHistoryView
@@ -69,8 +77,10 @@ export default function TableUserHistory({
           </tbody>
         </table>
       </div>
-      <div className="mobile:block laptop:hidden">
+      <div className="block laptop:hidden">
         {historyData.map((item) => {
+          console.log("item mobile", item);
+
           return (
             <UserHistoryMobileView
               key={item.id}
