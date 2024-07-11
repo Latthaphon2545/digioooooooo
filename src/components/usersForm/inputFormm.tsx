@@ -11,7 +11,6 @@ import AlertDialog, { ErrorStyle } from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { isFormEmpty } from "@/lib/inputUtils";
 import InputHeaderr from "./inputHeaderr";
-import { ShowAlert } from "../showAlert";
 
 type FormValues = {
   email: string;
@@ -43,22 +42,6 @@ const InputFormm = () => {
     setSubmitting(true);
 
     try {
-      // if (activeTab === 1 && groupData.length === 0) {
-      //   setErrorOnSubmit("Please upload a file before submitting");
-      //   return;
-      // }
-
-      // if (
-      //   activeTab === 0 &&
-      //   formValues.every(
-      //     ({ email, name, contact, role }) =>
-      //       !email && !name && !contact && !role
-      //   )
-      // ) {
-      //   setErrorOnSubmit("Please fill out the form");
-      //   return;
-      // }
-
       if (
         formValues.some(
           ({ email }) => email.includes("@") && !email.endsWith("@digio.co.th")
@@ -165,14 +148,9 @@ const InputFormm = () => {
       )}
       <AlertDialog
         alertTitle={errorOnSubmit}
-        open={showAlert}
         id="userAddError"
         icon={<BiError size={20} />}
         styles={ErrorStyle}
-        setAlertIcon={setAlertIcon}
-        setAlertStyles={setAlertStyles}
-        setShowAlert={setShowAlert}
-        setAlertTitle={setErrorOnSubmit}
       />
       <div
         className={`flex ${

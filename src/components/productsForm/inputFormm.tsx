@@ -136,7 +136,7 @@ const InputFormm = ({ models }: { models: Model[] }) => {
         open={showAlert}
         id="productAddError"
         icon={<BiError size={20} />}
-        styles="alert-error absolute w-fit mx-10 py-3 bottom-3"
+        styles={ErrorStyle}
         setAlertIcon={setAlertIcon}
         setAlertStyles={setAlertStyles}
         setShowAlert={setShowAlert}

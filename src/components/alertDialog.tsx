@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { ShowAlert } from "./showAlert";
 
 interface AlertDialogProps {
   alertTitle: string;
@@ -17,25 +16,20 @@ export default function AlertDialog({
   alertTitle,
   styles,
   icon,
-  open,
   id,
-  setAlertTitle,
-  setAlertStyles,
-  setAlertIcon,
-  setShowAlert,
 }: AlertDialogProps) {
+  const [showAlert, setShowAlert] = React.useState(false);
+
   useEffect(() => {
     if (alertTitle) {
       setShowAlert(true);
-      setAlertTitle(alertTitle);
-      setAlertStyles(styles);
-      setAlertIcon(icon);
       setTimeout(() => setShowAlert(false), 3000);
     }
   }, [alertTitle]);
+
   return (
     <>
-      {open && (
+      {showAlert && (
         <div className="fixed bottom-4 left-[15%] w-[20%]">
           <div
             role="alert"

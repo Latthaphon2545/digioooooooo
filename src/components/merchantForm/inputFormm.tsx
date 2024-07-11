@@ -4,7 +4,7 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { DataItem } from "@/lib/types";
 import MerchantInput from "./merchantInput";
 import GroupUpload from "../groupUpload";
-import AlertDialog from "../alertDialog";
+import AlertDialog, { ErrorStyle } from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import Alert from "../alert";
 import axios from "axios";
@@ -31,6 +31,10 @@ export default function MerchantInputFormm() {
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
+
+  const [alertStyles, setAlertStyles] = useState("");
+  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -125,13 +129,17 @@ export default function MerchantInputFormm() {
           <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
       )}
-      {errorOnSubmit && (
-        <AlertDialog
-          title={errorOnSubmit}
-          styles="alert-error absolute w-fit mx-10 py-3 bottom-3"
-          icon={<BiError size={20} />}
-        />
-      )}
+      <AlertDialog
+        alertTitle={errorOnSubmit}
+        open={showAlert}
+        id="merchantAddError"
+        icon={<BiError size={20} />}
+        styles={ErrorStyle}
+        setAlertTitle={setErrorOnSubmit}
+        setAlertStyles={setAlertStyles}
+        setAlertIcon={setAlertIcon}
+        setShowAlert={setShowAlert}
+      />
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
           styles={`btn-primary px-10 w-1/2 mobile:mt-5 lg:left-1/2 lg:transform lg:-translate-x-1/2 laptop:mt-0 ${

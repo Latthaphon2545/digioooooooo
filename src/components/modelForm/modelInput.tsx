@@ -3,7 +3,7 @@ import ModelInputField from "./modelInputField";
 import SubmitPopupButton from "../submitPopupButton";
 import ImageRenderer from "../imageRenderer";
 import { createModel } from "@/lib/actions/model/action";
-import AlertDialog from "../alertDialog";
+import AlertDialog, { ErrorStyle } from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { useFormState } from "react-dom";
 import { useState } from "react";
@@ -19,6 +19,8 @@ const ModelInput = () => {
     "cameras",
   ];
   const [state, formAction] = useFormState(createModel, { errors: [] });
+  const [alertStyles, setAlertStyles] = useState("");
+  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
   const [showAlert, setShowAlert] = useState(false);
 
   return (
@@ -84,13 +86,7 @@ const ModelInput = () => {
           </div> */}
         </div>
       </form>
-      {state.errors.length > 0 && (
-        <AlertDialog
-          title={state.errors[0]}
-          styles="alert-error absolute w-fit mx-10 py-3 bottom-3"
-          icon={<BiError size={20} />}
-        />
-      )}
+      <AlertDialog alertTitle={state.errors[0]} open={showAlert} id="modelAddError" icon={<BiError size={20} />} styles={ErrorStyle} setAlertTitle={() => ()} setAlertStyles={setAlertStyles} setAlertIcon={setAlertIcon} setShowAlert={setShowAlert} />
     </div>
   );
 };
