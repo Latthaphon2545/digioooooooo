@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ShowAlert } from "../showAlert";
+import { ShowAlert } from "../../showAlert";
 import { updateUserHistory } from "./action/updateUserHistory";
 import AlertDialog from "@/components/alertDialog";
 import UserHistoryMobileView from "./view/mobileView";

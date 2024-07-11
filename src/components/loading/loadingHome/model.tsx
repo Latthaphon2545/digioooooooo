@@ -1,9 +1,21 @@
 import { TbBuildingWarehouse } from "react-icons/tb";
 import { RiUninstallLine } from "react-icons/ri";
+import { ColorProductStatus } from "@/components/table/color";
 
 const item = 6;
 
 const ModelHomeLoading = () => {
+  const icon = [
+    {
+      name: "In stock",
+      icon: <TbBuildingWarehouse size={40} />,
+    },
+    {
+      name: "Installing",
+      icon: <RiUninstallLine size={40} />,
+    },
+  ];
+
   return (
     <div
       className={`grid gap-5 rounded-lg overflow-x-auto p-10 laptop:grid-cols-2`}
@@ -23,25 +35,21 @@ const ModelHomeLoading = () => {
             <div className="stat-title btn btn-xs mobile:w-fit">View More</div>
           </div>
 
-          <div className="stat">
-            <div className="stat-figure text-green-500 mobile:hidden laptop:block tablet:block">
-              <TbBuildingWarehouse size={40} />
+          {icon.map((item, index) => (
+            <div className="stat" key={index}>
+              <div
+                className={`stat-figure text-${ColorProductStatus(
+                  item.name
+                )} mobile:hidden laptop:block tablet:block`}
+              >
+                {item.icon}
+              </div>
+              <div className="stat-title mobile:text-xs  laptop:text-base">
+                {item.name}
+              </div>
+              <div className="stat-value skeleton opacity-25 h-8 w-10"></div>
             </div>
-            <div className="stat-title mobile:text-xs  laptop:text-base">
-              In Stock
-            </div>
-            <div className="stat-value skeleton opacity-25 h-8 w-10">{}</div>
-          </div>
-
-          <div className="stat">
-            <div className="stat-figure text-primary mobile:hidden laptop:block tablet:block">
-              <RiUninstallLine size={40} />
-            </div>
-            <div className="stat-title mobile:text-xs  laptop:text-base">
-              Installings
-            </div>
-            <div className="stat-value skeleton h-8 opacity-25 w-10">{}</div>
-          </div>
+          ))}
         </div>
       ))}
     </div>

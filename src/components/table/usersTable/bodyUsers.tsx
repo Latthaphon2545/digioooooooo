@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AlertDialog from "../../alertDialog";
-import { ShowAlert } from "../showAlert";
+import { ShowAlert } from "../../showAlert";
 import { TableView } from "./view/desktopView";
 
 import { MobileView } from "./view/mobileView";

@@ -1,5 +1,5 @@
 import React from "react";
-import StatHome from "./stat";
+import StatStatusModel from "./StatStatusModel";
 
 interface Model {
   series: string;
@@ -18,7 +18,7 @@ export default function ModelPage({ models }: ModelProps) {
       <div className={`grid gap-5 rounded-lg py-10 laptop:grid-cols-2`}>
         {models.map((model, index) => (
           <React.Fragment key={index}>
-            <StatHome
+            <StatStatusModel
               series={model.series}
               instock={model.status.INSTOCK}
               installing={model.status.INSTALLING}

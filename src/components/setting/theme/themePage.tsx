@@ -28,7 +28,7 @@ export default function ThemePage() {
     await updateTheme(newTheme);
   };
 
-  const divCard = (themeTitle: string) => {
+  const divCard = (themeTitle: string, index: number) => {
     const themeCurrent = themeTitle === "" ? "Use Device" : themeTitle;
 
     return (
@@ -37,6 +37,7 @@ export default function ThemePage() {
           theme === themeCurrent ? "border-2  border-primary" : ""
         } hover:shadow-lg hover:shadow-primary`}
         onClick={() => handleTheme(themeCurrent)}
+        key={index}
       >
         <div className="card-body flex-row items-center">
           <h1 className="text-xl">
@@ -59,7 +60,7 @@ export default function ThemePage() {
   return (
     <>
       <div className="flex laptop:flex-row mobile:flex-col gap-2 justify-between">
-        {arrayTheme.map((themeTitle) => divCard(themeTitle))}
+        {arrayTheme.map((themeTitle, index) => divCard(themeTitle, index))}
       </div>
     </>
   );

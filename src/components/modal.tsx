@@ -12,6 +12,7 @@ interface ModalProps {
   boolClose?: boolean;
   action?: () => void;
   mobileImg?: boolean;
+  closeAction?: boolean;
 }
 
 const Modal = ({
@@ -23,57 +24,62 @@ const Modal = ({
   boolClose,
   action,
   mobileImg,
+  closeAction,
 }: ModalProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <React.Fragment>
-      <label
-        htmlFor={id}
-        className={`btn btn-xs ${style}`}
-        onClick={() => {
-          setOpen(!open);
-          if (action) {
-            action();
-          }
-        }}
-      >
-        {title}
-      </label>
+    <>
+      {!closeAction && (
+        <>
+          <label
+            htmlFor={id}
+            className={`btn btn-xs ${style}`}
+            onClick={() => {
+              setOpen(!open);
+              if (action) {
+                action();
+              }
+            }}
+          >
+            {title}
+          </label>
 
-      <input type="checkbox" id={id} className="modal-toggle" />
-      <div
-        className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom  ${
-          open ? "modal-open" : ""
-        } ${mobileImg ? "w-full h-full" : ""}`}
-        role="dialog"
-      >
-        <div className="modal-box p-8">
-          {boolClose && (
+          <input type="checkbox" id={id} className="modal-toggle" />
+          <div
+            className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom  ${
+              open ? "modal-open" : ""
+            } ${mobileImg ? "w-full h-full" : ""}`}
+            role="dialog"
+          >
+            <div className="modal-box p-8">
+              {boolClose && (
+                <label
+                  htmlFor={id}
+                  className="btn btn-xs btn-circle btn-error absolute right-4 top-2"
+                  onClick={() => setOpen(!open)}
+                >
+                  X
+                </label>
+              )}
+              <h3 className="text-lg font-bold">{titleContent}</h3>
+              <div className="text-sm text-start max-h-[70vh] overflow-y-auto">
+                {content}
+              </div>
+            </div>
             <label
+              className="modal-backdrop"
               htmlFor={id}
-              className="btn btn-xs btn-circle btn-error absolute right-4 top-2"
-              onClick={() => setOpen(!open)}
+              onClick={() => {
+                setOpen(!open);
+              }}
             >
-              X
+              Close
             </label>
-          )}
-          <h3 className="text-lg font-bold">{titleContent}</h3>
-          <div className="text-sm text-start max-h-[70vh] overflow-y-auto">
-            {content}
           </div>
-        </div>
-        <label
-          className="modal-backdrop"
-          htmlFor={id}
-          onClick={() => {
-            setOpen(!open);
-          }}
-        >
-          Close
-        </label>
-      </div>
-    </React.Fragment>
+        </>
+      )}
+    </>
   );
 };
 

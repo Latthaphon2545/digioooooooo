@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const email = searchParams.get("email") || "";
+    const id = searchParams.get("id") || "";
 
     const users = await db.user.findUnique({
       where: {
-        email,
+        id,
       },
       select: {
         id: true,

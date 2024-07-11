@@ -8,7 +8,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { EditableField } from "../EditableField";
 import { productIdUI } from "../productIdShowEachShop";
 import { handleEditToggle } from "../handleEditToggle";
-import { ShowAlert } from "../showAlert";
+import { ShowAlert } from "../../showAlert";
 import { RenderSubmitPopupButton } from "./renderSubmitPopupButton";
 
 interface TableProps {

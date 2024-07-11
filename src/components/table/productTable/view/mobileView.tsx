@@ -6,7 +6,7 @@ import { ConvertStatus } from "@/components/convertStatusAndRole";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import { MdDelete } from "react-icons/md";
 import ModalMerchant from "../actions/handleUpdateMerchant";
-import { ShowAlert } from "../../showAlert";
+import { ShowAlert } from "../../../showAlert";
 import Modal from "@/components/modal";
 import { stringToHex } from "@/lib/generateRandomHref";
 import BankAdd from "../actions/handleBankAdd";

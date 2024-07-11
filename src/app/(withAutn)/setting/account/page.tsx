@@ -5,9 +5,9 @@ import {
   handleRoleChange,
   handleStatusChange,
 } from "@/components/table/DropdownField";
-import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBarSetting from "../navBar";
+import { GetAccount } from "@/lib/actions/getAccount/action";
 
 // Define an interface for the user data
 interface UserData {
@@ -19,22 +19,15 @@ interface UserData {
   contact: string;
 }
 
+const userId = "6650666b7e05719e52aabefd";
+
 export default function Page() {
-  const [data, setData] = React.useState<UserData | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = useState<UserData | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      try {
-        const email = "1@digio.co.th";
-        const res = await axios.get(`/api/users/getUser?email=${email}`);
-        // console.log(res.data.users);
-        setData(res.data.users);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setTimeout(() => setLoading(false), 2000);
-      }
+      const result = await GetAccount({ userId });
+      setData(result);
     };
     fetchUser();
   }, []);
@@ -43,9 +36,6 @@ export default function Page() {
     <>
       <NavBarSetting />
       <div className=" mb-1 mobile:mx-5 laptop:mx-10 laptop:mt-10 mobile:mt-2">
-        {loading && (
-          <div className="skeleton h-full w-full bg-opacity-10"></div>
-        )}
         {data && (
           <Account
             account={{
