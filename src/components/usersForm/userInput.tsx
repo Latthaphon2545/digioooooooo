@@ -82,7 +82,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
 
   return (
     <div className=" w-full">
-      <div className="overflow-hidden mobile:max-h-[72vh] tablet:max-h-[75vh] mobile:hidden sm:block">
+      <div className="overflow-hidden mobile:max-h-[72vh] tablet:max-h-[75vh] hidden lg:block">
         <form action={""}>
           <table className="w-full flex-nowrap">
             <thead>
@@ -120,7 +120,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
           </div>
         </form>
       </div>
-      <div className="sm:hidden max-h-[70vh] overflow-scroll w-full">
+      <div className="lg:hidden max-h-[70vh] overflow-scroll w-full">
         <form action="" className="w-full">
           <div className="flex flex-col gap-5 w-full">
             {formValues.map((_, index) => {

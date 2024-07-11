@@ -21,7 +21,6 @@ export default function TableUserHistory({
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
-  const [openEditModal, setOpenEditModal] = useState(false);
 
   const handleUpdateWrapper = async (
     id: string,
@@ -41,7 +40,7 @@ export default function TableUserHistory({
 
   return (
     <>
-      <div className="min-h-[63vh] mt-3 w-[80vw] mobile:hidden tablet:hidden laptop:block">
+      <div className="min-h-[63vh] mt-3 w-[80vw] hidden lg:hidden laptop:block">
         <table className="table table-fixed w-full text-center">
           <thead>
             <tr>
@@ -77,7 +76,7 @@ export default function TableUserHistory({
           </tbody>
         </table>
       </div>
-      <div className="block laptop:hidden">
+      <div className="block lg:hidden">
         {historyData.map((item) => {
           console.log("item mobile", item);
 

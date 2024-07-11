@@ -32,7 +32,7 @@ export const TabBar = ({
   }, [paramPage, setActiveTab]);
 
   return (
-    <div role="tablist" className="tabs tabs-bordered w-full  ">
+    <div role="tablist" className="tabs tabs-bordered w-full  content-center ">
       <input
         type="radio"
         name="my_tabs_1"
@@ -44,7 +44,7 @@ export const TabBar = ({
       />
       <div
         role="tabpanel"
-        className={`tab-content w-full pl-5 mx-auto ${
+        className={`tab-content w-full pl-5 mx-auto  ${
           activeTab === 0 ? "block mx-auto" : "hidden"
         } ${!paramPage ? "sm:px-10 mt-3" : "w-full  mx-auto"}`}
       >
@@ -61,7 +61,7 @@ export const TabBar = ({
       />
       <div
         role="tabpanel"
-        className={`tab-content w-full mx-auto ${
+        className={`tab-content w-full  ${
           activeTab === 1 ? "block mx-auto" : "hidden"
         } ${!paramPage && "px-5 sm:px-10 mt-3"}`}
       >

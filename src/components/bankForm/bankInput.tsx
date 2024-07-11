@@ -23,7 +23,7 @@ export default function BankInput() {
               name="name"
               required
               placeholder="Kasikorn Bank"
-              className="mt-3 font-normal block p-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
+              className="mt-3 font-normal block p-2.5  w-full text-sm text-base-content bg-transparent rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
             />
           </label>
           <label htmlFor="" className=" font-semibold w-full">
@@ -33,7 +33,7 @@ export default function BankInput() {
               name="bankAbbreviation"
               required
               placeholder="Kasikorn Bank = KBANK"
-              className="mt-3 font-normal block p-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
+              className="mt-3 font-normal block p-2.5  w-full text-sm text-base-content bg-transparent rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
             />
           </label>
           <div className="w-full">
