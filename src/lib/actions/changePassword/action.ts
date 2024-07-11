@@ -1,4 +1,3 @@
-import { ShowAlert } from "@/components/showAlert";
 import axios from "axios";
 import { Error, ErrorStyle } from "@/components/alertDialog";
 
@@ -42,15 +41,15 @@ export const ChangePassword = async ({
   } catch (e) {
     console.log(e);
     setUpdateAlert(true);
-    ShowAlert(
-      "Icorrect old password",
-      ErrorStyle,
-      setAlertTitle,
-      setAlertStyles,
-      setAlertIcon,
-      setUpdateAlert,
-      Error
-    );
+    // ShowAlert(
+    //   "Icorrect old password",
+    //   ErrorStyle,
+    //   setAlertTitle,
+    //   setAlertStyles,
+    //   setAlertIcon,
+    //   setUpdateAlert,
+    //   Error
+    // );
     handleClear();
   } finally {
     setLoadingChangePassword(false);

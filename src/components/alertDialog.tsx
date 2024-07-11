@@ -27,18 +27,12 @@ export default function AlertDialog({
   useEffect(() => {
     if (alertTitle) {
       setShowAlert(true);
-      ShowAlert(
-        alertTitle,
-        styles,
-        setAlertTitle,
-        setAlertStyles,
-        setAlertIcon,
-        setShowAlert,
-        icon
-      );
+      setAlertTitle(alertTitle);
+      setAlertStyles(styles);
+      setAlertIcon(icon);
+      setTimeout(() => setShowAlert(false), 3000);
     }
   }, [alertTitle]);
-
   return (
     <>
       {open && (

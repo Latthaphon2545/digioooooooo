@@ -11,7 +11,6 @@ type DropdownBottomProps = {
       title: string;
       names: {
         name: string;
-        action: () => void;
       }[];
     }[];
   };
@@ -42,14 +41,11 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
   };
 
   useEffect(() => {
-    const allChecked =
-      checkedValues.length ===
-      item.list.flatMap((options) => options.names).length;
-    let filterValue = allChecked ? "" : checkedValues.join(",");
-    const newUrl = encode(
+    const filterValue = checkedValues.join(",");
+    const newUrl = `${pathname}?${encode(
       `filter=${filterValue}&search=${search}&skip=${skip}&take=${take}`
-    );
-    router.push(`${pathname}?${newUrl}`);
+    )}`;
+    router.replace(newUrl, { scroll: true });
   }, [checkedValues]);
 
   const handleClear = () => {
@@ -66,7 +62,7 @@ export default function DropdownBottom({ item, index }: DropdownBottomProps) {
           <div key={optionsIndex}>
             <p className="text-xs my-2 mx-1">{options.title}</p>
             {options.names.map((option, optionIndex) => (
-              <li key={option.name} className="form-control">
+              <li key={optionIndex} className="form-control">
                 <label className="cursor-pointer">
                   <input
                     type="checkbox"

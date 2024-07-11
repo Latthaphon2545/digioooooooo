@@ -15,7 +15,6 @@ interface IForgotPassword {
   setAlertTitle?: (alertTitle: string) => void;
   setAlertStyles?: (alertStyles: string) => void;
   setAlertIcon?: (value: React.ReactNode) => void;
-  setAlertOpen?: (alertOpen: boolean) => void;
 }
 
 export const ForgotPassword = async ({
@@ -24,7 +23,6 @@ export const ForgotPassword = async ({
   setLoading,
   setForgotPassword,
   setAlertIcon,
-  setAlertOpen,
   setAlertStyles,
   setAlertTitle,
 }: IForgotPassword) => {
@@ -37,31 +35,19 @@ export const ForgotPassword = async ({
     });
     if (res.status === 201) {
       if (setForgotPassword) setForgotPassword(true);
-      if (setAlertOpen && setAlertIcon && setAlertStyles && setAlertTitle) {
-        ShowAlert(
-          "Link sent successfully",
-          SuccessStyle,
-          setAlertTitle,
-          setAlertStyles,
-          setAlertIcon,
-          setAlertOpen,
-          Success
-        );
+      if (setAlertIcon && setAlertStyles && setAlertTitle) {
+        setAlertTitle("Password reset link sent successfully");
+        setAlertStyles(SuccessStyle);
+        setAlertIcon(Success);
       }
     }
   } catch (e: any) {
     console.log(e);
     if (e.response.status === 404) {
-      if (setAlertOpen && setAlertIcon && setAlertStyles && setAlertTitle) {
-        ShowAlert(
-          "User not found",
-          ErrorStyle,
-          setAlertTitle,
-          setAlertStyles,
-          setAlertIcon,
-          setAlertOpen,
-          Error
-        );
+      if (setAlertIcon && setAlertStyles && setAlertTitle) {
+        setAlertTitle("Email not found");
+        setAlertStyles(ErrorStyle);
+        setAlertIcon(Error);
       }
     }
   } finally {

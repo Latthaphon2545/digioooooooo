@@ -8,7 +8,6 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { EditableField } from "../EditableField";
 import { productIdUI } from "../productIdShowEachShop";
 import { handleEditToggle } from "../handleEditToggle";
-import { ShowAlert } from "../../showAlert";
 import { RenderSubmitPopupButton } from "./renderSubmitPopupButton";
 
 interface TableProps {
@@ -44,15 +43,15 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
       );
     } catch (error) {
       console.error(error);
-      ShowAlert(
-        "Failed to update user",
-        "alert-error mobile:bg-error tablet:bg-error ",
-        setAlertTitle,
-        setAlertStyles,
-        setAlertIcon,
-        setUpdateAlert,
-        Error
-      );
+      // ShowAlert(
+      //   "Failed to update user",
+      //   "alert-error mobile:bg-error tablet:bg-error ",
+      //   setAlertTitle,
+      //   setAlertStyles,
+      //   setAlertIcon,
+      //   setUpdateAlert,
+      //   Error
+      // );
     } finally {
       dataForCurrentPage.map((item) => {
         if (item.id === id) {
@@ -62,15 +61,15 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         }
       });
       handleEditToggle(id, setIsEditing);
-      ShowAlert(
-        "User updated successfully",
-        "alert-success mobile:bg-success tablet:bg-success",
-        setAlertTitle,
-        setAlertStyles,
-        setAlertIcon,
-        setUpdateAlert,
-        Success
-      );
+      // ShowAlert(
+      //   "User updated successfully",
+      //   "alert-success mobile:bg-success tablet:bg-success",
+      //   setAlertTitle,
+      //   setAlertStyles,
+      //   setAlertIcon,
+      //   setUpdateAlert,
+      //   Success
+      // );
       setUpdateAlert(true);
       setIsUpdating({ ...isUpdating, [id]: false });
       setIsEditing({ ...isEditing, [id]: false });

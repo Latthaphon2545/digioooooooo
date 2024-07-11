@@ -7,7 +7,6 @@ import ViaSMS from "./viaSMS";
 import ViaEmail from "./viaEmail";
 import Link from "next/link";
 import AlertDialog, { Warning, WarningStyle } from "@/components/alertDialog";
-import { ShowAlert } from "@/components/showAlert";
 
 export const ViaStep = () => {
   const [viaEmail, setViaEmail] = useState(false);
@@ -25,15 +24,8 @@ export const ViaStep = () => {
   const handleSubmit = async () => {
     try {
       if (email.trim() === "") {
-        ShowAlert(
-          "Please enter your email",
-          WarningStyle,
-          setAlertTitle,
-          setAlertStyles,
-          setAlertIcon,
-          setAlertOpen,
-          Warning
-        );
+        setAlertTitle("Email is required");
+        setAlertStyles(WarningStyle);
       }
 
       const res = await ForgotPassword({
@@ -41,7 +33,6 @@ export const ViaStep = () => {
         phoneNumber: phone,
         setLoading,
         setAlertIcon,
-        setAlertOpen,
         setAlertStyles,
         setAlertTitle,
       });
@@ -111,11 +102,15 @@ export const ViaStep = () => {
       </Link>
 
       <AlertDialog
-        open={alertOpen}
-        title={alertTitle}
+        alertTitle={alertTitle}
         styles={alertStyles}
         icon={alertIcon}
+        open={alertOpen}
         id={`alert-dialog-${email}`}
+        setAlertTitle={setAlertTitle}
+        setAlertStyles={setAlertStyles}
+        setAlertIcon={setAlertIcon}
+        setShowAlert={setAlertOpen}
       />
     </>
   );

@@ -3,11 +3,10 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SearchBar from "./search";
 import DropdownBottom from "./fillter";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState, useCallback } from "react";
 import { decode, encode } from "@/lib/generateRandomHref";
 import { itemPage } from "./staticPropsInTable";
+import { getProductCategories } from "@/lib/actions/filter/getNameAndIdModel";
 
 const CATEGORIES = (option: string, series: string[]) => {
   if (option === "User") {
@@ -17,20 +16,15 @@ const CATEGORIES = (option: string, series: string[]) => {
         list: [
           {
             title: "Status",
-            names: [
-              { name: "Active", action: () => {} },
-              { name: "Inactive", action: () => {} },
-              { name: "Restricted", action: () => {} },
-              { name: "Pending", action: () => {} },
-            ],
+            names: ["Active", "Inactive", "Restricted", "Pending"].map(
+              (name) => ({ name })
+            ),
           },
           {
             title: "Role",
-            names: [
-              { name: "Admin", action: () => {} },
-              { name: "Operator", action: () => {} },
-              { name: "Call Center", action: () => {} },
-            ],
+            names: ["Admin", "Operator", "Call Center"].map((name) => ({
+              name,
+            })),
           },
         ],
       },
@@ -43,20 +37,19 @@ const CATEGORIES = (option: string, series: string[]) => {
           {
             title: "Status",
             names: [
-              { name: "In Stock", action: () => {} },
-              { name: "Installed", action: () => {} },
-              { name: "Installing", action: () => {} },
-              { name: "Waiting for Repair", action: () => {} },
-              { name: "Reparing", action: () => {} },
-              { name: "Damaged", action: () => {} },
-              { name: "Lost", action: () => {} },
-            ],
+              "In Stock",
+              "Installed",
+              "Installing",
+              "Waiting for Repair",
+              "Reparing",
+              "Damaged",
+              "Lost",
+            ].map((name) => ({ name })),
           },
           {
             title: "Models",
-            names: series.map((series) => ({
-              name: series,
-              action: () => {},
+            names: series.map((seriesName) => ({
+              name: seriesName,
             })),
           },
         ],
@@ -70,42 +63,44 @@ interface Category {
   title: string;
   list: {
     title: string;
-    names: { name: string; action: () => void }[];
+    names: { name: string }[];
   }[];
 }
+
+const skip = 0;
+const take = itemPage;
 
 export default function Header({ option }: { option: string }) {
   const router = useRouter();
   const pathName = usePathname();
   const params = useSearchParams();
   const [category, setCategory] = useState<Category[]>([]);
-  const [series, setSeries] = useState([]);
+  const [filterParamsArray, setFilterParamsArray] = useState<string[]>([]);
 
   const { filter } = decode(params.toString());
-  const skip = 0;
-  const take = itemPage;
 
-  useEffect(() => {
-    const getCategories = async () => {
-      let updatedSeries = [];
-      if (option === "Product") {
-        const res = await axios.get("/api/model/getNameAndIdModel");
-        updatedSeries = res.data.seriesModel;
-        setSeries(updatedSeries);
+  const fetchCategories = useCallback(async () => {
+    setCategory(CATEGORIES(option, []));
+    if (option === "Product") {
+      try {
+        const res = await getProductCategories({
+          setCategory,
+          CATEGORIES,
+        });
+      } catch (e) {
+        console.error(e);
       }
-      setCategory(CATEGORIES(option, updatedSeries));
-    };
-    getCategories();
+    }
   }, [option]);
 
-  const filterParamsArray = filter ? filter.split(",") : [];
-  const filterParamsObjects = filterParamsArray.map((param) => ({
-    value: param,
-  }));
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
-  if (filterParamsObjects.length === 0) {
-    filterParamsObjects.push({ value: "All" });
-  }
+  useEffect(() => {
+    const filterParams = filter ? filter.split(",") : [];
+    setFilterParamsArray(filterParams);
+  }, [filter]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchParams = e.target.value;
@@ -126,15 +121,20 @@ export default function Header({ option }: { option: string }) {
       <div className="items-center gap-3 mobile:hidden tablet:hidden laptop:flex">
         {category.length > 0 && (
           <>
-            {filterParamsObjects.map((param) => (
+            {filterParamsArray.map((param, index) => (
               <div
-                key={param.value}
+                key={index}
                 className="badge badge-outline badge-lg mr-3 px-4 py-3 text-sm font-bold gap-2"
               >
-                <p>{param.value}</p>
+                <p>{param}</p>
               </div>
             ))}
           </>
+        )}
+        {category.length === 0 && (
+          <div className="badge badge-outline badge-lg mr-3 px-4 py-3 text-sm font-bold gap-2">
+            <p>No filter</p>
+          </div>
         )}
       </div>
     </div>

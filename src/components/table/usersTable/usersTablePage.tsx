@@ -28,10 +28,13 @@ export default function TablePage({
 
   useEffect(() => {
     const getLengthUsers = async () => {
-      if (totalLength === 0) return;
+      if (totalLength === 0) {
+        setTotalPages(0);
+        return;
+      }
       const totalPages = Math.ceil(totalLength / itemPage);
       setTotalPages(totalPages);
-      onPageChange(1);
+      setCurrentPage(1);
     };
     getLengthUsers();
   }, [totalLength, itemPage]);

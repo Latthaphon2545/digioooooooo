@@ -7,7 +7,6 @@ import { MdDelete } from "react-icons/md";
 import ModalMerchant from "../actions/handleUpdateMerchant";
 import Link from "next/link";
 import { FaHistory } from "react-icons/fa";
-import { ShowAlert } from "../../../showAlert";
 import { stringToHex } from "@/lib/generateRandomHref";
 import BankAdd from "../actions/handleBankAdd";
 import { deleteBank } from "../actions/handleDeleteBank";
@@ -38,27 +37,27 @@ export const DesktopView = ({
   setAlertIcon,
 }: TableViewProps) => {
   const handleDeleteMerchant = (id: string) => {
-    deleteMerchant({
-      productId: id,
-      dataForCurrentPage,
-      setUpdateAlert,
-      setAlertTitle,
-      setAlertStyles,
-      setAlertIcon,
-      ShowAlert,
-    });
+    // deleteMerchant({
+    //   productId: id,
+    //   dataForCurrentPage,
+    //   setUpdateAlert,
+    //   setAlertTitle,
+    //   setAlertStyles,
+    //   setAlertIcon,
+    //   ShowAlert,
+    // });
   };
 
   const handleDeleteBank = (id: string) => {
-    deleteBank({
-      productId: id,
-      dataForCurrentPage,
-      setUpdateAlert,
-      setAlertTitle,
-      setAlertStyles,
-      setAlertIcon,
-      ShowAlert,
-    });
+    // deleteBank({
+    //   productId: id,
+    //   dataForCurrentPage,
+    //   setUpdateAlert,
+    //   setAlertTitle,
+    //   setAlertStyles,
+    //   setAlertIcon,
+    //   ShowAlert,
+    // });
   };
 
   return (
@@ -89,7 +88,7 @@ export const DesktopView = ({
       </td>
 
       {/* Merchant */}
-      <td className="py-2 px-4 h-[8vh]">
+      {/* <td className="py-2 px-4 h-[8vh]">
         {item.merchant ? (
           <div className="flex flex-row items-center justify-around">
             <div className="min-w-20 tooltip">
@@ -132,10 +131,10 @@ export const DesktopView = ({
             ShowAlert={ShowAlert}
           />
         )}
-      </td>
+      </td> */}
 
       {/* Bank */}
-      <td className={`py-2 px-4 h-[8vh] w-full`}>
+      {/* <td className={`py-2 px-4 h-[8vh] w-full`}>
         {item.bankId ? (
           <div className="flex flex-row items-center justify-around">
             <div className="min-w-20 ">{item.bank.bankAbbreviations}</div>
@@ -165,7 +164,7 @@ export const DesktopView = ({
             ShowAlert={ShowAlert}
           />
         )}
-      </td>
+      </td> */}
 
       {/* History */}
       <td className={`py-2 px-4 h-[8vh]`}>

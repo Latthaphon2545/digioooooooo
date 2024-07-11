@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import AlertDialog from "../../alertDialog";
-import { ShowAlert } from "../../showAlert";
 import { TableView } from "./view/desktopView";
 
 import { MobileView } from "./view/mobileView";
@@ -28,15 +27,15 @@ export default function BodyUsers({ dataForCurrentPage, editor }: TableProps) {
     id: string,
     users: { name: string; role: string; status: string; contact: string }
   ) => {
-    await handleUpdate(id, users, {
-      dataForCurrentPage,
-      setUpdateAlert,
-      showAlert: ShowAlert,
-      setAlertTitle,
-      setAlertStyles,
-      setAlertIcon,
-      setIsEditing,
-    });
+    // await handleUpdate(id, users, {
+    //   dataForCurrentPage,
+    //   setUpdateAlert,
+    //   showAlert: ShowAlert,
+    //   setAlertTitle,
+    //   setAlertStyles,
+    //   setAlertIcon,
+    //   setIsEditing,
+    // });
   };
 
   return (

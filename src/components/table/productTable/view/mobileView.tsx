@@ -6,7 +6,6 @@ import { ConvertStatus } from "@/components/convertStatusAndRole";
 import SubmitPopupButton from "@/components/submitPopupButton";
 import { MdDelete } from "react-icons/md";
 import ModalMerchant from "../actions/handleUpdateMerchant";
-import { ShowAlert } from "../../../showAlert";
 import Modal from "@/components/modal";
 import { stringToHex } from "@/lib/generateRandomHref";
 import BankAdd from "../actions/handleBankAdd";
@@ -37,27 +36,27 @@ export const MobileView = ({
   setAlertIcon,
 }: MobileViewProps) => {
   const handleDeleteMerchant = (id: string) => {
-    deleteMerchant({
-      productId: id,
-      dataForCurrentPage,
-      setUpdateAlert,
-      setAlertTitle,
-      setAlertStyles,
-      setAlertIcon,
-      ShowAlert,
-    });
+    // deleteMerchant({
+    //   productId: id,
+    //   dataForCurrentPage,
+    //   setUpdateAlert,
+    //   setAlertTitle,
+    //   setAlertStyles,
+    //   setAlertIcon,
+    //   ShowAlert,
+    // });
   };
 
   const handleDeleteBank = (id: string) => {
-    deleteBank({
-      productId: id,
-      dataForCurrentPage,
-      setUpdateAlert,
-      setAlertTitle,
-      setAlertStyles,
-      setAlertIcon,
-      ShowAlert,
-    });
+    // deleteBank({
+    //   productId: id,
+    //   dataForCurrentPage,
+    //   setUpdateAlert,
+    //   setAlertTitle,
+    //   setAlertStyles,
+    //   setAlertIcon,
+    //   ShowAlert,
+    // });
   };
 
   return (
@@ -95,7 +94,7 @@ export const MobileView = ({
           </div>
 
           <div className="flex flex-col justify-between gap-2">
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
               <p>Merchant</p>
               <div>
                 {item.merchant ? (
@@ -176,7 +175,7 @@ export const MobileView = ({
                   />
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

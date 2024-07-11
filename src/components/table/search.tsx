@@ -8,6 +8,7 @@ export default function SearchBar({
 }) {
   const [search, setSearch] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState("");
 
   const handleDelete = () => {
     setSearch("");
@@ -34,17 +35,29 @@ export default function SearchBar({
   }, []);
 
   return (
-    <div className="flex justify-end items-center">
-      <label className="input input-sm w-64 input-bordered flex items-center gap-2">
-        <FaSearch />
+    <div className="flex flex-col justify-end items-center">
+      <label
+        className={`input input-sm w-64 input-bordered flex items-center gap-2 ${
+          error ? "input-error" : ""
+        }`}
+      >
+        <span className="h-4 w-4 opacity-70">
+          <FaSearch />
+        </span>
         <input
           ref={searchInputRef}
           type="text"
           className="grow"
           placeholder="Search"
           onChange={(e) => {
-            handleSearch(e);
-            setSearch(e.target.value);
+            const regex = /^[a-zA-Z0-9\s]*$/;
+            if (regex.test(e.target.value)) {
+              setError("");
+              handleSearch(e);
+              setSearch(e.target.value);
+            } else {
+              setError("Special characters are not allowed");
+            }
           }}
           value={search}
         />
@@ -54,7 +67,7 @@ export default function SearchBar({
               ESC
             </kbd>
             <kbd
-              className="mobile:block tablet:block laptop:hidden kbd kbd-xs bg-transparent"
+              className="mobile:block tablet:block laptop:hidden  text-error"
               onClick={handleDelete}
             >
               X

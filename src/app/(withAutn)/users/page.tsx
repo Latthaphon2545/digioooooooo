@@ -1,29 +1,28 @@
 "use client";
 
-import axios from "axios";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import Table from "@/components/table/usersTable/usersTablePage";
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import ActionButton from "@/components/actionButton";
+import { useSearchParams } from "next/navigation";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import AlertDialog, { SuccessStyle } from "@/components/alertDialog";
 import FloatingActionButton from "@/components/floatingActionButton";
 import { decode } from "@/lib/generateRandomHref";
 import { GetAllUsers } from "@/lib/actions/getUsers/action";
-import { ShowAlert } from "@/components/showAlert";
+import Link from "next/link";
+import Container from "@/components/container/container";
+
+const isEditor = true;
 
 export default function Home() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [isEditor, setIseditor] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
   const path = useSearchParams();
   const { filter, search, skip, take } = decode(path.toString());
 
-  const router = useRouter();
   const alertMessage = useSearchParams().get("alert") || "";
 
   const [alertTitle, setAlertTitle] = useState("");
@@ -34,15 +33,15 @@ export default function Home() {
   useEffect(() => {
     if (alertMessage) {
       setShowAlert(true);
-      ShowAlert(
-        "User added successfully",
-        SuccessStyle,
-        setAlertTitle,
-        setAlertStyles,
-        setAlertIcon,
-        setShowAlert,
-        <AiOutlineUserAdd size={20} />
-      );
+      // ShowAlert(
+      //   "User added successfully",
+      //   SuccessStyle,
+      //   setAlertTitle,
+      //   setAlertStyles,
+      //   setAlertIcon,
+      //   setShowAlert,
+      //   <AiOutlineUserAdd size={20} />
+      // );
     }
   }, [alertMessage]);
 
@@ -61,50 +60,48 @@ export default function Home() {
     updateData();
   }, [filter, search, skip, take]);
 
-  console.log("Alert", alertMessage);
-
   return (
-    <>
-      <div className="flex flex-row">
-        <div className="flex flex-col w-full relative">
-          <AlertDialog
-            open={showAlert}
-            title={alertTitle}
-            styles={alertStyles}
-            icon={alertIcon}
-            id={"userAdd"}
-          />
-
-          <div className="justify-between items-center mx-5 mt-5 mb-1 h-14  mobile:hidden laptop:flex">
-            <h1 className="text-3xl font-bold">User</h1>
-            <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
-              <div className="mobile:hidden laptop:block">
-                <ActionButton
-                  action={() => {
-                    router.push("/users/add");
-                  }}
-                  styles={`btn-primary`}
-                  disabled={!isEditor}
-                >
+    <Container
+      AlertDialog={
+        <AlertDialog
+          open={showAlert}
+          title={alertTitle}
+          styles={alertStyles}
+          icon={alertIcon}
+          id={"userAdd"}
+        />
+      }
+      title="User"
+      BtnAction={
+        <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
+          <div className="mobile:hidden laptop:block">
+            {isEditor ? (
+              <Link href="/users/add">
+                <button className={` btn btn-primary`}>
                   <AiOutlineUserAdd size={20} /> Add users
-                </ActionButton>
-              </div>
-            </div>
+                </button>
+              </Link>
+            ) : (
+              <button className={` btn btn-primary`} disabled>
+                <AiOutlineUserAdd size={20} /> Add users
+              </button>
+            )}
           </div>
-          <FloatingActionButton page="user" />
-          <div className="flex justify-end mx-5"></div>
-          {loading ? (
-            <TablePageLoading Type="User" />
-          ) : (
-            <Table
-              data={data}
-              editor={isEditor}
-              totalLength={dataLength}
-              skip={parseInt(skip)}
-            />
-          )}
         </div>
-      </div>
-    </>
+      }
+      FloatingActionButton={<FloatingActionButton page="user" />}
+      Information={
+        loading ? (
+          <TablePageLoading Type="User" />
+        ) : (
+          <Table
+            data={data}
+            editor={isEditor}
+            totalLength={dataLength}
+            skip={parseInt(skip)}
+          />
+        )
+      }
+    />
   );
 }

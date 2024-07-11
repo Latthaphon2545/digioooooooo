@@ -8,7 +8,6 @@ import { ModalCountdown } from "@/components/modalCoundown";
 import Modal from "@/components/modal";
 import AlertDialog, { Error, ErrorStyle } from "@/components/alertDialog";
 import { ChangePassword } from "@/lib/actions/changePassword/action";
-import { ShowAlert } from "@/components/showAlert";
 import { RequirePassword } from "./requirePassword";
 import ForgotPasswordWithAuth from "./forgotPasswordWithAuth";
 
@@ -40,16 +39,16 @@ export const PasswordChange = ({
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
       setUpdateAlert(true);
-      ShowAlert(
-        "Password does not match",
-        ErrorStyle,
-        setAlertTitle,
-        setAlertStyles,
-        setAlertIcon,
-        setUpdateAlert,
-        Error
-      );
-      handleClear();
+      // ShowAlert(
+      //   "Password does not match",
+      //   ErrorStyle,
+      //   setAlertTitle,
+      //   setAlertStyles,
+      //   setAlertIcon,
+      //   setUpdateAlert,
+      //   Error
+      // );
+      // handleClear();
       return;
     }
 
@@ -146,13 +145,13 @@ export const PasswordChange = ({
         title="Link sent to your email"
       />
 
-      <AlertDialog
+      {/* <AlertDialog
         open={updateAlert}
         title={alertTitle}
         styles={alertStyles}
         icon={alertIcon}
         id={"updateAlertSetPassword"}
-      />
+      /> */}
     </>
   );
 };

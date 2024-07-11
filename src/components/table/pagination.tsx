@@ -90,14 +90,14 @@ export default function Pagination({
           <ActionButton
             action={handleToFirstPage}
             styles={`${btnClass} mobile:hidden tablet:hidden laptop:block`}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || lengthData === 0}
           >
             {"<<"}
           </ActionButton>
           <ActionButton
             action={handlePrev}
             styles={btnClass}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || lengthData === 0}
           >
             {"<"}
           </ActionButton>
@@ -150,14 +150,14 @@ export default function Pagination({
           <ActionButton
             action={handleNext}
             styles={btnClass}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || lengthData === 0}
           >
             {">"}
           </ActionButton>
           <ActionButton
             action={handleToLastPage}
             styles={`${btnClass} mobile:hidden tablet:hidden laptop:block`}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || lengthData === 0}
           >
             {">>"}
           </ActionButton>
