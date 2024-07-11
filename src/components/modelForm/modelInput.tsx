@@ -19,9 +19,6 @@ const ModelInput = () => {
     "cameras",
   ];
   const [state, formAction] = useFormState(createModel, { errors: [] });
-  const [alertStyles, setAlertStyles] = useState("");
-  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
-  const [showAlert, setShowAlert] = useState(false);
 
   return (
     <div className="pt-4 sm:pt-0 h-full">
@@ -75,15 +72,6 @@ const ModelInput = () => {
               Add
             </SubmitPopupButton>
           </div>
-
-          {/* <div className="absolute -bottom-5 left-0 grid grid-cols-3 ">
-            {state.errors &&
-              state.errors.map((error) => (
-                <div key={error} className="text-error text-sm">
-                  {error}
-                </div>
-              ))}
-          </div> */}
         </div>
       </form>
       <AlertDialog
