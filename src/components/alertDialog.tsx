@@ -4,12 +4,7 @@ interface AlertDialogProps {
   alertTitle: string;
   styles: string;
   icon?: React.ReactNode;
-  open: boolean;
   id: string;
-  setAlertTitle: (value: string) => void;
-  setAlertStyles: (value: string) => void;
-  setAlertIcon: (value: React.ReactNode) => void;
-  setShowAlert: (value: boolean) => void;
 }
 
 export default function AlertDialog({

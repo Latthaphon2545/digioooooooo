@@ -135,10 +135,6 @@ export default function MerchantInputFormm() {
         id="merchantAddError"
         icon={<BiError size={20} />}
         styles={ErrorStyle}
-        setAlertTitle={setErrorOnSubmit}
-        setAlertStyles={setAlertStyles}
-        setAlertIcon={setAlertIcon}
-        setShowAlert={setShowAlert}
       />
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
