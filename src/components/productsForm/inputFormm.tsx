@@ -37,16 +37,6 @@ const InputForm = ({ models }: { models: Model[] }) => {
   }, [errorOnSubmit]);
 
   const handleSubmit = async () => {
-    if (activeTab === 1 && groupData.length === 0) {
-      setErrorOnSubmit("Please upload a file before submitting");
-      return;
-    }
-
-    if (activeTab === 0 && formValues.every(({ model, sn }) => !model && !sn)) {
-      setErrorOnSubmit("Please fill out the form");
-      return;
-    }
-
     setSubmitting(true);
     groupData.forEach((item) => {
       item.model = models.find(
@@ -103,6 +93,7 @@ const InputForm = ({ models }: { models: Model[] }) => {
     setFormValues([
       { model: "", sn: "" },
       { model: "", sn: "" },
+      { model: "", sn: "" },
     ]);
     setGroupData([]);
   };
@@ -114,15 +105,19 @@ const InputForm = ({ models }: { models: Model[] }) => {
         title="Add Product"
         page="product"
       />
-      <TabBar
-        Individual={
+      <div
+        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
+          activeTab === 1 ? "flex items-center" : ""
+        } `}
+      >
+        {activeTab === 0 && (
           <ProductInput
             formValues={formValues}
             setFormValues={setFormValues}
             models={models}
           />
-        }
-        Group={
+        )}
+        {activeTab === 1 && (
           <GroupUpload
             setHasError={setHasError}
             headers={["model", "sn"]}
@@ -133,10 +128,8 @@ const InputForm = ({ models }: { models: Model[] }) => {
             setUploading={setUploading}
             setErrorOnSubmit={setErrorOnSubmit}
           />
-        }
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+        )}
+      </div>
       {submitting && (
         <div className="">
           <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>

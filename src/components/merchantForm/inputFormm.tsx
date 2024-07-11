@@ -19,7 +19,7 @@ type FormValues = {
   contact: string;
 }[];
 
-export default function MerchantInputForm() {
+export default function MerchantInputFormm() {
   const initialActiveTab = useSearchParams().get("activeTab") || 0;
   const [activeTab, setActiveTab] = useState(Number(initialActiveTab));
   const [hasError, setHasError] = useState(false);
@@ -84,7 +84,6 @@ export default function MerchantInputForm() {
     setFormValues([
       { name: "", contact: "", address: "" },
       { name: "", contact: "", address: "" },
-      { name: "", contact: "", address: "" },
     ]);
     setGroupData([]);
   };
@@ -95,28 +94,32 @@ export default function MerchantInputForm() {
         icon={<MdAddShoppingCart />}
         title="Add Merchant"
         page="merchant"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
-      <TabBar
-        Individual={
+      <div
+        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
+          activeTab === 1 ? "flex items-center" : ""
+        } `}
+      >
+        {activeTab === 0 && (
           <MerchantInput
             formValues={formValues}
             setFormValues={setFormValues}
           />
-        }
-        Group={
+        )}
+        {activeTab === 1 && (
           <GroupUpload
             setHasError={setHasError}
-            headers={["name", "address", "contact"]}
+            headers={["name", "contact", "address"]}
             setGroupData={setGroupData}
             page="merchant"
             uploading={uploading}
             setUploading={setUploading}
             setErrorOnSubmit={setErrorOnSubmit}
           />
-        }
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+        )}
+      </div>
       {submitting && (
         <div className="">
           <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>

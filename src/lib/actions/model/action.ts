@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createModel(prevState: any, formData: FormData) {
+  //export async function createModel(formData: FormData) {
   const INFORMATION_FIELD = [
     "description",
     "operating_system",
@@ -30,13 +31,12 @@ export async function createModel(prevState: any, formData: FormData) {
   const series = formData.get("series")?.toString().trim() as string;
 
   if (!series) {
-    errors.push("Series is required");
+    errors.push("Please fill out the series field before submitting");
   }
 
   INFORMATION_FIELD.forEach((field) => {
-    const fieldValue = formData.get(field) as string;
-    if (!fieldValue) {
-      errors.push(`${field} is required`);
+    if (!formData.get(field)?.toString().trim()) {
+      errors.push(`Please fill out the '${field}' field before submitting.`);
     }
   });
 

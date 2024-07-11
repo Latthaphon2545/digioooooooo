@@ -60,7 +60,10 @@ export default function Model({ models, edit }: ModelProps) {
             </div>
           </div>
         ))}
-        <div className="mobile:hidden tablet:hidden laptop:block">
+        <Link
+          href={"/products/models/add"}
+          className="mobile:hidden tablet:hidden laptop:block"
+        >
           <div
             className="card card-side bg-base-200 bg-opacity-40 shadow-xl mx-auto flex flex-col justify-center items-center gap-5 w-[80%] h-[30vh]"
             id="Add Model"
@@ -70,7 +73,7 @@ export default function Model({ models, edit }: ModelProps) {
             </div>
             <div className="text-2xl">Add Model</div>
           </div>
-        </div>
+        </Link>
       </div>
     </>
   );

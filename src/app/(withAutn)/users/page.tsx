@@ -52,6 +52,8 @@ export default function Home() {
     updateData();
   }, [filter, search, skip, take]);
 
+  console.log("Alert", alertMessage);
+
   return (
     <>
       <div className="flex flex-row">
