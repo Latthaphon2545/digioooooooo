@@ -86,7 +86,12 @@ const ModelInput = () => {
           </div> */}
         </div>
       </form>
-      <AlertDialog alertTitle={state.errors[0]} open={showAlert} id="modelAddError" icon={<BiError size={20} />} styles={ErrorStyle} setAlertTitle={() => ()} setAlertStyles={setAlertStyles} setAlertIcon={setAlertIcon} setShowAlert={setShowAlert} />
+      <AlertDialog
+        alertTitle={state.errors[0]}
+        styles={ErrorStyle}
+        icon={<BiError size={20} />}
+        id="modelAddError"
+      />
     </div>
   );
 };
