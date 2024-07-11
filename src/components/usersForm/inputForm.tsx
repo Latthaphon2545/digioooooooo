@@ -8,10 +8,11 @@ import GroupUpload from "../groupUpload";
 import { DataItem, Role } from "@/lib/types";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import AlertDialog from "../alertDialog";
+import AlertDialog, { ErrorStyle } from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { TabBar } from "./tabBar";
 import { isFormEmpty } from "@/lib/inputUtils";
+import { ShowAlert } from "../showAlert";
 
 type FormValues = {
   email: string;
@@ -35,14 +36,9 @@ const InputForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
 
-  useEffect(() => {
-    if (errorOnSubmit) {
-      const timer = setTimeout(() => {
-        setErrorOnSubmit("");
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [errorOnSubmit]);
+  const [alertStyles, setAlertStyles] = useState("");
+  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -160,17 +156,21 @@ const InputForm = () => {
           <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
       )}
-      {errorOnSubmit && (
-        <AlertDialog
-          title={errorOnSubmit}
-          styles="bg-error text-white "
-          icon={<BiError size={20} />}
-        />
-      )}
+      <AlertDialog
+        alertTitle={errorOnSubmit}
+        open={showAlert}
+        styles={alertStyles}
+        icon={alertIcon}
+        id="alertAddUserError"
+        setAlertTitle={setErrorOnSubmit}
+        setAlertStyles={setAlertStyles}
+        setAlertIcon={setAlertIcon}
+        setShowAlert={setShowAlert}
+      />
       <div
         className={`flex ${
           activeTab === 1 ? "justify-center" : ""
-        } lg:justify-end w-full tablet:mr-10 align-bottom `}
+        } lg:justify-end w-full tablet:mr-10 align-bottom`}
       >
         <Alert
           styles={`btn-primary px-10 w-1/2 mobile:mt-5 lg:left-1/2 lg:transform lg:-translate-x-1/2 laptop:mt-0 ${

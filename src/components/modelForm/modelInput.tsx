@@ -6,6 +6,7 @@ import { createModel } from "@/lib/actions/model/action";
 import AlertDialog from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { useFormState } from "react-dom";
+import { useState } from "react";
 
 const ModelInput = () => {
   const INFORMATION_FIELD = [
@@ -18,6 +19,7 @@ const ModelInput = () => {
     "cameras",
   ];
   const [state, formAction] = useFormState(createModel, { errors: [] });
+  const [showAlert, setShowAlert] = useState(false);
 
   return (
     <div className="pt-4 sm:pt-0 h-full">

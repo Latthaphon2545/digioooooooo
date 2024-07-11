@@ -1,20 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { ShowAlert } from "./showAlert";
 
 interface AlertDialogProps {
-  title: string;
+  alertTitle: string;
   styles: string;
   icon?: React.ReactNode;
   open: boolean;
   id: string;
+  setAlertTitle: (value: string) => void;
+  setAlertStyles: (value: string) => void;
+  setAlertIcon: (value: React.ReactNode) => void;
+  setShowAlert: (value: boolean) => void;
 }
 
 export default function AlertDialog({
-  title,
+  alertTitle,
   styles,
   icon,
   open,
   id,
+  setAlertTitle,
+  setAlertStyles,
+  setAlertIcon,
+  setShowAlert,
 }: AlertDialogProps) {
+  useEffect(() => {
+    if (alertTitle) {
+      setShowAlert(true);
+      ShowAlert(
+        alertTitle,
+        styles,
+        setAlertTitle,
+        setAlertStyles,
+        setAlertIcon,
+        setShowAlert,
+        icon
+      );
+    }
+  }, [alertTitle]);
+
   return (
     <>
       {open && (
@@ -24,7 +48,7 @@ export default function AlertDialog({
             className={`alert ${styles} fixed bottom-4 left-[15%] mobile:hidden tablet:hidden laptop:flex desktop:flex w-fit`}
           >
             {icon}
-            <span>{title}</span>
+            <span>{alertTitle}</span>
           </div>
 
           <dialog
@@ -33,7 +57,7 @@ export default function AlertDialog({
           >
             <div className={`modal-box ${styles}`}>
               <h3 className="font-bold text-lg flex items-center justify-center gap-5 ">
-                {icon} {title}
+                {icon} {alertTitle}
               </h3>
             </div>
           </dialog>

@@ -1,19 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import InputHeader from "../usersForm/inputHeader";
 import { IoMdAddCircle } from "react-icons/io";
 import GroupUpload from "../groupUpload";
 import Alert from "../alert";
 import { DataItem, Model } from "@/lib/types";
 import axios from "axios";
 import { checkFormatInput, isFormEmpty } from "@/lib/inputUtils";
-import AlertDialog from "../alertDialog";
+import AlertDialog, { ErrorStyle } from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { useRouter, useSearchParams } from "next/navigation";
-import { TabBar } from "../usersForm/tabBar";
 import ProductInput from "./productInput";
+import InputHeaderr from "../usersForm/inputHeaderr";
 
-const InputForm = ({ models }: { models: Model[] }) => {
+const InputFormm = ({ models }: { models: Model[] }) => {
   const initialActiveTab = useSearchParams().get("activeTab") || 0;
   const [activeTab, setActiveTab] = useState(Number(initialActiveTab));
   const [hasError, setHasError] = useState(false);
@@ -27,14 +26,9 @@ const InputForm = ({ models }: { models: Model[] }) => {
     { model: "", sn: "" },
   ]);
 
-  useEffect(() => {
-    if (errorOnSubmit) {
-      const timer = setTimeout(() => {
-        setErrorOnSubmit("");
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [errorOnSubmit]);
+  const [alertStyles, setAlertStyles] = useState("");
+  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -100,10 +94,12 @@ const InputForm = ({ models }: { models: Model[] }) => {
 
   return (
     <div className="relative h-full">
-      <InputHeader
+      <InputHeaderr
         icon={<IoMdAddCircle />}
         title="Add Product"
         page="product"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
       <div
         className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
@@ -135,13 +131,17 @@ const InputForm = ({ models }: { models: Model[] }) => {
           <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
       )}
-      {errorOnSubmit && (
-        <AlertDialog
-          title={errorOnSubmit}
-          styles="bg-error"
-          icon={<BiError size={20} />}
-        />
-      )}
+      <AlertDialog
+        alertTitle={errorOnSubmit}
+        open={showAlert}
+        id="productAddError"
+        icon={<BiError size={20} />}
+        styles="alert-error absolute w-fit mx-10 py-3 bottom-3"
+        setAlertIcon={setAlertIcon}
+        setAlertStyles={setAlertStyles}
+        setShowAlert={setShowAlert}
+        setAlertTitle={setErrorOnSubmit}
+      />
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
           styles={`btn-primary px-10 w-1/2 mobile:mt-5 lg:left-1/2 lg:transform lg:-translate-x-1/2 laptop:mt-0 ${
@@ -164,4 +164,4 @@ const InputForm = ({ models }: { models: Model[] }) => {
   );
 };
 
-export default InputForm;
+export default InputFormm;

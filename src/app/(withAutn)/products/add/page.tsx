@@ -1,4 +1,5 @@
 import InputForm from "@/components/productsForm/inputForm";
+import InputFormm from "@/components/productsForm/inputFormm";
 import axios from "axios";
 
 const getAllModel = async () => {
@@ -18,7 +19,8 @@ const AddProductPage = async () => {
 
   return (
     <div>
-      <InputForm models={models} />
+      {/* <InputForm models={models} /> */}
+      <InputFormm models={models} />
     </div>
   );
 };
