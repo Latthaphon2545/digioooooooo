@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import NavBarSetting from "../navBar";
 import ThemePage from "@/components/setting/theme/themePage";
 

@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { db } from "@/lib/db";
 import { forgotPasswordSend } from "@/lib/actions/email/forgotPassword";
 
-export const POST = async (req: NextRequest) => {
+export const PATCH = async (req: NextRequest) => {
   try {
     const { email, phoneNumber } = await req.json();
 

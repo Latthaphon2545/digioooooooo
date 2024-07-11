@@ -7,9 +7,11 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ActionButton from "@/components/actionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
-import AlertDialog from "@/components/alertDialog";
+import AlertDialog, { SuccessStyle } from "@/components/alertDialog";
 import FloatingActionButton from "@/components/floatingActionButton";
-import { encode, decode } from "@/lib/generateRandomHref";
+import { decode } from "@/lib/generateRandomHref";
+import { GetAllUsers } from "@/lib/actions/getUsers/action";
+import { ShowAlert } from "@/components/showAlert";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -21,33 +23,40 @@ export default function Home() {
   const path = useSearchParams();
   const { filter, search, skip, take } = decode(path.toString());
 
-  const [showAlert, setShowAlert] = useState(false);
-
   const router = useRouter();
   const alertMessage = useSearchParams().get("alert") || "";
+
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertStyles, setAlertStyles] = useState("");
+  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     if (alertMessage) {
       setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 4000);
+      ShowAlert(
+        "User added successfully",
+        SuccessStyle,
+        setAlertTitle,
+        setAlertStyles,
+        setAlertIcon,
+        setShowAlert,
+        <AiOutlineUserAdd size={20} />
+      );
     }
   }, [alertMessage]);
 
   useEffect(() => {
     const updateData = async () => {
-      try {
-        const res = await axios.get(
-          `/api/users/getUsers?filter=${filter}&search=${search}&skip=${skip}&take=${take}`
-        );
-        setData(res.data.users);
-        setDataLength(res.data.length);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
+      const res = await GetAllUsers({
+        filter,
+        search,
+        skip,
+        take,
+        setLoading,
+      });
+      setData(res.users);
+      setDataLength(res.length);
     };
     updateData();
   }, [filter, search, skip, take]);
@@ -56,13 +65,14 @@ export default function Home() {
     <>
       <div className="flex flex-row">
         <div className="flex flex-col w-full relative">
-          {showAlert && (
-            <AlertDialog
-              title="User added successfully"
-              styles="alert-success absolute bottom-8 left-8 w-fit"
-              icon={<AiOutlineUserAdd size={20} />}
-            />
-          )}
+          <AlertDialog
+            open={showAlert}
+            title={alertTitle}
+            styles={alertStyles}
+            icon={alertIcon}
+            id={"userAdd"}
+          />
+
           <div className="justify-between items-center mx-5 mt-5 mb-1 h-14  mobile:hidden laptop:flex">
             <h1 className="text-3xl font-bold">User</h1>
             <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>

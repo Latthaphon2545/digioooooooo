@@ -1,4 +1,4 @@
-import ForgotPasswordPage from "@/components/auth/forgotpassword/sendOtpPage";
+import ForgotPasswordPage from "@/components/auth/forgotpassword/sendForgotPage";
 import React from "react";
 
 export default function page() {

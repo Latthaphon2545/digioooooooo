@@ -1,34 +1,45 @@
 import React from "react";
 
-type AlertDialogProps = {
+interface AlertDialogProps {
   title: string;
   styles: string;
   icon?: React.ReactNode;
-};
+  open: boolean;
+  id: string;
+}
 
-export default function AlertDialog({ title, styles, icon }: AlertDialogProps) {
+export default function AlertDialog({
+  title,
+  styles,
+  icon,
+  open,
+  id,
+}: AlertDialogProps) {
   return (
-    <div>
-      <div
-        role="alert"
-        className={`alert ${styles} fixed bottom-4 left-[15%] mobile:hidden tablet:hidden laptop:flex desktop:flex w-fit`}
-      >
-        {icon}
-        <span>{title}</span>
-      </div>
+    <>
+      {open && (
+        <div className="fixed bottom-4 left-[15%] w-[20%]">
+          <div
+            role="alert"
+            className={`alert ${styles} fixed bottom-4 left-[15%] mobile:hidden tablet:hidden laptop:flex desktop:flex w-fit`}
+          >
+            {icon}
+            <span>{title}</span>
+          </div>
 
-      <dialog
-        id="my_modal_5"
-        className={`modal modal-bottom mobile:flex tablet:flex laptop:hidden desktop:hidden`}
-        open={true}
-      >
-        <div className={`modal-box ${styles}`}>
-          <h3 className="font-bold text-lg flex items-center justify-center gap-5 ">
-            {icon} {title}
-          </h3>
+          <dialog
+            id={id}
+            className={`modal modal-bottom mobile:flex tablet:flex laptop:hidden desktop:hidden`}
+          >
+            <div className={`modal-box ${styles}`}>
+              <h3 className="font-bold text-lg flex items-center justify-center gap-5 ">
+                {icon} {title}
+              </h3>
+            </div>
+          </dialog>
         </div>
-      </dialog>
-    </div>
+      )}
+    </>
   );
 }
 
@@ -111,3 +122,9 @@ export const I = (
     ></path>
   </svg>
 );
+
+export const ErrorStyle = "alert-error mobile:bg-error tablet:bg-error";
+
+export const SuccessStyle = "alert-success mobile:bg-success tablet:bg-success";
+
+export const WarningStyle = "alert-warning mobile:bg-warning tablet:bg-warning";

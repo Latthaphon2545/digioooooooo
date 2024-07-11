@@ -7,7 +7,7 @@ import { MdDelete } from "react-icons/md";
 import ModalMerchant from "../actions/handleUpdateMerchant";
 import Link from "next/link";
 import { FaHistory } from "react-icons/fa";
-import { ShowAlert } from "../../showAlert";
+import { ShowAlert } from "../../../showAlert";
 import { stringToHex } from "@/lib/generateRandomHref";
 import BankAdd from "../actions/handleBankAdd";
 import { deleteBank } from "../actions/handleDeleteBank";
