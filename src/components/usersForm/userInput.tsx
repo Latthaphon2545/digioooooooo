@@ -81,7 +81,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
   };
 
   return (
-    <div className=" w-full sm:px-10">
+    <div className=" w-full">
       <div className="overflow-hidden mobile:max-h-[72vh] tablet:max-h-[75vh] hidden lg:block">
         <form action={""}>
           <table className="w-full flex-nowrap">
@@ -113,7 +113,7 @@ const UserInput = ({ formValues, setFormValues }: UserInputProps) => {
               type="button"
               onClick={addRow}
               disabled={formValues.length >= 10}
-              className="disabled:opacity-20"
+              className="disabled:opacity-20 disabled:cursor-not-allowed"
             >
               <IoAddCircleOutline size={40} />
             </button>

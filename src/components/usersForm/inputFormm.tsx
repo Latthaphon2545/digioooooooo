@@ -34,10 +34,6 @@ const InputFormm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
 
-  const [alertStyles, setAlertStyles] = useState("");
-  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
-  const [showAlert, setShowAlert] = useState(false);
-
   const handleSubmit = async () => {
     setSubmitting(true);
 
@@ -122,7 +118,7 @@ const InputFormm = () => {
       />
 
       <div
-        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 `}
+        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 sm:px-10 `}
         //     ${activeTab === 1 ? "flex items-center" : ""}
         // `}
       >
@@ -141,16 +137,17 @@ const InputFormm = () => {
           />
         )}
       </div>
-      {submitting && (
+      {/* {submitting && (
         <div>
           <div className="loading loading-spinner loading-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "></div>
         </div>
-      )}
+      )} */}
       <AlertDialog
         alertTitle={errorOnSubmit}
         id="userAddError"
         icon={<BiError size={20} />}
         styles={ErrorStyle}
+        setAlertTitle={setErrorOnSubmit}
       />
       <div
         className={`flex ${
@@ -163,7 +160,6 @@ const InputFormm = () => {
               ? " right-5 bottom-4 w-1/2"
               : " w-2/3 left-1/2 transform -translate-x-1/2 bottom-4"
           } laptop:w-auto btn-wide fixed  lg:w-3/4  mobile:text-xl laptop:text-lg laptop:bottom-5 laptop:right-10 laptop:w-[20vh]  laptop:transform-none laptop:left-auto`}
-          // styles="btn-wide fixed  w-1/2 left-1/2 transform -translate-x-1/2 bottom-4"
           alertHeader="Add User"
           alertDescription="Are you sure you want to add these user?"
           id="add_user"
@@ -174,6 +170,7 @@ const InputFormm = () => {
             isFormEmpty(activeTab === 0 ? formValues : groupData)
           }
           action={handleSubmit}
+          loading={submitting}
         >
           Add
         </Alert>

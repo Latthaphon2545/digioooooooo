@@ -1,9 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import ProductInputField from "./productInputField";
-import axios from "axios";
 import { Model } from "@/lib/types";
-import { IoMdRemoveCircleOutline } from "react-icons/io";
 import MobileButtonInput from "../usersForm/mobileButtonInput";
 import MobileInput from "./mobileInput";
 
@@ -42,10 +40,6 @@ const ProductInput = ({
 
     return () => clearTimeout(timer);
   }, [formValues.length]);
-
-  // const deleteRow = (index: number) => {
-  //   setFormValues(prevFormValues => prevFormValues.filter((value, i) => i !== index));
-  // };
 
   const deleteRow = () => {
     const newFormValues = [...formValues];

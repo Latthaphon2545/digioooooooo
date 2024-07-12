@@ -36,7 +36,7 @@ export async function createModel(prevState: any, formData: FormData) {
 
   INFORMATION_FIELD.forEach((field) => {
     if (!formData.get(field)?.toString().trim()) {
-      errors.push(`Please fill out the '${field}' field before submitting.`);
+      errors.push(`Please fill out the ${field} field before submitting.`);
     }
   });
 

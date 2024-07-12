@@ -139,14 +139,10 @@ const InputForm = ({ models }: { models: Model[] }) => {
       )}
       <AlertDialog
         alertTitle={errorOnSubmit}
-        open={showAlert}
         id="productAddError"
         icon={<BiError size={20} />}
         styles={ErrorStyle}
         setAlertTitle={setErrorOnSubmit}
-        setAlertStyles={setAlertStyles}
-        setAlertIcon={setAlertIcon}
-        setShowAlert={setShowAlert}
       />
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
@@ -162,6 +158,7 @@ const InputForm = ({ models }: { models: Model[] }) => {
             hasError || uploading || submitting || isFormEmpty(formValues)
           }
           action={handleSubmit}
+          loading={submitting}
         >
           Add
         </Alert>

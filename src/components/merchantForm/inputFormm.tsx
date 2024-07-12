@@ -32,10 +32,6 @@ export default function MerchantInputFormm() {
   const [submitting, setSubmitting] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState("");
 
-  const [alertStyles, setAlertStyles] = useState("");
-  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
-  const [showAlert, setShowAlert] = useState(false);
-
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
@@ -75,12 +71,18 @@ export default function MerchantInputFormm() {
           },
         }
       );
-      console.log(res.data);
+
+      if (res.status === 201) {
+        console.log("successfully added");
+        clearForm();
+      }
+      console.log("res", res);
+
+      console.log("res data", res.data);
     } catch (error) {
       console.log("Error:", error);
     } finally {
       setSubmitting(false);
-      clearForm();
     }
   };
 
@@ -102,7 +104,7 @@ export default function MerchantInputFormm() {
         setActiveTab={setActiveTab}
       />
       <div
-        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 laptop:px-0 ${
+        className={`tablet:min-h-[67vh] mobile:min-h-[75vh] mobile:mt-5 laptop:mt-0 mobile:px-3 sm:px-10 ${
           activeTab === 1 ? "flex items-center" : ""
         } `}
       >
@@ -131,10 +133,10 @@ export default function MerchantInputFormm() {
       )}
       <AlertDialog
         alertTitle={errorOnSubmit}
-        open={showAlert}
         id="merchantAddError"
         icon={<BiError size={20} />}
         styles={ErrorStyle}
+        setAlertTitle={setErrorOnSubmit}
       />
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
         <Alert
@@ -150,6 +152,7 @@ export default function MerchantInputFormm() {
             hasError || uploading || submitting || isFormEmpty(formValues)
           }
           action={handleSubmit}
+          loading={submitting}
         >
           Add
         </Alert>

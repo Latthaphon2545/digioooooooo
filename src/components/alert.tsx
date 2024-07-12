@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 
 type AlertProps = {
   children: React.ReactNode;
@@ -9,6 +9,7 @@ type AlertProps = {
   alertDescription: string;
   id: string;
   disabled?: boolean;
+  loading: boolean;
 };
 
 const Alert = ({
@@ -19,7 +20,22 @@ const Alert = ({
   alertDescription,
   id,
   disabled,
+  loading,
 }: AlertProps) => {
+  const handleSubmit = async () => {
+    if (action) {
+      action();
+    }
+  };
+
+  useEffect(() => {
+    if (!loading) {
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      console.log("closing modal");
+      console.log("loading", loading);
+    }
+  }, [loading, id]);
+
   return (
     <div>
       <button
@@ -38,8 +54,17 @@ const Alert = ({
           <div className="modal-action">
             <form method="dialog">
               <button className="btn mr-5">Close</button>
-              <button type="submit" className="btn" onClick={action}>
-                Submit
+              <button
+                type="submit"
+                className="btn"
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? (
+                  <div className="loading loading-dots loading-xs py-0 max-h-3"></div>
+                ) : (
+                  "Submit"
+                )}
               </button>
             </form>
           </div>

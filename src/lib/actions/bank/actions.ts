@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function createBank(formData: FormData) {
+export async function createBank(prevData: any, formData: FormData) {
   const name = formData.get("name")?.toString().trim();
   const bankAbbreviation = formData.get("bankAbbreviation")?.toString().trim();
   const imageFile = formData.get("image");
@@ -21,18 +21,31 @@ export async function createBank(formData: FormData) {
     console.error(error);
   }
 
+  let errors = [];
+
   if (!name) {
-    throw new Error("Name is required");
+    errors.push("Please fill out the bank name field before submitting");
+  }
+
+  if (!bankAbbreviation) {
+    errors.push(
+      "Please fill out the bank abbreviation field before submitting"
+    );
   }
 
   if (!image) {
-    throw new Error("Image is required");
+    errors.push("Please upload an image before submitting");
+  }
+
+  if (errors.length > 0) {
+    console.error(errors);
+    return { errors };
   }
 
   const bank = {
     name: name as string,
     bankAbbreviations: bankAbbreviation as string,
-    image,
+    image: image as string,
   };
 
   const res = await db.bank.create({
