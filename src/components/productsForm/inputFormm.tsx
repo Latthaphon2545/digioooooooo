@@ -26,10 +26,6 @@ const InputFormm = ({ models }: { models: Model[] }) => {
     { model: "", sn: "" },
   ]);
 
-  const [alertStyles, setAlertStyles] = useState("");
-  const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
-  const [showAlert, setShowAlert] = useState(false);
-
   const handleSubmit = async () => {
     setSubmitting(true);
     groupData.forEach((item) => {
@@ -133,13 +129,9 @@ const InputFormm = ({ models }: { models: Model[] }) => {
       )}
       <AlertDialog
         alertTitle={errorOnSubmit}
-        open={showAlert}
         id="productAddError"
         icon={<BiError size={20} />}
         styles={ErrorStyle}
-        setAlertIcon={setAlertIcon}
-        setAlertStyles={setAlertStyles}
-        setShowAlert={setShowAlert}
         setAlertTitle={setErrorOnSubmit}
       />
       <div className="flex justify-end w-full tablet:mr-10 align-bottom">
@@ -156,6 +148,7 @@ const InputFormm = ({ models }: { models: Model[] }) => {
             hasError || uploading || submitting || isFormEmpty(formValues)
           }
           action={handleSubmit}
+          loading={submitting}
         >
           Add
         </Alert>

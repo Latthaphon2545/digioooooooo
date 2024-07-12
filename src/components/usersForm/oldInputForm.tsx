@@ -12,7 +12,6 @@ import AlertDialog, { ErrorStyle } from "../alertDialog";
 import { BiError } from "react-icons/bi";
 import { TabBar } from "./tabBar";
 import { isFormEmpty } from "@/lib/inputUtils";
-import { ShowAlert } from "../showAlert";
 
 type FormValues = {
   email: string;
@@ -158,14 +157,10 @@ const InputForm = () => {
       )}
       <AlertDialog
         alertTitle={errorOnSubmit}
-        open={showAlert}
         styles={alertStyles}
         icon={alertIcon}
         id="alertAddUserError"
         setAlertTitle={setErrorOnSubmit}
-        setAlertStyles={setAlertStyles}
-        setAlertIcon={setAlertIcon}
-        setShowAlert={setShowAlert}
       />
       <div
         className={`flex ${
@@ -189,6 +184,7 @@ const InputForm = () => {
             isFormEmpty(activeTab === 0 ? formValues : groupData)
           }
           action={handleSubmit}
+          loading={submitting}
         >
           Add
         </Alert>

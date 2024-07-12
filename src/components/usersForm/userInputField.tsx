@@ -66,7 +66,7 @@ const UserInputField = ({
       </label>
     </td>
     <td className="w-[10%]">
-      <label className="input input-sm input-bordered flex items-center gap-2 m-1">
+      <label className="select select-bordered select-sm flex items-center gap-2 m-1">
         <select
           value={formValues[index].role ?? ""}
           onChange={(e) => handleRoleChange(index, e.target.value as Role)}

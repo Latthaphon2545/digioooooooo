@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ShowAlert } from "../../showAlert";
 import { updateUserHistory } from "./action/updateUserHistory";
 import AlertDialog from "@/components/alertDialog";
 import UserHistoryMobileView from "./view/mobileView";
@@ -27,15 +26,15 @@ export default function TableUserHistory({
     history: { description: string; category: string; imageProves: File[] },
     imageToDelete: string[]
   ) => {
-    await updateUserHistory(id, history, imageToDelete, {
-      historyData,
-      setUpdateAlert,
-      showAlert: ShowAlert,
-      setAlertTitle,
-      setAlertStyles,
-      setAlertIcon,
-      setIsEditing,
-    });
+    // await updateUserHistory(id, history, imageToDelete, {
+    //   historyData,
+    //   setUpdateAlert,
+    //   showAlert: ShowAlert,
+    //   setAlertTitle,
+    //   setAlertStyles,
+    //   setAlertIcon,
+    //   setIsEditing,
+    // });
   };
 
   return (
@@ -90,13 +89,13 @@ export default function TableUserHistory({
         })}
       </div>
       <div className="fixed bottom-4 left-[15%] w-[20%]">
-        {updateAlert && (
+        {/* {updateAlert && (
           <AlertDialog
             title={alertTitle}
             styles={alertStyles}
             icon={alertIcon}
           />
-        )}
+        )} */}
       </div>
     </>
   );

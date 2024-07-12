@@ -5,6 +5,7 @@ interface AlertDialogProps {
   styles: string;
   icon?: React.ReactNode;
   id: string;
+  setAlertTitle?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function AlertDialog({
@@ -12,14 +13,20 @@ export default function AlertDialog({
   styles,
   icon,
   id,
+  setAlertTitle,
 }: AlertDialogProps) {
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    if (alertTitle) {
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 3000);
+    async function fetchAlert() {
+      if (alertTitle) {
+        setShowAlert(true);
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        setShowAlert(false);
+        setAlertTitle && setAlertTitle("");
+      }
     }
+    fetchAlert();
   }, [alertTitle]);
 
   return (

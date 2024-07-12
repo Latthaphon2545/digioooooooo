@@ -248,7 +248,7 @@ const GroupUpload = ({
         </div>
 
         {data.length > 0 && (
-          <div className="absolute -bottom-12 tablet:left-16 laptop:left-20 desktop:left-28 flex flex-wrap space-x-2">
+          <div className="absolute -bottom-12 tablet:left-6 laptop:left-6 desktop:left-28 flex flex-wrap space-x-2">
             <span className="badge badge-primary badge-lg py-4 px-3">
               Total {data.length}
             </span>
