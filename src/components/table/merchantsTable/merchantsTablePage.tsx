@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Header from "../header";
+import Header from "../Header/header";
 import Table from "./merchantsTable";
-import Pagination from "../pagination";
-import { itemPage } from "../staticPropsInTable";
+import Pagination from "../pagination/pagination";
+import { itemPage } from "../compo/staticPropsInTable";
 
 interface TablePageProps {
   data: {

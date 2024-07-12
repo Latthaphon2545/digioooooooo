@@ -1,16 +1,15 @@
 "use client";
 
 import { AiOutlineUserAdd } from "react-icons/ai";
-import Table from "@/components/table/usersTable/usersTablePage";
+import TableUser from "@/components/table/usersTable/usersTablePage";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import AlertDialog, { SuccessStyle } from "@/components/alertDialog";
 import FloatingActionButton from "@/components/floatingActionButton";
 import { decode } from "@/lib/generateRandomHref";
-import { GetAllUsers } from "@/lib/actions/getUsers/action";
-import Link from "next/link";
 import Container from "@/components/container/container";
+import { GetAllUsers } from "@/lib/actions/UserPage/getUsers";
 
 const isEditor = true;
 
@@ -28,20 +27,12 @@ export default function Home() {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
-  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     if (alertMessage) {
-      setShowAlert(true);
-      // ShowAlert(
-      //   "User added successfully",
-      //   SuccessStyle,
-      //   setAlertTitle,
-      //   setAlertStyles,
-      //   setAlertIcon,
-      //   setShowAlert,
-      //   <AiOutlineUserAdd size={20} />
-      // );
+      setAlertTitle("User added successfully");
+      setAlertStyles(SuccessStyle);
+      setAlertIcon(<AiOutlineUserAdd size={20} />);
     }
   }, [alertMessage]);
 
@@ -62,39 +53,13 @@ export default function Home() {
 
   return (
     <Container
-      AlertDialog={
-        <AlertDialog
-          open={showAlert}
-          title={alertTitle}
-          styles={alertStyles}
-          icon={alertIcon}
-          id={"userAdd"}
-        />
-      }
+      isEditor={isEditor}
       title="User"
-      BtnAction={
-        <div className={`${isEditor ? "" : "cursor-not-allowed"}`}>
-          <div className="mobile:hidden laptop:block">
-            {isEditor ? (
-              <Link href="/users/add">
-                <button className={` btn btn-primary`}>
-                  <AiOutlineUserAdd size={20} /> Add users
-                </button>
-              </Link>
-            ) : (
-              <button className={` btn btn-primary`} disabled>
-                <AiOutlineUserAdd size={20} /> Add users
-              </button>
-            )}
-          </div>
-        </div>
-      }
-      FloatingActionButton={<FloatingActionButton page="user" />}
       Information={
         loading ? (
           <TablePageLoading Type="User" />
         ) : (
-          <Table
+          <TableUser
             data={data}
             editor={isEditor}
             totalLength={dataLength}
@@ -102,6 +67,21 @@ export default function Home() {
           />
         )
       }
+      NavigatorBtn="/users/add"
+      textBtn={
+        <>
+          <AiOutlineUserAdd size={20} /> Add users
+        </>
+      }
+      AlertDialog={
+        <AlertDialog
+          alertTitle={alertTitle}
+          styles={alertStyles}
+          icon={alertIcon}
+          id={"userAdd"}
+        />
+      }
+      FloatingActionButton={<FloatingActionButton page="user" />}
     />
   );
 }

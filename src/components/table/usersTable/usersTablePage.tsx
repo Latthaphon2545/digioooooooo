@@ -1,19 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Pagination from "../pagination";
+import Pagination from "../pagination/pagination";
 import BodyUsers from "./bodyUsers";
-import Header from "../header";
-import { itemPage } from "../staticPropsInTable";
-
-interface TablePageProps {
-  data: {
-    [key: string]: any;
-  }[];
-  editor: boolean;
-  totalLength: number;
-  skip: number;
-}
+import Header from "../Header/header";
+import { itemPage } from "../compo/staticPropsInTable";
+import { currentPageCal, getLengthTable } from "../compo/getLength";
+import { TablePageProps } from "../compo/TableProps";
 
 export default function TablePage({
   data,
@@ -22,26 +15,19 @@ export default function TablePage({
   skip,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(
-    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+    currentPageCal({ itemPage, skip })
   );
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    const getLengthUsers = async () => {
-      if (totalLength === 0) {
-        setTotalPages(0);
-        return;
-      }
-      const totalPages = Math.ceil(totalLength / itemPage);
-      setTotalPages(totalPages);
-      setCurrentPage(1);
-    };
-    getLengthUsers();
+    getLengthTable({
+      totalLength,
+      setTotalPages,
+      setCurrentPage,
+      itemPage,
+    });
   }, [totalLength, itemPage]);
 
-  const onPageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
   return (
     <>
       <div className="ml-[3vw]">
@@ -53,7 +39,7 @@ export default function TablePage({
           currentPage={currentPage}
           totalPages={totalPages}
           lengthData={totalLength}
-          onPageChange={onPageChange}
+          onPageChange={setCurrentPage}
         />
       </div>
     </>

@@ -1,41 +1,36 @@
 import React, { useState } from "react";
 import AlertDialog from "../../alertDialog";
-import { TableView } from "./view/desktopView";
-
+import { DesktopView } from "./view/desktopView";
 import { MobileView } from "./view/mobileView";
-import { handleUpdate } from "./actions/handleUpdate";
+import { TableUserBodyProps } from "../compo/TableProps";
+import { handleUpdate } from "@/lib/actions/UserPage/updateUsers";
 
-interface TableProps {
-  dataForCurrentPage: {
-    [key: string]: any;
-  }[];
-  editor: boolean;
-}
-
-export default function BodyUsers({ dataForCurrentPage, editor }: TableProps) {
+export default function BodyUsers({
+  dataForCurrentPage,
+  editor,
+}: TableUserBodyProps) {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
 
-  const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
-  const [isLoad, setIsLoad] = useState(false);
-
-  const [openEditModal, setOpenEditModal] = useState(false);
 
   const handleUpdateWrapper = async (
     id: string,
-    users: { name: string; role: string; status: string; contact: string }
+    user: { name: string; role: string; status: string; contact: string },
+    setLoadings: (loadings: { [key: string]: boolean }) => void
   ) => {
-    // await handleUpdate(id, users, {
-    //   dataForCurrentPage,
-    //   setUpdateAlert,
-    //   showAlert: ShowAlert,
-    //   setAlertTitle,
-    //   setAlertStyles,
-    //   setAlertIcon,
-    //   setIsEditing,
-    // });
+    const res = await handleUpdate({
+      id,
+      user,
+      dataForCurrentPage,
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+      setIsEditing,
+      setLoadings,
+    });
+    return res;
   };
 
   return (
@@ -60,7 +55,7 @@ export default function BodyUsers({ dataForCurrentPage, editor }: TableProps) {
               </tr>
             )}
             {dataForCurrentPage.map((item) => (
-              <TableView
+              <DesktopView
                 key={item.id}
                 item={item}
                 isEditing={isEditing}
@@ -77,25 +72,23 @@ export default function BodyUsers({ dataForCurrentPage, editor }: TableProps) {
         {dataForCurrentPage.map((item) => (
           <div key={item.name} className="mt-3">
             <MobileView
+              key={item.id}
               item={item}
+              isEditing={isEditing}
               editor={editor}
-              setOpenEditModal={setOpenEditModal}
-              openEditModal={openEditModal}
               handleUpdate={handleUpdateWrapper}
+              setIsEditing={setIsEditing}
             />
           </div>
         ))}
       </div>
 
-      <div className="fixed bottom-4 left-[15%] w-[20%]">
-        {updateAlert && (
-          <AlertDialog
-            title={alertTitle}
-            styles={alertStyles}
-            icon={alertIcon}
-          />
-        )}
-      </div>
+      <AlertDialog
+        alertTitle={alertTitle}
+        styles={alertStyles}
+        icon={alertIcon}
+        id={"userUpdate"}
+      />
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
@@ -16,7 +15,7 @@ export async function PATCH(
       data: { name, role, status, contact },
     });
 
-    return NextResponse.json(updatedUser, { status: 200 });
+    return NextResponse.json({ updatedUser }, { status: 200 });
   } catch (e) {
     return NextResponse.json({ message: e }, { status: 400 });
   }

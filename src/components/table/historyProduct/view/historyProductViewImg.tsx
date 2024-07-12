@@ -161,7 +161,7 @@ const ViewImg = ({
   return (
     <>
       <Modal
-        title={
+        NameBtn={
           <div className="flex items-center space-x-2">
             {!editing ? <MdImageSearch size={20} /> : <FaRegEdit size={20} />}
           </div>
@@ -169,7 +169,7 @@ const ViewImg = ({
         titleContent="Image Prov."
         content={editing ? editImageShow(images) : imageShow(images)}
         id={id}
-        style={images && images.length > 0 ? "" : "btn-disabled"}
+        styleBtn={images && images.length > 0 ? "" : "btn-disabled"}
         boolClose={true}
       />
     </>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { tooltipShow } from "../setting/tooltipShow";
 
 export const EditableField = ({
   defaultValue,
@@ -86,4 +85,24 @@ export const EditableField = ({
       </label>
     );
   }
+};
+
+interface RenderEditableFieldProps {
+  id: string;
+  isEditing: any;
+  value: string;
+  onChange: any;
+}
+
+export const RenderEditableField = ({
+  id,
+  isEditing,
+  value,
+  onChange,
+}: RenderEditableFieldProps) => {
+  return isEditing[id] ? (
+    <EditableField defaultValue={value} onChange={onChange} />
+  ) : (
+    <p className="text-base w-full">{value}</p>
+  );
 };

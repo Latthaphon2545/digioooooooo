@@ -1,61 +1,54 @@
 import { useState } from "react";
-import { EditableField } from "../../EditableField";
 import {
-  Dropdown,
+  DropdownRole,
+  DropdownStatus,
   handleRoleChange,
   handleStatusChange,
-} from "../../DropdownField";
+} from "../DropdownFieldUser";
 import { ColorUserStatus } from "../../color";
 import ActionButton from "@/components/actionButton";
 import { handleEditToggle } from "../../handleEditToggle";
-import SubmitPopupButton from "@/components/submitPopupButton";
 import { TbUserEdit } from "react-icons/tb";
+import { RenderEditableField } from "../../EditableField";
+import PopupButtonUpdate from "./popupButtonUpdate";
+import { ViewProps } from "../../compo/TableProps";
 
-interface TableViewProps {
-  item: any;
-  isEditing: any;
-  setIsEditing: any;
-  editor: boolean;
-  handleUpdate: (
-    id: string,
-    users: { name: string; role: string; status: string; contact: string }
-  ) => Promise<void>;
-}
-
-export const TableView = ({
+export const DesktopView = ({
   item,
   isEditing,
   setIsEditing,
   handleUpdate,
   editor,
-}: TableViewProps) => {
+}: ViewProps) => {
   const [name, setName] = useState(item.name);
   const [role, setRole] = useState(item.role);
   const [status, setStatus] = useState(item.status);
   const [contact, setContact] = useState(item.contact);
-
-  const [isLoad, setIsLoad] = useState(false);
+  const [loadings, setLoadings] = useState<{ [key: string]: boolean }>({});
 
   return (
     <tr key={item.id}>
       <td className="py-2 px-4 h-[8vh]">
-        {isEditing[item.id] ? (
-          <EditableField defaultValue={name} onChange={setName} />
-        ) : (
-          <p className="text-base w-full">{name}</p>
-        )}
+        <RenderEditableField
+          id={item.id}
+          isEditing={isEditing}
+          value={name}
+          onChange={setName}
+        />
         <p className="text-xs text-gray-500">{item.email}</p>
       </td>
+
       <td className="py-2 px-4">
         {isEditing[item.id] ? (
-          <Dropdown selected={role} onChange={setRole} isRole={true} />
+          <DropdownRole selected={role} onChange={setRole} />
         ) : (
           <p>{handleRoleChange(item.role)}</p>
         )}
       </td>
+
       <td className="py-2 px-4">
         {isEditing[item.id] ? (
-          <Dropdown selected={status} onChange={setStatus} isStatus={true} />
+          <DropdownStatus selected={status} onChange={setStatus} />
         ) : (
           <div
             className={`badge badge-${ColorUserStatus(
@@ -66,19 +59,17 @@ export const TableView = ({
           </div>
         )}
       </td>
+
       <td className="py-2 px-4">
-        {isEditing[item.id] ? (
-          <EditableField
-            defaultValue={contact}
-            onChange={setContact}
-            contact={true}
-          />
-        ) : (
-          <p>{item.contact}</p>
-        )}
+        <RenderEditableField
+          id={item.id}
+          isEditing={isEditing}
+          value={contact}
+          onChange={setContact}
+        />
       </td>
 
-      <td className={`py-2 px-4 ${editor ? "" : "cursor-not-allowed"}`}>
+      <td className={`py-2 px-4 ${!editor && "cursor-not-allowed"}`}>
         {isEditing[item.id] ? (
           <div className="flex gap-1 justify-center">
             <ActionButton
@@ -87,50 +78,20 @@ export const TableView = ({
             >
               Cancel
             </ActionButton>
-            <SubmitPopupButton
-              action={async () => {
-                setIsLoad(true);
-                await handleUpdate(item.id, {
-                  name,
-                  role,
-                  status,
-                  contact,
-                });
-                setIsLoad(false);
-              }}
-              styles={`btn-success btn-sm ${
-                contact.length !== 10 || name.length === 0 ? "btn-disabled" : ""
-              }`}
-              disabled={contact.length !== 10 || name.length === 0}
-              confirmString={
-                isLoad ? (
-                  <span className="loading loading-spinner loading-xs"></span>
-                ) : (
-                  "Update"
-                )
-              }
-              confirmStyle="btn-success btn-sm"
-              header="Are you sure you want to update this user?"
-              description={
-                <div>
-                  <p>
-                    Name: <span className="font-bold">{name}</span>
-                  </p>
-                  <p>
-                    Role: <span className="font-bold">{role}</span>
-                  </p>
-                  <p>
-                    Status: <span className="font-bold">{status}</span>
-                  </p>
-                  <p>
-                    Contact: <span className="font-bold">{contact}</span>
-                  </p>
-                </div>
-              }
-              id={item.id}
-            >
-              Update
-            </SubmitPopupButton>
+            <PopupButtonUpdate
+              handleUpdate={handleUpdate}
+              item={item}
+              name={name}
+              role={role}
+              status={status}
+              contact={contact}
+              setName={setName}
+              setRole={setRole}
+              setStatus={setStatus}
+              setContact={setContact}
+              loadings={loadings}
+              setLoadings={setLoadings}
+            />
           </div>
         ) : (
           <ActionButton

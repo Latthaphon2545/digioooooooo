@@ -41,7 +41,7 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({
       message: "Bank updated successfully",
-      updatedProduct,
+      bank: bankExists,
     });
   } catch (error) {
     console.error("[PATCH MERCHANT]", error);

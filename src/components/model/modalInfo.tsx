@@ -11,7 +11,7 @@ export default function ModalInfo({
   return (
     <>
       <Modal
-        title={
+        NameBtn={
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -26,7 +26,7 @@ export default function ModalInfo({
             ></path>
           </svg>
         }
-        style="btn-ghost btn-xs"
+        styleBtn="btn-ghost btn-xs"
         titleContent={`Coming soon!`}
         id={`modal-info-${series}`}
         boolClose={true}

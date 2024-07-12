@@ -7,6 +7,7 @@ import ViaSMS from "./viaSMS";
 import ViaEmail from "./viaEmail";
 import Link from "next/link";
 import AlertDialog, { Warning, WarningStyle } from "@/components/alertDialog";
+import SubmitPopupButton from "@/components/submitPopupButton";
 
 export const ViaStep = () => {
   const [viaEmail, setViaEmail] = useState(false);
@@ -19,28 +20,21 @@ export const ViaStep = () => {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
-  const [alertOpen, setAlertOpen] = useState(false);
 
   const handleSubmit = async () => {
-    try {
-      if (email.trim() === "") {
-        setAlertTitle("Email is required");
-        setAlertStyles(WarningStyle);
-      }
-
-      const res = await ForgotPassword({
-        email: email.split("@")[0],
-        phoneNumber: phone,
-        setLoading,
-        setAlertIcon,
-        setAlertStyles,
-        setAlertTitle,
-      });
-    } catch (e: any) {
-      console.log(e);
-    } finally {
-      setAlertOpen(true);
+    if (email.trim() === "") {
+      setAlertTitle("Email is required");
+      setAlertStyles(WarningStyle);
     }
+
+    const res = await ForgotPassword({
+      email: email.split("@")[0],
+      phoneNumber: phone,
+      setLoading,
+      setAlertIcon,
+      setAlertStyles,
+      setAlertTitle,
+    });
   };
 
   const handleEmailClick = () => {
@@ -81,11 +75,16 @@ export const ViaStep = () => {
 
       <div className="w-full h-10">
         {viaEmail || viaSMS ? (
-          <button
-            onClick={handleSubmit}
-            className={`btn btn-primary w-full ${
+          <SubmitPopupButton
+            action={handleSubmit}
+            styles={`btn btn-primary w-full ${
               email.trim() === "" && "btn-disabled "
             } `}
+            header="Reset Password"
+            description="Are you sure you want to reset your password? After resetting your password, Account is logged out everywhere."
+            id="reset_password"
+            confirmString="Confirm"
+            confirmStyle="btn-success"
             disabled={loading}
           >
             {loading ? (
@@ -93,24 +92,19 @@ export const ViaStep = () => {
             ) : (
               "Send OTP"
             )}
-          </button>
+          </SubmitPopupButton>
         ) : null}
       </div>
 
       <Link href="/login" className="btn btn-sm btn-ghost w-fit h-10 mx-auto">
-        <p>Login</p>
+        <p>Back to login</p>
       </Link>
 
       <AlertDialog
         alertTitle={alertTitle}
         styles={alertStyles}
         icon={alertIcon}
-        open={alertOpen}
         id={`alert-dialog-${email}`}
-        setAlertTitle={setAlertTitle}
-        setAlertStyles={setAlertStyles}
-        setAlertIcon={setAlertIcon}
-        setShowAlert={setAlertOpen}
       />
     </>
   );

@@ -1,84 +1,77 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 
 interface ModalProps {
-  title: React.ReactNode;
+  NameBtn: React.ReactNode | string;
+  styleBtn?: string;
   titleContent?: string;
   content?: React.ReactNode;
-  style?: string;
   id: string;
-  boolClose?: boolean;
   action?: () => void;
   mobileImg?: boolean;
-  closeAction?: boolean;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
 const Modal = ({
-  title,
+  NameBtn: title,
   titleContent,
   content,
-  style,
+  styleBtn: style,
   id,
-  boolClose,
   action,
   mobileImg,
-  closeAction,
+  open,
+  setOpen,
 }: ModalProps) => {
-  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(!open);
+    if (action) action();
+  };
+
+  const hansleClose = () => {
+    setOpen(!open);
+  };
 
   return (
     <>
-      {!closeAction && (
-        <>
+      <button className={`btn btn-xs ${style}`} onClick={handleOpen}>
+        {title}
+      </button>
+
+      <input
+        type="checkbox"
+        id={id}
+        className="modal-toggle"
+        checked={open}
+        readOnly
+      />
+      <div
+        className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom ${
+          mobileImg && "w-full h-full"
+        }`}
+        role="dialog"
+      >
+        <div className="modal-box p-8">
           <label
             htmlFor={id}
-            className={`btn btn-xs ${style}`}
-            onClick={() => {
-              setOpen(!open);
-              if (action) {
-                action();
-              }
-            }}
+            className="btn btn-xs btn-circle btn-error absolute right-4 top-2"
+            onClick={hansleClose}
           >
-            {title}
+            <IoMdCloseCircle size={20} />
           </label>
 
-          <input type="checkbox" id={id} className="modal-toggle" />
-          <div
-            className={`modal laptop:modal-middle tablet:modal-middle mobile:modal-bottom  ${
-              open ? "modal-open" : ""
-            } ${mobileImg ? "w-full h-full" : ""}`}
-            role="dialog"
-          >
-            <div className="modal-box p-8">
-              {boolClose && (
-                <label
-                  htmlFor={id}
-                  className="btn btn-xs btn-circle btn-error absolute right-4 top-2"
-                  onClick={() => setOpen(!open)}
-                >
-                  X
-                </label>
-              )}
-              <h3 className="text-lg font-bold">{titleContent}</h3>
-              <div className="text-sm text-start max-h-[70vh] overflow-y-auto">
-                {content}
-              </div>
-            </div>
-            <label
-              className="modal-backdrop"
-              htmlFor={id}
-              onClick={() => {
-                setOpen(!open);
-              }}
-            >
-              Close
-            </label>
+          <h3 className="text-lg font-bold">{titleContent}</h3>
+          <div className="text-sm text-start max-h-[70vh] overflow-y-auto">
+            {content}
           </div>
-        </>
-      )}
+        </div>
+        <label className="modal-backdrop" htmlFor={id} onClick={hansleClose}>
+          Close
+        </label>
+      </div>
     </>
   );
 };

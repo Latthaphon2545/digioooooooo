@@ -4,7 +4,6 @@ import {
   Success,
   SuccessStyle,
 } from "@/components/alertDialog";
-import { ShowAlert } from "@/components/showAlert";
 import axios from "axios";
 
 interface IForgotPassword {
@@ -36,7 +35,7 @@ export const ForgotPassword = async ({
     if (res.status === 201) {
       if (setForgotPassword) setForgotPassword(true);
       if (setAlertIcon && setAlertStyles && setAlertTitle) {
-        setAlertTitle("Password reset link sent successfully");
+        setAlertTitle(`Reset password link sent to ${email}@digio.co.th`);
         setAlertStyles(SuccessStyle);
         setAlertIcon(Success);
       }
@@ -45,7 +44,7 @@ export const ForgotPassword = async ({
     console.log(e);
     if (e.response.status === 404) {
       if (setAlertIcon && setAlertStyles && setAlertTitle) {
-        setAlertTitle("Email not found");
+        setAlertTitle(`${email}@digio.co.th not found`);
         setAlertStyles(ErrorStyle);
         setAlertIcon(Error);
       }

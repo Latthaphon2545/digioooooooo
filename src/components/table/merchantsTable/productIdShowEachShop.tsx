@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ConvertStatus } from "../convertStatusAndRole";
-import { ColorProductStatus } from "./color";
+import { ConvertStatus } from "../../convertStatusAndRole";
+import { ColorProductStatus } from "../color";
 
 export const productIdUI = (products: any) => {
   return (

@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Table from "./historyProductBody";
 import Header from "./historyProductHeader";
-import Pagination from "../pagination";
-import { itemPage } from "../staticPropsInTable";
+import Pagination from "../pagination/pagination";
+import { itemPage } from "../compo/staticPropsInTable";
 
 interface TablePageProps {
   data: {

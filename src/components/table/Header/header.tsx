@@ -5,7 +5,7 @@ import SearchBar from "./search";
 import DropdownBottom from "./fillter";
 import { useEffect, useState, useCallback } from "react";
 import { decode, encode } from "@/lib/generateRandomHref";
-import { itemPage } from "./staticPropsInTable";
+import { itemPage } from "../compo/staticPropsInTable";
 import { getProductCategories } from "@/lib/actions/filter/getNameAndIdModel";
 
 const CATEGORIES = (option: string, series: string[]) => {

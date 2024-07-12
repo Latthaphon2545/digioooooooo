@@ -28,7 +28,7 @@ export const DesktopView = ({
       <td className={`py-2 px-4 h-[8vh]`}>
         {item?.description.length > 20 ? (
           <Modal
-            title={`${item.description.slice(0, 20)}...`}
+            NameBtn={`${item.description.slice(0, 20)}...`}
             content={item.description}
             id={item.id}
             boolClose={true}

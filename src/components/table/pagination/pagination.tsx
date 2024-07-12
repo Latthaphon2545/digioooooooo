@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import ActionButton from "../actionButton";
+import ActionButton from "../../actionButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { decode, encode } from "@/lib/generateRandomHref";
-import Modal from "../modal";
-import { itemPage } from "./staticPropsInTable";
+import Modal from "../../modal";
+import { itemPage } from "../compo/staticPropsInTable";
 
 interface PaginationProps {
   currentPage: number;
@@ -26,6 +26,8 @@ export default function Pagination({
   const pathName = usePathname();
   const params = useSearchParams();
   const { filter, search } = decode(params.toString());
+
+  const [open, setOpen] = useState(false);
 
   const updatePageRange = (page: number) => {
     let start = Math.max(page - 2, 1);
@@ -85,7 +87,7 @@ export default function Pagination({
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-2">
+      <div className="flex flex-col justify-center items-center mt-2 cursor-not-allowed">
         <div className="join">
           <ActionButton
             action={handleToFirstPage}
@@ -120,8 +122,8 @@ export default function Pagination({
           {/* In mobile */}
           <div className="mobile:block tablet:block laptop:hidden mb-5">
             <Modal
-              title={currentPage}
-              style={btnClass}
+              NameBtn={currentPage}
+              styleBtn={btnClass}
               titleContent="Select page"
               content={
                 <div className="wrap flex flex-nowrap overflow-x-auto gap-1 py-2">
@@ -134,6 +136,8 @@ export default function Pagination({
                         }`}
                         onClick={() => {
                           handleCurrentPage(page);
+                          setOpen(false);
+                          console.log("close");
                         }}
                       >
                         {page}
@@ -142,8 +146,9 @@ export default function Pagination({
                   )}
                 </div>
               }
+              setOpen={setOpen}
+              open={open}
               id="Select page"
-              boolClose={true}
             />
           </div>
 

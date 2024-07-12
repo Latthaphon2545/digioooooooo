@@ -3,26 +3,93 @@ import React, { useState } from "react";
 import AlertDialog from "@/components/alertDialog";
 import { DesktopView } from "./view/desktopView";
 import { MobileView } from "./view/mobileView";
-
-interface TableProps {
-  dataForCurrentPage: {
-    [key: string]: any;
-  }[];
-  editor?: boolean;
-  bankData: {
-    [key: string]: any;
-  }[];
-}
+import { TableProductBodyProps } from "../compo/TableProps";
+import { deleteBank } from "@/lib/actions/productTable/handleDeleteBank";
+import { deleteMerchant } from "@/lib/actions/productTable/handleDeleteMerchant";
+import { handleAddMerchantToProduct } from "@/lib/actions/productTable/handleUpdateMerchant";
+import { handleAddBankToProduct } from "@/lib/actions/productTable/handleBankAdd";
 
 export default function Table({
   dataForCurrentPage,
-  editor,
   bankData,
-}: TableProps) {
-  const [updateAlert, setUpdateAlert] = useState(false);
+}: TableProductBodyProps) {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
+
+  const handleAddMerchantWrapper = async ({
+    productId,
+    merchantId,
+    setLoadingAdd,
+  }: {
+    productId: string;
+    merchantId: string;
+    setLoadingAdd: (value: boolean) => void;
+  }) => {
+    handleAddMerchantToProduct({
+      dataForCurrentPage,
+      productID: productId,
+      merchantID: merchantId,
+      setLoadingAdd,
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+    });
+  };
+
+  const handleDeleteMerchantWrapper = ({
+    id,
+    setLoadingDelete,
+  }: {
+    id: string;
+    setLoadingDelete: (value: boolean) => void;
+  }) => {
+    deleteMerchant({
+      productId: id,
+      dataForCurrentPage,
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+      setLoadingDelete,
+    });
+  };
+
+  const handleDeleteBankWrapper = ({
+    id,
+    setLoadingDelete,
+  }: {
+    id: string;
+    setLoadingDelete: (value: boolean) => void;
+  }) => {
+    deleteBank({
+      productId: id,
+      dataForCurrentPage,
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+      setLoadingDelete,
+    });
+  };
+
+  const handleAddBankWrapper = ({
+    productId,
+    bankId,
+    setLoadingAdd,
+  }: {
+    productId: string;
+    bankId: string;
+    setLoadingAdd: (value: boolean) => void;
+  }) => {
+    handleAddBankToProduct({
+      productId,
+      bankId,
+      setLoading: setLoadingAdd,
+      dataForCurrentPage,
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+    });
+  };
 
   return (
     <>
@@ -51,12 +118,11 @@ export default function Table({
               <DesktopView
                 key={item.serialNumber}
                 item={item}
-                dataForCurrentPage={dataForCurrentPage}
-                setUpdateAlert={setUpdateAlert}
-                setAlertTitle={setAlertTitle}
-                setAlertStyles={setAlertStyles}
-                setAlertIcon={setAlertIcon}
                 dataBank={bankData}
+                handleDeleteMerchant={handleDeleteMerchantWrapper}
+                handleAddMerchant={handleAddMerchantWrapper}
+                handleDeleteBank={handleDeleteBankWrapper}
+                handleAddBank={handleAddBankWrapper}
               />
             ))}
           </tbody>
@@ -67,27 +133,24 @@ export default function Table({
         {dataForCurrentPage.map((item) => (
           <div key={item.serialNumber} className="mt-3">
             <MobileView
+              key={item.serialNumber}
               item={item}
-              dataForCurrentPage={dataForCurrentPage}
-              setUpdateAlert={setUpdateAlert}
-              setAlertTitle={setAlertTitle}
-              setAlertStyles={setAlertStyles}
-              setAlertIcon={setAlertIcon}
               dataBank={bankData}
+              handleDeleteMerchant={handleDeleteMerchantWrapper}
+              handleAddMerchant={handleAddMerchantWrapper}
+              handleDeleteBank={handleDeleteBankWrapper}
+              handleAddBank={handleAddBankWrapper}
             />
           </div>
         ))}
       </div>
 
-      <div className="fixed bottom-4 left-[15%] w-[20%]">
-        {updateAlert && (
-          <AlertDialog
-            title={alertTitle}
-            styles={alertStyles}
-            icon={alertIcon}
-          />
-        )}
-      </div>
+      <AlertDialog
+        alertTitle={alertTitle}
+        styles={alertStyles}
+        icon={alertIcon}
+        id="userUpdate"
+      />
     </>
   );
 }

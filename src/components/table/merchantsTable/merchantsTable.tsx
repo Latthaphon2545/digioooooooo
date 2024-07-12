@@ -6,7 +6,7 @@ import AlertDialog, { Error, Success } from "@/components/alertDialog";
 import Modal from "@/components/modal";
 import { FaPhoneAlt } from "react-icons/fa";
 import { EditableField } from "../EditableField";
-import { productIdUI } from "../productIdShowEachShop";
+import { productIdUI } from "./productIdShowEachShop";
 import { handleEditToggle } from "../handleEditToggle";
 import { RenderSubmitPopupButton } from "./renderSubmitPopupButton";
 
@@ -111,7 +111,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                 <div className=" w-full">
                   {item.name.length > 30 ? (
                     <Modal
-                      title={`${item.name.slice(0, 30)}...`}
+                      NameBtn={`${item.name.slice(0, 30)}...`}
                       titleContent="Merchant Name"
                       content={item.name}
                       id={item.name}
@@ -128,7 +128,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
             <td className={`py-2 px-4 h-[8vh]`}>
               {item.address.length > 20 ? (
                 <Modal
-                  title={`${item.address.slice(0, 20)}...`}
+                  NameBtn={`${item.address.slice(0, 20)}...`}
                   content={item.address}
                   id={item.address}
                   boolClose={true}
@@ -157,7 +157,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
         <td className="py-2 px-4 h-[8vh]">
           {item.product && item.product.length > 0 ? (
             <Modal
-              title="See Product"
+              NameBtn="See Product"
               titleContent="Product Serial Number"
               content={productIdUI(item.product)}
               id={item.product}
@@ -212,7 +212,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
               {/* Action */}
               {editor ? (
                 <Modal
-                  title={
+                  NameBtn={
                     <>
                       {isUpdating[item.id] ? (
                         <span className="loading loading-spinner"></span>
@@ -224,7 +224,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                     </>
                   }
                   titleContent=""
-                  style="btn-info btn-sm"
+                  styleBtn="btn-info btn-sm"
                   id={`editMerchants${item.id}`}
                   content={ModalEditMobileMerchant({ item })}
                   action={() => {
@@ -277,7 +277,7 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                 <div>
                   {item.product && item.product.length > 0 ? (
                     <Modal
-                      title="See Product"
+                      NameBtn="See Product"
                       titleContent="Product Serial Number"
                       content={productIdUI(item.product)}
                       id={item.product}

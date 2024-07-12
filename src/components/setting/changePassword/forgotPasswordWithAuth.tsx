@@ -1,3 +1,4 @@
+import SubmitPopupButton from "@/components/submitPopupButton";
 import { ForgotPassword } from "@/lib/actions/forgotPassword/action";
 import React, { useState } from "react";
 
@@ -45,17 +46,24 @@ export default function ForgotPasswordWithAuth({
           </label>
         </div>
       </div>
-      <button
-        onClick={handleResetPassword}
-        className="btn btn-primary w-full mt-4"
+      <SubmitPopupButton
+        action={handleResetPassword}
+        styles={`btn btn-primary w-full ${
+          email.trim() === "" && "btn-disabled "
+        } `}
+        header="Reset Password"
+        description="Are you sure you want to reset your password? After resetting your password, Account is logged out everywhere."
+        id="reset_password"
+        confirmString="Confirm"
+        confirmStyle="btn-success"
         disabled={loading}
       >
         {loading ? (
           <span className="loading loading-spinner loading-xs"></span>
         ) : (
-          "Send"
+          "Send OTP"
         )}
-      </button>
+      </SubmitPopupButton>
     </div>
   );
 }

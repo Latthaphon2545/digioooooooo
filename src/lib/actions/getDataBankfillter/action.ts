@@ -6,5 +6,6 @@ export const getDataBank = async () => {
     return res.data.bank;
   } catch (err) {
     console.log(err);
+    return [];
   }
 };

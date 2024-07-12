@@ -1,20 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Header from "../header";
-import Pagination from "../pagination";
-import { itemPage } from "../staticPropsInTable";
+import Header from "../Header/header";
+import Pagination from "../pagination/pagination";
+import { itemPage } from "../compo/staticPropsInTable";
 import Table from "./bodyProduct";
-import { getDataBank } from "@/lib/actions/bangData/action";
-
-interface TablePageProps {
-  data: {
-    [key: string]: any;
-  }[];
-  editor: boolean;
-  totalLength: number;
-  skip: number;
-}
+import { getDataBank } from "@/lib/actions/getDataBankfillter/action";
+import { currentPageCal, getLengthTable } from "../compo/getLength";
+import { TablePageProps } from "../compo/TableProps";
 
 export default function TablePageProduct({
   data,
@@ -23,27 +16,25 @@ export default function TablePageProduct({
   skip,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(
-    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+    currentPageCal({ itemPage, skip })
   );
-  const [itemPerPage, setItemPerPage] = useState(itemPage);
   const [totalPages, setTotalPages] = useState(0);
   const [bank, setBank] = useState<any[]>([]);
 
-  useEffect(() => {
-    const getLengthUsers = async () => {
-      if (totalLength === 0) return;
-      const totalPages = Math.ceil(totalLength / itemPerPage);
-      setTotalPages(totalPages);
-      const res = await getDataBank();
-      setBank(res);
-      onPageChange(1);
-    };
-    getLengthUsers();
-  }, [totalLength, itemPerPage]);
-
-  const onPageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+  const action = async () => {
+    const res = await getDataBank();
+    setBank(res);
   };
+
+  useEffect(() => {
+    getLengthTable({
+      totalLength,
+      setTotalPages,
+      setCurrentPage,
+      action,
+      itemPage,
+    });
+  }, [totalLength, itemPage]);
 
   return (
     <>
@@ -51,12 +42,12 @@ export default function TablePageProduct({
         <Header option="Product" />
       </div>
       <div className="flex flex-col w-full justify-center items-center">
-        <Table dataForCurrentPage={data} editor={editor} bankData={bank} />
+        <Table dataForCurrentPage={data} bankData={bank} />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           lengthData={totalLength}
-          onPageChange={onPageChange}
+          onPageChange={setCurrentPage}
         />
       </div>
     </>

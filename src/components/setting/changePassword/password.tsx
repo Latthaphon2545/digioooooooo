@@ -114,7 +114,7 @@ export const PasswordChange = ({
         </button>
 
         <Modal
-          title="Forgot Password?"
+          NameBtn="Forgot Password?"
           titleContent="Forgot Password?"
           content={
             <ForgotPasswordWithAuth
@@ -122,7 +122,7 @@ export const PasswordChange = ({
               setForgotPassword={setForgotPassword}
             />
           }
-          style="btn-ghost btn-xs link-error"
+          styleBtn="btn-ghost btn-xs link-error"
           id={`ForgotPAssword-${userId}`}
           boolClose={true}
           closeAction={forgotPassword}
