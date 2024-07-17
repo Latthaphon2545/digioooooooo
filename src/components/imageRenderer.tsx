@@ -64,6 +64,7 @@ export default function ImageRenderer() {
               height={350}
               className="w-full h-full object-cover"
             />
+            {/* <p className="text-gray-500 text-xl">No image uploaded</p> */}
           </div>
         )}
       </div>

@@ -149,7 +149,10 @@ export default function MerchantInputFormm() {
           alertDescription="Are you sure you want to add these merchants?"
           id="add_merchant"
           disabled={
-            hasError || uploading || submitting || isFormEmpty(formValues)
+            hasError ||
+            uploading ||
+            submitting ||
+            isFormEmpty(activeTab === 0 ? formValues : groupData)
           }
           action={handleSubmit}
           loading={submitting}

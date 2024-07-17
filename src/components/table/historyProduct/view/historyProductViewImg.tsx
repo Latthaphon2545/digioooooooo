@@ -28,6 +28,7 @@ const ViewImg = ({
   mobileImg?: boolean;
 }) => {
   const [images, setImages] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setImages(image);
@@ -170,7 +171,8 @@ const ViewImg = ({
         content={editing ? editImageShow(images) : imageShow(images)}
         id={id}
         styleBtn={images && images.length > 0 ? "" : "btn-disabled"}
-        boolClose={true}
+        open={open}
+        setOpen={setOpen}
       />
     </>
   );

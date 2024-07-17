@@ -35,19 +35,20 @@ export default function UserHistoryMobileView({
       <div className="card-body">
         <div className="card-actions flex justify-end">
           <Modal
-            title={
+            NameBtn={
               <>
                 <TbUserEdit size={20} /> Edit
               </>
             }
             titleContent=""
-            style="btn-info btn-sm"
+            styleBtn="btn-info btn-sm"
             id={`editUserHistory${item.id}`}
             content={ModalEdit({ item, handleUpdate: handleUpdateUserHistory })}
             action={() => {
               setOpenEditModal(!openEditModal);
             }}
-            boolClose={false}
+            open={openEditModal}
+            setOpen={setOpenEditModal}
           />
         </div>
         <div className="card-title flex justify-between">

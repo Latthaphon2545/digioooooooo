@@ -145,7 +145,10 @@ const InputFormm = ({ models }: { models: Model[] }) => {
           alertDescription="Are you sure you want to add these products?"
           id="add_product"
           disabled={
-            hasError || uploading || submitting || isFormEmpty(formValues)
+            hasError ||
+            uploading ||
+            submitting ||
+            isFormEmpty(activeTab === 0 ? formValues : groupData)
           }
           action={handleSubmit}
           loading={submitting}

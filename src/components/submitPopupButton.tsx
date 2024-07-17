@@ -35,7 +35,13 @@ export default function SubmitPopupButton({
       <label
         htmlFor={id}
         className={`btn ${styles}`}
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          console.log("Should be false", open);
+
+          setOpen(!open);
+
+          console.log("Should be true", open);
+        }}
       >
         {children}
       </label>
@@ -65,6 +71,7 @@ export default function SubmitPopupButton({
               onClick={() => {
                 action && action();
                 setOpen(!open);
+                console.log("open", open);
               }}
             >
               <label htmlFor={id}>

@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Header from "../header";
-import Pagination from "../pagination";
 import TableUserHistory from "./table";
-import { itemPage } from "../staticPropsInTable";
+import { itemPage } from "../compo/staticPropsInTable";
+import Pagination from "../pagination/pagination";
 
 type UserHistoryProps = {
   history: any[];
@@ -39,7 +38,7 @@ export default function UserHistory({
   return (
     <div className="h-full">
       <div className="font-bold text-3xl pt-4 pl-4 hidden sm:block ">
-        Halo Halo Good Good Good
+        My history
       </div>
       <div className="flex flex-col items-center sm:pt-20 justify-start h-full">
         <TableUserHistory historyData={history} isEditor={editor} />

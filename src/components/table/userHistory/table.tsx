@@ -15,6 +15,7 @@ export default function TableUserHistory({
   historyData,
   isEditor,
 }: TableUserHistoryProps) {
+  
   const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
