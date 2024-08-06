@@ -1,0 +1,26 @@
+{
+  "ERR_PARTNER_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3000",
+    "resDesc": {
+      "en": "Partner Not Found",
+      "th": "ไม่พบข้อมูลพาร์ทเนอร์"
+    }
+  },
+  "ERR_PARTNER_CREDENTIAL_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3001",
+    "resDesc": {
+      "en": "Partner Credential Not Found",
+      "th": "ไม่พบข้อมูลรหัสยืนยันพาร์ทเนอร์"
+    }
+  },
+  "ERR_PARTNER_NOT_ACTIVATE": {
+    "status": 400,
+    "resCode": "3002",
+    "resDesc": {
+      "en": "Partner Not Activate",
+      "th": "พาร์ทเนอร์ถูกระงับการใช้งาน"
+    }
+  }
+}

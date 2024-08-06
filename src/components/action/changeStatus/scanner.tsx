@@ -1,9 +1,9 @@
 "use client";
 
 import BarcodeScan from "@/components/scaner/barcodeScan";
+import { FindProductWhenChangeStatus } from "@/lib/actions/FindProductWhenChangeStatus/action";
 import axios from "axios";
 import { useState } from "react";
-import { BarcodeScanner } from "react-barcode-scanner";
 
 export default function Scanner({
   setNextStep,
@@ -19,26 +19,14 @@ export default function Scanner({
   const [loading, setLoading] = useState(false);
 
   const checkProduct = async (code: string) => {
-    try {
-      setLoading(true);
-      setFindingProduct(true);
-      const res = await axios.get(
-        `/api/products/getProduct/findProduct?sn=${code}`
-      );
-      if (res.status === 200) {
-        setMessage("Click next to continue");
-        setFindingProduct(true);
-      }
-    } catch (error: any) {
-      setMessage(error.response.data.error);
-      setFindingProduct(false);
-    } finally {
-      setTimeout(() => {
-        setNextStep(true);
-        setCode(code);
-        setLoading(false);
-      }, 1000);
-    }
+    const res = await FindProductWhenChangeStatus({
+      code,
+      setLoading,
+      setFindingProduct,
+      setMessage,
+      setNextStep,
+      setCode,
+    });
   };
 
   return (

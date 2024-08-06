@@ -1,0 +1,10 @@
+{
+  "ERR_RUNNING_NUMBER": {
+    "statusCode": 400,
+    "resCode": "6001",
+    "resDesc": {
+      "en": "Running number not found",
+      "th": "ไม่พบ Running number"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
+import { getTheme, updateTheme } from "@/lib/actions/themeActions/action";
 import React, { useEffect, useState } from "react";
-import { getTheme, updateTheme } from "@/lib/actions/themeActions/actions";
 import { TbMoon, TbSun, TbSunMoon } from "react-icons/tb";
 
 const arrayTheme = ["dark", "light", "Use Device"];
@@ -16,6 +16,7 @@ export default function ThemePage() {
         setTheme(initialTheme);
         document.documentElement.setAttribute("data-theme", initialTheme);
       } else {
+        setTheme("Use Device");
         document.documentElement.setAttribute("data-theme", "");
       }
     };

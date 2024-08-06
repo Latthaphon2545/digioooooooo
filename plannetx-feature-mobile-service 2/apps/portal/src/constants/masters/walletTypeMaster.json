@@ -1,0 +1,30 @@
+{
+  "SYSTEM": {
+    "label": "System",
+    "value": "SYSTEM"
+  },
+  "PARTNER": {
+    "label": "Partner",
+    "value": "PARTNER"
+  },
+  "COLLATERAL": {
+    "label": "Collateral",
+    "value": "COLLATERAL"
+  },
+  "DISCOUNT": {
+    "label": "Discount",
+    "value": "DISCOUNT"
+  },
+  "CUSTOMER": {
+    "label": "Customer",
+    "value": "CUSTOMER"
+  },
+  "AGENT": {
+    "label": "Agent",
+    "value": "AGENT"
+  },
+  "MERCHANT": {
+    "label": "Merchant",
+    "value": "MERCHANT"
+  }
+}

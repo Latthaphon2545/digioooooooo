@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { FaEdit } from "react-icons/fa";
 import { IoMdAddCircle } from "react-icons/io";
 import { StatStatus } from "../statStatus";
 import ModalInfo from "./modalInfo";
@@ -15,10 +14,10 @@ interface Model {
 
 interface ModelProps {
   models: Model[];
-  edit: boolean;
+  isEditor: boolean;
 }
 
-export default function Model({ models, edit }: ModelProps) {
+export default function Model({ models, isEditor }: ModelProps) {
   return (
     <>
       <div className="flex gap-5 flex-col justify-center mt-3 pb-5">
@@ -42,12 +41,6 @@ export default function Model({ models, edit }: ModelProps) {
                   series={model.series}
                 />
                 <h2>{model.series}</h2>
-                {/* <button
-                  disabled={!edit}
-                  className={`${edit ? "" : "cursor-not-allowed"}`}
-                >
-                  <FaEdit color={`${edit ? "black" : "gray"}`} />
-                </button> */}
               </div>
               <StatStatus status={model.status} />
               <div className="card-actions justify-end mt-3">
@@ -60,20 +53,24 @@ export default function Model({ models, edit }: ModelProps) {
             </div>
           </div>
         ))}
-        <Link
-          href={"/products/models/add"}
-          className="mobile:hidden tablet:hidden laptop:block"
-        >
-          <div
-            className="card card-side bg-base-200 bg-opacity-40 shadow-xl mx-auto flex flex-col justify-center items-center gap-5 w-[80%] h-[30vh]"
-            id="Add Model"
+        {isEditor && (
+          <Link
+            href={"/products/models/add"}
+            className={`mobile:hidden tablet:hidden laptop:block`}
           >
-            <div className="text-4xl">
-              <IoMdAddCircle />
+            <div
+              className="card card-side bg-base-200 bg-opacity-40 shadow-xl mx-auto flex flex-col justify-center items-center gap-5 w-[80%] h-[30vh]
+            hover:bg-opacity-60 cursor-pointer
+            "
+              id="Add Model"
+            >
+              <div className="text-4xl">
+                <IoMdAddCircle />
+              </div>
+              <div className="text-2xl">Add Model</div>
             </div>
-            <div className="text-2xl">Add Model</div>
-          </div>
-        </Link>
+          </Link>
+        )}
       </div>
     </>
   );

@@ -1,0 +1,34 @@
+{
+  "AUTHEN": {
+    "label": "Authen",
+    "value": "AUTHEN"
+  },
+  "SETTLEMENT": {
+    "label": "Settlment",
+    "value": "SETTLEMENT"
+  },
+  "PARTNER": {
+    "label": "Partner",
+    "value": "PARTNER"
+  },
+  "INAGENT": {
+    "label": "Agent",
+    "value": "INAGENT"
+  },
+  "INMERCHANT": {
+    "label": "Merchant",
+    "value": "INMERCHANT"
+  },
+  "CREDENTIAL": {
+    "label": "Credential",
+    "value": "CREDENTIAL"
+  },
+  "INUSER": {
+    "label": "User",
+    "value": "INUSER"
+  },
+  "INPORTAL": {
+    "label": "Staff",
+    "value": "INPORTAL"
+  }
+}

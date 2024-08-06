@@ -1,0 +1,50 @@
+{
+  "ERR_PORTAL_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3300",
+    "resDesc": {
+      "en": "User Not Found",
+      "th": "ไม่พบข้อมูลผู้ใช้"
+    }
+  },
+  "ERR_PORTAL_INCORRECT_PASSWORD": {
+    "status": 400,
+    "resCode": "3301",
+    "resDesc": {
+      "en": "Incorrect Password",
+      "th": "รหัสผ่านไม่ถูกต้อง"
+    }
+  },
+  "ERR_PORTAL_UNVERIFIED": {
+    "status": 400,
+    "resCode": "3302",
+    "resDesc": {
+      "en": "User has not been activated",
+      "th": "ผู้ใช้ยังไม่ถูกเปิดใช้งาน"
+    }
+  },
+  "ERR_PORTAL_SUSPENDED": {
+    "status": 400,
+    "resCode": "3303",
+    "resDesc": {
+      "en": "User has been suspended",
+      "th": "ผู้ใช้ถูกระงับการใช้งาน"
+    }
+  },
+  "ERR_PORTAL_RESET_PASSWORD_TOKEN_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3304",
+    "resDesc": {
+      "en": "Unable to reset password",
+      "th": "ไม่สามารถตั้งค่ารหัสผ่านได้"
+    }
+  },
+  "ERR_PORTAL_RESET_PASSWORD_TOKEN_EXPIRED": {
+    "status": 400,
+    "resCode": "3305",
+    "resDesc": {
+      "en": "Reset Password Link Expired",
+      "th": "ลิงค์ตั้งค่ารหัสผ่านหมดอายุ"
+    }
+  }
+}

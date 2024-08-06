@@ -1,0 +1,22 @@
+{
+  "TOPUP": {
+    "label": "Topup",
+    "value": "TOPUP"
+  },
+  "TRANSFER": {
+    "label": "Transfer",
+    "value": "TRANSFER"
+  },
+  "PAYMENT": {
+    "label": "Payment",
+    "value": "PAYMENT"
+  },
+  "WITHDRAW": {
+    "label": "Withdraw",
+    "value": "WITHDRAW"
+  },
+  "ADJUSTMENT": {
+    "label": "Adjustment",
+    "value": "ADJUSTMENT"
+  }
+}

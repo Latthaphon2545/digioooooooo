@@ -4,24 +4,22 @@ import { handleShowManyCheckInstock } from "../handleShowManyCheckInstock";
 import { ColorProductStatus } from "../../color";
 import { ConvertStatus } from "@/components/convertStatusAndRole";
 import ViewImg from "./historyProductViewImg";
+import { useState } from "react";
 
 export const DesktopView = ({
   item,
   manyCheckInstock,
-  editor,
-  handleEditData,
 }: {
   item: any;
   manyCheckInstock: number;
-  editor?: boolean;
-  handleEditData: (data: any) => void;
 }) => {
-  const { formattedDate, displayTime } = ConvertTime(item.time);
+  const { TimeFormat, displayTime } = ConvertTime(item.createdAt);
+  const [open, setOpen] = useState(false);
   return (
     <tr key={item.id}>
       <td className={`py-2 px-4 h-[8vh]`}>
         <span>
-          <h1 className="text-sm">{formattedDate}</h1>
+          <h1 className="text-sm">{TimeFormat}</h1>
           <h1 className="text-sm">{displayTime}</h1>
         </span>
       </td>
@@ -31,13 +29,14 @@ export const DesktopView = ({
             NameBtn={`${item.description.slice(0, 20)}...`}
             content={item.description}
             id={item.id}
-            boolClose={true}
+            open={open}
+            setOpen={setOpen}
           />
         ) : (
           handleShowManyCheckInstock(item.description, manyCheckInstock)
         )}
       </td>
-      <td className={`py-2 px-4 h-[8vh]`}>{item.user}</td>
+      <td className={`py-2 px-4 h-[8vh]`}>{item.user.name}</td>
       <td className={`py-2 px-4 h-[8vh]`}>
         <div
           className={`badge badge-${ColorProductStatus(
@@ -48,13 +47,8 @@ export const DesktopView = ({
         </div>
       </td>
       <td className={`py-2 px-4 h-[8vh]`}>
-        <ViewImg id={item.id} image={item.imageProv} />
+        <ViewImg id={item.id} image={item.imageProve} />
       </td>
-      {editor && (
-        <td className={`py-2 px-4 h-[8vh]`}>
-          <button onClick={() => handleEditData(item)}>Edit</button>
-        </td>
-      )}
     </tr>
   );
 };

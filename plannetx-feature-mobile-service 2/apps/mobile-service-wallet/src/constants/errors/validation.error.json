@@ -1,0 +1,90 @@
+{
+  "ERR_VERSION_ERROR": {
+    "statusCode": 400,
+    "resCode": "2000",
+    "resDesc": {
+      "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod   (001)",
+      "th": "ตรวจสอบแอปพลิเคชันเวอร์ชันใหม่ (NOT FORCE)"
+    }
+  },
+  "ERR_VERSION_FORCE_ERROR": {
+    "statusCode": 400,
+    "resCode": "2001",
+    "resDesc": {
+      "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod   (002)",
+      "th": "ตรวจสอบแอปพลิเคชันเวอร์ชันใหม่ (FORCE)"
+    }
+  },
+  "ERR_DEVICE_ERROR": {
+    "statusCode": 400,
+    "resCode": "2002",
+    "resDesc": {
+      "en": "Device Error",
+      "th": "ข้อมูล Device ไม่ถูกต้องกรุณา Login ใหม่"
+    }
+  },
+  "ERR_PIN_ERROR": {
+    "statusCode": 400,
+    "resCode": "2003",
+    "resDesc": {
+      "en": "PIN Error",
+      "th": "รหัส PIN ไม่ถูกต้องกรุณากรอกใหม่อีกครั้ง"
+    }
+  },
+  "ERR_PIN_01_ERROR": {
+    "statusCode": 400,
+    "resCode": "2004",
+    "resDesc": {
+      "en": "PIN Error",
+      "th": "รหัส PIN มีความยาวไม่เท่ากับ 6 หลัก กรุณากรอกใหม่อีกครั้ง"
+    }
+  },
+  "ERR_PIN_02_ERROR": {
+    "statusCode": 400,
+    "resCode": "2005",
+    "resDesc": {
+      "en": "PIN Error",
+      "th": "รหัส PIN ทั้ง 6 ตัวเป็นตัวเลขเรียงกัน กรุณากรอกใหม่อีกครั้ง"
+    }
+  },
+  "ERR_PIN_03_ERROR": {
+    "statusCode": 400,
+    "resCode": "2006",
+    "resDesc": {
+      "en": "PIN Error",
+      "th": "รหัส PIN ไม่สามารถกรอกตัวเลขซ้ำกันมากกว่า 2 ตัว กรุณากรอกใหม่อีกครั้ง"
+    }
+  },
+  "ERR_PIN_04_ERROR": {
+    "statusCode": 400,
+    "resCode": "2007",
+    "resDesc": {
+      "en": "PIN Error",
+      "th": "รหัส PIN ไม่ตรงกันต้องกรุณากรอกใหม่อีกครั้ง"
+    }
+  },
+  "ERR_NOT_FOUND_ERROR": {
+    "statusCode": 400,
+    "resCode": "2008",
+    "resDesc": {
+      "en": "PIN Error",
+      "th": "รหัส PIN เก่าไม่ถูกต้องกรุณากรอกใหม่อีกครั้ง"
+    }
+  },
+  "ERR_VERSION_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "2009",
+    "resDesc": {
+      "en": "Version not found",
+      "th": "ไม่พบเวอร์ชั่นในระบบ"
+    }
+  },
+  "ERR_EXISTING_PIN_ERROR": {
+    "statusCode": 400,
+    "resCode": "2010",
+    "resDesc": {
+      "en": "Existing PIN Error",
+      "th": "รหัส PIN ปัจจุบัน ไม่ถูกต้องกรุณากรอกใหม่อีกครั้ง"
+    }
+  }
+}

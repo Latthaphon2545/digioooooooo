@@ -1,0 +1,10 @@
+{
+  "ERR_TRANSACTION_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "3001",
+    "resDesc": {
+      "en": "Transaction not found",
+      "th": "ไม่พบรายการธุรกรรม"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "ACTIVATED": {
+    "label": "Activated",
+    "value": "ACTIVATED",
+    "color": "#2fa12d",
+    "backgroundColor": "#e9f8e9"
+  },
+  "DEACTIVATED": {
+    "label": "Deactivated",
+    "value": "DEACTIVATED",
+    "color": "#e32319",
+    "backgroundColor": "#ffe4e3"
+  }
+}

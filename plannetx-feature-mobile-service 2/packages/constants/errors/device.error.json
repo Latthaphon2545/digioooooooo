@@ -1,0 +1,18 @@
+{
+  "ERR_DEVICE_CHANGE_DETECTED": {
+    "statusCode": 400,
+    "resCode": "7001",
+    "resDesc": {
+      "en": "Device change detected",
+      "th": "ตรวจพบการเปลี่ยนแปลงอุปกรณ์"
+    }
+  },
+  "ERR_DEVICE_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "7002",
+    "resDesc": {
+      "en": "Device not found",
+      "th": "ไม่พบข้อมูลอุปกรณ์ในระบบ"
+    }
+  }
+}

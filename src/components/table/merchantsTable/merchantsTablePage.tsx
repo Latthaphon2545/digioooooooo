@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Header from "../Header/header";
-import Table from "./merchantsTable";
+import Table from "./merchantsBody";
 import Pagination from "../pagination/pagination";
 import { itemPage } from "../compo/staticPropsInTable";
+import { currentPageCal, getLengthTable } from "../compo/getLength";
 
 interface TablePageProps {
   data: {
@@ -22,24 +23,18 @@ export default function TablePageMerchants({
   skip,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(
-    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+    currentPageCal({ itemPage, skip })
   );
-  const [itemPerPage, setItemPerPage] = useState(itemPage);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    const getLengthUsers = async () => {
-      if (totalLength === 0) return;
-      const totalPages = Math.ceil(totalLength / itemPerPage);
-      setTotalPages(totalPages);
-      onPageChange(1);
-    };
-    getLengthUsers();
-  }, [totalLength, itemPerPage]);
-
-  const onPageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+    getLengthTable({
+      totalLength,
+      setTotalPages,
+      setCurrentPage,
+      itemPage,
+    });
+  }, [totalLength, itemPage]);
 
   return (
     <>
@@ -52,7 +47,7 @@ export default function TablePageMerchants({
           currentPage={currentPage}
           totalPages={totalPages}
           lengthData={totalLength}
-          onPageChange={onPageChange}
+          onPageChange={setCurrentPage}
         />
       </div>
     </>

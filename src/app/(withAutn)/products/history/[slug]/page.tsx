@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { hexToString, decode } from "@/lib/generateRandomHref";
+import GetHistory from "@/app/(withAutn)/users/history/[id]/page";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const [dataHistory, setDataHistory] = useState([]);
@@ -27,22 +28,12 @@ export default function Page({ params }: { params: { slug: string } }) {
         );
 
         const data = res.data;
-        const dataCustomer = data.productsHistory;
+        const dataCustomer = data.product;
+        const history = data.productsHistory;
         const lengthHistory = data.lengthHistory;
 
-        const transformedHistory = dataCustomer.map((item: any) => ({
-          time: new Date(item.createdAt).toString(),
-          description: item.description,
-          user: item.user.name,
-          category: item.category,
-          id: item.id,
-          imageProv: item.imageProve,
-        }));
-
-        const productDetails = dataCustomer[0]?.product;
-
-        setDataHistory(transformedHistory);
-        setDataProduct(productDetails);
+        setDataHistory(history);
+        setDataProduct(dataCustomer);
         setTotalPages(lengthHistory);
       } catch (error) {
         console.log(error);
@@ -64,7 +55,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             data={dataHistory}
             dataCustomer={dataProduct}
             editor={false}
-            lengthHistory={totalPages}
+            totalLength={totalPages}
             skip={parseInt(skip)}
           />
         )}

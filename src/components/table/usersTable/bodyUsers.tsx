@@ -3,7 +3,7 @@ import AlertDialog from "../../alertDialog";
 import { DesktopView } from "./view/desktopView";
 import { MobileView } from "./view/mobileView";
 import { TableUserBodyProps } from "../compo/TableProps";
-import { handleUpdate } from "@/lib/actions/UserPage/updateUsers";
+import { handleUpdate } from "@/lib/actions/UserPage/updateUsers/action";
 
 export default function BodyUsers({
   dataForCurrentPage,
@@ -88,6 +88,7 @@ export default function BodyUsers({
         styles={alertStyles}
         icon={alertIcon}
         id={"userUpdate"}
+        setAlertTitle={setAlertTitle}
       />
     </>
   );

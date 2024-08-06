@@ -1,0 +1,14 @@
+{
+  "DAILY": {
+    "id": 1,
+    "name": "DAILY"
+  },
+  "WEEKLY": {
+    "id": 2,
+    "name": "WEEKLY"
+  },
+  "MONTHLY": {
+    "id": 3,
+    "name": "MONTHLY"
+  }
+}

@@ -1,0 +1,27 @@
+FROM node:20-alpine AS builder
+WORKDIR /app
+RUN npm i -g turbo
+COPY turbo.json turbo.json
+COPY package*.json .
+COPY packages packages
+COPY apps/session-management-service apps/session-management-service
+RUN turbo prune --scope=session-management-service --docker
+
+FROM node:20-alpine AS installer
+WORKDIR /app
+RUN apk update
+RUN apk add --no-cache libc6-compat
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/package-lock.json ./package-lock.json
+RUN npm install
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+RUN npx turbo run build --filter=session-management-service...
+RUN npm install mysql2
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+COPY --from=installer /app .
+WORKDIR /app/apps/session-management-service
+
+CMD ["dist/main.js"]

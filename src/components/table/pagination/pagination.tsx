@@ -87,8 +87,8 @@ export default function Pagination({
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mt-2 cursor-not-allowed">
-        <div className="join">
+      <div className="flex flex-col justify-center items-center mt-2">
+        <div className="join cursor-not-allowed">
           <ActionButton
             action={handleToFirstPage}
             styles={`${btnClass} mobile:hidden tablet:hidden laptop:block`}

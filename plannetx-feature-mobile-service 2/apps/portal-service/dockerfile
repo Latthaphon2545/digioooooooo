@@ -1,0 +1,26 @@
+FROM node:18-alpine AS builder
+WORKDIR /app
+RUN npm i -g turbo
+COPY turbo.json turbo.json
+COPY package*.json .
+COPY packages packages
+COPY apps/portal-service apps/portal-service
+RUN turbo prune --scope=portal-service --docker
+
+FROM node:18-alpine AS installer
+WORKDIR /app
+RUN apk update
+RUN apk add --no-cache libc6-compat
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/package-lock.json ./package-lock.json
+RUN npm install
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+RUN npx turbo run build --filter=portal-service...
+
+FROM gcr.io/distroless/nodejs18-debian11 AS runner
+WORKDIR /app
+COPY --from=installer /app .
+WORKDIR /app/apps/portal-service
+
+CMD ["dist/main.js"]

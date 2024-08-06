@@ -1,0 +1,50 @@
+{
+  "ERR_INPORTAL_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3350",
+    "resDesc": {
+      "en": "User Not Found",
+      "th": "ไม่พบข้อมูลผู้ใช้"
+    }
+  },
+  "ERR_INPORTAL_USERNAME_DUPLICATE": {
+    "status": 400,
+    "resCode": "3351",
+    "resDesc": {
+      "en": "Username already exists",
+      "th": "ชื่อผู้ใช้งานนี้มีอยู่แล้ว"
+    }
+  },
+  "ERR_INPORTAL_EMAIL_DUPLICATE": {
+    "status": 400,
+    "resCode": "3352",
+    "resDesc": {
+      "en": "Email already exists",
+      "th": "อีเมล์นี้ถูกใช้งานแล้ว"
+    }
+  },
+  "ERR_INPORTAL_ALREADY_VERIFIRED": {
+    "status": 400,
+    "resCode": "3353",
+    "resDesc": {
+      "en": "User already verified",
+      "th": "ผู้ใช้งานถูกยืนยันแล้ว"
+    }
+  },
+  "ERR_INPORTAL_SUSPENDED": {
+    "status": 400,
+    "resCode": "3354",
+    "resDesc": {
+      "en": "User Suspended",
+      "th": "ผู้ใช้ถูกระงับการใช้งาน"
+    }
+  },
+  "ERR_INPORTAL_UNABLE_TO_UPDATE_YOURSELF": {
+    "status": 400,
+    "resCode": "3355",
+    "resDesc": {
+      "en": "Unable to update yourself",
+      "th": "ไม่สามารถแก้ไขตัวเองได้"
+    }
+  }
+}

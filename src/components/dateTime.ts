@@ -14,11 +14,13 @@ export const ConvertTime = (time: any) => {
     calculateTimeWithCurrent / (1000 * 60 * 60 * 24)
   );
 
-  const displayTime = `${formattedTime} (${
+  const displayTime = `(${
     calculateTime === 0 ? "Today" : `${calculateTime} days ago`
   })`;
 
-  return { formattedDate, displayTime };
+  const TimeFormat = `${formattedDate} ${formattedTime}`;
+
+  return { TimeFormat, displayTime };
 };
 
 export const DateFromObjectId = function (objectId: string) {

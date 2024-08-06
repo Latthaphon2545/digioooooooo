@@ -1,0 +1,10 @@
+{
+  "INDIVIDUAL": {
+    "label": "Individual",
+    "value": "INDIVIDUAL"
+  },
+  "CORPORATION": {
+    "label": "Corporation",
+    "value": "CORPORATION"
+  }
+}

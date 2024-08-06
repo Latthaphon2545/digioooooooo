@@ -1,0 +1,10 @@
+{
+  "TRANSACTION": {
+    "id": 1,
+    "name": "TRANSACTION"
+  },
+  "WALLET": {
+    "id": 2,
+    "name": "WALLET"
+  }
+}

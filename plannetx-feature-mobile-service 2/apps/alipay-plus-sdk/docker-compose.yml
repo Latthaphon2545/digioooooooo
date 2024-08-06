@@ -1,0 +1,8 @@
+services:
+  demo-application:
+    build: .
+    environment:
+      - AC_ROUTE_MODE=SHADOW
+      - AC_ROUTE_CLIENT_ID=SANDBOX_5YBZ2C2ZHW9E04204
+    ports:
+      - "8080:8080"

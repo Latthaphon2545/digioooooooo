@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ViewImg from "./view/historyProductViewImg";
-import Modal from "../../modal";
 import { DesktopView } from "./view/desktopView";
 import { MobileData } from "./view/mobileView";
 
@@ -12,22 +10,14 @@ interface TableProps {
 }
 
 export default function Table({ dataForCurrentPage, editor }: TableProps) {
-  const [bool, setBool] = useState(false);
-  const [boolEdit, setBoolEdit] = useState(editor);
   const [manyCheckInstock, setManyCheckInstock] = useState(0);
 
   useEffect(() => {
     const filterInstock = dataForCurrentPage.filter((item) =>
       item.category.includes("INSTOCK")
     );
-    setManyCheckInstock(filterInstock.length);
+    setManyCheckInstock(filterInstock.length + 1);
   }, [dataForCurrentPage]);
-
-  const handleEditData = (data: any) => {
-    setBoolEdit(!boolEdit);
-    setBool(!bool);
-    console.log(data);
-  };
 
   return (
     <>
@@ -36,7 +26,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
           <thead>
             <tr>
               <th></th>
-              {/* <th></th> */}
               <th>Description</th>
               <th>User</th>
               <th>Category</th>
@@ -51,8 +40,6 @@ export default function Table({ dataForCurrentPage, editor }: TableProps) {
                   key={item.id}
                   item={item}
                   manyCheckInstock={manyCheckInstock}
-                  editor={editor}
-                  handleEditData={handleEditData}
                 />
               );
             })}

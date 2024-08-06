@@ -1,0 +1,10 @@
+{
+  "ERR_INPARTNER_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3050",
+    "resDesc": {
+      "en": "Partner Not Found",
+      "th": "ไม่พบข้อมูลพาร์ทเนอร์"
+    }
+  }
+}

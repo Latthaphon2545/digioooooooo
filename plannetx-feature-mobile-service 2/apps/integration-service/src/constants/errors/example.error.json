@@ -1,0 +1,10 @@
+{
+  "ERR_EXAMPLE": {
+    "statusCode": 400,
+    "resCode": "4444",
+    "resDesc": {
+      "en": "Example Service Error",
+      "th": "ทดสอบความผิดพลาดของระบบ"
+    }
+  }
+}

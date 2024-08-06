@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "@/components/navBar/navBar";
 import "../globals.css";
-import { getTheme } from "@/lib/actions/themeActions/actions";
+import { getTheme } from "@/lib/actions/themeActions/action";
+import { EditorProvider } from "@/lib/context/EditorProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </head>
       <body className={`${inter.className} flex`}>
-        <NavBar>{children}</NavBar>
+        <EditorProvider>
+          <NavBar>{children}</NavBar>
+        </EditorProvider>
       </body>
     </html>
   );

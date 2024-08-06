@@ -1,0 +1,10 @@
+{
+  "ERR_REPORT_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3500",
+    "resDesc": {
+      "en": "Report Not Found",
+      "th": "ไม่พบรายงาน"
+    }
+  }
+}

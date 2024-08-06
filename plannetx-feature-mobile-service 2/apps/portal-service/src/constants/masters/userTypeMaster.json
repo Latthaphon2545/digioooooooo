@@ -1,0 +1,22 @@
+{
+  "SYSTEM": {
+    "id": 1,
+    "name": "SYSTEM"
+  },
+  "PARTNER": {
+    "id": 2,
+    "name": "PARTNER"
+  },
+  "CONSUMER": {
+    "id": 3,
+    "name": "CONSUMER"
+  },
+  "AGENT": {
+    "id": 4,
+    "name": "AGENT"
+  },
+  "MERCHANT": {
+    "id": 5,
+    "name": "MERCHANT"
+  }
+}

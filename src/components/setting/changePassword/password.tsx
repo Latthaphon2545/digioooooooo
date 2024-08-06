@@ -31,24 +31,15 @@ export const PasswordChange = ({
 
   const [isActive, setIsActive] = useState(false);
 
-  const [updateAlert, setUpdateAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
 
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
-      setUpdateAlert(true);
-      // ShowAlert(
-      //   "Password does not match",
-      //   ErrorStyle,
-      //   setAlertTitle,
-      //   setAlertStyles,
-      //   setAlertIcon,
-      //   setUpdateAlert,
-      //   Error
-      // );
-      // handleClear();
+      setAlertTitle("Password does not match");
+      setAlertStyles(ErrorStyle);
+      setAlertIcon(Error);
       return;
     }
 
@@ -61,7 +52,6 @@ export const PasswordChange = ({
       setAlertTitle,
       setAlertStyles,
       setAlertIcon,
-      setUpdateAlert,
       handleClear,
     });
   };
@@ -124,8 +114,8 @@ export const PasswordChange = ({
           }
           styleBtn="btn-ghost btn-xs link-error"
           id={`ForgotPAssword-${userId}`}
-          boolClose={true}
-          closeAction={forgotPassword}
+          open={forgotPassword}
+          setOpen={setForgotPassword}
         />
       </div>
 
@@ -145,13 +135,13 @@ export const PasswordChange = ({
         title="Link sent to your email"
       />
 
-      {/* <AlertDialog
-        open={updateAlert}
-        title={alertTitle}
+      <AlertDialog
+        alertTitle={alertTitle}
         styles={alertStyles}
         icon={alertIcon}
         id={"updateAlertSetPassword"}
-      /> */}
+        setAlertTitle={setAlertTitle}
+      />
     </>
   );
 };

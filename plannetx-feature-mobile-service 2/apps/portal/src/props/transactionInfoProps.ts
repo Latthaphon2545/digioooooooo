@@ -1,0 +1,63 @@
+export type TransactionInfoProps = {
+  partnerID: string
+  type: string
+  subType: string
+  referenceNo: string
+  orderId: string
+  payerName: string
+  payerWalletId: string
+  payeeName: string
+  payeeWalletId: string
+  bank: string
+  bankAccountNumber: string
+  feeExudeName: string
+  feeExudeWalletId: string
+  discountAbsorbName: string
+  discountAbsorbWalletId: string
+  net: number
+  fee: number
+  discount: number
+  approvalCode: string
+  discountCode: string
+  total: number
+  currency: string
+  status: string
+  batchNo: string
+  reference1: string
+  reference2: string
+  reference3: string
+  externalReference: string
+  remark: string
+}
+
+export const DefaultTransactionInfo: TransactionInfoProps = {
+  partnerID: '',
+  type: '',
+  subType: '',
+  referenceNo: '',
+  orderId: '',
+  payerName: '',
+  payerWalletId: '',
+  payeeName: '',
+  payeeWalletId: '',
+  bank: '',
+  bankAccountNumber: '',
+  feeExudeName: '',
+  feeExudeWalletId: '',
+  discountAbsorbName: '',
+  discountAbsorbWalletId: '',
+  net: 0,
+  fee: 0,
+  discount: 0,
+  approvalCode: '',
+  discountCode: '',
+  total: 0,
+  currency: '',
+  status: '',
+  batchNo: '',
+  reference1: '',
+  reference2: '',
+  reference3: '',
+  externalReference: '',
+  remark: ''
+}

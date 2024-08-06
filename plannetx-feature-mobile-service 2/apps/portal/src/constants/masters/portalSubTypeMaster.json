@@ -1,0 +1,10 @@
+{
+  "ADMIN": {
+    "label": "Admin",
+    "value": "ADMIN"
+  },
+  "USER": {
+    "label": "User",
+    "value": "USER"
+  }
+}

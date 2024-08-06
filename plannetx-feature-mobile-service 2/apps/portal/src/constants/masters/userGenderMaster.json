@@ -1,0 +1,10 @@
+{
+  "FEMALE": {
+    "label": "Female",
+    "value": "FEMALE"
+  },
+  "MALE": {
+    "label": "Male",
+    "value": "MALE"
+  }
+}

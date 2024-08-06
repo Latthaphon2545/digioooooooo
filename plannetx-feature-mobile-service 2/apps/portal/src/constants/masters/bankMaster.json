@@ -1,0 +1,74 @@
+{
+  "BAAC": {
+     "label": "BAAC",
+     "value": "BAAC"
+  },
+  "BAY": {
+     "label": "BAY",
+     "value": "BAY"
+  },
+  "BBL": {
+     "label": "BBL",
+     "value": "BBL"
+  },
+  "CIMBT": {
+     "label": "CIMBT",
+     "value": "CIMBT"
+  },
+  "CITI": {
+     "label": "CITI",
+     "value": "CITI"
+  },
+  "GHB": {
+     "label": "GHB",
+     "value": "GHB"
+  },
+  "GSB": {
+     "label": "GSB",
+     "value": "GSB"
+  },
+  "ICBC": {
+     "label": "ICBC",
+     "value": "ICBC"
+  },
+  "KBANK": {
+     "label": "KBANK",
+     "value": "KBANK"
+  },
+  "KKP": {
+     "label": "KKP",
+     "value": "KKP"
+  },
+  "KTB": {
+     "label": "KTB",
+     "value": "KTB"
+  },
+  "LHBANK": {
+     "label": "LHBANK",
+     "value": "LHBANK"
+  },
+  "SCB": {
+     "label": "SCB",
+     "value": "SCB"
+  },
+  "SCBT": {
+     "label": "SCBT",
+     "value": "SCBT"
+  },
+  "TCAP": {
+     "label": "TCAP",
+     "value": "TCAP"
+  },
+  "TCRB": {
+     "label": "TCRB",
+     "value": "TCRB"
+  },
+  "TMB": {
+     "label": "TMB",
+     "value": "TMB"
+  },
+  "UOB": {
+     "label": "UOB",
+     "value": "UOB"
+  }
+}

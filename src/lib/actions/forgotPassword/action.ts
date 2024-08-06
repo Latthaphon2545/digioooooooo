@@ -49,6 +49,11 @@ export const ForgotPassword = async ({
         setAlertIcon(Error);
       }
     }
+    if (setAlertIcon && setAlertStyles && setAlertTitle) {
+      setAlertTitle(`Failed to send reset password link, please try again`);
+      setAlertStyles(ErrorStyle);
+      setAlertIcon(Error);
+    }
   } finally {
     setLoading(false);
   }

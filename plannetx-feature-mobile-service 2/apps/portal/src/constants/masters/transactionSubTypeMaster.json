@@ -1,0 +1,22 @@
+{
+  "CLOSELOOP": {
+    "label": "Closeloop",
+    "value": "CLOSELOOP"
+  },
+  "PROMPTPAY": {
+    "label": "Promptpay",
+    "value": "PROMPTPAY"
+  },
+  "CREDITCARD": {
+    "label": "Creditcard",
+    "value": "CREDITCARD"
+  },
+  "CASA": {
+    "label": "CASA",
+    "value": "CASA"
+  },
+  "DIRECT": {
+    "label": "Direct",
+    "value": "DIRECT"
+  }
+}

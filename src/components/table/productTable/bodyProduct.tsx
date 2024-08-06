@@ -4,10 +4,10 @@ import AlertDialog from "@/components/alertDialog";
 import { DesktopView } from "./view/desktopView";
 import { MobileView } from "./view/mobileView";
 import { TableProductBodyProps } from "../compo/TableProps";
-import { deleteBank } from "@/lib/actions/productTable/handleDeleteBank";
-import { deleteMerchant } from "@/lib/actions/productTable/handleDeleteMerchant";
-import { handleAddMerchantToProduct } from "@/lib/actions/productTable/handleUpdateMerchant";
-import { handleAddBankToProduct } from "@/lib/actions/productTable/handleBankAdd";
+import { handleAddMerchantToProduct } from "@/lib/actions/productTable/UpdateMerchant/action";
+import { deleteMerchant } from "@/lib/actions/productTable/DeleteMerchant/action";
+import { deleteBank } from "@/lib/actions/productTable/DeleteBank/action";
+import { handleAddBankToProduct } from "@/lib/actions/productTable/AddBank/action";
 
 export default function Table({
   dataForCurrentPage,
@@ -150,6 +150,7 @@ export default function Table({
         styles={alertStyles}
         icon={alertIcon}
         id="userUpdate"
+        setAlertTitle={setAlertTitle}
       />
     </>
   );

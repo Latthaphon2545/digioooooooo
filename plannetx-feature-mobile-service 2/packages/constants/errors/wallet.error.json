@@ -1,0 +1,50 @@
+{
+  "ERR_WALLET_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "8001",
+    "resDesc": {
+      "en": "The wallet was not found",
+      "th": "ไม่พบกระเป๋าเงินอิเล็กทรอนิกส์"
+    }
+  },
+  "ERR_BALANCE_NEGATIVE": {
+    "statusCode": 400,
+    "resCode": "8002",
+    "resDesc": {
+      "en": "The balance cannot be negative",
+      "th": "จำนวนเงินไม่สามารถติดลบได้"
+    }
+  },
+  "ERR_WALLET_BALANCE_INSUFFICIENT": {
+    "statusCode": 400,
+    "resCode": "8003",
+    "resDesc": {
+      "en": "The balance in the wallet is insufficient",
+      "th": "ยอดเงินในกระเป๋าเงินอิเล็กทรอนิกส์ไม่เพียงพอ"
+    }
+  },
+  "ERR_ORIGINATING_WALLET_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "8004",
+    "resDesc": {
+      "en": "The originating wallet was not found",
+      "th": "ไม่พบกระเป๋าเงินอิเล็กทรอนิกส์ต้นทาง"
+    }
+  },
+  "ERR_DISTINATION_WALLET_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "8005",
+    "resDesc": {
+      "en": "The distination wallet was not found",
+      "th": "ไม่พบกระเป๋าเงินอิเล็กทรอนิกส์ปลายทาง"
+    }
+  },
+  "ERR_ORIGINATING_WALLET_BALANCE_INSUFFICIENT": {
+    "statusCode": 400,
+    "resCode": "8006",
+    "resDesc": {
+      "en": "The balance in the originating wallet is insufficient",
+      "th": "ยอดเงินในกระเป๋าเงินอิเล็กทรอนิกส์ต้นทางไม่เพียงพอ"
+    }
+  }
+}

@@ -3,23 +3,20 @@
 import BankPage from "@/components/bank/bankPage";
 import FloatingActionButton from "@/components/floatingActionButton";
 import LoadingBankPage from "@/components/loading/loadingBank/BankPage";
-import axios from "axios";
+import { getBank } from "@/lib/actions/bank/getBank/action";
+import { useEditor } from "@/lib/context/EditorProvider";
 import { useEffect, useState } from "react";
 
 export default function Page() {
   const [banks, setBanks] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const isEditor = useEditor();
+
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const bankRes = await axios.get("/api/bank/getBank");
-        setBanks(bankRes.data.bankStatus);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+      const bankRes = await getBank({ setLoading });
+      setBanks(bankRes);
     };
     fetchData();
   }, []);
@@ -27,7 +24,7 @@ export default function Page() {
   return (
     <div>
       {loading ? <LoadingBankPage /> : <BankPage banks={banks} />}
-      <FloatingActionButton page="bank" />
+      {isEditor && <FloatingActionButton page="bank" />}
     </div>
   );
 }

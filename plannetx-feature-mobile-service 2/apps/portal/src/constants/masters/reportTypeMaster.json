@@ -1,0 +1,10 @@
+{
+  "TRANSACTION": {
+    "label": "Transaction",
+    "value": "TRANSACTION"
+  },
+  "WALLET": {
+    "label": "Wallet",
+    "value": "WALLET"
+  }
+}

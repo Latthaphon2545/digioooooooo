@@ -1,0 +1,10 @@
+{
+  "CORPORATION": {
+    "id": 1,
+    "name": "CORPORATION"
+  },
+  "INDIVIDUAL": {
+    "id": 2,
+    "name": "INDIVIDUAL"
+  }
+}

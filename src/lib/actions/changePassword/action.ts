@@ -10,7 +10,6 @@ interface ChangePasswordProps {
   setAlertTitle: (title: string) => void;
   setAlertStyles: (styles: string) => void;
   setAlertIcon: (icon: React.ReactNode) => void;
-  setUpdateAlert: (update: boolean) => void;
   handleClear: () => void;
 }
 
@@ -23,7 +22,6 @@ export const ChangePassword = async ({
   setAlertTitle,
   setAlertStyles,
   setAlertIcon,
-  setUpdateAlert,
   handleClear,
 }: ChangePasswordProps) => {
   try {
@@ -40,16 +38,9 @@ export const ChangePassword = async ({
     }
   } catch (e) {
     console.log(e);
-    setUpdateAlert(true);
-    // ShowAlert(
-    //   "Icorrect old password",
-    //   ErrorStyle,
-    //   setAlertTitle,
-    //   setAlertStyles,
-    //   setAlertIcon,
-    //   setUpdateAlert,
-    //   Error
-    // );
+    setAlertTitle("Icorrect old password");
+    setAlertStyles(ErrorStyle);
+    setAlertIcon(Error);
     handleClear();
   } finally {
     setLoadingChangePassword(false);

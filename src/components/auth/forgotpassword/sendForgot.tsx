@@ -25,6 +25,7 @@ export const ViaStep = () => {
     if (email.trim() === "") {
       setAlertTitle("Email is required");
       setAlertStyles(WarningStyle);
+      setAlertIcon(Warning);
     }
 
     const res = await ForgotPassword({
@@ -105,6 +106,7 @@ export const ViaStep = () => {
         styles={alertStyles}
         icon={alertIcon}
         id={`alert-dialog-${email}`}
+        setAlertTitle={setAlertTitle}
       />
     </>
   );

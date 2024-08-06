@@ -1,0 +1,26 @@
+{
+  "ERR_TOKEN_INVALID": {
+    "statusCode": 400,
+    "resCode": "4001",
+    "resDesc": {
+      "en": "Token is invlid",
+      "th": "Token ไม่ถูกต้อง"
+    }
+  },
+  "ERR_TOKEN_TIMEOUT": {
+    "statusCode": 400,
+    "resCode": "4002",
+    "resDesc": {
+      "en": "Your token has expired",
+      "th": "Token ของท่านหมดอายุแล้ว"
+    }
+  },
+  "ERR_TOKEN_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "4003",
+    "resDesc": {
+      "en": "Token not found",
+      "th": "ไม่พบ token ในระบบ"
+    }
+  }
+}

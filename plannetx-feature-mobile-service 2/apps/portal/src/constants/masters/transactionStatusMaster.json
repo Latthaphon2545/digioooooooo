@@ -1,0 +1,50 @@
+{
+  "PENDING": {
+    "label": "Pending",
+    "value": "PENDING",
+    "color": "#676767",
+    "backgroundColor": "#f0f0f0"
+  },
+  "HOLDED": {
+    "label": "Holded",
+    "value": "HOLDED",
+    "color": "#e2a600",
+    "backgroundColor": "#fff8e3"
+  },
+  "APPROVED": {
+    "label": "Approved",
+    "value": "APPROVED",
+    "color": "#2fa12d",
+    "backgroundColor": "#e9f8e9"
+  },
+  "CANCELLED": {
+    "label": "Cancelled",
+    "value": "CANCELLED",
+    "color": "#f98c04",
+    "backgroundColor": "#fff1e0"
+  },
+  "FAILED": {
+    "label": "Failed",
+    "value": "FAILED",
+    "color": "#e32319",
+    "backgroundColor": "#ffe4e3"
+  },
+  "VOIDED": {
+    "label": "Voided",
+    "value": "VOIDED",
+    "color": "#8254c6",
+    "backgroundColor": "#efe9f8"
+  },
+  "REFUNDED": {
+    "label": "Refunded",
+    "value": "REFUNDED",
+    "color": "#8254c6",
+    "backgroundColor": "#efe9f8"
+  },
+  "SETTLED": {
+    "label": "Settled",
+    "value": "SETTLED",
+    "color": "#058be3",
+    "backgroundColor": "#cfecff"
+  }
+}

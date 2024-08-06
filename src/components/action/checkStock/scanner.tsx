@@ -1,66 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { BarcodeScanner } from "react-barcode-scanner";
-import AlertDialog, { Error, Success, Warning } from "../../alertDialog";
-import axios from "axios";
+import AlertDialog from "../../alertDialog";
 import BarcodeScan from "@/components/scaner/barcodeScan";
+import { CheckStock } from "@/lib/actions/checkStock/action";
 
 export default function Scanner() {
   const [code, setCode] = useState("");
   const [process, setProcess] = useState(false);
-  const [alert, setAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>(<></>);
 
-  const showAlert = (title: string, styles: string, icon?: React.ReactNode) => {
-    setAlertTitle(title);
-    setAlertStyles(styles);
-    setAlertIcon(icon);
-    setAlert(true);
-    setTimeout(() => {
-      setAlert(false);
-    }, 3000);
-  };
-
-  const checkStock = async (code: string) => {
-    try {
-      setProcess(true);
-      setCode(code);
-      const res = await axios.post("/api/products/checkStock", {
-        sn: code,
-        user: "6650666b7e05719e52aabef7",
-      });
-      const data = await res.data;
-      if (res.status === 200) {
-        showAlert(
-          data.message,
-          "alert-success mobile:bg-succes tablet:bg-success",
-          Success
-        );
-      }
-    } catch (error: any) {
-      console.log(error);
-      if (error.response.status === 404) {
-        showAlert(
-          error.response.data.message,
-          "alert-error mobile:bg-error tablet:bg-error",
-          Error
-        );
-      } else if (error.response.status === 400) {
-        showAlert(
-          error.response.data.message,
-          "alert-warning mobile:bg-warning tablet:bg-warning",
-          Warning
-        );
-      }
-    } finally {
-      setTimeout(() => {
-        setProcess(false);
-        setCode("");
-      }, 500);
-    }
+  const handleCheckStock = async (code: string) => {
+    const res = await CheckStock({
+      setProcess,
+      setCode,
+      code,
+      setAlertTitle,
+      setAlertStyles,
+      setAlertIcon,
+    });
   };
 
   return (
@@ -81,19 +41,18 @@ export default function Scanner() {
       ) : (
         <BarcodeScan
           action={(code) => {
-            checkStock(code);
+            handleCheckStock(code);
           }}
         />
       )}
-      <div>
-        {alert && (
-          <AlertDialog
-            title={alertTitle}
-            styles={alertStyles}
-            icon={alertIcon}
-          />
-        )}
-      </div>
+
+      <AlertDialog
+        alertTitle={alertTitle}
+        styles={alertStyles}
+        icon={alertIcon}
+        id="alertScanner"
+        setAlertTitle={setAlertTitle}
+      />
     </div>
   );
 }

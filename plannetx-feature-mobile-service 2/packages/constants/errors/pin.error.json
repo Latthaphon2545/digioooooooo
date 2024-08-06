@@ -1,0 +1,50 @@
+{
+  "ERR_PIN_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "7201",
+    "resDesc": {
+      "en": "Pin not found",
+      "th": "ไม่พบรหัสยืนยันนี้ในระบบ"
+    }
+  },
+  "ERR_PIN_NOT_MATCH": {
+    "statusCode": 400,
+    "resCode": "7202",
+    "resDesc": {
+      "en": "Pin not correct",
+      "th": "รหัส PIN ไม่ถูกต้องกรุณากรอกใหม่อีกครั้ง"
+    }
+  },
+  "ERR_PIN_VALIDATE": {
+    "statusCode": 400,
+    "resCode": "7203",
+    "resDesc": {
+      "en": "Pin format not correct",
+      "th": "รูปแบบ Pin ไม่ถูกต้อง"
+    }
+  },
+  "ERR_EXISTING_PIN_NOT_CORRECT": {
+    "statusCode": 400,
+    "resCode": "7204",
+    "resDesc": {
+      "en": "Existing pin not correct",
+      "th": "รหัส Pin เก่าไม่ถูกต้อง"
+    }
+  }, 
+  "ERR_ENCRYPT_PIN_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "7205",
+    "resDesc": {
+      "en": "Encrypt pin not found",
+      "th": "ไม่พบ Pin ในข้อมูลที่เข้ารหัส"
+    }
+  },
+  "ERR_ENCRYPT_EXISTING_PIN_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "7206",
+    "resDesc": {
+      "en": "Encrypt existing pin not found",
+      "th": "ไม่พบ Pin เก่า ในข้อมูลที่เข้ารหัส"
+    }
+  }
+}

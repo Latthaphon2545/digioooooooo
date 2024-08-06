@@ -5,6 +5,7 @@ import Table from "./historyProductBody";
 import Header from "./historyProductHeader";
 import Pagination from "../pagination/pagination";
 import { itemPage } from "../compo/staticPropsInTable";
+import { currentPageCal, getLengthTable } from "../compo/getLength";
 
 interface TablePageProps {
   data: {
@@ -14,7 +15,7 @@ interface TablePageProps {
     [key: string]: any;
   };
   editor?: boolean;
-  lengthHistory: number;
+  totalLength: number;
   skip: number;
 }
 
@@ -22,26 +23,22 @@ export default function TablePageProductHistory({
   data,
   dataCustomer,
   editor,
-  lengthHistory,
+  totalLength,
   skip,
 }: TablePageProps) {
   const [currentPage, setCurrentPage] = useState(
-    skip === 0 ? 1 : Math.ceil(skip / itemPage) + 1
+    currentPageCal({ itemPage, skip })
   );
   const [totalPages, setTotalPages] = useState(0);
 
-  const onPageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-
   useEffect(() => {
-    const getLengthUsers = async () => {
-      if (lengthHistory === 0) return;
-      const totalPages = Math.ceil(lengthHistory / itemPage);
-      setTotalPages(totalPages);
-    };
-    getLengthUsers();
-  }, [lengthHistory, itemPage]);
+    getLengthTable({
+      totalLength,
+      setTotalPages,
+      setCurrentPage,
+      itemPage,
+    });
+  }, [totalLength, itemPage]);
 
   return (
     <>
@@ -54,8 +51,8 @@ export default function TablePageProductHistory({
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            lengthData={lengthHistory}
-            onPageChange={onPageChange}
+            lengthData={totalLength}
+            onPageChange={setCurrentPage}
           />
         </div>
       </div>

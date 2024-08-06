@@ -1,7 +1,6 @@
 "use client";
 
 import SubmitPopupButton from "@/components/submitPopupButton";
-import { useState } from "react";
 
 interface RenderSubmitPopupButtonProps {
   id: string;
@@ -13,7 +12,7 @@ interface RenderSubmitPopupButtonProps {
     merchant: { name: string; address: string; contact: string }
   ) => Promise<void>;
   isUpdating: boolean;
-  mobile?: boolean;
+  setOpenEditModal?: (value: boolean) => void;
 }
 
 export const RenderSubmitPopupButton = ({
@@ -23,19 +22,14 @@ export const RenderSubmitPopupButton = ({
   contact,
   handleUpdate,
   isUpdating,
-  mobile,
+  setOpenEditModal,
 }: RenderSubmitPopupButtonProps) => {
   return (
     <SubmitPopupButton
       action={async () => {
         await handleUpdate(id, { name, address, contact });
         if (isUpdating) return;
-
-        if (mobile) {
-          const modal = document.getElementById(`editMerchants${id}`);
-          const checkbox = modal?.nextElementSibling as HTMLInputElement;
-          checkbox.style.display = "none";
-        }
+        if (setOpenEditModal) setOpenEditModal(false);
       }}
       styles={`btn-success btn-sm ${
         contact.length !== 10 || name.length === 0 ? "btn-disabled" : ""
@@ -68,7 +62,11 @@ export const RenderSubmitPopupButton = ({
       }
       id={`editMerchants${id}`}
     >
-      Confirm
+      {isUpdating ? (
+        <span className="loading loading-spinner"></span>
+      ) : (
+        <>Confirm</>
+      )}
     </SubmitPopupButton>
   );
 };

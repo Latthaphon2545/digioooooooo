@@ -1,0 +1,14 @@
+{
+  "SYSTEM": {
+    "label": "System",
+    "value": "SYSTEM"
+  },
+  "PARTNER": {
+    "label": "Partner",
+    "value": "PARTNER"
+  },
+  "CONSUMER": {
+    "label": "Consumer",
+    "value": "CONSUMER"
+  }
+}

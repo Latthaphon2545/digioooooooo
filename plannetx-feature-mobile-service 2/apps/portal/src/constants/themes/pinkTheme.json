@@ -1,0 +1,9 @@
+{
+  "NAME": "pink",
+  "ACCENT_COLOR": "#d93a96",
+  "ACCENT_SHADOW_COLOR": "rgba(217, 58, 150, 0.1)",
+  "SIDEBAR_ACTIVE_COLOR": "#d93a96",
+  "SIDEBAR_ACTIVE_BACKGROUND": "#fff3fb",
+  "SIDEBAR_IDLE_COLOR": "#92a3b9",
+  "SIDEBAR_IDLE_BACKGROUND": "transparent"
+}

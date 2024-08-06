@@ -1,0 +1,14 @@
+{
+  "DAILY": {
+    "label": "Daily",
+    "value": "DAILY"
+  },
+  "WEEKLY": {
+    "label": "Weekly",
+    "value": "WEEKLY"
+  },
+  "MONTHLY": {
+    "label": "Monthly",
+    "value": "MONTHLY"
+  }
+}

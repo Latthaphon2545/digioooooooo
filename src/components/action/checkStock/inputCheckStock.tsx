@@ -1,28 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Error, I, Success, Warning } from "../../alertDialog";
+import { CheckStock } from "@/lib/actions/checkStock/action";
 
 export default function InputCheckStock() {
   const [sn, setSn] = useState(Array(8).fill(""));
   const [status, setStatus] = useState(Array(8).fill("")); // New state to track status
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const setSN = async () => {
-      const sizeWindow = await window.innerHeight;
-      let size = 0;
-      if (sizeWindow > 1100) {
-        size = 11;
-      } else {
-        size = 8;
-      }
-      setSn(Array(size).fill(""));
-      setStatus(Array(size).fill(""));
-    };
-    setSN();
-  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -41,32 +26,20 @@ export default function InputCheckStock() {
     });
   };
 
-  const submit = async () => {
-    if (!confirm("Are you sure you want to submit?")) return;
-
+  const handleCheckStock = async () => {
     try {
       setLoading(true);
       await Promise.all(
         sn.map(async (sn, index) => {
-          try {
-            if (!sn) {
-              handleSetStatus(index, I);
-              return; // Skip further processing
-            }
-
-            const res = await axios.post("/api/products/checkStock", {
-              sn: sn,
-              user: "6650666b7e05719e52aabef7",
-            });
-            handleSetStatus(index, Success);
-            handleInputChange({ target: { value: "" } } as any, index);
-          } catch (error: any) {
-            if (error.response.status === 404) {
-              handleSetStatus(index, Error);
-            } else if (error.response.status === 400) {
-              handleSetStatus(index, Warning);
-            }
+          if (!sn || sn === "") {
+            handleSetStatus(index, I);
+            return;
           }
+          const res = await CheckStock({
+            code: sn,
+            handleSetStatus,
+            index,
+          });
         })
       );
     } catch (error) {
@@ -142,7 +115,7 @@ export default function InputCheckStock() {
         className={`btn btn-${
           loading ? "block" : "primary"
         } laptop:w-3/6 mobile:w-full tablet:w-full btn-primary btn-lg`}
-        onClick={submit}
+        onClick={handleCheckStock}
         disabled={loading}
       >
         {loading ? (

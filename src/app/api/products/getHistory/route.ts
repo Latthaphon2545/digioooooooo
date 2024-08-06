@@ -7,14 +7,12 @@ export async function GET(request: NextRequest) {
     const sn = searchParams.get("sn") || "";
     const skip = searchParams.get("skip") || "";
     const take = searchParams.get("take") || "";
-    const skipInt = skip ? parseInt(skip) : undefined;
-    const takeInt = take ? parseInt(take) : undefined;
+    const skipInt = parseInt(skip ?? 0);
+    const takeInt = take ? parseInt(take) : 10;
 
     const productsHistory = await db.history.findMany({
       where: {
-        productId: {
-          contains: sn,
-        },
+        productId: sn,
       },
       skip: skipInt,
       take: takeInt,
@@ -27,17 +25,16 @@ export async function GET(request: NextRequest) {
             name: true,
           },
         },
-        product: {
-          include: {
-            model: {
-              select: {
-                series: true,
-                image: true,
-              },
-            },
-            merchant: true,
-          },
-        },
+      },
+    });
+
+    const product = await db.product.findUnique({
+      where: {
+        serialNumber: sn,
+      },
+      include: {
+        merchant: true,
+        model: true,
       },
     });
 
@@ -50,7 +47,7 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json(
-      { productsHistory, lengthHistory },
+      { productsHistory, product, lengthHistory },
       { status: 200 }
     );
   } catch (error) {

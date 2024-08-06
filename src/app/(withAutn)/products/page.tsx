@@ -1,17 +1,16 @@
 "use client";
 
 import AlertDialog, { SuccessStyle } from "@/components/alertDialog";
-import Container from "@/components/container/container";
+import Container from "@/components/container/containerTable";
 import FloatingActionButton from "@/components/floatingActionButton";
 import TablePageLoading from "@/components/loading/loadingTable/tablePage";
 import TablePageProduct from "@/components/table/productTable/productTablePage";
 import { DetAllProduct } from "@/lib/actions/getAllProduct/action";
+import { useEditor } from "@/lib/context/EditorProvider";
 import { decode } from "@/lib/generateRandomHref";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
-
-const isEditor = true;
 
 export default function Productmanagement() {
   const [data, setData] = useState([]);
@@ -26,6 +25,8 @@ export default function Productmanagement() {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertStyles, setAlertStyles] = useState("");
   const [alertIcon, setAlertIcon] = useState<React.ReactNode>("");
+
+  const isEditor = useEditor();
 
   useEffect(() => {
     if (alertMessage) {
@@ -54,17 +55,15 @@ export default function Productmanagement() {
     <Container
       isEditor={isEditor}
       title="Product"
-      Information={
-        loading ? (
-          <TablePageLoading Type="Product" />
-        ) : (
-          <TablePageProduct
-            data={data}
-            editor={isEditor}
-            totalLength={dataLength}
-            skip={parseInt(skip)}
-          />
-        )
+      Loading={loading}
+      LoadingChild={<TablePageLoading Type="Product" />}
+      Child={
+        <TablePageProduct
+          data={data}
+          editor={isEditor}
+          totalLength={dataLength}
+          skip={parseInt(skip)}
+        />
       }
       NavigatorBtn="/products/add"
       textBtn={<>Add Product</>}
@@ -74,6 +73,7 @@ export default function Productmanagement() {
           styles={alertStyles}
           icon={alertIcon}
           id={"userAdd"}
+          setAlertTitle={setAlertTitle}
         />
       }
       FloatingActionButton={<FloatingActionButton page="product" />}

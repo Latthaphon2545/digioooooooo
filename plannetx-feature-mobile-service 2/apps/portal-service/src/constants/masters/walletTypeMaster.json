@@ -1,0 +1,30 @@
+{
+  "SYSTEM": {
+    "id": 1,
+    "name": "SYSTEM"
+  },
+  "PARTNER": {
+    "id": 2,
+    "name": "PARTNER"
+  },
+  "COLLATERAL": {
+    "id": 3,
+    "name": "COLLATERAL"
+  },
+  "DISCOUNT": {
+    "id": 4,
+    "name": "DISCOUNT"
+  },
+  "CUSTOMER": {
+    "id": 5,
+    "name": "CUSTOMER"
+  },
+  "AGENT": {
+    "id": 6,
+    "name": "AGENT"
+  },
+  "MERCHANT": {
+    "id": 7,
+    "name": "MERCHANT"
+  }
+}

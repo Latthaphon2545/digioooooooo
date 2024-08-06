@@ -1,0 +1,18 @@
+{
+  "ERR_BANK_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "4001",
+    "resDesc": {
+      "en": "Bank not found",
+      "th": "ไม่พบธนาคารปลายทาง"
+    }
+  },
+  "ERR_USER_BANK_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "4002",
+    "resDesc": {
+      "en": "No bank account linked to the user found",
+      "th": "ไม่พบบัญชีธนาคารที่เชื่อมต่อกับผู้ใช้งาน"
+    }
+  }
+}

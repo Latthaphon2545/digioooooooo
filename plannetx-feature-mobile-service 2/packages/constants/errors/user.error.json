@@ -1,0 +1,18 @@
+{
+  "ERR_USER_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "5001",
+    "resDesc": {
+      "en": "User not found",
+      "th": "ไม่พบบัญชีผู้ใช้งาน"
+    }
+  },
+  "ERR_USER_KEY_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "5002",
+    "resDesc": {
+      "en": "User key not found",
+      "th": "ไม่พบการเข้ารหัสสำหรับบัญชีผู้ใช้งาน"
+    }
+  }
+}

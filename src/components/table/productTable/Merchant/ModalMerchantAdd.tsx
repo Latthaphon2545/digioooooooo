@@ -1,5 +1,5 @@
 import SubmitPopupButton from "@/components/submitPopupButton";
-import { handleSearchMerchant } from "@/lib/actions/productTable/handleUpdateMerchant";
+import { handleSearchMerchant } from "@/lib/actions/productTable/UpdateMerchant/action";
 import { useState } from "react";
 
 interface ModalMerchantAddProps {

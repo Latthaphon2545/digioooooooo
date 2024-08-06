@@ -1,0 +1,26 @@
+{
+  "ERR_VERSION_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "7101",
+    "resDesc": {
+      "en": "Version not found",
+      "th": "ไม่พบข้อมูลเวอร์ชันในระบบ"
+    }
+  },
+  "ERR_OLD_VERSION_AVAILABLE": {
+    "statusCode": 400,
+    "resCode": "7102",
+    "resDesc": {
+      "en": "New version of application available",
+      "th": "แอปพลิเคชัน มีเวอร์ชันใหม่พร้อมให้ใช้งาน"
+    }
+  },
+  "ERR_OLD_VERSION_UNAVAILABLE": {
+    "statusCode": 400,
+    "resCode": "7103",
+    "resDesc": {
+      "en": "Application update required",
+      "th": "แอปพลิเคชัน ต้องการอัปเดต"
+    }
+  }
+}

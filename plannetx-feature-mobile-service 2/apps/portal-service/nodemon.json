@@ -1,0 +1,6 @@
+{
+  "ignore": [
+    "logs/*"
+  ],
+  "exec": "eslint src --color --cache && node ."
+}

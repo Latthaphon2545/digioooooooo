@@ -8,6 +8,8 @@ export default function ModalInfo({
   information: Record<string, string>;
   series: string;
 }) {
+  const [open, setOpen] = React.useState(false);
+
   return (
     <>
       <Modal
@@ -29,7 +31,8 @@ export default function ModalInfo({
         styleBtn="btn-ghost btn-xs"
         titleContent={`Coming soon!`}
         id={`modal-info-${series}`}
-        boolClose={true}
+        open={open}
+        setOpen={setOpen}
       />
     </>
   );

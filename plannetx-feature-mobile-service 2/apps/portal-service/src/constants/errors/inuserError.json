@@ -1,0 +1,34 @@
+{
+  "ERR_INUSER_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3400",
+    "resDesc": {
+      "en": "User Not Found",
+      "th": "ไม่พบข้อมูลผู้ใช้"
+    }
+  },
+  "ERR_INUSER_CORPORATION_TAX_ID_REQUIRED": {
+    "status": 400,
+    "resCode": "3401",
+    "resDesc": {
+      "en": "Tax ID is required",
+      "th": "กรุณาระบุหมายเลขประจำตัวผู้เสียภาษี"
+    }
+  },
+  "ERR_INUSER_INDIVIDUAL_CITIZEN_ID_OR_PASSPORT_REQUIRED": {
+    "status": 400,
+    "resCode": "3402",
+    "resDesc": {
+      "en": "Citizen ID or Passport is required",
+      "th": "กรุณาระบุหมายเลขบัตรประชาชนหรือพาสปอร์ต"
+    }
+  },
+  "ERR_INUSER_DUPLICATE": {
+    "status": 400,
+    "resCode": "3403",
+    "resDesc": {
+      "en": "Duplicate User Info",
+      "th": "พบข้อมูลผู้ใช้งานซ้ำ"
+    }
+  }
+}

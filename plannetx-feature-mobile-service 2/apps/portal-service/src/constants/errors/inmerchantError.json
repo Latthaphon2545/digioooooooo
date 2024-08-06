@@ -1,0 +1,18 @@
+{
+  "ERR_INMERCHANT_MID_DUPLICATE": {
+    "status": 400,
+    "resCode": "3700",
+    "resDesc": {
+      "en": "MID Aleady Exists",
+      "th": "พบข้อมูล MID นี้อยู่แล้ว"
+    }
+  },
+  "ERR_INMERCHANT_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3701",
+    "resDesc": {
+      "en": "Merchant Not Found",
+      "th": "ไม่พบข้อมูลร้านค้านี้"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ERR_USER_OTP_NOT_FOUND": {
+    "statusCode": 400,
+    "resCode": "2001",
+    "resDesc": {
+      "en": "OTP not found",
+      "th": "ไม่พบ OTP นี้ใน ระบบ"
+    }
+  },
+  "ERR_USER_OTP_INCORRECT": {
+    "statusCode": 400,
+    "resCode": "2002",
+    "resDesc": {
+      "en": "Your OTP is not correct",
+      "th": "OTP ของท่านไม่ถูกต้อง"
+    }
+  },
+  "ERR_USER_OTP_EXPIRED": {
+    "statusCode": 400,
+    "resCode": "2003",
+    "resDesc": {
+      "en": "Your OTP has expired",
+      "th": "OTP ของท่านหมดอายุแล้ว"
+    }
+  },
+  "ERR_USER_OTP_OVER_LIMIT": {
+    "statusCode": 400,
+    "resCode": "2004",
+    "resDesc": {
+      "en": "You have exceeded limit OTP attempt",
+      "th": "ท่านได้ทำการยืนยัน OTP\nเกินขีดจำกัด"
+    }
+  },
+  "ERR_USER_USE_EXIST_PASS_OTP": {
+    "statusCode": 400,
+    "resCode": "2005",
+    "resDesc": {
+      "en": "This mobile number and otp have already been used successfully",
+      "th": "เบอร์และ OTP ชุดนี้ถูกใช้งานสำเร็จไปแล้ว"
+    }
+  }
+}

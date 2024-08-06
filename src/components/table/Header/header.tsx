@@ -6,7 +6,7 @@ import DropdownBottom from "./fillter";
 import { useEffect, useState, useCallback } from "react";
 import { decode, encode } from "@/lib/generateRandomHref";
 import { itemPage } from "../compo/staticPropsInTable";
-import { getProductCategories } from "@/lib/actions/filter/getNameAndIdModel";
+import { getProductCategories } from "@/lib/actions/filter/action";
 
 const CATEGORIES = (option: string, series: string[]) => {
   if (option === "User") {
@@ -114,9 +114,13 @@ export default function Header({ option }: { option: string }) {
     <div className="flex items-center gap-3 mobile:my-5 mobile:justify-center laptop:mt-0 laptop:justify-normal">
       <div className="flex items-center">
         <SearchBar handleSearch={handleSearch} />
-        {category.map((item, index) => (
-          <DropdownBottom key={index} item={item} index={index} />
-        ))}
+        {option !== "" && (
+          <>
+            {category.map((item, index) => (
+              <DropdownBottom key={index} item={item} index={index} />
+            ))}
+          </>
+        )}
       </div>
       <div className="items-center gap-3 mobile:hidden tablet:hidden laptop:flex">
         {category.length > 0 && (
@@ -130,11 +134,6 @@ export default function Header({ option }: { option: string }) {
               </div>
             ))}
           </>
-        )}
-        {category.length === 0 && (
-          <div className="badge badge-outline badge-lg mr-3 px-4 py-3 text-sm font-bold gap-2">
-            <p>No filter</p>
-          </div>
         )}
       </div>
     </div>

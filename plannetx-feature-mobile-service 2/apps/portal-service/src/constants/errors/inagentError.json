@@ -1,0 +1,10 @@
+{
+  "ERR_INAGENT_NOT_FOUND": {
+    "status": 400,
+    "resCode": "3600",
+    "resDesc": {
+      "en": "Agent Not Found",
+      "th": "ไม่พบข้อมูลเอเย่นต์นี้"
+    }
+  }
+}

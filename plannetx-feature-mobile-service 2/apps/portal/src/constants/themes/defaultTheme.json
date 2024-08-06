@@ -1,0 +1,9 @@
+{
+  "NAME": "default",
+  "ACCENT_COLOR": "#1479ff",
+  "ACCENT_SHADOW_COLOR": "rgba(20, 121, 255, 0.1)",
+  "SIDEBAR_ACTIVE_COLOR": "#1479ff",
+  "SIDEBAR_ACTIVE_BACKGROUND": "#f3f8ff",
+  "SIDEBAR_IDLE_COLOR": "#92a3b9",
+  "SIDEBAR_IDLE_BACKGROUND": "transparent"
+}

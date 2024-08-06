@@ -9,13 +9,13 @@ export const MobileData = ({
   item: any;
   manyCheckInstock: number;
 }) => {
-  const { formattedDate, displayTime } = ConvertTime(item.time);
+  const { TimeFormat, displayTime } = ConvertTime(item.createdAt);
   return (
     <div className="card w-[90vw] bg-base-100 shadow-xl">
       <div className="card-body p-5">
         <div className="card-title flex-col">
           <div className="flex w-full justify-between items-center">
-            <h1 className=" text-gray-500 text-sm">{formattedDate}</h1>
+            <h1 className=" text-gray-500 text-sm">{TimeFormat}</h1>
             <h1 className=" text-gray-500 text-sm">{displayTime}</h1>
           </div>
           <div className="divider my-0"></div>
@@ -28,13 +28,13 @@ export const MobileData = ({
           <div className="flex flex-col justify-between gap-2">
             <div className="flex justify-between items-center">
               <div>User</div>
-              <div>{item.user}</div>
+              <div>{item.user.name}</div>
             </div>
 
             <div className="flex justify-between items-center">
               <div>Image</div>
               <div>
-                <ViewImg id={item.id} image={item.imageProv} />
+                <ViewImg id={item.id} image={item.imageProve} />
               </div>
             </div>
           </div>

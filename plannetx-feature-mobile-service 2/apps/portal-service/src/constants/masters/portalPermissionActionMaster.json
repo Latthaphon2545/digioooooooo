@@ -1,0 +1,8 @@
+{
+  "LIST": "LIST",
+  "DETAIL": "DETAIL",
+  "CREATE": "CREATE",
+  "EDIT": "EDIT",
+  "DELETE": "DELETE",
+  "EXPORT": "EXPORT"
+}

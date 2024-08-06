@@ -1,0 +1,10 @@
+{
+  "ERR_VALIDATION_ERROR": {
+    "statusCode": 400,
+    "resCode": "9999",
+    "resDesc": {
+      "en": "Validation Error",
+      "th": "รูปแบบข้อมูลไม่ถูกต้อง"
+    }
+  }
+}

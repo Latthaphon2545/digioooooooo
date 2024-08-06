@@ -1,0 +1,20 @@
+{
+  "UNVERIFIED": {
+    "label": "Unverified",
+    "value": "UNVERIFIED",
+    "color": "#676767",
+    "backgroundColor": "#f0f0f0"
+  },
+  "VERIFIED": {
+    "label": "Verified",
+    "value": "VERIFIED",
+    "color": "#2fa12d",
+    "backgroundColor": "#e9f8e9"
+  },
+  "SUSPENDED": {
+    "label": "Suspended",
+    "value": "SUSPENDED",
+    "color": "#e32319",
+    "backgroundColor": "#ffe4e3"
+  }
+}

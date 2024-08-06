@@ -1,0 +1,8 @@
+{
+  "PENDING": 0,
+  "APPROVED": 1,
+  "CANCELED": 2,
+  "INVALID": 3,
+  "PARTIAL": 4,
+  "EXPIRED": 5
+}

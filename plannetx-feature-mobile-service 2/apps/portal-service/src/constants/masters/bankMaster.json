@@ -1,0 +1,74 @@
+{
+  "BAAC": {
+     "id": 1,
+     "shortName": "BAAC"
+  },
+  "BAY": {
+     "id": 2,
+     "shortName": "BAY"
+  },
+  "BBL": {
+     "id": 3,
+     "shortName": "BBL"
+  },
+  "CIMBT": {
+     "id": 4,
+     "shortName": "CIMBT"
+  },
+  "CITI": {
+     "id": 5,
+     "shortName": "CITI"
+  },
+  "GHB": {
+     "id": 6,
+     "shortName": "GHB"
+  },
+  "GSB": {
+     "id": 7,
+     "shortName": "GSB"
+  },
+  "ICBC": {
+     "id": 8,
+     "shortName": "ICBC"
+  },
+  "KBANK": {
+     "id": 9,
+     "shortName": "KBANK"
+  },
+  "KKP": {
+     "id": 10,
+     "shortName": "KKP"
+  },
+  "KTB": {
+     "id": 11,
+     "shortName": "KTB"
+  },
+  "LHBANK": {
+     "id": 12,
+     "shortName": "LHBANK"
+  },
+  "SCB": {
+     "id": 13,
+     "shortName": "SCB"
+  },
+  "SCBT": {
+     "id": 14,
+     "shortName": "SCBT"
+  },
+  "TCAP": {
+     "id": 15,
+     "shortName": "TCAP"
+  },
+  "TCRB": {
+     "id": 16,
+     "shortName": "TCRB"
+  },
+  "TMB": {
+     "id": 17,
+     "shortName": "TMB"
+  },
+  "UOB": {
+     "id": 18,
+     "shortName": "UOB"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "ERR_SETTLEMENT_STATUS_IS_NOT_PROCESSING": {
+    "status": 400,
+    "resCode": "3100",
+    "resDesc": {
+      "en": "Settlement's status is not processing",
+      "th": "Settlement's status is not processing"
+    }
+  }
+}

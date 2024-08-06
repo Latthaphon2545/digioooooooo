@@ -1,0 +1,10 @@
+{
+  "extends": "@planetx/tsconfig/base.json",
+  "include": ["./src/**/*.ts"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "noImplicitReturns": false,
+    "declaration": false,
+  },
+  "exclude": ["node_modules"]
+}
